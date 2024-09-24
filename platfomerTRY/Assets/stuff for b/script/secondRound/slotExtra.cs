@@ -7,4 +7,5 @@ public class slotExtra : MonoBehaviour
 {
     public item it;
     public int index;
+    public string kingdom;
 }

@@ -3,12 +3,20 @@
     using UnityEngine;
     using UnityEngine.UI;
     using TMPro;
+    using Unity.VisualScripting;
 
-    public class craftingManager : MonoBehaviour
+public enum state
+{
+    start,playerOne, playerTwo, none
+}
+
+public class craftingManager : MonoBehaviour
     {
         private item currentItem;
         public Image currentCourser;
 
+        public slotExtra[] placeSlotsP1;
+        public slotExtra[] placeSlotsP2;
         public slotExtra[] placeSlots;
 
         public string[] forges;
@@ -18,12 +26,23 @@
         public float Vtempo0;
         public float Vtempo1;
         public float Vtempo2;
+        public float Vtempo3;
+        public float Vtempo4;
+        public float Vtempo5;
         private Image OgIm;
         public slotExtra Og;
         public Toggle tog;
+        public state state;
+    public GameObject TP1;
+    public GameObject TP2;
+
+        kingdom king;
+        deckManager deck;
+
 
         private void Start()
         {
+        state = state.playerOne;
 
             if (Og == null || currentCourser == null)
             {
@@ -34,28 +53,48 @@
                 OgIm = Og.GetComponent<Image>();
             }
 
-            // Ensure that placeSlots is not null and contains elements
-            if (placeSlots == null || placeSlots.Length == 0)
+            // Ensure that placeSlotsP1 is not null and contains elements
+            if (placeSlotsP1 == null || placeSlotsP1.Length == 0)
             {
-                Debug.LogError("placeSlots is not assigned or empty.");
+                Debug.LogError("placeSlotsP1 is not assigned or empty.");
             }
-
+            if (placeSlotsP2 == null || placeSlotsP2.Length == 0)
+            {
+                Debug.LogError("placeSlotsP2 is not assigned or empty.");
+            }
             // Ensure forges and virtue arrays are properly assigned
             if (forges == null)
             {
                 Debug.LogError("forges or virtue arrays are not assigned.");
             }
-        }
+
+        deck = FindObjectOfType<deckManager>();
+    }
 
         private void Update()
         {
+
+            if (state == state.playerOne)
+            {
+                placeSlots = placeSlotsP2;
+                TP1.SetActive(true);
+                TP2.SetActive(false);
+            }
+            else if (state == state.playerTwo)
+            {
+                placeSlots = placeSlotsP1;
+                TP2.SetActive(true);
+                TP1.SetActive(false);
+            }
         movingR();
-    ;   }
+        }
 
     public List<item> selectedItems = new List<item>();
 
     void movingR()
     {
+
+
         if (Input.GetMouseButtonUp(0))
         {
             if (currentItem != null)
@@ -63,6 +102,7 @@
                 currentCourser.gameObject.SetActive(false);
                 slotExtra nearestSlot = null;
                 float shortestDistance = float.MaxValue;
+
 
                 foreach (slotExtra slotM in placeSlots)
                 {
@@ -87,10 +127,14 @@
                     {
                         slotImage.sprite = currentItem.GetComponent<Image>().sprite;
                         slotImage.color = currentItem.GetComponent<Image>().color;
+                
+                        
                     }
                     nearestSlot.it = currentItem;
                 }
 
+                state = state == state.playerOne ? state.playerTwo : state.playerOne;
+                deck.state = state == state.playerOne ? state.playerTwo : state.playerOne;
                 currentItem = null;
             }
         }
@@ -108,15 +152,12 @@
         }
 
         bool itemsForged = false;
-
         forgedItems.Clear();
 
         for (int i = 0; i < selectedItems.Count - 1; i++)
         {
-            // Only check the current item and the next item
             string currentForge = selectedItems[i].Rname + selectedItems[i + 1].Rname;
 
-            // Check if this combination matches any in the forges array
             for (int k = 0; k < forges.Length; k++)
             {
                 if (forges[k] == currentForge && Vnum[k] != null)
@@ -138,11 +179,22 @@
                             Vtempo2 += Vcount;
                             Vnum[2].text = Vtempo2.ToString();
                             break;
+                        case 3:
+                            Vtempo3 += Vcount;
+                            Vnum[3].text = Vtempo3.ToString();
+                            break;
+                        case 4:
+                            Vtempo4 += Vcount;
+                            Vnum[4].text = Vtempo4.ToString();
+                            break;
+                        case 5:
+                            Vtempo5 += Vcount;
+                            Vnum[5].text = Vtempo5.ToString();
+                            break;
                     }
 
-                    // Add the forged items to the list
-                    forgedItems.Add(selectedItems[i]);
-                    forgedItems.Add(selectedItems[i + 1]);
+                     forgedItems.Add(selectedItems[i]);
+                     forgedItems.Add(selectedItems[i + 1]);
                     itemsForged = true;
                 }
             }
@@ -151,7 +203,9 @@
         if (itemsForged)
         {
             RemoveForgedItems();
+            state = state == state.playerOne ? state.playerTwo : state.playerOne;
         }
+
         selectedItems.Clear();
     }
 
@@ -160,30 +214,31 @@
 
     void RemoveForgedItems()
     {
+        //it should not remove the items that are just similar
         foreach (slotExtra slot in placeSlots)
         {
             if (slot != null && forgedItems.Contains(slot.it))
             {
-                // Remove the forged item from the slot
+                
                 slot.it = null;
 
-                // Restore the original image and color (use OgIm for the default appearance)
+                
                 Image slotImage = slot.GetComponent<Image>();
                 if (slotImage != null && OgIm != null)
                 {
                     slotImage.sprite = OgIm.sprite;
                     slotImage.color = OgIm.color;
+                
                 }
             }
         }
 
-        // Remove forged items from selectedItems
+       
         foreach (item forgedItem in forgedItems)
         {
             selectedItems.Remove(forgedItem);
         }
 
-        // Clear the forgedItems list
         selectedItems.Clear();
         forgedItems.Clear();
     }
@@ -195,7 +250,10 @@
         {
             if (slot != null)
             {
-                selectedItems.Add(slot.it);
+                if (slot.it != null)
+                {
+                    selectedItems.Add(slot.it);
+                }
             }
         }
         else
@@ -222,11 +280,13 @@
                 {
                     slotImage.sprite = OgIm.sprite;
                     slotImage.color = OgIm.color;
+    
                 }
                 slot.it = null;
             }
         }
     }
+
 
 
     public void OnMouseDownItem(item it)
