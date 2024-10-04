@@ -15,7 +15,6 @@ public class deckManager : MonoBehaviour
     
 
     public bool lidbool =  true;
-
     public state state;
 
     private void Start()
@@ -98,5 +97,10 @@ public class deckManager : MonoBehaviour
 
         Button.SetActive(false);
         state = state.none;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

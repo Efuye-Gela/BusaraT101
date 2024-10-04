@@ -1,153 +1,72 @@
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.UI;
-    using TMPro;
-    using Unity.VisualScripting;
-
-public enum state
-{
-    start,playerOne, playerTwo, none
-}
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class craftingManager : MonoBehaviour
+{
+    private item currentItem;
+    public Image currentCourser;
+
+    public slotExtra[] placeSlotsALL;
+
+    public string[] forges;
+    public string[] weapons;
+    public TMP_Text[] Vnum;
+    public TMP_Text selectedItemsDisplay; // Add this for the selected items display
+
+    private float[] Vtempo = new float[12];
+    private Image OgIm;
+    public slotExtra Og;
+    public Toggle tog;
+    public state state;
+
+    private deckManager deck;
+    public Movingpeice mpc;
+
+    public List<SelectedItem> selectedItems = new List<SelectedItem>();
+    public List<item> forgedItems = new List<item>();
+
+    private void Start()
     {
-        private item currentItem;
-        public Image currentCourser;
-
-        public slotExtra[] placeSlotsP1;
-        public slotExtra[] placeSlotsP2;
-        public slotExtra[] placeSlots;
-
-        public string[] forges;
-
-        public TMP_Text[] Vnum;
-        public float Vcount;
-        public float Vtempo0;
-        public float Vtempo1;
-        public float Vtempo2;
-        public float Vtempo3;
-        public float Vtempo4;
-        public float Vtempo5;
-        private Image OgIm;
-        public slotExtra Og;
-        public Toggle tog;
-        public state state;
-    public GameObject TP1;
-    public GameObject TP2;
-
-        kingdom king;
-        deckManager deck;
-
-
-        private void Start()
-        {
         state = state.playerOne;
 
-            if (Og == null || currentCourser == null)
-            {
-                Debug.LogError("One or more required fields are not assigned in the inspector.");
-            }
-            else
-            {
-                OgIm = Og.GetComponent<Image>();
-            }
+        if (Og == null || currentCourser == null)
+        {
+            Debug.LogError("One or more required fields are not assigned in the inspector.");
+            return;
+        }
+        OgIm = Og.GetComponent<Image>();
 
-            // Ensure that placeSlotsP1 is not null and contains elements
-            if (placeSlotsP1 == null || placeSlotsP1.Length == 0)
-            {
-                Debug.LogError("placeSlotsP1 is not assigned or empty.");
-            }
-            if (placeSlotsP2 == null || placeSlotsP2.Length == 0)
-            {
-                Debug.LogError("placeSlotsP2 is not assigned or empty.");
-            }
-            // Ensure forges and virtue arrays are properly assigned
-            if (forges == null)
-            {
-                Debug.LogError("forges or virtue arrays are not assigned.");
-            }
+        if (placeSlotsALL.Length == 0)
+        {
+            Debug.LogError("placeSlotsALL is not assigned or empty.");
+            return;
+        }
+
+        if (forges == null)
+        {
+            Debug.LogError("forges array is not assigned.");
+            return;
+        }
 
         deck = FindObjectOfType<deckManager>();
+        mpc = FindObjectOfType<Movingpeice>();
+
+        // Initialize selected items display if assigned
+        UpdateSelectedItemsDisplay();
     }
 
-        private void Update()
-        {
-
-            if (state == state.playerOne)
-            {
-                placeSlots = placeSlotsP2;
-                TP1.SetActive(true);
-                TP2.SetActive(false);
-            }
-            else if (state == state.playerTwo)
-            {
-                placeSlots = placeSlotsP1;
-                TP2.SetActive(true);
-                TP1.SetActive(false);
-            }
-        movingR();
-        }
-
-    public List<item> selectedItems = new List<item>();
-
-    void movingR()
+    private void Update()
     {
-
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (currentItem != null)
-            {
-                currentCourser.gameObject.SetActive(false);
-                slotExtra nearestSlot = null;
-                float shortestDistance = float.MaxValue;
-
-
-                foreach (slotExtra slotM in placeSlots)
-                {
-                    if (slotM != null)
-                    {
-                        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, slotM.transform.position);
-                        float distance = Vector2.Distance(Input.mousePosition, screenPoint);
-
-                        if (distance < shortestDistance)
-                        {
-                            shortestDistance = distance;
-                            nearestSlot = slotM;
-                        }
-                    }
-                }
-
-                if (nearestSlot != null)
-                {
-                    nearestSlot.gameObject.SetActive(true);
-                    Image slotImage = nearestSlot.GetComponent<Image>();
-                    if (slotImage != null && currentItem != null)
-                    {
-                        slotImage.sprite = currentItem.GetComponent<Image>().sprite;
-                        slotImage.color = currentItem.GetComponent<Image>().color;
-                
-                        
-                    }
-                    nearestSlot.it = currentItem;
-                }
-
-                state = state == state.playerOne ? state.playerTwo : state.playerOne;
-                deck.state = state == state.playerOne ? state.playerTwo : state.playerOne;
-                currentItem = null;
-            }
-        }
-
+        mpc.UpdateGameState();
     }
-
-    public List<item> forgedItems = new List<item>();
 
     public void CheckForForge()
     {
-        if (forges == null || Vnum == null || selectedItems == null || selectedItems.Count < 2)
+        if (forges == null || Vnum == null || selectedItems.Count < 2)
         {
-            Debug.LogError("One or more required fields are not assigned or not enough items selected.");
+            Debug.Log("One or more required fields are not assigned or not enough items selected.");
             return;
         }
 
@@ -156,45 +75,17 @@ public class craftingManager : MonoBehaviour
 
         for (int i = 0; i < selectedItems.Count - 1; i++)
         {
-            string currentForge = selectedItems[i].Rname + selectedItems[i + 1].Rname;
+            string currentForge = selectedItems[i].it.Rname + selectedItems[i + 1].it.Rname;
 
             for (int k = 0; k < forges.Length; k++)
             {
                 if (forges[k] == currentForge && Vnum[k] != null)
                 {
-                    Vcount = 0;
-                    Vcount++;
+                    Vtempo[k]++;
+                    Vnum[k].text = Vtempo[k].ToString();
 
-                    switch (k)
-                    {
-                        case 0:
-                            Vtempo0 += Vcount;
-                            Vnum[0].text = Vtempo0.ToString();
-                            break;
-                        case 1:
-                            Vtempo1 += Vcount;
-                            Vnum[1].text = Vtempo1.ToString();
-                            break;
-                        case 2:
-                            Vtempo2 += Vcount;
-                            Vnum[2].text = Vtempo2.ToString();
-                            break;
-                        case 3:
-                            Vtempo3 += Vcount;
-                            Vnum[3].text = Vtempo3.ToString();
-                            break;
-                        case 4:
-                            Vtempo4 += Vcount;
-                            Vnum[4].text = Vtempo4.ToString();
-                            break;
-                        case 5:
-                            Vtempo5 += Vcount;
-                            Vnum[5].text = Vtempo5.ToString();
-                            break;
-                    }
-
-                     forgedItems.Add(selectedItems[i]);
-                     forgedItems.Add(selectedItems[i + 1]);
+                    forgedItems.Add(selectedItems[i].it);
+                    forgedItems.Add(selectedItems[i + 1].it);
                     itemsForged = true;
                 }
             }
@@ -203,67 +94,63 @@ public class craftingManager : MonoBehaviour
         if (itemsForged)
         {
             RemoveForgedItems();
-            state = state == state.playerOne ? state.playerTwo : state.playerOne;
+            mpc.SwitchTurn();
         }
 
         selectedItems.Clear();
+        UpdateSelectedItemsDisplay(); // Update display when items are cleared
     }
-
-
-
 
     void RemoveForgedItems()
     {
-        //it should not remove the items that are just similar
-        foreach (slotExtra slot in placeSlots)
+        List<slotExtra> slotsToClear = new List<slotExtra>();
+
+        foreach (slotExtra slot in placeSlotsALL)
         {
             if (slot != null && forgedItems.Contains(slot.it))
             {
-                
-                slot.it = null;
-
-                
-                Image slotImage = slot.GetComponent<Image>();
-                if (slotImage != null && OgIm != null)
+                // Check if the slot's index matches the one stored in selectedItems
+                SelectedItem selectedItem = selectedItems.Find(si => si.it == slot.it && si.index == slot.index);
+                if (IsAdjacent(slot) && selectedItem != null)
                 {
-                    slotImage.sprite = OgIm.sprite;
-                    slotImage.color = OgIm.color;
-                
+                    slotsToClear.Add(slot);
                 }
             }
         }
 
-       
-        foreach (item forgedItem in forgedItems)
+        foreach (slotExtra slot in slotsToClear)
         {
-            selectedItems.Remove(forgedItem);
+            slot.it = null;
+
+            Image slotImage = slot.GetComponent<Image>();
+            if (slotImage != null && OgIm != null)
+            {
+                slotImage.sprite = OgIm.sprite;
+            }
         }
 
-        selectedItems.Clear();
-        forgedItems.Clear();
-    }
+        // Remove the forged items from selectedItems by matching both the item and its index
+        foreach (item forgedItem in forgedItems)
+        {
+            selectedItems.RemoveAll(si => si.it == forgedItem);
+        }
 
+        forgedItems.Clear();
+        UpdateSelectedItemsDisplay(); // Update display when items are removed
+    }
 
     public void OnClickSlot(slotExtra slot)
     {
         if (tog != null && tog.isOn)
         {
-            if (slot != null)
-            {
-                if (slot.it != null)
-                {
-                    selectedItems.Add(slot.it);
-                }
-            }
+            selecte(slot);
         }
         else
         {
-           
             if (slot != null && slot.it != null)
             {
                 currentItem = slot.it;
 
-                
                 if (currentCourser != null)
                 {
                     currentCourser.gameObject.SetActive(true);
@@ -271,7 +158,6 @@ public class craftingManager : MonoBehaviour
                     if (itemImage != null)
                     {
                         currentCourser.sprite = itemImage.sprite;
-                        currentCourser.color = itemImage.color;
                     }
                 }
 
@@ -279,34 +165,71 @@ public class craftingManager : MonoBehaviour
                 if (slotImage != null && OgIm != null)
                 {
                     slotImage.sprite = OgIm.sprite;
-                    slotImage.color = OgIm.color;
-    
                 }
                 slot.it = null;
             }
         }
+        UpdateSelectedItemsDisplay(); // Update display when an item is clicked
     }
 
-
-
-    public void OnMouseDownItem(item it)
+    public void selecte(slotExtra slot)
+    {
+        if (slot != null && slot.it != null)
         {
-            if (it != null)
+            if (IsAdjacent(slot))
             {
-                if (currentItem == null)
-                {
-                    currentItem = it;
-                    if (currentCourser != null)
-                    {
-                        currentCourser.gameObject.SetActive(true);
-                        Image itemImage = currentItem.GetComponent<Image>();
-                        if (itemImage != null)
-                        {
-                            currentCourser.sprite = itemImage.sprite;
-                            currentCourser.color = itemImage.color;
-                        }
-                    }
-                }
+                // Store both the item and its slot index
+                selectedItems.Add(new SelectedItem(slot.it, slot.index));
+            }
+            else
+            {
+                Debug.Log("No, you cannot select that item. Items must be adjacent.");
             }
         }
+        UpdateSelectedItemsDisplay(); // Update display when an item is selected
     }
+
+    private bool IsAdjacent(slotExtra slot)
+    {
+        int index = System.Array.IndexOf(placeSlotsALL, slot);
+
+        if (index < 0) return false;
+
+        if ((index > 0 && placeSlotsALL[index - 1].it != null && (index % 8 != 0)) ||
+            (index < placeSlotsALL.Length - 1 && placeSlotsALL[index + 1].it != null && ((index + 1) % 8 != 0)))
+        {
+            return true;
+        }
+
+        // Check vertical adjacency
+        int columnLength = 8;
+        if (index >= columnLength && placeSlotsALL[index - columnLength].it != null) return true;
+        if (index < placeSlotsALL.Length - columnLength && placeSlotsALL[index + columnLength].it != null) return true;
+
+        Debug.Log("No, you cannot select that item. Items must be adjacent.");
+        return false;
+    }
+
+    private void UpdateSelectedItemsDisplay()
+    {
+        if (selectedItemsDisplay == null) return;
+
+        selectedItemsDisplay.text = "Selected Items: ";
+        foreach (SelectedItem selectedItem in selectedItems)
+        {
+            selectedItemsDisplay.text += selectedItem.it.Rname + " ";
+        }
+    }
+}
+
+public class SelectedItem
+{
+    public item it;
+    public int index;
+
+    public SelectedItem(item item, int idx)
+    {
+        it = item;
+        index = idx;
+    }
+}
