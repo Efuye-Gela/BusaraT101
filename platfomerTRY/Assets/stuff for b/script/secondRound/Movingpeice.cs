@@ -54,17 +54,48 @@ public class Movingpeice : MonoBehaviour
         TP1.SetActive(state == state.playerOne);
         TP2.SetActive(state == state.playerTwo);
 
+        // Set placeSlotsP1 to white (active) and placeSlotsP2 to black (inactive) when it's player one's turn
         if (state == state.playerOne)
         {
-            pan1.color = new Color(1f, 1f, 1f, 0.5f);
-            pan.color = new Color(0f, 0f, 0f, 0.5f);
+            foreach (slotExtra slot in placeSlotsP1)
+            {
+                Image slotImage = slot.GetComponent<Image>();
+                if (slotImage != null)
+                {
+                    slotImage.color = Color.white;
+                }
+            }
+            foreach (slotExtra slot in placeSlotsP2)
+            {
+                Image slotImage = slot.GetComponent<Image>();
+                if (slotImage != null)
+                {
+                    slotImage.color = new Color(1f, 1f, 1f, 0.5f);
+                }
+            }
         }
+      
         else if (state == state.playerTwo)
         {
-            pan1.color = new Color(0f, 0f, 0f, 0.5f);
-            pan.color = new Color(1f, 1f, 1f, 0.5f);
+            foreach (slotExtra slot in placeSlotsP2)
+            {
+                Image slotImage = slot.GetComponent<Image>();
+                if (slotImage != null)
+                {
+                    slotImage.color = Color.white; 
+                }
+            }
+            foreach (slotExtra slot in placeSlotsP1)
+            {
+                Image slotImage = slot.GetComponent<Image>();
+                if (slotImage != null)
+                {
+                    slotImage.color = new Color(1f, 1f, 1f, 0.5f); 
+                }
+            }
         }
     }
+
 
     private void movingR()
     {
