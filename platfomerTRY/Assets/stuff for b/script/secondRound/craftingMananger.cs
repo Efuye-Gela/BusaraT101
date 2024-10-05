@@ -178,7 +178,7 @@ public class craftingManager : MonoBehaviour
         {
             if (slot != null && forgedItems.Contains(slot.it))
             {
-                // Check if the slot's index matches the one stored in selectedItems
+                
                 SelectedItem selectedItem = selectedItems.Find(si => si.index == slot.index);
                 if (IsAdjacent(slot) && selectedItem != null)
                 {
