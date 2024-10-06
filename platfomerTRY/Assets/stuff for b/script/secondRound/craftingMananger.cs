@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +13,11 @@ public class craftingManager : MonoBehaviour
     public string[] forges;
     public string[] weapon;
     public TMP_Text[] Vnum;
+    public TMP_Text[] Vnum1;
     public TMP_Text selectedItemsDisplay;
 
     private float[] Vtempo = new float[12];
+    private float[] Vtempo1 = new float[12];
     private Image OgIm;
     public slotExtra Og;
     public Toggle tog;
@@ -26,6 +29,7 @@ public class craftingManager : MonoBehaviour
     public List<SelectedItem> selectedItems = new List<SelectedItem>();
     public List<item> forgedItems = new List<item>();
     public bool itemsForged = false;
+
 
 
     private void Start()
@@ -70,7 +74,6 @@ public class craftingManager : MonoBehaviour
             return;
         }
 
-
         forgedItems.Clear();
 
         Queue<item> itemQueue = new Queue<item>();
@@ -84,20 +87,28 @@ public class craftingManager : MonoBehaviour
         for (int i = 0; i < itemQueue.Count - 1; i++)
         {
             item firstItem = itemQueue.Dequeue();
-            item secondItem = itemQueue.Peek(); // Look at the next item without removing it
-
+            item secondItem = itemQueue.Peek();
 
             string currentForge = firstItem.Rname + secondItem.Rname;
-
 
             bool forged = false;
 
             for (int k = 0; k < forges.Length; k++)
             {
-                if (forges[k] == currentForge && Vnum[k] != null)
+                if (forges[k] == currentForge && Vnum[k] != null && Vnum1 != null)
                 {
-                    Vtempo[k]++;
-                    Vnum[k].text = Vtempo[k].ToString();
+                  if(mpc.state == state.playerOne)
+                   {
+                        Vtempo[k]++;
+                        Vnum[k].text = Vtempo[k].ToString();
+
+                   }
+                   else if(mpc.state == state.playerTwo)
+                   {
+                        Vtempo1[k]++;
+                        Vnum1[k].text = Vtempo1[k].ToString();
+                  
+                    }
 
                     forgedItems.Add(firstItem);
                     forgedItems.Add(secondItem);
@@ -123,52 +134,42 @@ public class craftingManager : MonoBehaviour
         UpdateSelectedItemsDisplay();
     }
 
-
-
     public void Weapon()
     {
-        itemsForged = false; // Reset the flag before processing
+        itemsForged = false;
 
-        // Loop through selectedItems ensuring we check groups of three consecutive items
+        
         for (int i = 0; i <= selectedItems.Count - 3; i++)
         {
-            // Create a string that combines the Rnames of three consecutive items
             string currentForge = selectedItems[i].it.Rname + selectedItems[i + 1].it.Rname + selectedItems[i + 2].it.Rname;
 
-            // Check if the current combination exists in the 'weapon' array
+          
             for (int k = 0; k < weapon.Length; k++)
             {
                 if (weapon[k] == currentForge && Vnum[k] != null)
                 {
-
-
-
-                    // Set the itemsForged flag to true since we found a valid combination
+                   
                     itemsForged = true;
 
-                    // Add the forged items to the forgedItems list
+                   
                     forgedItems.Add(selectedItems[i].it);
                     forgedItems.Add(selectedItems[i + 1].it);
                     forgedItems.Add(selectedItems[i + 2].it);
 
-                    break; // Exit the inner loop once the combination is found
+                    break; 
                 }
             }
 
             if (itemsForged)
             {
-                // If items are forged, remove them and switch turn
+              
                 RemoveForgedItems();
-                break; // Break the outer loop once forging is successful
+                break;
             }
         }
-
-        // Clear selected items after processing
         selectedItems.Clear();
         UpdateSelectedItemsDisplay();
     }
-
-
 
     void RemoveForgedItems()
     {
@@ -178,7 +179,6 @@ public class craftingManager : MonoBehaviour
         {
             if (slot != null && forgedItems.Contains(slot.it))
             {
-                
                 SelectedItem selectedItem = selectedItems.Find(si => si.index == slot.index);
                 if (IsAdjacent(slot) && selectedItem != null)
                 {
@@ -228,7 +228,7 @@ public class craftingManager : MonoBehaviour
             itemsForged = false;
             mpc.SwitchTurn();
         }
-        else if(!tog.isOn && itemsForged == false)
+        else if (!tog.isOn && itemsForged == false)
         {
             if (slot != null && slot.it != null)
             {
@@ -266,6 +266,17 @@ public class craftingManager : MonoBehaviour
                 return;
             }
 
+            // Check if it's the first item being selected
+            if (selectedItems.Count == 0)
+            {
+                // Ensure the first selected item is within mpc.placeSlot
+                if (!IsInPlaceSlot(slot))
+                {
+                    Debug.Log("The first selected item must be within mpc.placeSlot.");
+                    return;
+                }
+            }
+
             if (IsAdjacent(slot))
             {
                 selectedItems.Add(new SelectedItem(slot.it, slot.index));
@@ -276,6 +287,12 @@ public class craftingManager : MonoBehaviour
                 Debug.Log("No, you cannot select that item. Items must be adjacent.");
             }
         }
+    }
+
+    private bool IsInPlaceSlot(slotExtra slot)
+    {
+        // Check if the slot exists in mpc.placeSlot
+        return mpc.placeSlots != null && mpc.placeSlots.Contains(slot);
     }
 
     private bool IsAdjacent(slotExtra slot)
@@ -310,7 +327,6 @@ public class craftingManager : MonoBehaviour
             selectedItemsDisplay.text += selectedItem.it.Rname + " ";
         }
     }
-
 }
 
 public class SelectedItem

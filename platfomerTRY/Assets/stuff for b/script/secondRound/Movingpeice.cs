@@ -23,6 +23,9 @@ public class Movingpeice : MonoBehaviour
 
     private deckManager deck;
 
+    public GameObject pR1;
+    public GameObject pR2;
+
     private void Start()
     {
         state = state.playerOne;
@@ -73,8 +76,10 @@ public class Movingpeice : MonoBehaviour
                     slotImage.color = new Color(1f, 1f, 1f, 0.5f);
                 }
             }
+            pR1.SetActive(true);
+            pR2.SetActive(false);
         }
-      
+
         else if (state == state.playerTwo)
         {
             foreach (slotExtra slot in placeSlotsP2)
@@ -82,7 +87,7 @@ public class Movingpeice : MonoBehaviour
                 Image slotImage = slot.GetComponent<Image>();
                 if (slotImage != null)
                 {
-                    slotImage.color = Color.white; 
+                    slotImage.color = Color.white;
                 }
             }
             foreach (slotExtra slot in placeSlotsP1)
@@ -90,9 +95,11 @@ public class Movingpeice : MonoBehaviour
                 Image slotImage = slot.GetComponent<Image>();
                 if (slotImage != null)
                 {
-                    slotImage.color = new Color(1f, 1f, 1f, 0.5f); 
+                    slotImage.color = new Color(1f, 1f, 1f, 0.5f);
                 }
             }
+            pR1.SetActive(false);
+            pR2.SetActive(true);
         }
     }
 
