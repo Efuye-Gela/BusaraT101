@@ -16,8 +16,8 @@ public class craftingManager : MonoBehaviour
     public TMP_Text[] Vnum1;
     public TMP_Text selectedItemsDisplay;
 
-    private float[] Vtempo = new float[12];
-    private float[] Vtempo1 = new float[12];
+    private float[] Vtempo = new float[7];
+    private float[] Vtempo1 = new float[7];
     private Image OgIm;
     public slotExtra Og;
     public Toggle tog;
@@ -83,11 +83,11 @@ public class craftingManager : MonoBehaviour
             itemQueue.Enqueue(selectedItem.it);
         }
 
-        // Process each item in the queue
-        for (int i = 0; i < itemQueue.Count - 1; i++)
+        // Process items in the queue
+        while (itemQueue.Count > 1)
         {
             item firstItem = itemQueue.Dequeue();
-            item secondItem = itemQueue.Peek();
+            item secondItem = itemQueue.Peek();  // Get the next item to compare
 
             string currentForge = firstItem.Rname + secondItem.Rname;
 
@@ -95,19 +95,20 @@ public class craftingManager : MonoBehaviour
 
             for (int k = 0; k < forges.Length; k++)
             {
-                if (forges[k] == currentForge && Vnum[k] != null && Vnum1 != null)
-                {
-                  if(mpc.state == state.playerOne)
-                   {
-                        Vtempo[k]++;
-                        Vnum[k].text = Vtempo[k].ToString();
+                // Wrap the index if it exceeds the array length (0 to 4)
+                int wrappedIndex = k % Vtempo.Length;  // or Vtempo1.Length, they seem to have the same size
 
-                   }
-                   else if(mpc.state == state.playerTwo)
-                   {
-                        Vtempo1[k]++;
-                        Vnum1[k].text = Vtempo1[k].ToString();
-                  
+                if (forges[k] == currentForge && Vnum[wrappedIndex] != null && Vnum1[wrappedIndex] != null)
+                {
+                    if (mpc.state == state.playerOne)
+                    {
+                        Vtempo[wrappedIndex]++;
+                        Vnum[wrappedIndex].text = Vtempo[wrappedIndex].ToString();
+                    }
+                    else if (mpc.state == state.playerTwo)
+                    {
+                        Vtempo1[wrappedIndex]++;
+                        Vnum1[wrappedIndex].text = Vtempo1[wrappedIndex].ToString();
                     }
 
                     forgedItems.Add(firstItem);
@@ -120,19 +121,21 @@ public class craftingManager : MonoBehaviour
             if (forged)
             {
                 RemoveForgedItems();
-                mpc.SwitchTurn();
             }
             else
             {
-                // If not forged, re-add the first item back to the queue
+                // If no forge, re-enqueue the first item at the end
                 itemQueue.Enqueue(firstItem);
             }
         }
 
         // Clear selected items after processing
+        mpc.SwitchTurn();
         selectedItems.Clear();
         UpdateSelectedItemsDisplay();
     }
+
+
 
     public void Weapon()
     {
@@ -151,7 +154,7 @@ public class craftingManager : MonoBehaviour
                    
                     itemsForged = true;
 
-                   
+
                     forgedItems.Add(selectedItems[i].it);
                     forgedItems.Add(selectedItems[i + 1].it);
                     forgedItems.Add(selectedItems[i + 2].it);
