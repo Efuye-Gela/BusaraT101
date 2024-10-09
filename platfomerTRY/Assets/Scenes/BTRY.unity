@@ -2288,19 +2288,6 @@ MonoBehaviour:
   - {fileID: 1365989990}
   - {fileID: 532840722}
   - {fileID: 2062399695}
-  forges:
-  - firewater
-  - firerock
-  - fireair
-  - airrock
-  - airwater
-  - waterrock
-  - waterfire
-  - rockfire
-  - airfire
-  - rockair
-  - waterair
-  - rockwater
   weapon:
   - waterwaterwater
   - firefirefire
@@ -2327,6 +2314,11 @@ MonoBehaviour:
   mpc: {fileID: 0}
   forgedItems: []
   itemsForged: 0
+  forge:
+  - fire
+  - water
+  - rock
+  - air
 --- !u!4 &250795541
 Transform:
   m_ObjectHideFlags: 0
@@ -2896,7 +2888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -22, y: -15}
+  m_AnchoredPosition: {x: -100, y: -15}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &312618609
@@ -6898,7 +6890,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0e35f6b808bb7447826cc6c69ffe448, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11793,7 +11785,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 367, y: -572}
+  m_AnchoredPosition: {x: 235, y: -464}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1766355821
@@ -12749,7 +12741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -600}
+  m_AnchoredPosition: {x: -116, y: -505}
   m_SizeDelta: {x: 1000, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1904915364

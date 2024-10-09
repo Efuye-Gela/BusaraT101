@@ -10,7 +10,6 @@ public class craftingManager : MonoBehaviour
     public Image currentCourser;
 
     public slotExtra[] placeSlotsALL;
-    public string[] forges;
     public string[] weapon;
     public TMP_Text[] Vnum;
     public TMP_Text[] Vnum1;
@@ -31,7 +30,12 @@ public class craftingManager : MonoBehaviour
     public bool itemsForged = false;
 
 
-
+    public string[] forge;
+    //{fire(0), rock(1), water(2), air(3)} => firewater, firerock, fireair, airrock, airwater, waterrock
+    // by accessing the index in the respective array making the six combination 
+    // (0,1) (0,2), (0,3), (1,2) (1,3) (2,3) so the combinition should also be check in reverse meaning combination of (1,0) (2,0) (3,0)... and soon 
+    //after combing then checking with the selected items in the array so will check if the combination of the selected item of the first and the second is the same as the combination of (0,1) and then 
+    // checking if it is the same as (1,0) and so on if it finds a match the function will break 
     private void Start()
     {
         state = state.playerOne;
@@ -49,7 +53,7 @@ public class craftingManager : MonoBehaviour
             return;
         }
 
-        if (forges == null)
+        if (forge == null)
         {
             Debug.LogError("forges array is not assigned.");
             return;
@@ -68,7 +72,7 @@ public class craftingManager : MonoBehaviour
 
     public void CheckForForge()
     {
-        if (forges == null || Vnum == null || selectedItems.Count < 2)
+        if (forge == null || Vnum == null || selectedItems.Count < 2)
         {
             Debug.Log("One or more required fields are not assigned or not enough items selected.");
             return;
@@ -92,31 +96,100 @@ public class craftingManager : MonoBehaviour
             string currentForge = firstItem.Rname + secondItem.Rname;
 
             bool forged = false;
-
-            for (int k = 0; k < forges.Length; k++)
+            // 0f, 1w, 2r, 3a
+            
+            if(forge[0] + forge[1] == currentForge || forge[1] + forge[0] == currentForge)//fire and water
             {
-                // Wrap the index if it exceeds the array length (0 to 4)
-                int wrappedIndex = k % Vtempo.Length;  // or Vtempo1.Length, they seem to have the same size
-
-                if (forges[k] == currentForge && Vnum[wrappedIndex] != null && Vnum1[wrappedIndex] != null)
+                if(mpc.state == state.playerOne)
                 {
-                    if (mpc.state == state.playerOne)
-                    {
-                        Vtempo[wrappedIndex]++;
-                        Vnum[wrappedIndex].text = Vtempo[wrappedIndex].ToString();
-                    }
-                    else if (mpc.state == state.playerTwo)
-                    {
-                        Vtempo1[wrappedIndex]++;
-                        Vnum1[wrappedIndex].text = Vtempo1[wrappedIndex].ToString();
-                    }
+                Vtempo[0]++;
+                Vnum[0].text = Vtempo[0].ToString();
 
-                    forgedItems.Add(firstItem);
-                    forgedItems.Add(secondItem);
-                    forged = true;
-                    break;
+                }
+                else if(mpc.state == state.playerTwo)
+                {
+                    Vtempo1[0]++;
+                    Vnum1[0].text = Vtempo1[0].ToString();
                 }
             }
+            else if (forge[0] + forge[2] == currentForge || forge[2] + forge[0] == currentForge)//fire and rock
+            {
+                if (mpc.state == state.playerOne)
+                {
+                    Vtempo[1]++;
+                    Vnum[1].text = Vtempo[1].ToString();
+
+                }
+                else if (mpc.state == state.playerTwo)
+                {
+                    Vtempo1[1]++;
+                    Vnum1[1].text = Vtempo1[1].ToString();
+                }
+            }
+            else if (forge[0] + forge[3] == currentForge || forge[3] + forge[0] == currentForge)//fire and air
+            {
+                if (mpc.state == state.playerOne)
+                {
+                    Vtempo[2]++;
+                    Vnum[2].text = Vtempo[2].ToString();
+
+                }
+                else if (mpc.state == state.playerTwo)
+                {
+                    Vtempo1[2]++;
+                    Vnum1[2].text = Vtempo1[2].ToString();
+                }
+            }
+            else if (forge[1] + forge[2] == currentForge || forge[2] + forge[1] == currentForge)//water and rock
+            {
+                if (mpc.state == state.playerOne)
+                {
+                    Vtempo[3]++;
+                    Vnum[3].text = Vtempo[3].ToString();
+
+                }
+                else if (mpc.state == state.playerTwo)
+                {
+                    Vtempo1[3]++;
+                    Vnum1[3].text = Vtempo1[3].ToString();
+                }
+            }
+            else if (forge[1] + forge[3] == currentForge || forge[3] + forge[1] == currentForge)// water and air
+            {
+                if (mpc.state == state.playerOne)
+                {
+                    Vtempo[4]++;
+                    Vnum[4].text = Vtempo[4].ToString();
+
+                }
+                else if (mpc.state == state.playerTwo)
+                {
+                    Vtempo1[4]++;
+                    Vnum1[4].text = Vtempo1[4].ToString();
+                }
+            }
+            else if (forge[2] + forge[3] == currentForge || forge[3] + forge[2] == currentForge)// rock and air
+            {
+                if (mpc.state == state.playerOne)
+                {
+                    Vtempo[5]++;
+                    Vnum[5].text = Vtempo[5].ToString();
+
+                }
+                else if (mpc.state == state.playerTwo)
+                {
+                    Vtempo1[5]++;
+                    Vnum1[5].text = Vtempo1[5].ToString();
+                }
+            }
+            else
+            {
+                Debug.Log("The item was not found");
+            }
+
+            forgedItems.Add(firstItem);
+            forgedItems.Add(secondItem);
+            forged = true;
 
             if (forged)
             {
@@ -139,6 +212,16 @@ public class craftingManager : MonoBehaviour
 
     public void Weapon()
     {
+        if (selectedItems.Count < 3)
+        {
+            Debug.Log("not enough to use weapon");
+            return;
+        }else if (selectedItems.Count > 3)
+        {
+            Debug.Log("only 3 Item must be selected to be used");
+            return;
+        }
+
         itemsForged = false;
 
         
@@ -151,15 +234,18 @@ public class craftingManager : MonoBehaviour
             {
                 if (weapon[k] == currentForge && Vnum[k] != null)
                 {
-                   
-                    itemsForged = true;
 
+                    itemsForged = true;
 
                     forgedItems.Add(selectedItems[i].it);
                     forgedItems.Add(selectedItems[i + 1].it);
                     forgedItems.Add(selectedItems[i + 2].it);
 
-                    break; 
+                    break;
+                }
+                else
+                {
+                    Debug.Log("Selected Items must be similar to use weapon");
                 }
             }
 
@@ -173,6 +259,8 @@ public class craftingManager : MonoBehaviour
         selectedItems.Clear();
         UpdateSelectedItemsDisplay();
     }
+
+
 
     void RemoveForgedItems()
     {
@@ -245,7 +333,7 @@ public class craftingManager : MonoBehaviour
                     {
                         currentCourser.sprite = itemImage.sprite;
                     }
-                }
+                }//move thus snip of the code else where (to movment)
 
                 Image slotImage = slot.GetComponent<Image>();
                 if (slotImage != null && OgIm != null)
@@ -255,6 +343,8 @@ public class craftingManager : MonoBehaviour
                 slot.it = null;
             }
         }
+
+
         UpdateSelectedItemsDisplay();
     }
 

@@ -8,6 +8,4 @@ public class slotExtra : MonoBehaviour
     public int index;
 
 
-
-
 }

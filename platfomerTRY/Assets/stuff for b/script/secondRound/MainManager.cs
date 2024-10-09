@@ -18,9 +18,4 @@ public class MainManager : MonoBehaviour
         deckManager = GetComponent<deckManager>();
         craftingManager = GetComponent<craftingManager>();
     }
-
-    public void Turn()
-    {
-        //if the code inside of the deckManager and craftManager happens make it change state between the above playerstates where if player on deos any of the code in craftmanager 
-    }
 }

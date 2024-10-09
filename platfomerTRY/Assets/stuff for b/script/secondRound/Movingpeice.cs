@@ -104,45 +104,53 @@ public class Movingpeice : MonoBehaviour
     }
 
 
-    private void movingR()
+  private void movingR()
+{
+    if (Input.GetMouseButtonUp(0) && currentItem != null)
     {
-        if (Input.GetMouseButtonUp(0) && currentItem != null)
+        currentCourser.gameObject.SetActive(false);
+        slotExtra nearestSlot = null;
+        float shortestDistance = float.MaxValue;
+
+        foreach (slotExtra slotM in placeSlots)
         {
-            currentCourser.gameObject.SetActive(false);
-            slotExtra nearestSlot = null;
-            float shortestDistance = float.MaxValue;
-
-            foreach (slotExtra slotM in placeSlots)
+            if (slotM != null)
             {
-                if (slotM != null)
-                {
-                    Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, slotM.transform.position);
-                    float distance = Vector2.Distance(Input.mousePosition, screenPoint);
+                Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, slotM.transform.position);
+                float distance = Vector2.Distance(Input.mousePosition, screenPoint);
 
-                    if (distance < shortestDistance)
-                    {
-                        shortestDistance = distance;
-                        nearestSlot = slotM;
-                    }
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    nearestSlot = slotM;
                 }
             }
+        }
 
-            if (nearestSlot != null)
+        if (nearestSlot != null)
+        {
+            // Check if the nearest slot is already occupied
+            if (nearestSlot.it != null)
+            {
+                Debug.Log("This slot is already occupied.");
+                currentCourser.gameObject.SetActive(true);
+            }
+            else
             {
                 nearestSlot.gameObject.SetActive(true);
                 Image slotImage = nearestSlot.GetComponent<Image>();
                 if (slotImage != null)
                 {
                     slotImage.sprite = currentItem.GetComponent<Image>().sprite;
-                    
                 }
                 nearestSlot.it = currentItem;
+                SwitchTurn();
+                currentItem = null;
             }
-
-            SwitchTurn();
-            currentItem = null;
         }
     }
+}
+
 
     public void SwitchTurn()
     {
@@ -168,7 +176,6 @@ public class Movingpeice : MonoBehaviour
                 if (itemImage != null)
                 {
                     currentCourser.sprite = itemImage.sprite;
-                    currentCourser.color = itemImage.color;
                 }
             }
         }
