@@ -28,14 +28,13 @@ public class craftingManager : MonoBehaviour
     public List<SelectedItem> selectedItems = new List<SelectedItem>();
     public List<item> forgedItems = new List<item>();
     public bool itemsForged = false;
+    public bool itemsToTrade = false;
 
 
     public string[] forge;
-    //{fire(0), rock(1), water(2), air(3)} => firewater, firerock, fireair, airrock, airwater, waterrock
-    // by accessing the index in the respective array making the six combination 
-    // (0,1) (0,2), (0,3), (1,2) (1,3) (2,3) so the combinition should also be check in reverse meaning combination of (1,0) (2,0) (3,0)... and soon 
-    //after combing then checking with the selected items in the array so will check if the combination of the selected item of the first and the second is the same as the combination of (0,1) and then 
-    // checking if it is the same as (1,0) and so on if it finds a match the function will break 
+
+   
+
     private void Start()
     {
         state = state.playerOne;
@@ -68,6 +67,7 @@ public class craftingManager : MonoBehaviour
     private void Update()
     {
         mpc.UpdateGameState();
+       
     }
 
     public void CheckForForge()
@@ -215,10 +215,13 @@ public class craftingManager : MonoBehaviour
         if (selectedItems.Count < 3)
         {
             Debug.Log("not enough to use weapon");
+            selectedItems.Clear();
             return;
-        }else if (selectedItems.Count > 3)
+        }
+        else if (selectedItems.Count > 3)
         {
             Debug.Log("only 3 Item must be selected to be used");
+            selectedItems.Clear();
             return;
         }
 
@@ -235,8 +238,8 @@ public class craftingManager : MonoBehaviour
                 if (weapon[k] == currentForge && Vnum[k] != null)
                 {
 
-                    itemsForged = true;
 
+                    itemsForged = true;
                     forgedItems.Add(selectedItems[i].it);
                     forgedItems.Add(selectedItems[i + 1].it);
                     forgedItems.Add(selectedItems[i + 2].it);
@@ -251,7 +254,60 @@ public class craftingManager : MonoBehaviour
 
             if (itemsForged)
             {
-              
+                RemoveForgedItems();
+                break;
+            }
+        }
+
+        selectedItems.Clear();
+        UpdateSelectedItemsDisplay();
+    }
+
+    public void Trade()
+    {
+        if (selectedItems.Count < 1)
+        {
+            Debug.Log("not enough to use weapon");
+            selectedItems.Clear();
+            return;
+        }
+        else if (selectedItems.Count > 1)
+        {
+            Debug.Log("only 3 Item must be selected to be used");
+            selectedItems.Clear();
+            return;
+        }
+
+        itemsToTrade = false;
+
+
+        for (int i = 0; i <= selectedItems.Count - 3; i++)
+        {
+            string currentForge = selectedItems[i].it.Rname + selectedItems[i + 1].it.Rname + selectedItems[i + 2].it.Rname;
+
+
+            for (int k = 0; k < weapon.Length; k++)
+            {
+                if (weapon[k] == currentForge && Vnum[k] != null)
+                {
+
+                    itemsToTrade = true;
+
+                    forgedItems.Add(selectedItems[i].it);
+                    forgedItems.Add(selectedItems[i + 1].it);
+                    forgedItems.Add(selectedItems[i + 2].it);
+
+                    break;
+                }
+                else
+                {
+                    Debug.Log("Selected Items must be similar to use weapon");
+                }
+            }
+
+            if (itemsToTrade)
+            {
+
                 RemoveForgedItems();
                 break;
             }
@@ -271,7 +327,7 @@ public class craftingManager : MonoBehaviour
             if (slot != null && forgedItems.Contains(slot.it))
             {
                 SelectedItem selectedItem = selectedItems.Find(si => si.index == slot.index);
-                if (IsAdjacent(slot) && selectedItem != null)
+                if (selectedItem != null)
                 {
                     slotsToClear.Add(slot);
                 }
@@ -301,53 +357,94 @@ public class craftingManager : MonoBehaviour
 
     public void OnClickSlot(slotExtra slot)
     {
-        if (tog != null && tog.isOn && itemsForged == false)
+        // Ensure slot is valid
+        if (slot == null) return;
+
+        // Case 1: Selecting an item from a slot
+        if (tog.isOn && itemsForged == false && itemsToTrade == false)
         {
-            if (IsAdjacent(slot))
-            {
                 selecte(slot);
-            }
         }
-        else if (tog.isOn && itemsForged == true)
+        // Case 2: Removing the item from a slot
+        else if (tog.isOn && itemsForged == true && itemsToTrade == false)
         {
+            WeaponRemove(slot);
+        }
+        // Cases 3: Picking up an item from a slot or placing it into another empty slot
+        else if (!tog.isOn && itemsForged == false && itemsToTrade == false)
+        {
+            MovePlaced(slot);
+        }
+        else if(!tog.isOn && itemsForged == false && itemsToTrade == true)
+        {
+            Exchange(slot);
+        }
+
+        UpdateSelectedItemsDisplay();
+    }
+
+    public void Exchange(slotExtra slot)
+    {
+       
+    }
+
+    public void WeaponRemove(slotExtra slot)
+    {
+
+        Image slotImage = slot.GetComponent<Image>();
+        if (slotImage != null && OgIm != null)
+        {
+            slotImage.sprite = OgIm.sprite;
+        }
+        slot.it = null;
+        itemsForged = false;
+        mpc.SwitchTurn();
+    }
+
+    public void MovePlaced(slotExtra slot)
+    {
+        if (slot != null && slot.it != null && currentItem == null && IsInPlaceSlot(slot))
+        {
+            // Case 3: Pick up the item from this slot
+            currentItem = slot.it;
+
+            if (currentCourser != null)
+            {
+                currentCourser.gameObject.SetActive(true);
+                Image itemImage = currentItem.GetComponent<Image>();
+                if (itemImage != null)
+                {
+                    currentCourser.sprite = itemImage.sprite;
+                }
+            }
+
             Image slotImage = slot.GetComponent<Image>();
             if (slotImage != null && OgIm != null)
             {
                 slotImage.sprite = OgIm.sprite;
             }
+
+            // Clear the slot
             slot.it = null;
-            itemsForged = false;
+        }
+        else if (currentItem != null && slot.it == null && IsInPlaceSlot(slot))
+        {
+            // Case 4: Place the item into this slot
+            slot.it = currentItem;
+
+            Image slotImage = slot.GetComponent<Image>();
+            Image currentItemImage = currentItem.GetComponent<Image>();
+            if (slotImage != null && currentItemImage != null)
+            {
+                slotImage.sprite = currentItemImage.sprite;
+            }
+
+            // Clear currentItem after placing it
+            currentItem = null;
+            currentCourser.gameObject.SetActive(false);
             mpc.SwitchTurn();
         }
-        else if (!tog.isOn && itemsForged == false)
-        {
-            if (slot != null && slot.it != null)
-            {
-                currentItem = slot.it;
-
-                if (currentCourser != null)
-                {
-                    currentCourser.gameObject.SetActive(true);
-                    Image itemImage = currentItem.GetComponent<Image>();
-                    if (itemImage != null)
-                    {
-                        currentCourser.sprite = itemImage.sprite;
-                    }
-                }//move thus snip of the code else where (to movment)
-
-                Image slotImage = slot.GetComponent<Image>();
-                if (slotImage != null && OgIm != null)
-                {
-                    slotImage.sprite = OgIm.sprite;
-                }
-                slot.it = null;
-            }
-        }
-
-
-        UpdateSelectedItemsDisplay();
     }
-
     public void selecte(slotExtra slot)
     {
         if (slot != null && slot.it != null)
@@ -374,6 +471,7 @@ public class craftingManager : MonoBehaviour
             {
                 selectedItems.Add(new SelectedItem(slot.it, slot.index));
                 UpdateSelectedItemsDisplay();
+               
             }
             else
             {

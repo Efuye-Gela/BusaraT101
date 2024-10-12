@@ -104,52 +104,53 @@ public class Movingpeice : MonoBehaviour
     }
 
 
-  private void movingR()
-{
-    if (Input.GetMouseButtonUp(0) && currentItem != null)
+    private void movingR()
     {
-        currentCourser.gameObject.SetActive(false);
-        slotExtra nearestSlot = null;
-        float shortestDistance = float.MaxValue;
-
-        foreach (slotExtra slotM in placeSlots)
+        if (Input.GetMouseButtonUp(0) && currentItem != null)
         {
-            if (slotM != null)
-            {
-                Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, slotM.transform.position);
-                float distance = Vector2.Distance(Input.mousePosition, screenPoint);
+            currentCourser.gameObject.SetActive(false);
+            slotExtra nearestSlot = null;
+            float shortestDistance = float.MaxValue;
 
-                if (distance < shortestDistance)
+            foreach (slotExtra slotM in placeSlots)
+            {
+                if (slotM != null)
                 {
-                    shortestDistance = distance;
-                    nearestSlot = slotM;
+                    Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, slotM.transform.position);
+                    float distance = Vector2.Distance(Input.mousePosition, screenPoint);
+
+                    if (distance < shortestDistance)
+                    {
+                        shortestDistance = distance;
+                        nearestSlot = slotM;
+                    }
                 }
             }
-        }
 
-        if (nearestSlot != null)
-        {
-            // Check if the nearest slot is already occupied
-            if (nearestSlot.it != null)
+            if (nearestSlot != null)
             {
-                Debug.Log("This slot is already occupied.");
-                currentCourser.gameObject.SetActive(true);
-            }
-            else
-            {
-                nearestSlot.gameObject.SetActive(true);
-                Image slotImage = nearestSlot.GetComponent<Image>();
-                if (slotImage != null)
+                // Check if the nearest slot is already occupied
+                if (nearestSlot.it != null)
                 {
-                    slotImage.sprite = currentItem.GetComponent<Image>().sprite;
+                    Debug.Log("This slot is already occupied.");
+                    currentCourser.gameObject.SetActive(true);
                 }
-                nearestSlot.it = currentItem;
-                SwitchTurn();
-                currentItem = null;
+                else
+                {
+                    nearestSlot.gameObject.SetActive(true);
+                    Image slotImage = nearestSlot.GetComponent<Image>();
+                    if (slotImage != null)
+                    {
+                        slotImage.sprite = currentItem.GetComponent<Image>().sprite;
+                    }
+                    nearestSlot.it = currentItem;
+                    SwitchTurn();
+                    currentItem = null;
+                   
+                }
             }
         }
     }
-}
 
 
     public void SwitchTurn()
@@ -180,4 +181,5 @@ public class Movingpeice : MonoBehaviour
             }
         }
     }
+
 }
