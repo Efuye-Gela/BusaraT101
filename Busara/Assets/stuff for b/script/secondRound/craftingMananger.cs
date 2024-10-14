@@ -549,8 +549,6 @@ public class craftingManager : MonoBehaviour
         return mpc.placeSlots != null && mpc.placeSlots.Contains(slot);
     }
 
-
-
     private void UpdateSelectedItemsDisplay()
     {
         if (selectedItemsDisplay == null) return;
