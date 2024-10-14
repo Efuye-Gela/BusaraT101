@@ -79,134 +79,167 @@ public class craftingManager : MonoBehaviour
         }
 
         forgedItems.Clear();
-
-        Queue<item> itemQueue = new Queue<item>();
+        List<SelectedItem> itemsList = new List<SelectedItem>();
 
         foreach (var selectedItem in selectedItems)
         {
-            itemQueue.Enqueue(selectedItem.it);
+            itemsList.Add(selectedItem);
+        }
+        for (int j = 0; j < itemsList.Count - 1; j++)
+        {
+            if (itemsList[j].it.Rname == itemsList[j + 1].it.Rname)
+            {
+                Debug.Log("You can't have the same item forged");
+                selectedItems.Clear();
+                UpdateSelectedItemsDisplay();
+                return;
+            }
         }
 
-        // Process items in the queue
-        while (itemQueue.Count > 1)
+        // Process items using a for loop
+        for (int i = 0; i < itemsList.Count - 1; i++)
         {
-            item firstItem = itemQueue.Dequeue();
-            item secondItem = itemQueue.Peek();  // Get the next item to compare
+            item firstItem = itemsList[i].it;
+            item secondItem = itemsList[i + 1].it; // Get the next item to compare
 
+            int firstItemIndex = itemsList[i].index;
+            int secondItemIndex = itemsList[i + 1].index;
+
+
+         
             string currentForge = firstItem.Rname + secondItem.Rname;
 
             bool forged = false;
-            // 0f, 1w, 2r, 3a
-            
-            if(forge[0] + forge[1] == currentForge || forge[1] + forge[0] == currentForge)//fire and water
-            {
-                if(mpc.state == state.playerOne)
-                {
-                Vtempo[0]++;
-                Vnum[0].text = Vtempo[0].ToString();
 
-                }
-                else if(mpc.state == state.playerTwo)
+            bool inPlayerOneSlot = false;
+            bool inPlayerTwoSlot = false;
+
+            if (mpc.placeSlotsP1.Contains(placeSlotsALL[firstItemIndex]))
+                inPlayerOneSlot = true; 
+            else if (mpc.placeSlotsP2.Contains(placeSlotsALL[firstItemIndex]))
+                inPlayerTwoSlot = true;
+            if (mpc.placeSlotsP1.Contains(placeSlotsALL[secondItemIndex]))
+                inPlayerOneSlot = true;
+            else if (mpc.placeSlotsP2.Contains(placeSlotsALL[secondItemIndex]))
+                inPlayerTwoSlot = true;
+
+
+            bool mixedSlots = false;
+
+            // Fire and Water combination (0f, 1w, 2r, 3a)
+            if (CheckForgeCombination(forge[0], forge[1], currentForge)) // Fire + Water
+            {
+                forged = true;
+                if (mixedSlots)
                 {
-                    Vtempo1[0]++;
-                    Vnum1[0].text = Vtempo1[0].ToString();
+                    UpdateForgeStatus(0, true, true); // Add to both slots if it's mixed
+                }
+                else
+                {
+                    UpdateForgeStatus(0, inPlayerOneSlot, inPlayerTwoSlot);
                 }
             }
-            else if (forge[0] + forge[2] == currentForge || forge[2] + forge[0] == currentForge)//fire and rock
+            else if (CheckForgeCombination(forge[0], forge[2], currentForge)) // Fire + Rock
             {
-                if (mpc.state == state.playerOne)
+                forged = true;
+                if (mixedSlots)
                 {
-                    Vtempo[1]++;
-                    Vnum[1].text = Vtempo[1].ToString();
-
+                    UpdateForgeStatus(1, true, true);
                 }
-                else if (mpc.state == state.playerTwo)
+                else
                 {
-                    Vtempo1[1]++;
-                    Vnum1[1].text = Vtempo1[1].ToString();
+                    UpdateForgeStatus(1, inPlayerOneSlot, inPlayerTwoSlot);
                 }
             }
-            else if (forge[0] + forge[3] == currentForge || forge[3] + forge[0] == currentForge)//fire and air
+            else if (CheckForgeCombination(forge[0], forge[3], currentForge)) // Fire + Air
             {
-                if (mpc.state == state.playerOne)
+                forged = true;
+                if (mixedSlots)
                 {
-                    Vtempo[2]++;
-                    Vnum[2].text = Vtempo[2].ToString();
-
+                    UpdateForgeStatus(2, true, true);
                 }
-                else if (mpc.state == state.playerTwo)
+                else
                 {
-                    Vtempo1[2]++;
-                    Vnum1[2].text = Vtempo1[2].ToString();
+                    UpdateForgeStatus(2, inPlayerOneSlot, inPlayerTwoSlot);
                 }
             }
-            else if (forge[1] + forge[2] == currentForge || forge[2] + forge[1] == currentForge)//water and rock
+            else if (CheckForgeCombination(forge[1], forge[2], currentForge)) // Water + Rock
             {
-                if (mpc.state == state.playerOne)
+                forged = true;
+                if (mixedSlots)
                 {
-                    Vtempo[3]++;
-                    Vnum[3].text = Vtempo[3].ToString();
-
+                    UpdateForgeStatus(3, true, true);
                 }
-                else if (mpc.state == state.playerTwo)
+                else
                 {
-                    Vtempo1[3]++;
-                    Vnum1[3].text = Vtempo1[3].ToString();
+                    UpdateForgeStatus(3, inPlayerOneSlot, inPlayerTwoSlot);
                 }
             }
-            else if (forge[1] + forge[3] == currentForge || forge[3] + forge[1] == currentForge)// water and air
+            else if (CheckForgeCombination(forge[1], forge[3], currentForge)) // Water + Air
             {
-                if (mpc.state == state.playerOne)
+                forged = true;
+                if (mixedSlots)
                 {
-                    Vtempo[4]++;
-                    Vnum[4].text = Vtempo[4].ToString();
-
+                    UpdateForgeStatus(4, true, true);
                 }
-                else if (mpc.state == state.playerTwo)
+                else
                 {
-                    Vtempo1[4]++;
-                    Vnum1[4].text = Vtempo1[4].ToString();
+                    UpdateForgeStatus(4, inPlayerOneSlot, inPlayerTwoSlot);
                 }
             }
-            else if (forge[2] + forge[3] == currentForge || forge[3] + forge[2] == currentForge)// rock and air
+            else if (CheckForgeCombination(forge[2], forge[3], currentForge)) // Rock + Air
             {
-                if (mpc.state == state.playerOne)
+                forged = true;
+                if (mixedSlots)
                 {
-                    Vtempo[5]++;
-                    Vnum[5].text = Vtempo[5].ToString();
-
+                    UpdateForgeStatus(5, true, true);
                 }
-                else if (mpc.state == state.playerTwo)
+                else
                 {
-                    Vtempo1[5]++;
-                    Vnum1[5].text = Vtempo1[5].ToString();
+                    UpdateForgeStatus(5, inPlayerOneSlot, inPlayerTwoSlot);
                 }
             }
             else
             {
-                Debug.Log("The item was not found");
+                Debug.Log("Combination does not exist, moving to the next item.");
             }
-
-            forgedItems.Add(firstItem);
-            forgedItems.Add(secondItem);
-            forged = true;
 
             if (forged)
             {
+                forgedItems.Add(firstItem);
+                forgedItems.Add(secondItem);
                 RemoveForgedItems();
-            }
-            else
-            {
-                // If no forge, re-enqueue the first item at the end
-                itemQueue.Enqueue(firstItem);
             }
         }
 
-        // Clear selected items after processing
         mpc.SwitchTurn();
         selectedItems.Clear();
         UpdateSelectedItemsDisplay();
     }
+
+
+    // Helper method to check forge combination
+    private bool CheckForgeCombination(string forgeA, string forgeB, string currentForge)
+    {
+        return (forgeA + forgeB.ToString() == currentForge || forgeB + forgeA.ToString() == currentForge);
+    }
+
+    // Helper method to update the forge status based on player slot
+    private void UpdateForgeStatus(int index, bool inPlayerOneSlot, bool inPlayerTwoSlot)
+    {
+        if (inPlayerOneSlot)
+        {
+            Vtempo[index]++;
+            Vnum[index].text = Vtempo[index].ToString();
+        }
+        if (inPlayerTwoSlot)
+        {
+            Vtempo1[index]++;
+            Vnum1[index].text = Vtempo1[index].ToString();
+        }
+    }
+
+
 
 
 
@@ -237,8 +270,6 @@ public class craftingManager : MonoBehaviour
             {
                 if (weapon[k] == currentForge && Vnum[k] != null)
                 {
-
-
                     itemsForged = true;
                     forgedItems.Add(selectedItems[i].it);
                     forgedItems.Add(selectedItems[i + 1].it);
@@ -268,12 +299,14 @@ public class craftingManager : MonoBehaviour
         if (selectedItems.Count < 1)
         {
             Debug.Log("not enough to use weapon");
+            UpdateSelectedItemsDisplay();
             selectedItems.Clear();
             return;
         }
         else if (selectedItems.Count > 1)
         {
             Debug.Log("only 3 Item must be selected to be used");
+            UpdateSelectedItemsDisplay();
             selectedItems.Clear();
             return;
         }
@@ -467,18 +500,48 @@ public class craftingManager : MonoBehaviour
                 }
             }
 
-            if (IsAdjacent(slot))
+            // Check adjacency based on the last selected item
+            if (selectedItems.Count == 0 || IsAdjacent(slot, selectedItems.Last()))
             {
                 selectedItems.Add(new SelectedItem(slot.it, slot.index));
+
+                // Log the index and associated slot
+                Debug.Log($"Selected item index: {slot.index}, associated slot: {slot.name}");
+
                 UpdateSelectedItemsDisplay();
-               
             }
             else
             {
-                Debug.Log("No, you cannot select that item. Items must be adjacent.");
+                Debug.Log("No, you cannot select that item. It must be adjacent to the last selected item.");
             }
         }
     }
+
+    private bool IsAdjacent(slotExtra slot, SelectedItem lastSelectedItem)
+    {
+        int currentIndex = System.Array.IndexOf(placeSlotsALL, slot);
+        int lastIndex = lastSelectedItem.index;
+
+        if (currentIndex < 0 || lastIndex < 0) return false;
+
+        // Check horizontal adjacency
+        if ((currentIndex == lastIndex - 1 && currentIndex % 8 != 7) ||
+            (currentIndex == lastIndex + 1 && currentIndex % 8 != 0))
+        {
+            return true;
+        }
+
+        // Check vertical adjacency
+        int columnLength = 8;  // The number of columns
+        if (currentIndex == lastIndex - columnLength || currentIndex == lastIndex + columnLength)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     private bool IsInPlaceSlot(slotExtra slot)
     {
@@ -486,27 +549,7 @@ public class craftingManager : MonoBehaviour
         return mpc.placeSlots != null && mpc.placeSlots.Contains(slot);
     }
 
-    private bool IsAdjacent(slotExtra slot)
-    {
-        int index = System.Array.IndexOf(placeSlotsALL, slot);
 
-        if (index < 0) return false;
-
-        // Check horizontal adjacency
-        if ((index > 0 && placeSlotsALL[index - 1].it != null && (index % 8 != 0)) ||
-            (index < placeSlotsALL.Length - 1 && placeSlotsALL[index + 1].it != null && ((index + 1) % 8 != 0)))
-        {
-            return true;
-        }
-
-        // Check vertical adjacency
-        int columnLength = 8;
-        if (index >= columnLength && placeSlotsALL[index - columnLength].it != null) return true;
-        if (index < placeSlotsALL.Length - columnLength && placeSlotsALL[index + columnLength].it != null) return true;
-
-        Debug.Log("No, you cannot select that item. Items must be adjacent.");
-        return false;
-    }
 
     private void UpdateSelectedItemsDisplay()
     {

@@ -22,6 +22,7 @@ public class Movingpeice : MonoBehaviour
     public Image pan1;
 
     private deckManager deck;
+    craftingManager crafting;
 
     public GameObject pR1;
     public GameObject pR2;
@@ -43,6 +44,7 @@ public class Movingpeice : MonoBehaviour
         }
 
         deck = FindObjectOfType<deckManager>();
+        crafting = FindObjectOfType<craftingManager>();
     }
 
     private void Update()
@@ -158,6 +160,8 @@ public class Movingpeice : MonoBehaviour
         state = (state == state.playerOne) ? state.playerTwo : state.playerOne;
         deck.state = state;
         UpdateUIForCurrentState();
+        crafting.selectedItems.Clear();
+
     }
 
     private void UpdateUIForCurrentState()
