@@ -42,7 +42,23 @@ public class deckManager : MonoBehaviour
             lidW.SetActive(false);
             lidF.SetActive(false);
         }
-     
+        else if (state == state.playerThree)
+        {
+            Button.SetActive(true);
+            lidR.SetActive(false);
+            lidA.SetActive(false);
+            lidW.SetActive(false);
+            lidF.SetActive(false);
+        }
+        else if (state == state.playerFour)
+        {
+            Button.SetActive(true);
+            lidR.SetActive(false);
+            lidA.SetActive(false);
+            lidW.SetActive(false);
+            lidF.SetActive(false);
+        }
+
     }
     void Shuffle()
     {

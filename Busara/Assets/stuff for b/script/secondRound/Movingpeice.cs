@@ -11,21 +11,24 @@ public class Movingpeice : MonoBehaviour
 
     public slotExtra[] placeSlotsP1;
     public slotExtra[] placeSlotsP2;
+    public slotExtra[] placeSlotsP3;
+    public slotExtra[] placeSlotsP4;
     public slotExtra[] placeSlots;
 
     public Toggle tog;
     public state state;
     public GameObject TP1;
     public GameObject TP2;
-
-    public Image pan;
-    public Image pan1;
+    public GameObject TP3;
+    public GameObject TP4;
 
     private deckManager deck;
     craftingManager crafting;
 
     public GameObject pR1;
     public GameObject pR2;
+    public GameObject pR3;
+    public GameObject pR4;
 
     private void Start()
     {
@@ -55,55 +58,54 @@ public class Movingpeice : MonoBehaviour
 
     public void UpdateGameState()
     {
-        placeSlots = (state == state.playerOne) ? placeSlotsP1 : placeSlotsP2;
-        TP1.SetActive(state == state.playerOne);
-        TP2.SetActive(state == state.playerTwo);
-
-        // Set placeSlotsP1 to white (active) and placeSlotsP2 to black (inactive) when it's player one's turn
+        // Assign the appropriate placeSlots based on the current player state
         if (state == state.playerOne)
         {
-            foreach (slotExtra slot in placeSlotsP1)
-            {
-                Image slotImage = slot.GetComponent<Image>();
-                if (slotImage != null)
-                {
-                    slotImage.color = Color.white;
-                }
-            }
-            foreach (slotExtra slot in placeSlotsP2)
-            {
-                Image slotImage = slot.GetComponent<Image>();
-                if (slotImage != null)
-                {
-                    slotImage.color = new Color(1f, 1f, 1f, 0.5f);
-                }
-            }
-            pR1.SetActive(true);
-            pR2.SetActive(false);
+            placeSlots = placeSlotsP1;
         }
-
         else if (state == state.playerTwo)
         {
-            foreach (slotExtra slot in placeSlotsP2)
+            placeSlots = placeSlotsP2;
+        }
+        else if (state == state.playerThree)
+        {
+            placeSlots = placeSlotsP3;
+        }
+        else if (state == state.playerFour)
+        {
+            placeSlots = placeSlotsP4;
+        }
+
+        
+        TP1.SetActive(state == state.playerOne);
+        TP2.SetActive(state == state.playerTwo);
+        TP3.SetActive(state == state.playerThree);
+        TP4.SetActive(state == state.playerFour);
+
+        SetSlotColors(placeSlotsP1, state == state.playerOne ? Color.white : new Color(1f, 1f, 1f, 0.2f));
+        SetSlotColors(placeSlotsP2, state == state.playerTwo ? Color.white : new Color(1f, 1f, 1f, 0.2f));
+        SetSlotColors(placeSlotsP3, state == state.playerThree ? Color.white : new Color(1f, 1f, 1f, 0.2f));
+        SetSlotColors(placeSlotsP4, state == state.playerFour ? Color.white : new Color(1f, 1f, 1f, 0.2f));
+
+        pR1.SetActive(state == state.playerOne);
+        pR2.SetActive(state == state.playerTwo);
+        pR3.SetActive(state == state.playerThree);
+        pR4.SetActive(state == state.playerFour);
+    }
+
+    // Helper function to set the color of the slots
+    private void SetSlotColors(slotExtra[] slots, Color color)
+    {
+        foreach (slotExtra slot in slots)
+        {
+            Image slotImage = slot.GetComponent<Image>();
+            if (slotImage != null)
             {
-                Image slotImage = slot.GetComponent<Image>();
-                if (slotImage != null)
-                {
-                    slotImage.color = Color.white;
-                }
+                slotImage.color = color;
             }
-            foreach (slotExtra slot in placeSlotsP1)
-            {
-                Image slotImage = slot.GetComponent<Image>();
-                if (slotImage != null)
-                {
-                    slotImage.color = new Color(1f, 1f, 1f, 0.5f);
-                }
-            }
-            pR1.SetActive(false);
-            pR2.SetActive(true);
         }
     }
+
 
 
     private void movingR()
@@ -157,7 +159,24 @@ public class Movingpeice : MonoBehaviour
 
     public void SwitchTurn()
     {
-        state = (state == state.playerOne) ? state.playerTwo : state.playerOne;
+        
+        if(state == state.playerOne)
+        {
+            state = state.playerTwo;
+        }
+        else if(state == state.playerTwo)
+        {
+            state = state.playerThree;
+        }
+        else if( state == state.playerThree)
+        {
+            state = state.playerFour;
+        }
+        else if(state == state.playerFour)
+        {
+            state = state.playerOne;
+        }
+
         deck.state = state;
         UpdateUIForCurrentState();
         crafting.selectedItems.Clear();

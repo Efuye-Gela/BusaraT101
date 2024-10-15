@@ -6,7 +6,7 @@ using TMPro;
 
 public enum state
 {
-    start, playerOne, playerTwo, none
+    start, playerOne, playerTwo, playerThree, playerFour, none
 }
 
 public class MainManager : MonoBehaviour

@@ -13,10 +13,15 @@ public class craftingManager : MonoBehaviour
     public string[] weapon;
     public TMP_Text[] Vnum;
     public TMP_Text[] Vnum1;
+    public TMP_Text[] Vnum2;
+    public TMP_Text[] Vnum3;
+
     public TMP_Text selectedItemsDisplay;
 
     private float[] Vtempo = new float[7];
     private float[] Vtempo1 = new float[7];
+    private float[] Vtempo2 = new float[7];
+    private float[] Vtempo3 = new float[7];
     private Image OgIm;
     public slotExtra Og;
     public Toggle tog;
@@ -24,6 +29,7 @@ public class craftingManager : MonoBehaviour
 
     private deckManager deck;
     public Movingpeice mpc;
+    MainManager mm;
 
     public List<SelectedItem> selectedItems = new List<SelectedItem>();
     public List<item> forgedItems = new List<item>();
@@ -113,91 +119,63 @@ public class craftingManager : MonoBehaviour
 
             bool inPlayerOneSlot = false;
             bool inPlayerTwoSlot = false;
+            bool inPlayerThreeSlot = false;
+            bool inPlayerFourSlot = false;
 
+            //first item check
             if (mpc.placeSlotsP1.Contains(placeSlotsALL[firstItemIndex]))
                 inPlayerOneSlot = true; 
             else if (mpc.placeSlotsP2.Contains(placeSlotsALL[firstItemIndex]))
                 inPlayerTwoSlot = true;
+            else if (mpc.placeSlotsP3.Contains(placeSlotsALL[firstItemIndex]))
+                inPlayerThreeSlot = true;
+            else if (mpc.placeSlotsP4.Contains(placeSlotsALL[firstItemIndex]))
+                inPlayerFourSlot = true;
+
+            //the second item check
             if (mpc.placeSlotsP1.Contains(placeSlotsALL[secondItemIndex]))
                 inPlayerOneSlot = true;
             else if (mpc.placeSlotsP2.Contains(placeSlotsALL[secondItemIndex]))
                 inPlayerTwoSlot = true;
+            if (mpc.placeSlotsP3.Contains(placeSlotsALL[secondItemIndex]))
+                inPlayerThreeSlot = true;
+            else if (mpc.placeSlotsP4.Contains(placeSlotsALL[secondItemIndex]))
+                inPlayerFourSlot = true;
 
 
-            bool mixedSlots = false;
+
 
             // Fire and Water combination (0f, 1w, 2r, 3a)
             if (CheckForgeCombination(forge[0], forge[1], currentForge)) // Fire + Water
             {
-                forged = true;
-                if (mixedSlots)
-                {
-                    UpdateForgeStatus(0, true, true); // Add to both slots if it's mixed
-                }
-                else
-                {
-                    UpdateForgeStatus(0, inPlayerOneSlot, inPlayerTwoSlot);
-                }
+                forged = true;  
+                UpdateForgeStatus(0, inPlayerOneSlot, inPlayerTwoSlot, inPlayerThreeSlot, inPlayerFourSlot);
+                
             }
             else if (CheckForgeCombination(forge[0], forge[2], currentForge)) // Fire + Rock
             {
                 forged = true;
-                if (mixedSlots)
-                {
-                    UpdateForgeStatus(1, true, true);
-                }
-                else
-                {
-                    UpdateForgeStatus(1, inPlayerOneSlot, inPlayerTwoSlot);
-                }
+               UpdateForgeStatus(1, inPlayerOneSlot, inPlayerTwoSlot, inPlayerThreeSlot, inPlayerFourSlot);
             }
             else if (CheckForgeCombination(forge[0], forge[3], currentForge)) // Fire + Air
             {
                 forged = true;
-                if (mixedSlots)
-                {
-                    UpdateForgeStatus(2, true, true);
-                }
-                else
-                {
-                    UpdateForgeStatus(2, inPlayerOneSlot, inPlayerTwoSlot);
-                }
+                UpdateForgeStatus(2, inPlayerOneSlot, inPlayerTwoSlot, inPlayerThreeSlot, inPlayerFourSlot);
             }
             else if (CheckForgeCombination(forge[1], forge[2], currentForge)) // Water + Rock
             {
                 forged = true;
-                if (mixedSlots)
-                {
-                    UpdateForgeStatus(3, true, true);
-                }
-                else
-                {
-                    UpdateForgeStatus(3, inPlayerOneSlot, inPlayerTwoSlot);
-                }
+                UpdateForgeStatus(3, inPlayerOneSlot, inPlayerTwoSlot, inPlayerThreeSlot, inPlayerFourSlot);
             }
             else if (CheckForgeCombination(forge[1], forge[3], currentForge)) // Water + Air
             {
                 forged = true;
-                if (mixedSlots)
-                {
-                    UpdateForgeStatus(4, true, true);
-                }
-                else
-                {
-                    UpdateForgeStatus(4, inPlayerOneSlot, inPlayerTwoSlot);
-                }
+                UpdateForgeStatus(4, inPlayerOneSlot, inPlayerTwoSlot, inPlayerThreeSlot, inPlayerFourSlot);
             }
             else if (CheckForgeCombination(forge[2], forge[3], currentForge)) // Rock + Air
             {
                 forged = true;
-                if (mixedSlots)
-                {
-                    UpdateForgeStatus(5, true, true);
-                }
-                else
-                {
-                    UpdateForgeStatus(5, inPlayerOneSlot, inPlayerTwoSlot);
-                }
+                UpdateForgeStatus(5, inPlayerOneSlot, inPlayerTwoSlot, inPlayerThreeSlot, inPlayerFourSlot);
             }
             else
             {
@@ -225,7 +203,7 @@ public class craftingManager : MonoBehaviour
     }
 
     // Helper method to update the forge status based on player slot
-    private void UpdateForgeStatus(int index, bool inPlayerOneSlot, bool inPlayerTwoSlot)
+    private void UpdateForgeStatus(int index, bool inPlayerOneSlot, bool inPlayerTwoSlot, bool inPlayerThreeSlot, bool inPlayerFourSlot)
     {
         if (inPlayerOneSlot)
         {
@@ -236,6 +214,16 @@ public class craftingManager : MonoBehaviour
         {
             Vtempo1[index]++;
             Vnum1[index].text = Vtempo1[index].ToString();
+        }
+        if (inPlayerThreeSlot)
+        {
+            Vtempo2[index]++;
+            Vnum2[index].text = Vtempo2[index].ToString();
+        }
+        if (inPlayerFourSlot)
+        {
+            Vtempo3[index]++;
+            Vnum3[index].text = Vtempo3[index].ToString();
         }
     }
 
@@ -258,11 +246,23 @@ public class craftingManager : MonoBehaviour
             return;
         }
 
+        //fix this part
+  /*      foreach(var item in selectedItems)
+        {
+            if (mpc.placeSlots.Contains(si=>item[si.index]))
+            {
+                Debug.Log("you can not use Anothers player Resource for Weapon");
+            }
+        }
+  */
+
         itemsForged = false;
 
         
         for (int i = 0; i <= selectedItems.Count - 3; i++)
         {
+
+        
             string currentForge = selectedItems[i].it.Rname + selectedItems[i + 1].it.Rname + selectedItems[i + 2].it.Rname;
 
           
