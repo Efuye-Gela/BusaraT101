@@ -177,6 +177,7 @@ public class Movingpeice : MonoBehaviour
             state = state.playerOne;
         }
 
+        tog.isOn = true;
         deck.state = state;
         UpdateUIForCurrentState();
         crafting.selectedItems.Clear();

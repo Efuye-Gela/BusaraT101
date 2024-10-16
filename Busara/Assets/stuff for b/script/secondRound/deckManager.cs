@@ -114,8 +114,5 @@ public class deckManager : MonoBehaviour
         state = state.none;
     }
 
-    public void Quit()
-    {
-        Application.Quit();
-    }
+ 
 }

@@ -101,6 +101,10 @@ public class craftingManager : MonoBehaviour
                 return;
             }
         }
+        bool inPlayerOneSlot = false;
+        bool inPlayerTwoSlot = false;
+        bool inPlayerThreeSlot = false;
+        bool inPlayerFourSlot = false;
 
         // Process items using a for loop
         for (int i = 0; i < itemsList.Count - 1; i++)
@@ -117,10 +121,7 @@ public class craftingManager : MonoBehaviour
 
             bool forged = false;
 
-            bool inPlayerOneSlot = false;
-            bool inPlayerTwoSlot = false;
-            bool inPlayerThreeSlot = false;
-            bool inPlayerFourSlot = false;
+         
 
             //first item check
             if (mpc.placeSlotsP1.Contains(placeSlotsALL[firstItemIndex]))
@@ -233,66 +234,61 @@ public class craftingManager : MonoBehaviour
 
     public void Weapon()
     {
-        if (selectedItems.Count < 3)
+        if (selectedItems.Count != 3)
         {
-            Debug.Log("not enough to use weapon");
-            selectedItems.Clear();
-            return;
-        }
-        else if (selectedItems.Count > 3)
-        {
-            Debug.Log("only 3 Item must be selected to be used");
+            Debug.Log("Exactly 3 items must be selected to use weapon");
             selectedItems.Clear();
             return;
         }
 
-        //fix this part
-  /*      foreach(var item in selectedItems)
+        // Check if selected items belong to another player's resources
+        foreach (var item in selectedItems)
         {
-            if (mpc.placeSlots.Contains(si=>item[si.index]))
+            // Assuming `mpc.placeSlots` is a list of slots with an index and player ownership
+            if (!mpc.placeSlots.Any(slot => slot.index == item.index))
             {
-                Debug.Log("you can not use Anothers player Resource for Weapon");
+                Debug.Log("You cannot use another player's resource for weapon");
+                selectedItems.Clear();
+                UpdateSelectedItemsDisplay();
+                return;
             }
         }
-  */
 
-        itemsForged = false;
+         itemsForged = false;
 
-        
-        for (int i = 0; i <= selectedItems.Count - 3; i++)
+        // Create a string representing the current selected items
+        string currentForge = selectedItems[0].it.Rname + selectedItems[1].it.Rname + selectedItems[2].it.Rname;
+
+        // Iterate through available weapons to find a match
+        for (int k = 0; k < weapon.Length; k++)
         {
-
-        
-            string currentForge = selectedItems[i].it.Rname + selectedItems[i + 1].it.Rname + selectedItems[i + 2].it.Rname;
-
-          
-            for (int k = 0; k < weapon.Length; k++)
+            if (weapon[k] == currentForge && Vnum[k] != null)
             {
-                if (weapon[k] == currentForge && Vnum[k] != null)
-                {
-                    itemsForged = true;
-                    forgedItems.Add(selectedItems[i].it);
-                    forgedItems.Add(selectedItems[i + 1].it);
-                    forgedItems.Add(selectedItems[i + 2].it);
+                itemsForged = true;
 
-                    break;
-                }
-                else
-                {
-                    Debug.Log("Selected Items must be similar to use weapon");
-                }
-            }
+                // Add the forged items
+                forgedItems.Add(selectedItems[0].it);
+                forgedItems.Add(selectedItems[1].it);
+                forgedItems.Add(selectedItems[2].it);
 
-            if (itemsForged)
-            {
-                RemoveForgedItems();
-                break;
+                break; // Weapon has been forged, break the loop
             }
+        }
+
+        if (itemsForged)
+        {
+            Debug.Log("Weapon forged successfully!");
+            RemoveForgedItems(); // Remove forged items
+        }
+        else
+        {
+            Debug.Log("Selected items must be similar to forge a weapon");
         }
 
         selectedItems.Clear();
         UpdateSelectedItemsDisplay();
     }
+
 
     public void Trade()
     {
@@ -440,6 +436,7 @@ public class craftingManager : MonoBehaviour
         {
             // Case 3: Pick up the item from this slot
             currentItem = slot.it;
+            selectedItems.Add(new SelectedItem(slot.it, slot.index));
 
             if (currentCourser != null)
             {
@@ -460,7 +457,7 @@ public class craftingManager : MonoBehaviour
             // Clear the slot
             slot.it = null;
         }
-        else if (currentItem != null && slot.it == null && IsInPlaceSlot(slot))
+        else if (currentItem != null && slot.it == null && IsInPlaceSlot(slot) && IsAdjacent(slot, selectedItems.Last()))
         {
             // Case 4: Place the item into this slot
             slot.it = currentItem;
@@ -482,17 +479,8 @@ public class craftingManager : MonoBehaviour
     {
         if (slot != null && slot.it != null)
         {
-            // Check if the item is already selected
-            if (selectedItems.Exists(si => si.index == slot.index))
-            {
-                Debug.Log("This item is already selected.");
-                return;
-            }
-
-            // Check if it's the first item being selected
             if (selectedItems.Count == 0)
             {
-                // Ensure the first selected item is within mpc.placeSlot
                 if (!IsInPlaceSlot(slot))
                 {
                     Debug.Log("The first selected item must be within mpc.placeSlot.");
@@ -500,12 +488,21 @@ public class craftingManager : MonoBehaviour
                 }
             }
 
-            // Check adjacency based on the last selected item
-            if (selectedItems.Count == 0 || IsAdjacent(slot, selectedItems.Last()))
+            // Check if the item is already selected
+            var selected = selectedItems.FirstOrDefault(si => si.index == slot.index);
+            if (selected != null)
             {
+                
+                selectedItems.Remove(selected);
+                Debug.Log("Item Removed!");
+
+                UpdateSelectedItemsDisplay();
+            }
+            else if (selectedItems.Count == 0 || IsAdjacent(slot, selectedItems.Last()))
+            {
+                
                 selectedItems.Add(new SelectedItem(slot.it, slot.index));
 
-                // Log the index and associated slot
                 Debug.Log($"Selected item index: {slot.index}, associated slot: {slot.name}");
 
                 UpdateSelectedItemsDisplay();
@@ -549,7 +546,7 @@ public class craftingManager : MonoBehaviour
         return mpc.placeSlots != null && mpc.placeSlots.Contains(slot);
     }
 
-    private void UpdateSelectedItemsDisplay()
+    public void UpdateSelectedItemsDisplay()
     {
         if (selectedItemsDisplay == null) return;
 
