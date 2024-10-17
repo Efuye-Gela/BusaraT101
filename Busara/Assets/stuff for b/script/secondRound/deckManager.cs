@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Unity.VisualScripting;
 
 public class deckManager : MonoBehaviour
 {
@@ -16,13 +18,14 @@ public class deckManager : MonoBehaviour
     public bool lidbool =  true;
     public state state;
 
+    int count = 24;
+    public TMP_Text resorcCeount; 
+
     private void Start()
     {
-        
         Shuffle();
     }
-
-
+   
     private void Update()
     {
         if(state == state.playerOne)
@@ -57,6 +60,11 @@ public class deckManager : MonoBehaviour
             lidA.SetActive(false);
             lidW.SetActive(false);
             lidF.SetActive(false);
+        }
+        if (count == 0)
+        {
+            count = 24;
+            Shuffle();
         }
 
     }
@@ -112,6 +120,10 @@ public class deckManager : MonoBehaviour
 
         Button.SetActive(false);
         state = state.none;
+        count--;
+        resorcCeount.text = count.ToString() + "/24";
+     
+
     }
 
  

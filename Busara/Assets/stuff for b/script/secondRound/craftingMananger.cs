@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class craftingManager : MonoBehaviour
 
     public slotExtra[] placeSlotsALL;
     public string[] weapon;
+    public string[] tradItem;
     public TMP_Text[] Vnum;
     public TMP_Text[] Vnum1;
     public TMP_Text[] Vnum2;
@@ -34,12 +36,17 @@ public class craftingManager : MonoBehaviour
     public List<SelectedItem> selectedItems = new List<SelectedItem>();
     public List<item> forgedItems = new List<item>();
     public bool itemsForged = false;
+    int RemoveCount = 3;
     public bool itemsToTrade = false;
 
 
     public string[] forge;
+    slotExtra previousSlot = null;
+    slotExtra previousSlot1 = null;
+    slotExtra previousSlot2 = null;
+    slotExtra previousSlot3 = null;
 
-   
+
 
     private void Start()
     {
@@ -240,6 +247,16 @@ public class craftingManager : MonoBehaviour
             selectedItems.Clear();
             return;
         }
+        if(previousSlot != null || previousSlot1 != null)
+        {
+            previousSlot = null;
+            previousSlot1 = null;
+        }
+        if (previousSlot2 != null || previousSlot3 != null)
+        {
+            previousSlot2 = null;
+            previousSlot3 = null;
+        }
 
         // Check if selected items belong to another player's resources
         foreach (var item in selectedItems)
@@ -265,6 +282,7 @@ public class craftingManager : MonoBehaviour
             if (weapon[k] == currentForge && Vnum[k] != null)
             {
                 itemsForged = true;
+                RemoveCount = 3;
 
                 // Add the forged items
                 forgedItems.Add(selectedItems[0].it);
@@ -310,38 +328,31 @@ public class craftingManager : MonoBehaviour
         itemsToTrade = false;
 
 
-        for (int i = 0; i <= selectedItems.Count - 3; i++)
+        for (int i = 0; i <= selectedItems.Count - 1; i++)
         {
-            string currentForge = selectedItems[i].it.Rname + selectedItems[i + 1].it.Rname + selectedItems[i + 2].it.Rname;
+            string currentForge = selectedItems[i].it.Rname;
 
 
-            for (int k = 0; k < weapon.Length; k++)
+            for (int k = 0; k < forge.Length; k++)
             {
-                if (weapon[k] == currentForge && Vnum[k] != null)
+                if (forge[k] == currentForge && Vnum[k] != null)
                 {
 
                     itemsToTrade = true;
-
+                    currentItem = selectedItems[i].it;
                     forgedItems.Add(selectedItems[i].it);
-                    forgedItems.Add(selectedItems[i + 1].it);
-                    forgedItems.Add(selectedItems[i + 2].it);
 
+
+                    Debug.Log($"selected item for trad is {selectedItems[i].it.Rname}");
                     break;
                 }
                 else
                 {
-                    Debug.Log("Selected Items must be similar to use weapon");
+                    Debug.Log("Something went wrong");
                 }
             }
-
-            if (itemsToTrade)
-            {
-
-                RemoveForgedItems();
-                break;
-            }
         }
-        selectedItems.Clear();
+
         UpdateSelectedItemsDisplay();
     }
 
@@ -404,7 +415,7 @@ public class craftingManager : MonoBehaviour
         {
             MovePlaced(slot);
         }
-        else if(!tog.isOn && itemsForged == false && itemsToTrade == true)
+        else if(tog.isOn && itemsForged == false && itemsToTrade == true)
         {
             Exchange(slot);
         }
@@ -414,21 +425,128 @@ public class craftingManager : MonoBehaviour
 
     public void Exchange(slotExtra slot)
     {
-       
+        // Ensure that the selected item (currentItem) exists and the target slot is valid
+        if (slot != null)
+        {
+            // Swap the items between the current slot and the target slot
+            item tempItem = slot.it;  // Store the target slot's item temporarily
+            slot.it = currentItem;    // Set the target slot's item to the currentItem
+            currentItem = tempItem;   // Set currentItem to the previously stored item
+
+            // Update the UI: Swap the sprites between the slot and the cursor
+            Image slotImage = slot.GetComponent<Image>();
+            Image currentItemImage = currentCourser;
+
+            if (slotImage != null)
+            {
+                // If the slot now has an item, update its sprite, otherwise set it to the default empty sprite
+                if (slot.it != null)
+                {
+                    Image newSlotItemImage = slot.it.GetComponent<Image>();
+                    slotImage.sprite = newSlotItemImage != null ? newSlotItemImage.sprite : OgIm.sprite;
+                }
+                else
+                {
+                    slotImage.sprite = OgIm.sprite; // Default sprite for empty slot
+                }
+            }
+
+            if (currentItemImage != null)
+            {
+                // If there's an item on the cursor, update its sprite, otherwise disable the cursor
+                if (currentItem != null)
+                {
+                    Image newCurrentItemImage = currentItem.GetComponent<Image>();
+                    currentItemImage.sprite = newCurrentItemImage != null ? newCurrentItemImage.sprite : null;
+                }
+                else
+                {
+                    currentCourser.gameObject.SetActive(false); // Hide the cursor when there's no item
+                }
+            }
+
+            itemsToTrade = false;     // Reset trade flag after successful exchange
+            mpc.SwitchTurn();         // Switch turn after trade
+            selectedItems.Clear();    // Clear selected items
+            UpdateSelectedItemsDisplay(); // Update the UI with the selected items
+
+            Debug.Log("Items exchanged successfully!");
+        }
+        else
+        {
+            Debug.Log("No item selected or invalid slot.");
+        }
     }
+
+
 
     public void WeaponRemove(slotExtra slot)
     {
+        // Ensure slot and item are valid
+        if (slot == null || slot.it == null) return;
 
+
+
+        // Find the corresponding place slot from which the item was removed
+        slotExtra originalSlot = placeSlotsALL.FirstOrDefault(s => s.index == slot.index);
+        
+        if (originalSlot != null)
+        {
+            Debug.Log($"Item removed from slot {originalSlot.name} (index {slot.index}).");
+        }
+
+        if (mpc.placeSlotsP1.Contains(previousSlot) && mpc.placeSlotsP1.Contains(originalSlot))
+        {
+            Debug.Log("You have already removed from here.");
+            return;
+        }
+        else if (mpc.placeSlotsP2.Contains(previousSlot1) && mpc.placeSlotsP2.Contains(originalSlot))
+        {
+            Debug.Log("You have already removed from here.");
+            return;
+        }
+        if (mpc.placeSlotsP3.Contains(previousSlot2) && mpc.placeSlotsP3.Contains(originalSlot))
+        {
+            Debug.Log("You have already removed from here.");
+            return;
+        }
+        if (mpc.placeSlotsP4.Contains(previousSlot3) && mpc.placeSlotsP4.Contains(originalSlot))
+        {
+            Debug.Log("You have already removed from here.");
+            return;
+        }
+        if(mpc.placeSlotsP1.Contains(originalSlot))
+            previousSlot = originalSlot;
+        if (mpc.placeSlotsP2.Contains(originalSlot))
+            previousSlot1 = originalSlot;
+        if (mpc.placeSlotsP3.Contains(originalSlot))
+            previousSlot2 = originalSlot;
+        if (mpc.placeSlotsP4.Contains(originalSlot))
+            previousSlot3 = originalSlot;
+
+        // Reset slot image if possible
         Image slotImage = slot.GetComponent<Image>();
         if (slotImage != null && OgIm != null)
         {
             slotImage.sprite = OgIm.sprite;
+            RemoveCount--;
         }
+
+        // Clear the item from the slot after all operations
         slot.it = null;
-        itemsForged = false;
-        mpc.SwitchTurn();
+
+        // Switch turn when RemoveCount reaches 0
+        if (RemoveCount == 0)
+        {
+            itemsForged = false;
+            RemoveCount = 0;
+            mpc.SwitchTurn();
+        }
     }
+
+
+
+
 
     public void MovePlaced(slotExtra slot)
     {
@@ -468,7 +586,7 @@ public class craftingManager : MonoBehaviour
             {
                 slotImage.sprite = currentItemImage.sprite;
             }
-
+            
             // Clear currentItem after placing it
             currentItem = null;
             currentCourser.gameObject.SetActive(false);
