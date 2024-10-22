@@ -46,6 +46,9 @@ public class craftingManager : MonoBehaviour
     slotExtra previousSlot2 = null;
     slotExtra previousSlot3 = null;
 
+  
+    public Trading tradingSystem;
+    private slotExtra selectedFirstItemSlot = null;
 
 
     private void Start()
@@ -75,6 +78,9 @@ public class craftingManager : MonoBehaviour
         mpc = FindObjectOfType<Movingpeice>();
 
         UpdateSelectedItemsDisplay();
+
+        tradingSystem = new Trading();
+        tradingSystem.placeSlotsALL = placeSlotsALL;
     }
 
     private void Update()
@@ -308,54 +314,38 @@ public class craftingManager : MonoBehaviour
     }
 
 
-    public void Trade()
+    public void TradeSelectedItems(slotExtra slot)
     {
-        if (selectedItems.Count < 1)
+        if (itemsToTrade && selectedFirstItemSlot == null && slot.it != null)
         {
-            Debug.Log("not enough to use weapon");
+            // First item selection for trading
+            selectedFirstItemSlot = slot;
+            selectedItems.Add(new SelectedItem(slot.it, slot.index));
+            Debug.Log($"First trade item selected: {slot.it.Rname}");
             UpdateSelectedItemsDisplay();
-            selectedItems.Clear();
-            return;
+
         }
-        else if (selectedItems.Count > 1)
+        else if (itemsToTrade && selectedFirstItemSlot != null && slot.it != null)
         {
-            Debug.Log("only 3 Item must be selected to be used");
+            // Second item selection for trading
+            tradingSystem.TradeItems(selectedFirstItemSlot.index, slot.index);
+            selectedFirstItemSlot = null; // Reset after trade
+            itemsToTrade = false; // Trade process complete
+            selectedItems.Clear();
             UpdateSelectedItemsDisplay();
-            selectedItems.Clear();
-            return;
+            itemsToTrade = false;
         }
-
-        itemsToTrade = false;
-
-
-        for (int i = 0; i <= selectedItems.Count - 1; i++)
+        else
         {
-            string currentForge = selectedItems[i].it.Rname;
-
-
-            for (int k = 0; k < forge.Length; k++)
-            {
-                if (forge[k] == currentForge && Vnum[k] != null)
-                {
-
-                    itemsToTrade = true;
-                    currentItem = selectedItems[i].it;
-                    forgedItems.Add(selectedItems[i].it);
-
-
-                    Debug.Log($"selected item for trad is {selectedItems[i].it.Rname}");
-                    break;
-                }
-                else
-                {
-                    Debug.Log("Something went wrong");
-                }
-            }
+            Debug.Log("Invalid action. Please select a valid item or press trade.");
         }
-
-        UpdateSelectedItemsDisplay();
     }
 
+    public void OnTradeButtonPressed()
+    {
+        itemsToTrade = true;
+        Debug.Log("Select second item to trade with.");
+    }
 
 
     void RemoveForgedItems()
@@ -417,66 +407,15 @@ public class craftingManager : MonoBehaviour
         }
         else if(tog.isOn && itemsForged == false && itemsToTrade == true)
         {
-            Exchange(slot);
+
+            TradeSelectedItems(slot);
         }
 
         UpdateSelectedItemsDisplay();
     }
 
-    public void Exchange(slotExtra slot)
-    {
-        // Ensure that the selected item (currentItem) exists and the target slot is valid
-        if (slot != null)
-        {
-            // Swap the items between the current slot and the target slot
-            item tempItem = slot.it;  // Store the target slot's item temporarily
-            slot.it = currentItem;    // Set the target slot's item to the currentItem
-            currentItem = tempItem;   // Set currentItem to the previously stored item
 
-            // Update the UI: Swap the sprites between the slot and the cursor
-            Image slotImage = slot.GetComponent<Image>();
-            Image currentItemImage = currentCourser;
 
-            if (slotImage != null)
-            {
-                // If the slot now has an item, update its sprite, otherwise set it to the default empty sprite
-                if (slot.it != null)
-                {
-                    Image newSlotItemImage = slot.it.GetComponent<Image>();
-                    slotImage.sprite = newSlotItemImage != null ? newSlotItemImage.sprite : OgIm.sprite;
-                }
-                else
-                {
-                    slotImage.sprite = OgIm.sprite; // Default sprite for empty slot
-                }
-            }
-
-            if (currentItemImage != null)
-            {
-                // If there's an item on the cursor, update its sprite, otherwise disable the cursor
-                if (currentItem != null)
-                {
-                    Image newCurrentItemImage = currentItem.GetComponent<Image>();
-                    currentItemImage.sprite = newCurrentItemImage != null ? newCurrentItemImage.sprite : null;
-                }
-                else
-                {
-                    currentCourser.gameObject.SetActive(false); // Hide the cursor when there's no item
-                }
-            }
-
-            itemsToTrade = false;     // Reset trade flag after successful exchange
-            mpc.SwitchTurn();         // Switch turn after trade
-            selectedItems.Clear();    // Clear selected items
-            UpdateSelectedItemsDisplay(); // Update the UI with the selected items
-
-            Debug.Log("Items exchanged successfully!");
-        }
-        else
-        {
-            Debug.Log("No item selected or invalid slot.");
-        }
-    }
 
 
 
@@ -543,9 +482,6 @@ public class craftingManager : MonoBehaviour
             mpc.SwitchTurn();
         }
     }
-
-
-
 
 
     public void MovePlaced(slotExtra slot)
@@ -687,3 +623,57 @@ public class SelectedItem
         index = idx;
     }
 }
+public class Trading
+{
+    public slotExtra[] placeSlotsALL;
+
+   
+    public void TradeItems(int index1, int index2)
+    {
+       
+        if (index1 < 0 || index1 >= placeSlotsALL.Length || index2 < 0 || index2 >= placeSlotsALL.Length)
+        {
+            Debug.LogError("Invalid indices for item trade.");
+            return;
+        }
+
+        slotExtra slot1 = placeSlotsALL[index1];
+        slotExtra slot2 = placeSlotsALL[index2];
+
+        
+        if (slot1.it == null || slot2.it == null)
+        {
+            Debug.LogError("Cannot trade. One or both slots are empty.");
+            return;
+        }
+
+        
+        item tempItem = slot1.it;
+        slot1.it = slot2.it;
+        slot2.it = tempItem;
+
+        
+        UpdateSlotVisuals(slot1);
+        UpdateSlotVisuals(slot2);
+
+        Debug.Log($"Traded items between slots {index1} and {index2}.");
+    }
+
+   
+    private void UpdateSlotVisuals(slotExtra slot)
+    {
+        if (slot == null) return;
+
+        Image slotImage = slot.GetComponent<Image>();
+        if (slotImage != null && slot.it != null)
+        {
+            Image itemImage = slot.it.GetComponent<Image>();
+            if (itemImage != null)
+            {
+                slotImage.sprite = itemImage.sprite;
+            }
+        }
+    }
+}
+
+
