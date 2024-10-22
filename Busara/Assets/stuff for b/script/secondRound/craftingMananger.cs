@@ -46,9 +46,9 @@ public class craftingManager : MonoBehaviour
     slotExtra previousSlot2 = null;
     slotExtra previousSlot3 = null;
 
-  
-    public Trading tradingSystem;
+
     private slotExtra selectedFirstItemSlot = null;
+    public Trading tradingSystem;
 
 
     private void Start()
@@ -323,17 +323,16 @@ public class craftingManager : MonoBehaviour
             selectedItems.Add(new SelectedItem(slot.it, slot.index));
             Debug.Log($"First trade item selected: {slot.it.Rname}");
             UpdateSelectedItemsDisplay();
-
         }
         else if (itemsToTrade && selectedFirstItemSlot != null && slot.it != null)
         {
             // Second item selection for trading
             tradingSystem.TradeItems(selectedFirstItemSlot.index, slot.index);
-            selectedFirstItemSlot = null; // Reset after trade
-            itemsToTrade = false; // Trade process complete
+            selectedFirstItemSlot = null; 
+            itemsToTrade = false; 
             selectedItems.Clear();
             UpdateSelectedItemsDisplay();
-            itemsToTrade = false;
+            mpc.SwitchTurn();
         }
         else
         {
@@ -341,10 +340,14 @@ public class craftingManager : MonoBehaviour
         }
     }
 
+    
     public void OnTradeButtonPressed()
     {
+        selectedItems.Clear();
+        UpdateSelectedItemsDisplay();
         itemsToTrade = true;
-        Debug.Log("Select second item to trade with.");
+        Debug.Log("Selecte your item for trade:");
+        UpdateSelectedItemsDisplay();
     }
 
 
@@ -407,7 +410,6 @@ public class craftingManager : MonoBehaviour
         }
         else if(tog.isOn && itemsForged == false && itemsToTrade == true)
         {
-
             TradeSelectedItems(slot);
         }
 
@@ -425,8 +427,6 @@ public class craftingManager : MonoBehaviour
         if (slot == null || slot.it == null) return;
 
 
-
-        // Find the corresponding place slot from which the item was removed
         slotExtra originalSlot = placeSlotsALL.FirstOrDefault(s => s.index == slot.index);
         
         if (originalSlot != null)
@@ -482,6 +482,9 @@ public class craftingManager : MonoBehaviour
             mpc.SwitchTurn();
         }
     }
+
+
+
 
 
     public void MovePlaced(slotExtra slot)
@@ -647,19 +650,19 @@ public class Trading
             return;
         }
 
-        
+       
         item tempItem = slot1.it;
         slot1.it = slot2.it;
         slot2.it = tempItem;
 
-        
+        // Optional: Update the slot visuals (e.g., image sprites)
         UpdateSlotVisuals(slot1);
         UpdateSlotVisuals(slot2);
 
         Debug.Log($"Traded items between slots {index1} and {index2}.");
     }
 
-   
+    // Helper function to update slot visuals after a trade
     private void UpdateSlotVisuals(slotExtra slot)
     {
         if (slot == null) return;

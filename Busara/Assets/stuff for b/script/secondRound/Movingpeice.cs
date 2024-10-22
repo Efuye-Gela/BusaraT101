@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using Unity.Mathematics;
 
 public class Movingpeice : MonoBehaviour
 {
