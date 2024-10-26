@@ -116,7 +116,7 @@ public class Movingpeice : MonoBehaviour
 
             foreach (slotExtra slotM in placeSlots)
             {
-                if (slotM != null)
+                if (slotM != null && slotM.gameObject.activeSelf) // Check if slot is active
                 {
                     Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, slotM.transform.position);
                     float distance = Vector2.Distance(Input.mousePosition, screenPoint);
@@ -148,14 +148,15 @@ public class Movingpeice : MonoBehaviour
                     nearestSlot.it = currentItem;
                     SwitchTurn();
                     currentItem = null;
-                   
                 }
             }
         }
     }
 
 
-    public void SwitchTurn()
+
+
+public void SwitchTurn()
     {
         
         if(state == state.playerOne)

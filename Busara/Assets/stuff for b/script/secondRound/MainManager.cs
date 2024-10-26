@@ -15,6 +15,7 @@ public class MainManager : MonoBehaviour
     craftingManager craftingManager;
     deckManager deckManager;
     SelectedItem selectedItem;
+    Movingpeice mpc;
 
     public TMP_Text printText;
     public TMP_InputField numberOfplayer;
@@ -26,11 +27,8 @@ public class MainManager : MonoBehaviour
     {
         deckManager = GetComponent<deckManager>();
         craftingManager = GetComponent<craftingManager>();
-
+        mpc = GetComponent<Movingpeice>();
         Application.logMessageReceived += HandleLog;
-/*
-        numberOfplayer.contentType = TMP_InputField.ContentType.IntegerNumber;
-        numb = numberOfplayer.text;*/
     }
 
     private void HandleLog(string logString, string stackTrace, LogType type)
@@ -55,6 +53,16 @@ public class MainManager : MonoBehaviour
     public void loadManager(int index)
     {
         SceneManager.LoadScene(index);
+    }
+    public void DeactivateAllSlotsIN4()
+    {
+        foreach (slotExtra slot in mpc.placeSlotsP4)
+        {
+            if (slot != null && slot.gameObject != null) 
+            {
+                slot.gameObject.SetActive(false); 
+            }
+        }
     }
 
 }

@@ -86,8 +86,22 @@ public class craftingManager : MonoBehaviour
     private void Update()
     {
         mpc.UpdateGameState();
-       
+        SomeCraftingMethod();
     }
+    public void SomeCraftingMethod()
+    {
+        foreach (slotExtra slot in mpc.placeSlots)
+        {
+            // Skip if the slot is null or inactive
+            if (slot == null || !slot.gameObject.activeSelf)
+            {
+                continue; // Skip this iteration
+            }
+
+            // Your crafting logic here, operating only on active slots
+        }
+    }
+
 
     public void CheckForForge()
     {
@@ -427,6 +441,7 @@ public class craftingManager : MonoBehaviour
         if (slot == null || slot.it == null) return;
 
 
+
         slotExtra originalSlot = placeSlotsALL.FirstOrDefault(s => s.index == slot.index);
         
         if (originalSlot != null)
@@ -459,7 +474,7 @@ public class craftingManager : MonoBehaviour
         if (mpc.placeSlotsP2.Contains(originalSlot))
             previousSlot1 = originalSlot;
         if (mpc.placeSlotsP3.Contains(originalSlot))
-            previousSlot2 = originalSlot;
+            previousSlot2 = originalSlot; 
         if (mpc.placeSlotsP4.Contains(originalSlot))
             previousSlot3 = originalSlot;
 

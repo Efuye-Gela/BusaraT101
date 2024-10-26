@@ -3320,7 +3320,6 @@ MonoBehaviour:
   - water
   - rock
   - air
-  ItemToTrade: 0
 --- !u!4 &250795541
 Transform:
   m_ObjectHideFlags: 0
