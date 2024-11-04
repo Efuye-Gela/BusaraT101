@@ -74,8 +74,8 @@ public class craftingManager : MonoBehaviour
             return;
         }
 
-        deck = FindObjectOfType<deckManager>();
-        mpc = FindObjectOfType<Movingpeice>();
+        deck = FindFirstObjectByType<deckManager>();
+        mpc = FindFirstObjectByType<Movingpeice>();
 
         UpdateSelectedItemsDisplay();
 
@@ -245,13 +245,13 @@ public class craftingManager : MonoBehaviour
         }
         if (inPlayerThreeSlot)
         {
-            Vtempo2[index]++;
-            Vnum2[index].text = Vtempo2[index].ToString();
+            Vtempo3[index]++;
+            Vnum3[index].text = Vtempo3[index].ToString();
         }
         if (inPlayerFourSlot)
         {
-            Vtempo3[index]++;
-            Vnum3[index].text = Vtempo3[index].ToString();
+            Vtempo2[index]++;
+            Vnum2[index].text = Vtempo2[index].ToString();
         }
     }
 
@@ -404,6 +404,10 @@ public class craftingManager : MonoBehaviour
 
     public void OnClickSlot(slotExtra slot)
     {
+        if (!tog.isOn)
+        {
+            MovePlaced(slot);
+        }
         // Ensure slot is valid
         if (slot == null) return;
 
@@ -416,11 +420,6 @@ public class craftingManager : MonoBehaviour
         else if (tog.isOn && itemsForged == true && itemsToTrade == false)
         {
             WeaponRemove(slot);
-        }
-        // Cases 3: Picking up an item from a slot or placing it into another empty slot
-        else if (!tog.isOn && itemsForged == false && itemsToTrade == false)
-        {
-            MovePlaced(slot);
         }
         else if(tog.isOn && itemsForged == false && itemsToTrade == true)
         {
@@ -547,6 +546,8 @@ public class craftingManager : MonoBehaviour
             mpc.SwitchTurn();
         }
     }
+
+
     public void selecte(slotExtra slot)
     {
         if (slot != null && slot.it != null)

@@ -23,11 +23,6 @@ public class Movingpeice : MonoBehaviour
     private deckManager deck;
     craftingManager crafting;
 
-    public GameObject pR1;
-    public GameObject pR2;
-    public GameObject pR3;
-    public GameObject pR4;
-
     private void Start()
     {
         state = state.playerOne;
@@ -44,8 +39,8 @@ public class Movingpeice : MonoBehaviour
             return;
         }
 
-        deck = FindObjectOfType<deckManager>();
-        crafting = FindObjectOfType<craftingManager>();
+        deck = FindFirstObjectByType<deckManager>();
+        crafting = FindFirstObjectByType<craftingManager>();
     }
 
     private void Update()
@@ -67,11 +62,11 @@ public class Movingpeice : MonoBehaviour
         }
         else if (state == state.playerThree)
         {
-            placeSlots = placeSlotsP3;
+            placeSlots = placeSlotsP4;
         }
         else if (state == state.playerFour)
         {
-            placeSlots = placeSlotsP4;
+            placeSlots = placeSlotsP3;
         }
 
         
@@ -82,13 +77,10 @@ public class Movingpeice : MonoBehaviour
 
         SetSlotColors(placeSlotsP1, state == state.playerOne ? Color.white : new Color(1f, 1f, 1f, 0.2f));
         SetSlotColors(placeSlotsP2, state == state.playerTwo ? Color.white : new Color(1f, 1f, 1f, 0.2f));
-        SetSlotColors(placeSlotsP3, state == state.playerThree ? Color.white : new Color(1f, 1f, 1f, 0.2f));
-        SetSlotColors(placeSlotsP4, state == state.playerFour ? Color.white : new Color(1f, 1f, 1f, 0.2f));
+        SetSlotColors(placeSlotsP4, state == state.playerThree ? Color.white : new Color(1f, 1f, 1f, 0.2f));
+        SetSlotColors(placeSlotsP3, state == state.playerFour ? Color.white : new Color(1f, 1f, 1f, 0.2f));
 
-        pR1.SetActive(state == state.playerOne);
-        pR2.SetActive(state == state.playerTwo);
-        pR3.SetActive(state == state.playerThree);
-        pR4.SetActive(state == state.playerFour);
+       
     }
 
     // Helper function to set the color of the slots

@@ -64,5 +64,16 @@ public class MainManager : MonoBehaviour
             }
         }
     }
+    public void info(GameObject infopage)
+    {
+        if (!infopage.activeSelf)
+        {
+            infopage.SetActive(true);
+        }
+        else
+        {
+            infopage.SetActive(false);
+        }
+    }
 
 }
