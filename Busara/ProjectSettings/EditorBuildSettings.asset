@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/mainMenu.unity
     guid: 00ed64d160871f94c873f039e88c10b3
   - enabled: 1
-    path: Assets/Scenes/BTRY.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 025ed911d16032b4791da8d9efae5ed4
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
