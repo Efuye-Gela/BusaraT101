@@ -1,8 +1,6 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using Mono.Cecil;
 
 public class DrawResourceActionMove : MonoBehaviour
 {
@@ -14,14 +12,25 @@ public class DrawResourceActionMove : MonoBehaviour
     [SerializeField] private GameObject FirePrefab;
     [SerializeField] private GameObject EarthPrefab;
 
-    [SerializeField] private List<GameObject> placeableObjects;
+    //[SerializeField] private List<GameObject> placeableObjects;
 
     private Resource tobePlacedResource;
 
     public void OnTapDraw()
     {
+        if (!GameManager.Instance.multidraw)
+        {
+            if (TurnManager.Instance.ActivePlayer == GameManager.Instance.lastDrawnPlayer)
+            {
+                Debug.Log("Can't Draw Resource Again");
+                return;
+            }
+        }
+
         GameObject newResource;
         Card drawnCard = DeckManager.Instance.Draw();
+        GameManager.Instance.lastDrawnPlayer = TurnManager.Instance.ActivePlayer;
+
         DeckManager.Instance.GoToNext();
         if (drawnCard == default(Card))
             Debug.LogError("Null card");
@@ -31,38 +40,33 @@ public class DrawResourceActionMove : MonoBehaviour
             if (drawnCard.GetType() == typeof(ResourceCard))
             {
                 ResourceCard drawnResourceCard = (ResourceCard)drawnCard;
-                
-                // TODO: Bad coding
-                if (drawnResourceCard.Resource == ResourceType.Water)
+                GameObject prefabObject = null;
+                switch (drawnResourceCard.Resource)
                 {
-                    newResource = Instantiate(WaterPrefab, parentTransform);
-                    newResource.GetComponent<Draggable>().canvas = gameCanvas;
-                    tobePlacedResource = newResource.GetComponent<Resource>();
+                    case ResourceType.Water:
+                        prefabObject = WaterPrefab;
+                        break;
+                    case ResourceType.Earth:
+                        prefabObject = EarthPrefab;
+                        break;
+                    case ResourceType.Fire:
+                        prefabObject = FirePrefab;
+                        break;
+                    case ResourceType.Air:
+                        prefabObject = AirPrefab;
+                        break;
+                    default:
+                        break;
                 }
-                else if (drawnResourceCard.Resource == ResourceType.Air)
-                {
-                    newResource = Instantiate(AirPrefab, parentTransform);
-                    newResource.GetComponent<Draggable>().canvas = gameCanvas;
-                    tobePlacedResource = newResource.GetComponent<Resource>();
-                }
-                else if (drawnResourceCard.Resource == ResourceType.Earth)
-                {
-                    newResource = Instantiate(EarthPrefab, parentTransform);
-                    newResource.GetComponent<Draggable>().canvas = gameCanvas;
-                    tobePlacedResource = newResource.GetComponent<Resource>();
-                }
-                else if (drawnResourceCard.Resource == ResourceType.Fire)
-                { 
-                    newResource = Instantiate(FirePrefab, parentTransform);
-                    newResource.GetComponent<Draggable>().canvas = gameCanvas;
-                    tobePlacedResource = newResource.GetComponent<Resource>();
-                }
-                else
-                    newResource = null;
+
+                newResource = Instantiate(prefabObject, parentTransform);
+                newResource.GetComponent<Draggable>().canvas = gameCanvas;
+                tobePlacedResource = newResource.GetComponent<Resource>();
+
 
             }
             else if (drawnCard.GetType() == typeof(DisasterCard))
-            { 
+            {
                 // Inititate Diaster Sequence
 
             }

@@ -19,21 +19,30 @@ public class MoveResourceActionMove : MonoBehaviour
     private void SlotClicked(GameObject gameObject)
     {
         Slot clickedSlot = gameObject.GetComponent<Slot>();
-        List<Slot> adjacentSlots = new List<Slot>();
-        if (clickedSlot != null)
-        {
-            if (clickedSlot.isOccupied==false)
+        if (clickedSlot != null) {
+            if (clickedSlot.board.player != TurnManager.Instance.ActivePlayer )
             {
-                if (availableSlots.Contains(clickedSlot))
-                { 
-                    clickedSlot.isOccupied = true;
-                    clickedSlot.resource = tobeMovedResource;
-                    tobeMovedResource.gameObject.transform.SetParent(clickedSlot.gameObject.transform);
-                    tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;
-                    EmptySlot(tobeMovedResource);
-                    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+                Debug.Log("Can't move other player Pieces");
+                return;
+            }
+
+            List<Slot> adjacentSlots = new List<Slot>();
+            if (clickedSlot != null)
+            {
+                if (clickedSlot.isOccupied == false)
+                {
+                    if (availableSlots.Contains(clickedSlot))
+                    {
+                        //clickedSlot.isOccupied = true;
+                        //clickedSlot.resource = tobeMovedResource;
+                        OccupySlot(clickedSlot, tobeMovedResource);
+                        tobeMovedResource.gameObject.transform.SetParent(clickedSlot.gameObject.transform);
+                        tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;                       
+                        EmptySlot(tobeMovedResource);
+                        TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+                    }
                 }
-            }      
+            } 
         }
     }
 
@@ -43,6 +52,13 @@ public class MoveResourceActionMove : MonoBehaviour
         resource.slot = null;
         occupiedSlot.resource = null;
         occupiedSlot.isOccupied=false;
+    }
+
+    private void OccupySlot(Slot slot, Resource resource)
+    {
+        slot.resource = resource;
+        slot.isOccupied = true;
+        resource.slot = slot;
     }
 
     private void ResourceClicked(GameObject gameObject)
@@ -57,8 +73,8 @@ public class MoveResourceActionMove : MonoBehaviour
                 adjacentSlots = BoardManager.GetAdjacentSlots(clickedOnResource.slot);
                 foreach (Slot slot in adjacentSlots) 
                 {
-                    if (slot.isOccupied == false) { 
-                        slot.gameObject.GetComponent<Image>().color = Color.red;
+                    if (!slot.isOccupied) { 
+                        //slot.gameObject.GetComponent<Image>().color = Color.red;
                         availableSlots.Add(slot);
                     }
                 }

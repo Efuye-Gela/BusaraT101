@@ -22,7 +22,6 @@ public class DropHandler : MonoBehaviour, IDropHandler, IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("New");
         OnSlotClicked?.Invoke(this.gameObject);
     }
 }

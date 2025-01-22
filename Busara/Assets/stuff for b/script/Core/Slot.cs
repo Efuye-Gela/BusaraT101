@@ -10,20 +10,21 @@ public class Slot : MonoBehaviour
     public bool isOccupied;
     public Resource resource;
 
-    public static Action OnSlotFilled;
-    public static Action OnSlotEmptied;
+    public static Action<Slot> OnSlotFilled;
+    public static Action<Slot> OnSlotEmptied;
 
     private void Start()
     {
 
     }
 
-    private Resource EmptySlot()
+    public Resource EmptySlot()
     {
+        OnSlotEmptied?.Invoke(this);
         Resource removedResource = this.resource;
         isOccupied = false;
         this.resource = null;
-        OnSlotEmptied?.Invoke();
+        
         return removedResource;
     }
 

@@ -91,9 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  resourceType: 3
+  resourceType: 2
   resourceIcon: {fileID: -5663974789534609588, guid: 5ed4a9ba41ecdf744a40affdd2b008a6, type: 3}
-  pieceColor: {r: 0.9490197, g: 0.34901962, b: 0.35686275, a: 0}
+  pieceColor: {r: 1, g: 0, b: 0, a: 0}
+  slot: {fileID: 0}
 --- !u!114 &703715680140260935
 MonoBehaviour:
   m_ObjectHideFlags: 0
