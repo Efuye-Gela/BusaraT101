@@ -27,11 +27,15 @@ public class HardWinterDisaster : DisasterEffect
                     info += player.Virtues[i];
             }
 
-            Debug.Log("Before Winter");
-            Debug.Log(info);
-            player.Virtues.Remove(player.Virtues[0]);
-            Debug.Log("After winter");
-            Debug.Log(info);
+   
+            if(player.Virtues.Count > 0)
+            {
+                player.Virtues.Remove(player.Virtues[0]);
+                Debug.Log("After winter");
+                Debug.Log(info);
+            }
+
+
         }
     }
 

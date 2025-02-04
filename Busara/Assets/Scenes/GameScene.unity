@@ -8574,6 +8574,7 @@ MonoBehaviour:
   - {fileID: 231428226}
   - {fileID: 584165799}
   - {fileID: 1236021396}
+  - {fileID: 1863054089}
 --- !u!1 &1411244385
 GameObject:
   m_ObjectHideFlags: 0
@@ -10316,7 +10317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1863054089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10329,7 +10330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ab7bcfd31e72f48b003758c2f5c608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardName: 'Politics '
+  CardName: Corruption
   Description: Each player with 9 or more Resources must discard half their Resources,
     rounded down.
   effect: {fileID: 1863054091}
@@ -10360,7 +10361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46649aea711ca2749bfc45ab71d301b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 9
+  threshold: 1
 --- !u!1 &1864541916
 GameObject:
   m_ObjectHideFlags: 0

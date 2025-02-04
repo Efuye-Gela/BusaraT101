@@ -7,23 +7,46 @@ public class CorruptionDisaster : DisasterEffect
 
     public CorruptionDisaster(int threshold)
     {
-        this.threshold = threshold;
+       // this.threshold = threshold;
     }
     public override bool IsValid(Player currentPlayer, List<Player> allPlayers)
     {
-        if (currentPlayer != null
-                //&& currentPlayer.ResourceCount > threshold
-                )
+        int resourseCount = 0;
+        foreach(Slot slot in currentPlayer.Board.Slots)
+        {
+            if (slot.resource)
+            {
+                resourseCount++;
+            }
+        }
+        if (currentPlayer != null &&  resourseCount > threshold)
+        {
+            Debug.Log("Bad Bad Boy you Greedy man");
+            resourseCount = 0;
             return true;
+        }
+
         else
             return false;
     }
 
     public override void Execute()
-    {  
-        //player.DiscardResources(threshold);
-        //  Debug.Log($"{currentPlayer.Name} discarded resources due to reaching the threshold of {threshold}.");
-        
+    {
+      foreach(Player player in PlayerManager.Instance.Players)
+        {
+            if (IsValid(player, PlayerManager.Instance.Players) == true)
+            {
+                Debug.Log($"{player.name} discarded resources due to reaching the threshold of 9.");
+                foreach (Slot slot in player.Board.Slots)
+                {
+                    if (slot.resource)
+                    {
+                        Destroy(slot.resource.gameObject);
+                    }
+                }
+            }
+        }
+
     }
 
     
