@@ -41,8 +41,8 @@ public class CorruptionDisaster : DisasterEffect
                 {
                     if (slot.resource)
                     {
-                        Destroy(slot.resource.gameObject);
-                        //null null 
+                        Destroy(slot.resource.gameObject); 
+                        slot.EmptySlot();
                     }
                 }
             }
