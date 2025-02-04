@@ -32,21 +32,27 @@ public class CorruptionDisaster : DisasterEffect
 
     public override void Execute()
     {
-      foreach(Player player in PlayerManager.Instance.Players)
+        foreach(Player player in PlayerManager.Instance.Players)
         {
             if (IsValid(player, PlayerManager.Instance.Players))
             {
+                List<Player> Curplayers = new List<Player>(PlayerManager.Instance.Players);
+                TurnManager.Instance.OnSpecialCardDrawn(Curplayers);
                 Debug.Log($"{player.name} discarded resources due to reaching the threshold of {threshold}.");
-                foreach (Slot slot in player.Board.Slots)
-                {
-                    if (slot.resource)
+               
+                    if (player.selectedResources.Count == 1
+                    //Mathf.Floor(threshold/2)
+                    )
                     {
-                        Destroy(slot.resource.gameObject); 
-                        slot.EmptySlot();
+                        Destroy(player.selectedResources[0]);
+                        player.selectedResources[0].slot.EmptySlot();
+                        TurnManager.Instance.CompleteTurn(player);
                     }
-                }
+                
             }
+                TurnManager.Instance.CompleteTurn(player);
         }
+    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
 
     }
 

@@ -71,7 +71,7 @@ public class DrawResourceActionMove : MonoBehaviour
                 
                 DisasterCard drawnDisasterCard = (DisasterCard)drawnCard;
                 drawnDisasterCard.effect.Execute();
-                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+                //TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
         }   
 

@@ -26,7 +26,6 @@ public class HardWinterDisaster : DisasterEffect
                 else
                     info += player.Virtues[i];
             }
-
    
             if(player.Virtues.Count > 0)
             {
@@ -34,9 +33,10 @@ public class HardWinterDisaster : DisasterEffect
                 Debug.Log("After winter");
                 Debug.Log(info);
             }
-
-
+            //TurnManager.Instance.CompleteTurn(player);
         }
+        TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+        
     }
 
     public override bool IsValid(Player currentPlayer, List<Player> allPlayers)
