@@ -34,14 +34,15 @@ public class CorruptionDisaster : DisasterEffect
     {
       foreach(Player player in PlayerManager.Instance.Players)
         {
-            if (IsValid(player, PlayerManager.Instance.Players) == true)
+            if (IsValid(player, PlayerManager.Instance.Players))
             {
-                Debug.Log($"{player.name} discarded resources due to reaching the threshold of 9.");
+                Debug.Log($"{player.name} discarded resources due to reaching the threshold of {threshold}.");
                 foreach (Slot slot in player.Board.Slots)
                 {
                     if (slot.resource)
                     {
                         Destroy(slot.resource.gameObject);
+                        //null null 
                     }
                 }
             }
