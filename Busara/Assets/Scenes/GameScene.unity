@@ -3684,6 +3684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Kirubel
   Virtues: []
+  selectedResources: []
   Board: {fileID: 3762560165583260936}
 --- !u!1 &690362372
 GameObject:
@@ -4575,6 +4576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Dagem
   Virtues: []
+  selectedResources: []
   Board: {fileID: 3762560165583260938}
 --- !u!1 &798621547
 GameObject:
@@ -5312,7 +5314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &853240520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5337,7 +5339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ab7bcfd31e72f48b003758c2f5c608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardName: 'Politics '
+  CardName: HardWinter
   Description: Every player must discard 1 Virtue.
   effect: {fileID: 853240520}
 --- !u!4 &853240522
@@ -6921,6 +6923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Yared
   Virtues: []
+  selectedResources: []
   Board: {fileID: 3762560165583260937}
 --- !u!1 &1168682826
 GameObject:
@@ -8521,7 +8524,6 @@ MonoBehaviour:
   WaterPrefab: {fileID: 5148399164962441303, guid: 2b52e57d6915e784198fbec6f4824503, type: 3}
   FirePrefab: {fileID: 380732527712568371, guid: 1aa90f639271d7447b2c2ba9b45f17c3, type: 3}
   EarthPrefab: {fileID: 7354266515093972647, guid: 8105cff2bf2f0404c9d1609bef1d4a1f, type: 3}
-  placeableObjects: []
 --- !u!1 &1406691152
 GameObject:
   m_ObjectHideFlags: 0
@@ -8567,30 +8569,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cards:
+  - {fileID: 853240521}
   - {fileID: 236796174}
-  - {fileID: 1313413768}
-  - {fileID: 1877564831}
-  - {fileID: 955338074}
-  - {fileID: 43553113}
-  - {fileID: 1679340336}
   - {fileID: 231428226}
-  - {fileID: 2110280228}
-  - {fileID: 1681359002}
-  - {fileID: 1258593479}
-  - {fileID: 417951846}
-  - {fileID: 690362373}
   - {fileID: 584165799}
-  - {fileID: 1765098063}
-  - {fileID: 217254882}
-  - {fileID: 611553109}
-  - {fileID: 159768646}
-  - {fileID: 746138443}
   - {fileID: 1236021396}
-  - {fileID: 101010217}
-  - {fileID: 9839365}
-  - {fileID: 338109524}
-  - {fileID: 1934216416}
-  - {fileID: 1564177876}
 --- !u!1 &1411244385
 GameObject:
   m_ObjectHideFlags: 0
@@ -11315,6 +11298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Bertemeous
   Virtues: []
+  selectedResources: []
   Board: {fileID: 3762560165583260935}
 --- !u!1 &1968854752
 GameObject:

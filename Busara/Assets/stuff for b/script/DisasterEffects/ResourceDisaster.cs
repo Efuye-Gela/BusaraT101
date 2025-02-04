@@ -4,13 +4,13 @@ using UnityEngine;
 public class ResourceDisaster : DisasterEffect
 {
 
-    public override void Execute(Player currentPlayer, List<Player> allPlayers)
+    public override void Execute()
     {
-        if (currentPlayer != null)
-        {
-            //TODO: currentPlayer.DiscardResources();
-            Debug.Log($"{currentPlayer.Name} discarded resource.");
-        }
+        //if (currentPlayer != null)
+        //{
+        //    //TODO: currentPlayer.DiscardResources();
+        //    Debug.Log($"{currentPlayer.Name} discarded resource.");
+        //}
     }
 
     public override bool IsValid(Player currentPlayer, List<Player> allPlayers)

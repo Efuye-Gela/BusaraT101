@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PoliticsDisaster : DisasterEffect
 {
-    public override void Execute(Player currentPlayer, List<Player> allPlayers)
+    public override void Execute()
     {
         //foreach (var playerObject in allPlayers)
         //{
@@ -16,7 +16,7 @@ public class PoliticsDisaster : DisasterEffect
            
         //}
 
-        Debug.Log($"{currentPlayer.Name}'s board was rotated.");
+        //Debug.Log($"{currentPlayer.Name}'s board was rotated.");
     }
 
     public override bool IsValid(Player currentPlayer, List<Player> allPlayers)

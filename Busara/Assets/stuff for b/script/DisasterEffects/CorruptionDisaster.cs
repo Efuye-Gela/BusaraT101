@@ -19,10 +19,10 @@ public class CorruptionDisaster : DisasterEffect
             return false;
     }
 
-    public override void Execute(Player currentPlayer, List<Player> allPlayers)
+    public override void Execute()
     {  
         //player.DiscardResources(threshold);
-        Debug.Log($"{currentPlayer.Name} discarded resources due to reaching the threshold of {threshold}.");
+        //  Debug.Log($"{currentPlayer.Name} discarded resources due to reaching the threshold of {threshold}.");
         
     }
 
