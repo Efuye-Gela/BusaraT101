@@ -22,6 +22,7 @@ public class Slot : MonoBehaviour
     {
         OnSlotEmptied?.Invoke(this);
         Resource removedResource = this.resource;
+        removedResource.slot = null;
         isOccupied = false;
         this.resource = null;
         
