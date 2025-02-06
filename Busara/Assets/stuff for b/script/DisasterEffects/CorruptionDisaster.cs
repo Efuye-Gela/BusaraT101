@@ -15,7 +15,7 @@ public class CorruptionDisaster : DisasterEffect
         List<Player> playerList = new List<Player>();
         foreach(Player player in allPlayers)
         {
-            foreach (Slot slot in player.Board.Slots)//This is a bad way to do it because n^2 fix it later if possible 
+            foreach (Slot slot in player.Board.Slots) //This is a bad way to do it because n^2 fix it later if possible 
             {
                 if (slot.resource)
                 {
@@ -41,6 +41,7 @@ public class CorruptionDisaster : DisasterEffect
 
     public override void Execute()
     {
+        /*[Fix it make it use the selected resource]*/
         var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
         if (TheAnswer && players != null)
         {
@@ -54,7 +55,7 @@ public class CorruptionDisaster : DisasterEffect
                     { 
                         Destroy(slot.resource.gameObject);
                         slot.EmptySlot();
-                        break;
+                        //break;
                     }
                 }
             }

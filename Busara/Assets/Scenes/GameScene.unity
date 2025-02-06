@@ -8855,7 +8855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ab7bcfd31e72f48b003758c2f5c608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardName: 'Politics '
+  CardName: Resource Disaster
   Description: Every player must discard 1 Resource from their Kingdom Board.
   effect: {fileID: 1445088528}
 --- !u!4 &1445088527
@@ -8885,6 +8885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e281c99959ad8684d8816259b1ba7afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  threshold: 0
 --- !u!1 &1458954889
 GameObject:
   m_ObjectHideFlags: 0
