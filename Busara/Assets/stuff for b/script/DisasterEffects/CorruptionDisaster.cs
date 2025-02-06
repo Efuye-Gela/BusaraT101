@@ -7,53 +7,64 @@ public class CorruptionDisaster : DisasterEffect
 
     public CorruptionDisaster(int threshold)
     {
-       // this.threshold = threshold;
+       this.threshold = threshold;
     }
-    public override bool IsValid(Player currentPlayer, List<Player> allPlayers)
+    public override (bool,List<Player>) IsValid(List<Player> allPlayers)
     {
         int resourseCount = 0;
-        foreach(Slot slot in currentPlayer.Board.Slots)
+        List<Player> playerList = new List<Player>();
+        foreach(Player player in allPlayers)
         {
-            if (slot.resource)
+            foreach (Slot slot in player.Board.Slots)//This is a bad way to do it because n^2 fix it later if possible 
             {
-                resourseCount++;
+                if (slot.resource)
+                {
+                    resourseCount++;
+                }
             }
-        }
-        if (currentPlayer != null &&  resourseCount > threshold)
-        {
-            Debug.Log("Bad Bad Boy you Greedy man");
-            resourseCount = 0;
-            return true;
+            if (player != null && resourseCount > threshold)
+            {
+                Debug.Log("Bad Bad Boy you Greedy man");
+                resourseCount = 0;
+                playerList.Add(player);
+            }
+            else
+                resourseCount = 0;
         }
 
+        if (playerList.Count == 0)
+            return (false, playerList);
         else
-            return false;
+            return (true, playerList);
+
     }
 
     public override void Execute()
     {
-        foreach(Player player in PlayerManager.Instance.Players)
+        var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
+        if (TheAnswer && players != null)
         {
-            if (IsValid(player, PlayerManager.Instance.Players))
-            {
-                List<Player> Curplayers = new List<Player>(PlayerManager.Instance.Players);
-                TurnManager.Instance.OnSpecialCardDrawn(Curplayers);
-                Debug.Log($"{player.name} discarded resources due to reaching the threshold of {threshold}.");
-               
-                    if (player.selectedResources.Count == 1
-                    //Mathf.Floor(threshold/2)
-                    )
-                    {
-                        Destroy(player.selectedResources[0]);
-                        player.selectedResources[0].slot.EmptySlot();
-                        TurnManager.Instance.CompleteTurn(player);
-                    }
-                
-            }
-                TurnManager.Instance.CompleteTurn(player);
-        }
-    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            Debug.Log("So you were naughty!!!");
 
+            foreach(Player MeetPlayer in players)
+            {
+                foreach(Slot slot in MeetPlayer.Board.Slots)
+                {
+                    if (slot.resource)
+                    { 
+                        Destroy(slot.resource.gameObject);
+                        slot.EmptySlot();
+                        break;
+                    }
+                }
+            }
+            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+        }
+        else
+        {
+            Debug.Log("I see no one was greedy");
+            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+        }
     }
 
     

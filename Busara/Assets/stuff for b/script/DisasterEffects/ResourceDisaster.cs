@@ -13,11 +13,13 @@ public class ResourceDisaster : DisasterEffect
         //}
     }
 
-    public override bool IsValid(Player currentPlayer, List<Player> allPlayers)
+    public override (bool, List<Player>) IsValid(List<Player> allPlayers)
     {
-        if (currentPlayer != null)
-            return true;
+        if (allPlayers != null
+                                                //&& currentPlayer.virtues.count > 0
+                                                )
+            return (true, PlayerManager.Instance.Players);
         else
-            return false;
+            return (false, PlayerManager.Instance.Players);
     }
 }

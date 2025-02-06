@@ -8751,11 +8751,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cards:
-  - {fileID: 853240521}
   - {fileID: 236796174}
   - {fileID: 231428226}
   - {fileID: 584165799}
-  - {fileID: 1236021396}
+  - {fileID: 236796174}
+  - {fileID: 236796174}
   - {fileID: 1863054089}
 --- !u!1 &1411244385
 GameObject:

@@ -35,17 +35,17 @@ public class HardWinterDisaster : DisasterEffect
             }
             //TurnManager.Instance.CompleteTurn(player);
         }
-        TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+        //TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         
     }
 
-    public override bool IsValid(Player currentPlayer, List<Player> allPlayers)
+    public override (bool, List<Player>) IsValid(List<Player> allPlayers)
     {
-        if(currentPlayer!=null 
+        if (allPlayers !=null 
                                 //&& currentPlayer.virtues.count > 0
                                                 )
-        return true;
+        return (true, PlayerManager.Instance.Players);
         else 
-            return false;
+            return (false, PlayerManager.Instance.Players);
     }
 }
