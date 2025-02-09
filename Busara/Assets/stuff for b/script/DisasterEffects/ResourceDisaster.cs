@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class ResourceDisaster : DisasterEffect
 {
-    public ResourceDisaster()
-    {
-        threshold = 1;
-    }
+    [SerializeField] private int threshold;
+
     public override (bool, List<Player>) IsValid(List<Player> allPlayers)
     {
         int resourseCount = 0;

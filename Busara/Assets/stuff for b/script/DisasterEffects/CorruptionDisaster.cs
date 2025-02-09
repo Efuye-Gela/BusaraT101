@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class CorruptionDisaster : DisasterEffect
 {
-    public CorruptionDisaster()
-    {
-       threshold = 2;
-    }
+    [SerializeField] private int threshold;
     public override (bool,List<Player>) IsValid(List<Player> allPlayers)
     {
         int resourseCount = 0;
