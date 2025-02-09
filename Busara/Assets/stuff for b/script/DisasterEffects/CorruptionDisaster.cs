@@ -1,13 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CorruptionDisaster : DisasterEffect
 {
-    [SerializeField] private int threshold;
-
-    public CorruptionDisaster(int threshold)
+    public CorruptionDisaster()
     {
-       this.threshold = threshold;
+       threshold = 2;
     }
     public override (bool,List<Player>) IsValid(List<Player> allPlayers)
     {
@@ -15,13 +14,7 @@ public class CorruptionDisaster : DisasterEffect
         List<Player> playerList = new List<Player>();
         foreach(Player player in allPlayers)
         {
-            foreach (Slot slot in player.Board.Slots) //This is a bad way to do it because n^2 fix it later if possible 
-            {
-                if (slot.resource)
-                {
-                    resourseCount++;
-                }
-            }
+            resourseCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
             if (player != null && resourseCount > threshold)
             {
                 Debug.Log("Bad Bad Boy you Greedy man");
@@ -45,21 +38,8 @@ public class CorruptionDisaster : DisasterEffect
         var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
         if (TheAnswer && players != null)
         {
-            Debug.Log("So you were naughty!!!");
-
-            foreach(Player MeetPlayer in players)
-            {
-                foreach(Slot slot in MeetPlayer.Board.Slots)
-                {
-                    if (slot.resource)
-                    { 
-                        Destroy(slot.resource.gameObject);
-                        slot.EmptySlot();
-                        //break;
-                    }
-                }
-            }
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            Debug.Log($"So {players} were naughty!!!");
+            TurnManager.Instance.OnSpecialCardDrawn(players);
         }
         else
         {

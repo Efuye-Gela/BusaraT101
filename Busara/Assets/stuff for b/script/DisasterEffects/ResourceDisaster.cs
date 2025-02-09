@@ -3,11 +3,9 @@ using UnityEngine;
 
 public class ResourceDisaster : DisasterEffect
 {
-    [SerializeField] private int threshold;
-
-    public ResourceDisaster(int threshold)
+    public ResourceDisaster()
     {
-        this.threshold = threshold;
+        threshold = 1;
     }
     public override (bool, List<Player>) IsValid(List<Player> allPlayers)
     {
@@ -44,21 +42,9 @@ public class ResourceDisaster : DisasterEffect
         var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
         if (TheAnswer && players != null)
         {
-            Debug.Log("shish");
-
-            foreach (Player MeetPlayer in players)
-            {
-                foreach (Slot slot in MeetPlayer.Board.Slots)
-                {
-                    if (slot.resource)
-                    {
-                        Destroy(slot.resource.gameObject);
-                        slot.EmptySlot();
-                        break;
-                    }
-                }
-            }
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            Debug.Log($"So {players} sucks to be you!!!");
+            TurnManager.Instance.OnSpecialCardDrawn(players);
+            //TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
         else
         {

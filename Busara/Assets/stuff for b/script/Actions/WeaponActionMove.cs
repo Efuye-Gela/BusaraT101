@@ -59,22 +59,4 @@ public class WeaponActionMove : MonoBehaviour
 
 
     }
-
-    public void OnTapRemove()
-    {
-       List<Resource> resources = TurnManager.Instance.ActivePlayer.selectedResources;
-        if (resources != null && resources.Count>0)
-        {
-            if (resources.Count > 1)
-                Debug.Log("Please select one resource only");
-            else 
-            {
-                
-                resources[0].slot.EmptySlot();
-                TurnManager.Instance.ActivePlayer.selectedResources.Clear();
-                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-            }
-        }
-    }
-
 }

@@ -16,6 +16,8 @@ public class TurnManager : Manager<TurnManager>
     private List<Player> specialActionList; //
     Player lastSeqentialPlayer = null;
 
+    public event Action OnSpecialCardDrawnEvent;
+
     void Start()
     {
         StartTurns();
@@ -95,6 +97,7 @@ public class TurnManager : Manager<TurnManager>
         EndTurn(activePlayer);
         BeginTurn(nextPlayer);
         Debug.Log("Special Turn for "+ nextPlayer.name);
+        OnSpecialCardDrawnEvent?.Invoke();
     }
 
 
