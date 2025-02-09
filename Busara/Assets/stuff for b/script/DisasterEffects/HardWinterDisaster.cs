@@ -5,11 +5,6 @@ public class HardWinterDisaster : DisasterEffect
 {
     public override void Execute()
     {
-        /* if (currentPlayer != null)
-         {
-             //TODO: currentPlayer.DiscardVirtue();
-             Debug.Log($"{currentPlayer.Name} discarded a virtue.");
-         }*/
         Debug.Log("Winter has struck!!!");
         string info = "";
         
@@ -33,9 +28,7 @@ public class HardWinterDisaster : DisasterEffect
                 Debug.Log("After winter");
                 Debug.Log(info);
             }
-            //TurnManager.Instance.CompleteTurn(player);
         }
-        //TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         
     }
 

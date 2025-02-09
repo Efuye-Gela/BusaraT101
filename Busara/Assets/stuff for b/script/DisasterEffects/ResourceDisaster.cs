@@ -13,13 +13,7 @@ public class ResourceDisaster : DisasterEffect
         List<Player> playerList = new List<Player>();
         foreach (Player player in allPlayers)
         {
-            foreach (Slot slot in player.Board.Slots)//This is a bad way to do it because n^2 fix it later if possible 
-            {
-                if (slot.resource)
-                {
-                    resourseCount++;
-                }
-            }
+            resourseCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
             if (player != null && resourseCount > threshold)
             {
                 Debug.Log("You lost a resource boho");
