@@ -12316,6 +12316,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1161211927}
+    - target: {fileID: 181992931205825501, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
+      propertyPath: boardId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 209038738530448952, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -12712,6 +12716,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 794165848}
+    - target: {fileID: 2373590822645798154, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
+      propertyPath: boardId
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2614775208870405684, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -12860,6 +12868,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1966992603}
+    - target: {fileID: 4066944949771069716, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
+      propertyPath: boardId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4326117230950661287, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -13180,6 +13192,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 673272960}
+    - target: {fileID: 5773667488833010360, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
+      propertyPath: boardId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5778639140190139325, guid: b0a8ce9ee6293744d992dcf2444d2d5b, type: 3}
       propertyPath: m_Spacing.x
       value: 100

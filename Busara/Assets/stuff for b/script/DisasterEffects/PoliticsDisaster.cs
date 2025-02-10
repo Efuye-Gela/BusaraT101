@@ -5,18 +5,16 @@ public class PoliticsDisaster : DisasterEffect
 {
     public override void Execute()
     {
-        //foreach (var playerObject in allPlayers)
-        //{
-        //    var player = playerObject.GetComponent<Player>();
-        //    if (player != null)
-        //    {
-        //        player.RotateBoard();
-                
-        //    }
-           
-        //}
+        /*
+          access each player first then set each players board to the next player and soon 
+         */
+        List<Player> tempPlayers = PlayerManager.Instance.Players;
+        tempPlayers.Reverse();
 
-        //Debug.Log($"{currentPlayer.Name}'s board was rotated.");
+       foreach(Player player in PlayerManager.Instance.Players)
+       {
+            player.Board.player = tempPlayers[player.Board.boardId];
+       }
     }
 
     public override (bool, List<Player>) IsValid(List<Player> allPlayers)
