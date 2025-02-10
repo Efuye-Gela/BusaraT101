@@ -15,7 +15,7 @@ public abstract class Power : ScriptableObject
         this.powerDescription = powerDescription;
     }
 
-    public abstract (bool, List<Player>) IsVaild(List<Player> players, Virtue virtue);
+    public abstract bool IsVaild(List<Virtue> virtue);
     public abstract void Excute();
 
 }

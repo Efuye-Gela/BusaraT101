@@ -1,5 +1,4 @@
 using UnityEngine;
-using static Kingdom;
 
 [CreateAssetMenu(menuName = "Kingdom/Milu")]
 public class Milu : Kingdom

@@ -8,9 +8,9 @@ public class Invisibility : Power
     {
 
     }
-    public override (bool, List<Player>) IsVaild(List<Player> players, Virtue virtue)
+    public override bool IsVaild(List<Virtue> virtue)
     {
-        return (false, PlayerManager.Instance.Players);
+        return false;
     }
     public override void Excute()
     {
