@@ -3868,6 +3868,7 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   Board: {fileID: 3762560165583260936}
+  Kingdom: {fileID: 11400000, guid: e145020ecfdcaf34e8246ef8ed385aae, type: 2}
 --- !u!1 &690362372
 GameObject:
   m_ObjectHideFlags: 0
@@ -4177,6 +4178,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763034700}
   m_CullTransparentMesh: 1
+--- !u!1 &767567795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 767567796}
+  m_Layer: 0
+  m_Name: testout
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &767567796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767567795}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -243721.36, y: -28786.691, z: -6.648427}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &779307777
 GameObject:
   m_ObjectHideFlags: 0
@@ -4760,6 +4792,7 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   Board: {fileID: 3762560165583260938}
+  Kingdom: {fileID: 11400000, guid: e145020ecfdcaf34e8246ef8ed385aae, type: 2}
 --- !u!1 &798621547
 GameObject:
   m_ObjectHideFlags: 0
@@ -6139,7 +6172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &987873944
 Transform:
   m_ObjectHideFlags: 0
@@ -7107,6 +7140,7 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   Board: {fileID: 3762560165583260937}
+  Kingdom: {fileID: 11400000, guid: e145020ecfdcaf34e8246ef8ed385aae, type: 2}
 --- !u!1 &1168682826
 GameObject:
   m_ObjectHideFlags: 0
@@ -10187,7 +10221,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1766355822}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1467538572}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnPowerUser
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1766355822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11488,6 +11534,7 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   Board: {fileID: 3762560165583260935}
+  Kingdom: {fileID: 11400000, guid: e145020ecfdcaf34e8246ef8ed385aae, type: 2}
 --- !u!1 &1968854752
 GameObject:
   m_ObjectHideFlags: 0
@@ -14128,3 +14175,4 @@ SceneRoots:
   - {fileID: 1535290733}
   - {fileID: 1643155703}
   - {fileID: 627096682}
+  - {fileID: 767567796}

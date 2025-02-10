@@ -40,4 +40,9 @@ public class GameManager : Manager<GameManager>
         }
     
     }
+
+    public void OnPowerUser()
+    {
+        TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
+    }
 }

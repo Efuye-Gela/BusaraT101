@@ -7,4 +7,5 @@ public class Player : MonoBehaviour
     public List<Virtue> Virtues;
     public List<Resource> selectedResources;
     public Board Board;
+    public Kingdom Kingdom;
 }
