@@ -4928,7 +4928,7 @@ MonoBehaviour:
   selectedResources: []
   selectedPlayers: []
   Board: {fileID: 3762560165583260938}
-  Kingdom: {fileID: 11400000, guid: e145020ecfdcaf34e8246ef8ed385aae, type: 2}
+  Kingdom: {fileID: 11400000, guid: e01d6e08f3d633b41bb7103ef7af99e0, type: 2}
 --- !u!1 &798621547
 GameObject:
   m_ObjectHideFlags: 0
@@ -9185,8 +9185,6 @@ MonoBehaviour:
   - {fileID: 584165799}
   - {fileID: 236796174}
   - {fileID: 236796174}
-  - {fileID: 1863054089}
-  - {fileID: 1445088526}
 --- !u!1 &1411244385
 GameObject:
   m_ObjectHideFlags: 0
@@ -10394,7 +10392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1629675650}
   m_Layer: 5
-  m_Name: player
+  m_Name: player UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

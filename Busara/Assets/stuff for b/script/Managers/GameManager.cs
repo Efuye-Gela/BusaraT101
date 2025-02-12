@@ -43,15 +43,17 @@ public class GameManager : Manager<GameManager>
 
     public void OnPowerUser()
     {
-        TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
+        if(TurnManager.Instance.ActivePlayer.Kingdom.power != null)
+        {
+            TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
+        }
     }
 
     public void GetPlayer(Player player)
     {
         if (TurnManager.Instance.ActivePlayer != player)
         {
-            TurnManager.Instance.ActivePlayer.selectedPlayers.Clear();
-            TurnManager.Instance.ActivePlayer.selectedPlayers.Add(player);
+            TurnManager.Instance.ActivePlayer.selectedPlayer = player;
         }
        /* if(TurnManager.Instance.ActivePlayer != player)
         {
