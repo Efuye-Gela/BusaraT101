@@ -27,8 +27,14 @@ public class InfiniteKnowladge : Power
     {
         if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
         {
-            Debug.Log($"Fear the {TurnManager.Instance.ActivePlayer.Kingdom.kingdomName} kingdom." +
-            $" we use the {TurnManager.Instance.ActivePlayer.Kingdom.power.powerName}");
+            if (TurnManager.Instance.ActivePlayer.selectedPlayers.Count == 0)
+                Debug.Log("Please selecte a player u wish to use ur power on");
+            else
+            {
+                Debug.Log($"show me who you are {TurnManager.Instance.ActivePlayer.selectedPlayers[0].Kingdom.kingdomName} kingdom." +
+                $" lets see what you can use {TurnManager.Instance.ActivePlayer.selectedPlayers[0].Kingdom.power.powerName}.");
+                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            }
         }
         else
         {

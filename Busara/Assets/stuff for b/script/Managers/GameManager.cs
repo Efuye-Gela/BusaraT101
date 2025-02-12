@@ -45,4 +45,22 @@ public class GameManager : Manager<GameManager>
     {
         TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
     }
+
+    public void GetPlayer(Player player)
+    {
+        if (TurnManager.Instance.ActivePlayer != player)
+        {
+            TurnManager.Instance.ActivePlayer.selectedPlayers.Clear();
+            TurnManager.Instance.ActivePlayer.selectedPlayers.Add(player);
+        }
+       /* if(TurnManager.Instance.ActivePlayer != player)
+        {
+            if (!TurnManager.Instance.ActivePlayer.selectedPlayers.Contains(player))
+            {
+                TurnManager.Instance.ActivePlayer.selectedPlayers.Add(player);
+                Debug.Log("PLayer added");
+            }// if we wanted multiple players to be selected at a time for now tho since i do not need that 
+        }*/
+        //Debug.Log(player.Name +" , "+ player.name +" , "+ player.Kingdom + " , " + player.Kingdom.power + ". ");//just for test out
+    }
 }
