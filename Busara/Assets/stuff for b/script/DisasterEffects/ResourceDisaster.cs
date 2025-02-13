@@ -35,7 +35,7 @@ public class ResourceDisaster : DisasterEffect
         if (TheAnswer && players != null)
         {
             Debug.Log($"So {players} sucks to be you!!!");
-            TurnManager.Instance.OnSpecialCardDrawn(players);
+            TurnManager.Instance.OnSpecialCardDrawn(false, players);
             //TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
         else
