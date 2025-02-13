@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using NUnit.Framework;
 using Unity.VisualScripting;
+using System.Linq;
 
 public class PlayerState : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class PlayerState : MonoBehaviour
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
 
+    public static PlayerState instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         PlayerName.text = player.Name;
@@ -20,7 +28,6 @@ public class PlayerState : MonoBehaviour
     }
     public void Update()
     {
-
         GetPlayerVirtueCount();
     }
     public void VirtueDisplay()
@@ -41,28 +48,30 @@ public class PlayerState : MonoBehaviour
    
     public void GetPlayerVirtueCount()
     {
-        int count = 0;
-        if (player.Virtues.Count > 0)
+       /*count = 0;*/
+        if (player != null)
         {
-            foreach (Virtue ver in player.Virtues)
+            if (player.Virtues.Count > 0)
             {
-                foreach(VirtueUI Vui in VirtueUIList)
+                int count = 0;
+                
+                foreach (Virtue ver in player.Virtues)
                 {
-                    if(ver != null && Vui != null)
+                    foreach (VirtueUI Vui in VirtueUIList)
                     {
-                        if (Vui.virtueUIre.type == ver.type)
+                        if(ver != null && Vui != null)
                         {
-                            count++;
-                            Vui.NumberOFvirtues.text = count.ToString();
-                        }   
-                    }
-                    
+                            if (player.Virtues.Contains(Vui.virtueUIre))
+                            {
+                                count++;
+                                Vui.NumberOFvirtues.text = count.ToString();
+                            }   
+                        }
+                    }//find a brtter way of doing this 
                 }
-              
             }
         }
 
-        
     }
 
 
