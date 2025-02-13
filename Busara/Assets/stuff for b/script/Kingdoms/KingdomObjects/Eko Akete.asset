@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f386c7b9d80797742a0dab82d405b322, type: 3}
+  m_Name: Eko Akete
+  m_EditorClassIdentifier: 
+  kingdomName: Eko Akete
+  kingdomStory: "The system of governance is \r\ndescribed as UMUNNA, a republican\r\nsystem
+    of government where \r\neveryone comes together to reach \r\nan agreement on
+    a common goal.\r\nThe Kingdom values Creativity, \r\nJustice, Industriousness,
+    and most of \r\nall oneness."
+  power: {fileID: 11400000, guid: a1d1ce5e30422b24b9487645c739270f, type: 2}
+  virtuesForWin:
+  - NumberofVirtues: 4
+    virtues: {fileID: 11400000, guid: f47b8d6f75c1afe43acbd572adb2f4d1, type: 2}
+  - NumberofVirtues: 3
+    virtues: {fileID: 11400000, guid: 8d6c9227e23c7bd4f9c4d0685973d479, type: 2}
+  - NumberofVirtues: 2
+    virtues: {fileID: 11400000, guid: 31e463a29862684408b2ffb798e00760, type: 2}

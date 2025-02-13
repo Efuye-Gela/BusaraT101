@@ -4406,6 +4406,7 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   selectedPlayer: {fileID: 0}
+  selectedVirtue: []
   Board: {fileID: 3762560165583260936}
   Kingdom: {fileID: 11400000, guid: 2101d90dbb9abcc40896544ee0c2f557, type: 2}
 --- !u!1 &690362372
@@ -5331,6 +5332,7 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   selectedPlayer: {fileID: 0}
+  selectedVirtue: []
   Board: {fileID: 3762560165583260938}
   Kingdom: {fileID: 11400000, guid: e01d6e08f3d633b41bb7103ef7af99e0, type: 2}
 --- !u!1 &798621547
@@ -8107,8 +8109,9 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   selectedPlayer: {fileID: 0}
+  selectedVirtue: []
   Board: {fileID: 3762560165583260937}
-  Kingdom: {fileID: 11400000, guid: 166bd70ecff75fe4083d114e4f7cfe1b, type: 2}
+  Kingdom: {fileID: 11400000, guid: f3cba5f1b62ea9a4ba1e53f8870902de, type: 2}
 --- !u!1 &1168682826
 GameObject:
   m_ObjectHideFlags: 0
@@ -13188,6 +13191,7 @@ MonoBehaviour:
   Virtues: []
   selectedResources: []
   selectedPlayer: {fileID: 0}
+  selectedVirtue: []
   Board: {fileID: 3762560165583260935}
   Kingdom: {fileID: 11400000, guid: e145020ecfdcaf34e8246ef8ed385aae, type: 2}
 --- !u!1 &1968854752

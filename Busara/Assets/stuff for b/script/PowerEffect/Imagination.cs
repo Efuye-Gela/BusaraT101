@@ -12,20 +12,20 @@ public class Imagination : Power
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            //    if(virtue.Count > 1)
-            //    {
-            //        virtue.RemoveAt(0);
-            //    }
-            return (true);
-            //else 
-            //return (false);
+            if (virtue.Count > 0)
+            {
+                virtue.Clear();
+                return (true);
+            }
+            else
+                return (false);
         }
         else
             return (false);
     }
     public override void Excute()
     {
-        if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
+        if (IsVaild(TurnManager.Instance.ActivePlayer.selectedVirtue))
         {
             if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
                 Debug.Log("Please selecte a player u wish to use ur power on");

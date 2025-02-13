@@ -20,13 +20,7 @@ public class PlayerStatDisplay : MonoBehaviour
         }
         else
         {
-            //foreach(PlayerState state in TheState)
-            //{
-            //    Destroy(state.gameObject);
-            //}
-            //TheState.Clear();
             statPanal.SetActive(false);
-
         }
     }
 }
