@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb23c549a1c4ca478cca91294fc71fa, type: 3}
+  m_Name: Ubunifu
+  m_EditorClassIdentifier: 
+  kingdomName: Ubunifu
+  kingdomStory: "\"Ubunifu\" means Creativity and\r\nImagination in Swahili. The
+    kingdom \r\nis ruled by an elite council. It began \r\nin the 22nd century after
+    a long war \r\nof minds and skills.\r\nThe people are Craftsmen of all sorts
+    \r\n& skilled Juju men who developed \r\nhyper neural activity hence ability
+    to \r\nread and translate thoughts."
+  power: {fileID: 11400000, guid: c632c4aea09803e4aace7d0a05bec2dd, type: 2}
+  virtuesForWin:
+  - NumberofVirtues: 2
+    virtues: {fileID: 11400000, guid: f47b8d6f75c1afe43acbd572adb2f4d1, type: 2}
+  - NumberofVirtues: 3
+    virtues: {fileID: 11400000, guid: 4624248e70a74634fb80c182de553610, type: 2}
+  - NumberofVirtues: 4
+    virtues: {fileID: 11400000, guid: 8d6c9227e23c7bd4f9c4d0685973d479, type: 2}

@@ -3,29 +3,27 @@ using UnityEngine;
 
 public class PoliticsDisaster : DisasterEffect
 {
-    public override void Execute(Player currentPlayer, List<Player> allPlayers)
+    public override void Execute()
     {
-        //foreach (var playerObject in allPlayers)
-        //{
-        //    var player = playerObject.GetComponent<Player>();
-        //    if (player != null)
-        //    {
-        //        player.RotateBoard();
-                
-        //    }
-           
-        //}
+        var (Accepted, players) = IsValid(PlayerManager.Instance.Players);
+        if (Accepted)
+        {
+            List<Player> tempPlayers = PlayerManager.Instance.Players;
+            tempPlayers.Reverse();
 
-        Debug.Log($"{currentPlayer.Name}'s board was rotated.");
+            foreach (Player player in players)
+            {
+                player.Board.player = tempPlayers[player.Board.boardId];
+            }
+        }
+
     }
 
-    public override bool IsValid(Player currentPlayer, List<Player> allPlayers)
+    public override (bool, List<Player>) IsValid(List<Player> allPlayers)
     {
-        if (currentPlayer != null
-            //&& currentPlayer.ResourceCount > threshold
-            )
-            return true;
+        if (allPlayers != null)
+            return (true, PlayerManager.Instance.Players);
         else
-            return false;
+            return (false, PlayerManager.Instance.Players);
     }
 }

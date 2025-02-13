@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825a991940599d442a2497294d73f27f, type: 3}
+  m_Name: Nevulandis
+  m_EditorClassIdentifier: 
+  kingdomName: N'evulandis
+  kingdomStory: "N'Evulandis, pronounced \r\n'Neverlandis', is a futuristic \r\ncivilization
+    in the 30th century \r\ngoverned by the House of IO's, sort \r\nof a monarchy.
+    The people are called \r\nN'evula, they speak Lota and use \r\nData as currency.
+    Their house values \r\nare Peace, Information, Loyalty and \r\nCollaboration."
+  power: {fileID: 11400000, guid: a9c4f0c8a1a60944297b9c551c909358, type: 2}
+  virtuesForWin:
+  - NumberofVirtues: 4
+    virtues: {fileID: 11400000, guid: 4624248e70a74634fb80c182de553610, type: 2}
+  - NumberofVirtues: 2
+    virtues: {fileID: 11400000, guid: 8d6c9227e23c7bd4f9c4d0685973d479, type: 2}
+  - NumberofVirtues: 3
+    virtues: {fileID: 11400000, guid: 31e463a29862684408b2ffb798e00760, type: 2}

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class DisasterCard : Card
 {
-    [SerializeField] private DisasterEffect effect;
+    [SerializeField] public DisasterEffect effect;
 
     public DisasterCard(string cardName, string description, DisasterEffect effect)
         : base(cardName, description)
@@ -14,6 +14,6 @@ public class DisasterCard : Card
 
     public void ActivatePower(Player currentPlayer, List<Player> allPlayers)
     {
-        effect.Execute(currentPlayer, allPlayers);
+        effect.Execute();
     }
 }

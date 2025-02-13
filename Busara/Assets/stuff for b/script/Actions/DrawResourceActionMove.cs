@@ -36,6 +36,7 @@ public class DrawResourceActionMove : MonoBehaviour
             Debug.LogError("Null card");
         else
         {
+            DeckManager.Instance.Cards.Add(drawnCard);
             DeckManager.Instance.Cards.Remove(drawnCard);
             if (drawnCard.GetType() == typeof(ResourceCard))
             {
@@ -67,10 +68,11 @@ public class DrawResourceActionMove : MonoBehaviour
             }
             else if (drawnCard.GetType() == typeof(DisasterCard))
             {
-                // Inititate Diaster Sequence
-
+                
+                DisasterCard drawnDisasterCard = (DisasterCard)drawnCard;
+                drawnDisasterCard.effect.Execute();
             }
-        }
+        }   
 
         DropHandler.OnItemPlaced += ResourcePlaced;
         

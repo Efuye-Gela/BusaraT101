@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca3ee961a03484145b9874f18990f520, type: 3}
+  m_Name: Royaume Kongo
+  m_EditorClassIdentifier: 
+  kingdomName: Royaume Kingdom
+  kingdomStory: "In this kingdom the power is maintained by a Lumumba in Mani Kongo
+    (the supreme leader) and its \r                          capital is Mbanza Ngungu.
+    Among its peculiarities, the kingdom is a center of Cultural Revolution, with
+    a great sense of taste, beautiful and art. Royaume Konga dominated all the other
+    kingdoms during its heyday and its infuence reached all the way to the northern
+    hemisphere."
+  power: {fileID: 11400000, guid: 6d2cf8e4419f73942851aab2cec6a44b, type: 2}
+  virtuesForWin:
+  - NumberofVirtues: 4
+    virtues: {fileID: 11400000, guid: f47b8d6f75c1afe43acbd572adb2f4d1, type: 2}
+  - NumberofVirtues: 2
+    virtues: {fileID: 11400000, guid: 4624248e70a74634fb80c182de553610, type: 2}
+  - NumberofVirtues: 3
+    virtues: {fileID: 11400000, guid: 275b91d0a3e6ed64ab870dcc566413d9, type: 2}
