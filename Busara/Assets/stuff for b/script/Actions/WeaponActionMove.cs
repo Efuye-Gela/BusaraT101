@@ -55,7 +55,7 @@ public class WeaponActionMove : MonoBehaviour
         TurnManager.Instance.ActivePlayer.selectedResources.Clear();
         List<Player> otherPlayers = new List<Player>(PlayerManager.Instance.Players);
         otherPlayers.Remove(player);
-        TurnManager.Instance.OnSpecialCardDrawn(otherPlayers);
+        TurnManager.Instance.OnSpecialCardDrawn(false,otherPlayers);
 
 
     }

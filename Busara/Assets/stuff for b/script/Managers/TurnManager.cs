@@ -12,7 +12,8 @@ public class TurnManager : Manager<TurnManager>
 
     public Action<Player> onTurn;
 
-    private bool isSpecialCardDrawn = false; // Flag for special card state
+    public bool isSpecialCardDrawn = false; // Flag for special card state
+    public bool returnToFirstPlayer = false; // 
     private List<Player> specialActionList; //
     Player lastSeqentialPlayer = null;
 
@@ -38,7 +39,7 @@ public class TurnManager : Manager<TurnManager>
         return activePlayer == player;
     }
 
-    public void CompleteTurn(Player player)
+    public void CompleteTurn(Player player, Action onSpecialActionComplete = null)
     {
         if (player != activePlayer)
             return;
@@ -54,16 +55,24 @@ public class TurnManager : Manager<TurnManager>
                 EndTurn(activePlayer);
                 BeginTurn(nextSpecialPlayer);
             }
-            else if(specialActionList.Count==1)
+            else if (specialActionList.Count == 1)
             {
                 specialActionList.Remove(player);
-                activePlayer = lastSeqentialPlayer;
-                Player nextNormalPlayer = GetNextPlayer();
+                
                 Debug.Log("Last Special Turn Ended");
                 isSpecialCardDrawn = false;
-                EndTurn(activePlayer);
-                BeginTurn(nextNormalPlayer);
-                
+                EndTurn(player);
+                if (returnToFirstPlayer)
+                    BeginTurn(lastSeqentialPlayer);
+                else
+                { 
+                    activePlayer = lastSeqentialPlayer;
+                    Player nextNormalPlayer = GetNextPlayer();
+                    BeginTurn(nextNormalPlayer);
+                }
+
+                // Execute the passed action if provided
+                onSpecialActionComplete?.Invoke();
             }
             return;
         }
@@ -85,9 +94,10 @@ public class TurnManager : Manager<TurnManager>
     }
 
     // Triggered when a special card is drawn
-    public void OnSpecialCardDrawn(List<Player> players)
+    public void OnSpecialCardDrawn(bool _returnToFirstPlayer,List<Player> players)
     {
         lastSeqentialPlayer = activePlayer;
+        returnToFirstPlayer = _returnToFirstPlayer;
         Debug.Log("Special Action to be Performed.");
         isSpecialCardDrawn = true;
         specialActionList = players;

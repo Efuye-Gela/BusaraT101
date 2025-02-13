@@ -29,5 +29,19 @@ public class Slot : MonoBehaviour
         return removedResource;
     }
 
-    
+    public static void EmptySlotByResource(Resource resource)
+    {
+        Slot occupiedSlot = resource.slot;
+        resource.slot = null;
+        occupiedSlot.resource = null;
+        occupiedSlot.isOccupied = false;
+    }
+
+    public static void OccupySlot(Slot slot, Resource resource)
+    {
+        slot.resource = resource;
+        slot.isOccupied = true;
+        resource.slot = slot;
+    }
+
 }

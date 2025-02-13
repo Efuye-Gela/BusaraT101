@@ -102,13 +102,16 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     {
         foreach (var slot in TurnManager.Instance.ActivePlayer.Board.Slots)
         {
-            if (selectedResources.Contains(slot.resource))
+            if (selectedResources != null && selectedResources.Count > 0)
             {
-                slot.gameObject.GetComponent<Image>().color = Color.yellow;
-            }
-            else
-                slot.gameObject.GetComponent<Image>().color = Color.white;
+                if (selectedResources.Contains(slot.resource))
+                {
+                    slot.gameObject.GetComponent<Image>().color = Color.yellow;
+                }
+                else
+                    slot.gameObject.GetComponent<Image>().color = Color.white;
 
+            }
         }
 
 

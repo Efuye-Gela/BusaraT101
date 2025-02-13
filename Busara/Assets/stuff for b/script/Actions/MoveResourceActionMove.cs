@@ -35,31 +35,20 @@ public class MoveResourceActionMove : MonoBehaviour
                     {
                         //clickedSlot.isOccupied = true;
                         //clickedSlot.resource = tobeMovedResource;
-                        OccupySlot(clickedSlot, tobeMovedResource);
+                        Slot.OccupySlot(clickedSlot, tobeMovedResource);
                         tobeMovedResource.gameObject.transform.SetParent(clickedSlot.gameObject.transform);
                         tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;                       
-                        EmptySlot(tobeMovedResource);
+                        Slot.EmptySlotByResource(tobeMovedResource);
+                        TurnManager.Instance.ActivePlayer.selectedResources.Clear();
                         TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+                        
                     }
                 }
             } 
         }
     }
 
-    private void EmptySlot(Resource resource)
-    {
-        Slot occupiedSlot = resource.slot;
-        resource.slot = null;
-        occupiedSlot.resource = null;
-        occupiedSlot.isOccupied=false;
-    }
-
-    private void OccupySlot(Slot slot, Resource resource)
-    {
-        slot.resource = resource;
-        slot.isOccupied = true;
-        resource.slot = slot;
-    }
+    
 
     private void ResourceClicked(GameObject gameObject)
     {
