@@ -120,7 +120,8 @@ public class TradeManager : Manager<TradeManager>
                 TradeCompleted?.Invoke();
             }
         }
-        TradeFailed?.Invoke();
+        else
+            TradeFailed?.Invoke();
     }
 
     private void StartResourceSwap(Player player)
@@ -134,6 +135,17 @@ public class TradeManager : Manager<TradeManager>
             targetSlot = null;
 
         SwapResources(sourceSlot,targetSlot);
+    }
+
+    public void TradeSelectedResource()
+    {
+        Player currentPlayer = TurnManager.Instance.ActivePlayer;
+        if (currentPlayer.selectedResources.Count == 1)
+        {
+            Resource resource = currentPlayer.selectedResources[0];
+            targetSlot = resource.slot;
+            SwapResources(sourceSlot, targetSlot);
+        }
     }
 
     private void SwapResources(Slot sourceSlot, Slot targetSlot)

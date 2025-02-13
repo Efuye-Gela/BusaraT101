@@ -65,7 +65,10 @@ public class TurnManager : Manager<TurnManager>
                 isSpecialCardDrawn = false;
                 EndTurn(player);
                 if (returnToFirstPlayer)
+                { 
+                    returnToFirstPlayer = false;
                     BeginTurn(lastSeqentialPlayer);
+                }
                 else
                 { 
                     activePlayer = lastSeqentialPlayer;

@@ -10,7 +10,7 @@ public class TradeDisplayManager : Manager<TradeDisplayManager>
     [SerializeField] private GameObject tradeSetupDisplay;
     [SerializeField] private GameObject tradeDisplay;
     [SerializeField] private GameObject tradePlayersDisplay;
-    [SerializeField] private GameObject ConfirmButton;
+    [SerializeField] private GameObject ConfrimDisplay;
 
     private void OnEnable()
     {
@@ -24,8 +24,7 @@ public class TradeDisplayManager : Manager<TradeDisplayManager>
 
     private void ConfirmResource()
     {
-        TurnOffAllDisplays();
-        ConfirmButton.SetActive(true);
+        ActivateDisplay(ConfrimDisplay);
     }
 
     private void SetupOffer(Tuple<ResourceType, List<ResourceType>> tuple)
@@ -55,6 +54,7 @@ public class TradeDisplayManager : Manager<TradeDisplayManager>
 
     private void TurnOffAllDisplays()
     {
+        ConfrimDisplay.SetActive(false);
         tradeSetupDisplay.SetActive(false);
         tradeDisplay.SetActive(false);
         tradePlayersDisplay.SetActive(false);
