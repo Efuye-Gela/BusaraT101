@@ -36,6 +36,7 @@ public class Imagination : Power
                     Debug.Log("Give me your virtue bitch");
                     TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
                     TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
+                    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
                 }
             }
         }

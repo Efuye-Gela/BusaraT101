@@ -55,7 +55,7 @@ public class GameManager : Manager<GameManager>
 
     public void GetPlayer(Player player)
     {
-        if (TurnManager.Instance.ActivePlayer != player)
+        if(TurnManager.Instance.ActivePlayer != player)
         {
             TurnManager.Instance.ActivePlayer.selectedPlayer = player;
         }
