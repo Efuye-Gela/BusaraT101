@@ -15,7 +15,7 @@ public class Imagination : Power
             if (virtue.Count > 0)
             {
                 List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
-                foreach(Virtue virtueTobeDestroyed in tempVirtuecollection)
+                foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
                 {
                     if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueTobeDestroyed))
                     {
@@ -25,19 +25,27 @@ public class Imagination : Power
                 }
                 if (virtue.Count == 0)
                 {
-                    virtue.Clear();
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                     return (true);
                 }
                 else
                 {
+
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                     return false;
                 }
             }
             else
+            {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 return (false);
+            }
         }
         else
+        {
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
             return (false);
+        }
     }
     public override void Excute()
     {
@@ -54,10 +62,12 @@ public class Imagination : Power
                     TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
                     TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
                     TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 }
             }
             else
             {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
             }
         }

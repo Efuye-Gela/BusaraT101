@@ -9,25 +9,7 @@ public class VirtueUI : MonoBehaviour
 
     public void Getvirtue()
     {
-
-        TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueUIre);
-        /*int virtuecount = 0;
-        if (TurnManager.Instance.ActivePlayer.state.VirtuePrefab)
-        {
-            foreach (Virtue virtue in TurnManager.Instance.ActivePlayer.selectedVirtue)
-            {
-                if (virtueUIre = virtue)
-                {
-                    virtuecount++;
-                }
-            }
-            if (TurnManager.Instance.ActivePlayer.selectedVirtue.Contains(virtueUIre))
-                TurnManager.Instance.ActivePlayer.selectedVirtue.Remove(virtueUIre);
-            else
-                TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueUIre);
-        }
-        else
-            Debug.Log("you should only chose your virtue");*/
+       TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueUIre);
     }
 
 }

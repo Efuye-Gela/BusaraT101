@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Security.Principal;
 using UnityEngine;
 
 
@@ -8,22 +9,46 @@ public class TransformPower : Power
 
     public TransformPower(string powerName, string powerDescription) : base(powerName, powerDescription)
     {
-
+        
     }
     public override bool IsVaild(List<Virtue> virtue)
     {
-     /*   if (TurnManager.Instance.ActivePlayer)
+        if (TurnManager.Instance.ActivePlayer)
         {
-            //    if(virtue.Count > 1)
-            //    {
-            //        virtue.RemoveAt(0);
-            //    }
-            return (true);
-            //else 
-            //return (false);
-        }*/
-        //else // 
+            if (virtue.Count > 0)
+            {
+                List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
+                foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
+                {
+                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueTobeDestroyed))
+                    {
+                        virtue.Remove(virtueTobeDestroyed);
+                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueTobeDestroyed);
+                    }
+                }
+                if (virtue.Count == 0)
+                {
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                    return (true);
+                }
+                else
+                {
+
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                    return false;
+                }
+            }
+            else
+            {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                return (false);
+            }
+        }
+        else
+        {
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
             return (false);
+        }
     }
     public override void Excute()
     {

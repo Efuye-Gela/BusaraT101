@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Power/Invisibility")]
-public class Invisibility : Power
+
+[CreateAssetMenu(menuName = "Power/IdentitySurfing")]
+public class IdentitySurfing : Power
 {
-    public Invisibility(string powerName, string powerDescription) : base(powerName, powerDescription)
+    public IdentitySurfing(string powerName, string powerDescription) : base(powerName, powerDescription)
     {
 
     }
@@ -55,14 +56,17 @@ public class Invisibility : Power
         {
             if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
             {
-                TurnManager.Instance.ActivePlayer.state.gameObject.SetActive(false);
+                Debug.Log("Give me your power");
+                Kingdom TempKingdom = TurnManager.Instance.ActivePlayer.Kingdom;
+                TurnManager.Instance.ActivePlayer.Kingdom = TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom;
+                TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom = TempKingdom;
                 TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
             else
             {
-                Debug.Log("Broke bitch !!!!");
                 TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
             }
         }
     }
