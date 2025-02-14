@@ -7,9 +7,6 @@ public class HardWinterDisaster : DisasterEffect
     {
         Debug.Log("Winter has struck!!!");
         string info = "";
-        
-
-        Debug.Log(info);
         foreach (Player player in PlayerManager.Instance.Players)
         {
             for (int i = 0; i < player.Virtues.Count; i++)

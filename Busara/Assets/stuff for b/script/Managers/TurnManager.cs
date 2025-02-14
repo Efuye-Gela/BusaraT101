@@ -18,6 +18,7 @@ public class TurnManager : Manager<TurnManager>
     private List<Player> specialActionList; //
     Player lastSeqentialPlayer = null;
 
+    public GameObject WonScreen;
     public event Action OnSpecialCardDrawnEvent;
 
     void Start()
@@ -122,16 +123,13 @@ public class TurnManager : Manager<TurnManager>
             return;
         }
 
-        // Dictionary to store player's virtue counts by type
         Dictionary<VirtueType, int> playerVirtueCounts = new Dictionary<VirtueType, int>();
 
-        // Initialize virtue counts
+
         foreach (VirtueType type in System.Enum.GetValues(typeof(VirtueType)))
         {
             playerVirtueCounts[type] = 0;
         }
-
-        // Count the player's virtues by type
         foreach (Virtue virtue in ActivePlayer.Virtues)
         {
             if (virtue != null)
@@ -140,7 +138,6 @@ public class TurnManager : Manager<TurnManager>
             }
         }
 
-        // Check if player meets all virtue requirements for their kingdom
         foreach (Kingdom.VirtuesForCost requirement in ActivePlayer.Kingdom.virtuesForWin)
         {
             if (requirement == null || requirement.virtues == null)
@@ -149,17 +146,14 @@ public class TurnManager : Manager<TurnManager>
             VirtueType requiredType = requirement.virtues.type;
             int requiredCount = requirement.NumberofVirtues;
 
-            // If the player has fewer virtues of this type than required, they haven't won yet
             if (!playerVirtueCounts.ContainsKey(requiredType) || playerVirtueCounts[requiredType] < requiredCount)
             {
-                Debug.Log("Player does not meet win conditions yet.");
                 return;
             }
         }
 
-        // If all requirements are met, player wins
         Debug.Log(ActivePlayer.Name + " has met the win conditions!");
-        // You can trigger a win event here, like UI updates, game end state, etc.
+        WonScreen.SetActive(true);
     }
 
 
