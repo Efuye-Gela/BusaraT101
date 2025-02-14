@@ -25,6 +25,7 @@ public class PlayerState : MonoBehaviour
     {
         PlayerName.text = player.Name;
         VirtueDisplay();
+        GetPlayerVirtueCount();
     }
     public void Update()
     {
@@ -45,11 +46,37 @@ public class PlayerState : MonoBehaviour
             } 
         }
     }
-   
+
     public void GetPlayerVirtueCount()
     {
-      
+        if (player == null || player.Virtues == null || VirtueUIList == null)
+            return;
+
+        Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
+
+        foreach (VirtueType type in System.Enum.GetValues(typeof(VirtueType)))
+        {
+            virtueCounts[type] = 0;
+        }
+
+        foreach (Virtue virtue in player.Virtues)
+        {
+            if (virtueCounts.ContainsKey(virtue.type))
+            {
+                virtueCounts[virtue.type]++;
+            }
+        }
+
+        foreach (VirtueUI virtueUI in VirtueUIList)
+        {
+            if (virtueUI != null && virtueUI.virtueUIre != null)
+            {
+                VirtueType virtueType = virtueUI.virtueUIre.type;
+                virtueUI.NumberOFvirtues.text = virtueCounts[virtueType].ToString();
+            }
+        }
     }
+
 
 
 }
