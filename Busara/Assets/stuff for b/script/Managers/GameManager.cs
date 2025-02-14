@@ -42,24 +42,19 @@ public class GameManager : Manager<GameManager>
     
     }
 
-    public void OnPowerUser()
+    public void OnPowerUser(Player player)
     {
         if(TurnManager.Instance.ActivePlayer.Kingdom.power != null)
         {
-            if(TurnManager.Instance.ActivePlayer)
+            if(TurnManager.Instance.ActivePlayer == player)
                 TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
             else
                 Debug.Log("Not your turn");
         }
-
-    }
-
-    public void GetPlayer(Player player)
-    {
-        if(TurnManager.Instance.ActivePlayer != player)
+        if (TurnManager.Instance.ActivePlayer != player)
         {
             TurnManager.Instance.ActivePlayer.selectedPlayer = player;
         }
-        //Debug.Log(player.Name +" , "+ player.name +" , "+ player.Kingdom + " , " + player.Kingdom.power + ". ");//just for test out
+
     }
 }

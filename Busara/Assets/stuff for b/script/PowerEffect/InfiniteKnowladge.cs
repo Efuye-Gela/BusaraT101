@@ -12,13 +12,29 @@ public class InfiniteKnowladge : Power
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-        //    if(virtue.Count > 1)
-        //    {
-        //        virtue.RemoveAt(0);
-        //    }
-             return (true);
-            //else 
-            //return (false);
+            if (virtue.Count > 0)
+            {
+                List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
+                foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
+                {
+                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueTobeDestroyed))
+                    {
+                        virtue.Remove(virtueTobeDestroyed);
+                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueTobeDestroyed);
+                    }
+                }
+                if (virtue.Count == 0)
+                {
+                    virtue.Clear();
+                    return (true);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+                return (false);
         }
         else
             return (false);

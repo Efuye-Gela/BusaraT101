@@ -514,7 +514,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5390927508921662314}
         m_TargetAssemblyTypeName: VirtueUI, Assembly-CSharp
-        m_MethodName: GetVirtue
+        m_MethodName: Getvirtue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

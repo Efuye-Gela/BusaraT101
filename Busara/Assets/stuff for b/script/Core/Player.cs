@@ -10,4 +10,5 @@ public class Player : MonoBehaviour
     public List<Virtue> selectedVirtue;
     public Board Board;
     public Kingdom Kingdom;
+    public PlayerState state;
 }

@@ -14,7 +14,6 @@ public class Invisibility : Power
     }
     public override void Excute()
     {
-        Debug.Log($"Fear the {TurnManager.Instance.ActivePlayer.Kingdom.kingdomName} kingdom." +
-            $" we use the {TurnManager.Instance.ActivePlayer.Kingdom.power.powerName}");
+        TurnManager.Instance.ActivePlayer.state.gameObject.SetActive(false);
     }
 }

@@ -241,23 +241,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1467538572}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetPlayer
+        m_MethodName: OnPowerUser
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1161211927}
           m_ObjectArgumentAssemblyTypeName: Player, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1467538572}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnPowerUser
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2555,6 +2543,7 @@ MonoBehaviour:
   selectedVirtue: []
   Board: {fileID: 3762560165583260936}
   Kingdom: {fileID: 11400000, guid: 2101d90dbb9abcc40896544ee0c2f557, type: 2}
+  state: {fileID: 1439141307}
 --- !u!1 &690362372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,6 +3176,7 @@ MonoBehaviour:
   selectedVirtue: []
   Board: {fileID: 3762560165583260938}
   Kingdom: {fileID: 11400000, guid: e01d6e08f3d633b41bb7103ef7af99e0, type: 2}
+  state: {fileID: 1770935287}
 --- !u!1 &798621547
 GameObject:
   m_ObjectHideFlags: 0
@@ -3971,6 +3961,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 712858357023095250, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
   m_PrefabInstance: {fileID: 1000277894}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1000277896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+  m_PrefabInstance: {fileID: 1000277894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e40f1a7453cb541bf37f232b5a5f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1007728156
 GameObject:
   m_ObjectHideFlags: 0
@@ -4335,6 +4336,7 @@ MonoBehaviour:
   selectedVirtue: []
   Board: {fileID: 3762560165583260937}
   Kingdom: {fileID: 11400000, guid: f3cba5f1b62ea9a4ba1e53f8870902de, type: 2}
+  state: {fileID: 1000277896}
 --- !u!1 &1168682826
 GameObject:
   m_ObjectHideFlags: 0
@@ -5418,6 +5420,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 712858357023095250, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
   m_PrefabInstance: {fileID: 1422412144}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1439141307 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+  m_PrefabInstance: {fileID: 542130926}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e40f1a7453cb541bf37f232b5a5f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1445088524
 GameObject:
   m_ObjectHideFlags: 0
@@ -6014,23 +6027,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1467538572}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetPlayer
+        m_MethodName: OnPowerUser
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 673272960}
           m_ObjectArgumentAssemblyTypeName: Player, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1467538572}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnPowerUser
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6158,23 +6159,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1467538572}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetPlayer
+        m_MethodName: OnPowerUser
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1966992603}
           m_ObjectArgumentAssemblyTypeName: Player, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1467538572}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnPowerUser
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6535,6 +6524,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1535290733}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1770935287 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+  m_PrefabInstance: {fileID: 1422412144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e40f1a7453cb541bf37f232b5a5f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1830353938
 GameObject:
   m_ObjectHideFlags: 0
@@ -7040,23 +7040,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1467538572}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GetPlayer
+        m_MethodName: OnPowerUser
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 794165848}
           m_ObjectArgumentAssemblyTypeName: Player, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1467538572}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: OnPowerUser
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7222,7 +7210,8 @@ MonoBehaviour:
   selectedPlayer: {fileID: 0}
   selectedVirtue: []
   Board: {fileID: 3762560165583260935}
-  Kingdom: {fileID: 11400000, guid: e145020ecfdcaf34e8246ef8ed385aae, type: 2}
+  Kingdom: {fileID: 11400000, guid: 166bd70ecff75fe4083d114e4f7cfe1b, type: 2}
+  state: {fileID: 2130631920}
 --- !u!1 &1968854752
 GameObject:
   m_ObjectHideFlags: 0
@@ -7725,6 +7714,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 712858357023095250, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
   m_PrefabInstance: {fileID: 2130631918}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2130631920 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+  m_PrefabInstance: {fileID: 2130631918}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e40f1a7453cb541bf37f232b5a5f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &76155934419725178
 Transform:
   m_ObjectHideFlags: 0
