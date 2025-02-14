@@ -25,36 +25,45 @@ public class InfiniteKnowladge : Power
                 }
                 if (virtue.Count == 0)
                 {
-                    virtue.Clear();
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                     return (true);
                 }
                 else
                 {
+
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                     return false;
                 }
             }
             else
+            {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 return (false);
+            }
         }
         else
+        {
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
             return (false);
+        }
     }   
     public override void Excute()
     {
-        if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
+        if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
+            Debug.Log("Please selecte a player u wish to use ur power on");
+        else
         {
-            if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
-                Debug.Log("Please selecte a player u wish to use ur power on");
-            else
+            if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
             {
                 Debug.Log($"show me who you are {TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom.kingdomName} kingdom." +
                 $" lets see what you can use {TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom.power.powerName}.");
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
-        }
-        else
-        {
-            Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
+            else
+            {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
+            }
         }
     }
 }

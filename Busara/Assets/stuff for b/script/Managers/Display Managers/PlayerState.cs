@@ -13,7 +13,6 @@ public class PlayerState : MonoBehaviour
     public Transform SpawnArea;
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
-
     public static PlayerState instance;
 
     private void Awake()

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Power/TransformPower")]
+[CreateAssetMenu(menuName = "Power/TransformPower")]//how should I use this 
 public class TransformPower : Power
 {
 
@@ -12,7 +12,7 @@ public class TransformPower : Power
     }
     public override bool IsVaild(List<Virtue> virtue)
     {
-        if (TurnManager.Instance.ActivePlayer)
+     /*   if (TurnManager.Instance.ActivePlayer)
         {
             //    if(virtue.Count > 1)
             //    {
@@ -21,8 +21,8 @@ public class TransformPower : Power
             return (true);
             //else 
             //return (false);
-        }
-        else
+        }*/
+        //else // 
             return (false);
     }
     public override void Excute()

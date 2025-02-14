@@ -2346,6 +2346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerStand (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4221130186974405115, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: player
       value: 
@@ -3943,6 +3947,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerStand (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4221130186974405115, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: player
       value: 
@@ -5401,6 +5409,10 @@ PrefabInstance:
     - target: {fileID: 4221130186974405115, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_Name
       value: PlayerStand
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221130186974405115, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: player
@@ -7695,6 +7707,10 @@ PrefabInstance:
     - target: {fileID: 4221130186974405115, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_Name
       value: PlayerStand (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4221130186974405115, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: player
