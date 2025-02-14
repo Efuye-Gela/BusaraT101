@@ -48,30 +48,7 @@ public class PlayerState : MonoBehaviour
    
     public void GetPlayerVirtueCount()
     {
-       /*count = 0;*/
-        if (player != null)
-        {
-            if (player.Virtues.Count > 0)
-            {
-                int count = 0;
-                
-                foreach (Virtue ver in player.Virtues)
-                {
-                    foreach (VirtueUI Vui in VirtueUIList)
-                    {
-                        if(ver != null && Vui != null)
-                        {
-                            if (player.Virtues.Contains(Vui.virtueUIre))
-                            {
-                                count++;
-                                Vui.NumberOFvirtues.text = count.ToString();
-                            }   
-                        }
-                    }//find a brtter way of doing this 
-                }
-            }
-        }
-
+      
     }
 
 
