@@ -12,7 +12,7 @@ public class Invisibility : Power
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            if (virtue.Count > 0)
+            if (virtue.Count == 2)
             {
                 List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
                 foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
@@ -50,7 +50,7 @@ public class Invisibility : Power
     public override void Excute()
     {
         if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
-            Debug.Log("Please selecte a player u wish to use ur power on");
+            PlayerStatDisplay.Instance.Communication("Please selecte a player u wish to use ur power on");
         else
         {
             if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))

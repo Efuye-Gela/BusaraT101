@@ -8,6 +8,7 @@ public class PoliticsDisaster : DisasterEffect
         var (Accepted, players) = IsValid(PlayerManager.Instance.Players);
         if (Accepted)
         {
+            PlayerStatDisplay.Instance.Communication("Change your land bitch!!!");
             List<Player> tempPlayers =  new List<Player>(PlayerManager.Instance.Players);
             tempPlayers.Add(tempPlayers[0]);
             tempPlayers.Remove(tempPlayers[0]);

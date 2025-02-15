@@ -20,9 +20,9 @@ MonoBehaviour:
     to \r\nread and translate thoughts."
   power: {fileID: 11400000, guid: c632c4aea09803e4aace7d0a05bec2dd, type: 2}
   virtuesForWin:
-  - NumberofVirtues: 1
+  - NumberofVirtues: 2
     virtues: {fileID: 11400000, guid: f47b8d6f75c1afe43acbd572adb2f4d1, type: 2}
-  - NumberofVirtues: 1
+  - NumberofVirtues: 3
     virtues: {fileID: 11400000, guid: 4624248e70a74634fb80c182de553610, type: 2}
-  - NumberofVirtues: 1
+  - NumberofVirtues: 4
     virtues: {fileID: 11400000, guid: 8d6c9227e23c7bd4f9c4d0685973d479, type: 2}

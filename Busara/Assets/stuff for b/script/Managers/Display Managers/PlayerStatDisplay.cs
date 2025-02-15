@@ -3,13 +3,14 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerStatDisplay : MonoBehaviour
+public class PlayerStatDisplay : Manager<PlayerStatDisplay>
 {
     public PlayerState PlayerStat;
     public Transform StatParent;
     public List<PlayerState> TheState;
 
     public TMP_Text consoleText;
+    public TMP_Text infoText;
 
     private void OnEnable()
     {
@@ -42,6 +43,14 @@ public class PlayerStatDisplay : MonoBehaviour
         else
         {
             statPanal.SetActive(false);
+        }
+    }
+
+    public void Communication(string info)
+    {
+        if(infoText != null)
+        {
+            infoText.text = info;
         }
     }
 }

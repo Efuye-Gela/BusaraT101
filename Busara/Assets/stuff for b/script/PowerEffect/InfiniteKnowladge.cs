@@ -12,7 +12,7 @@ public class InfiniteKnowladge : Power
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            if (virtue.Count > 0)
+            if (virtue.Count == 1)
             {
                 List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
                 foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)

@@ -12,7 +12,7 @@ public class Imagination : Power
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            if (virtue.Count > 0)
+            if (virtue.Count == 3)
             {
                 List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
                 foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
@@ -50,7 +50,7 @@ public class Imagination : Power
     public override void Excute()
     {
         if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
-            Debug.Log("Please selecte a player u wish to use ur power on");
+            PlayerStatDisplay.Instance.Communication("Please selecte a player u wish to use ur power on");
         else
         {
             if (IsVaild(TurnManager.Instance.ActivePlayer.selectedVirtue))
@@ -59,6 +59,7 @@ public class Imagination : Power
                 if (TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Count > 0)
                 {
                     Debug.Log("Give me your virtue bitch");
+                    PlayerStatDisplay.Instance.Communication("Give me your virtue bitch");
                     TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
                     TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
                     TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
@@ -69,6 +70,7 @@ public class Imagination : Power
             {
                 TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
+                PlayerStatDisplay.Instance.Communication("YOU CAN NOT USE UR POWER JUST YET");
             }
         }
         

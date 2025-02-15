@@ -13,7 +13,7 @@ public class IdentitySurfing : Power
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            if (virtue.Count > 0)
+            if (virtue.Count == 3)
             {
                 List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
                 foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
@@ -51,12 +51,12 @@ public class IdentitySurfing : Power
     public override void Excute()
     {
         if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
-            Debug.Log("Please selecte a player u wish to use ur power on");
+            PlayerStatDisplay.Instance.Communication("Please selecte a player u wish to use ur power on");
         else
         {
             if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
             {
-                Debug.Log("Give me your power");
+                PlayerStatDisplay.Instance.Communication("Give your kingdom");
                 Kingdom TempKingdom = TurnManager.Instance.ActivePlayer.Kingdom;
                 TurnManager.Instance.ActivePlayer.Kingdom = TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom;
                 TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom = TempKingdom;

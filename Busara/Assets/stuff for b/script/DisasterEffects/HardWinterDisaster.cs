@@ -5,11 +5,13 @@ public class HardWinterDisaster : DisasterEffect
 {
     public override void Execute()
     {
-        Debug.Log("Winter has struck!!!");
+       
         string info = "";
         var (Answer, Players) = IsValid(PlayerManager.Instance.Players);
         if (Answer)
         {
+            Debug.Log("Winter has struck!!!");
+            PlayerStatDisplay.Instance.Communication("Winter has struck!!!");
             foreach (Player player in Players)
             {
                 for (int i = 0; i < player.Virtues.Count; i++)

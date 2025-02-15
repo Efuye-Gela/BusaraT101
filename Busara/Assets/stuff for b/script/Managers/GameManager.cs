@@ -26,7 +26,7 @@ public class GameManager : Manager<GameManager>
             if (resources != null && resources.Count > 0)
             {
                 if (resources.Count > 1)
-                    Debug.Log("Please select one resource only");
+                    PlayerStatDisplay.Instance.Communication("Please select one resource only");
                 else
                 {
                     resources[0].slot.EmptySlot();
@@ -48,12 +48,11 @@ public class GameManager : Manager<GameManager>
         {
             if(TurnManager.Instance.ActivePlayer == player)
                 TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
-            else
-                Debug.Log("Not your turn");
         }
         if (TurnManager.Instance.ActivePlayer != player)
         {
             TurnManager.Instance.ActivePlayer.selectedPlayer = player;
+            Debug.Log($"{player.Name} touched.");
         }
 
     }
