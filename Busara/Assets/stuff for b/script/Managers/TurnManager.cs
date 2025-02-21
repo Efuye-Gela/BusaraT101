@@ -34,7 +34,7 @@ public class TurnManager : Manager<TurnManager>
     void BeginTurn(Player player)
     {
         activePlayer = player;
-        Debug.Log("Current Turn : " + player.name);
+        Debug.Log("Current Turn : " + player.name +" Board:"+ player.Board.name);
         onTurn?.Invoke(player);
     }
 
