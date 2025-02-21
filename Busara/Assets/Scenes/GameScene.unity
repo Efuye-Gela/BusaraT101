@@ -3960,7 +3960,7 @@ MonoBehaviour:
   StatParent: {fileID: 1534698352}
   TheState: []
   consoleText: {fileID: 1198374546}
-  infoText: {fileID: 0}
+  infoText: {fileID: 393483019}
 --- !u!1 &955338073
 GameObject:
   m_ObjectHideFlags: 0
