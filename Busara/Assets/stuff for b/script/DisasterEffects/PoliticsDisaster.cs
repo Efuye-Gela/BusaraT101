@@ -8,8 +8,6 @@ public class PoliticsDisaster : DisasterEffect
     private void Start()
     {
         tempPlayers = new List<Player>(PlayerManager.Instance.Players);
-        tempPlayers.Add(tempPlayers[0]);
-        tempPlayers.Remove(tempPlayers[0]);
     }
     public override void Execute()
     {
@@ -32,14 +30,13 @@ public class PoliticsDisaster : DisasterEffect
             p2 p3 p4 p1 
 
             tempPlayers = P2,P3,P4,P1
+
+            p1 - b2 - p1
+            p2 - b3 - p2
+            p3 - b4 - p3
+            p4 - b1 - p4
                           
              */
-
-            // this is for the board side 
-            foreach (Player player in players)
-            {
-                player.Board.player = tempPlayers[player.Board.boardId];
-            }
 
             tempPlayers.Clear();
             foreach (Player player in PlayerManager.Instance.Players)
@@ -54,6 +51,13 @@ public class PoliticsDisaster : DisasterEffect
             foreach (Player player in players)
             {
                 player.Board = tempPlayers[player.Board.boardId].Board;
+            }
+
+
+            // this is for the board side 
+            foreach (Player player in players)
+            {
+                player.Board.player = player;
             }
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }

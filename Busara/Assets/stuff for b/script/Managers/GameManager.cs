@@ -8,11 +8,21 @@ public class GameManager : Manager<GameManager>
     public bool isTournament = false;
 
     public bool IsSpecialTurn = false;
+
+    public Player currentPlayer;
+
+    private void Awake()
+    {
+        setPlayer();
+    }
     void Start()
     {
         TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpacaileTurn; 
     }
-
+    private void Update()
+    {
+        setPlayer();
+    }
     private void HandleSpacaileTurn()
     {
         IsSpecialTurn = true;
@@ -55,5 +65,13 @@ public class GameManager : Manager<GameManager>
             Debug.Log($"{player.Name} touched.");
         }
 
+    }
+
+    public void setPlayer()
+    {
+        if(currentPlayer == null)
+        {
+            currentPlayer = TurnManager.Instance.ActivePlayer;
+        }
     }
 }
