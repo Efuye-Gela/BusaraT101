@@ -5,12 +5,73 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TurnManager : Manager<TurnManager>
 {
+    #region TURN BEGIN   
+
+    List<TurnBeginListener> turnBeginListeners = new List<TurnBeginListener>();
+
+    public void AddTurnBeginListeners(TurnBeginListener listener)
+    {
+        if (!turnBeginListeners.Contains(listener))
+            turnBeginListeners.Add(listener);
+    }
+
+    public void RemoveTurnBeginListener(TurnBeginListener listener)
+    {
+        if (turnBeginListeners.Contains(listener))
+            turnBeginListeners.Remove(listener);
+    }
+
+    public void TriggerTurnBeginListeners()
+    {
+        foreach (TurnBeginListener listener in turnBeginListeners.ToArray())
+        {
+            listener.OnTurnBegin();
+        }
+    }
+
+    public interface TurnBeginListener
+    {
+        void OnTurnBegin();
+        
+    }
+    #endregion
+
+    #region TURN END
+    List<TurnEndListener> turnEndListeners = new List<TurnEndListener>();
+
+    public void AddTurnEndListeners(TurnEndListener listener)
+    {
+        if (!turnEndListeners.Contains(listener))
+            turnEndListeners.Add(listener);
+    }
+
+    public void RemoveTurnEndListener(TurnEndListener listener)
+    {
+        if (turnEndListeners.Contains(listener))
+            turnEndListeners.Remove(listener);
+    }
+
+    public void TriggerTurnEndListeners()
+    {
+        foreach (TurnEndListener listener in turnEndListeners.ToArray())
+        {
+            listener.OnTurnEnd();
+        }
+    }
+    public interface TurnEndListener
+    {
+        void OnTurnEnd();
+
+    }
+    #endregion
+
+
     public Player firstPlayer;
 
     private Player activePlayer;
     public Player ActivePlayer => activePlayer;
 
-    public Action<Player> onTurn;
+    //public Action<Player> onTurn;
 
     public bool isSpecialCardDrawn = false; // Flag for special card state
     public bool returnToFirstPlayer = false; // 
@@ -33,7 +94,8 @@ public class TurnManager : Manager<TurnManager>
     {
         activePlayer = player;
         Debug.Log("Current Turn : " + player.name);
-        onTurn?.Invoke(player);
+        //onTurn?.Invoke(player);
+        TriggerTurnBeginListeners();
     }
 
     public bool HasTurn(Player player)
@@ -83,6 +145,7 @@ public class TurnManager : Manager<TurnManager>
         }
 
         Player nextPlayer = GetNextPlayer();
+        TriggerTurnEndListeners();
         EndTurn(activePlayer);
         Debug.Log("Turn Ended");
         BeginTurn(nextPlayer);
@@ -95,6 +158,7 @@ public class TurnManager : Manager<TurnManager>
 
     void EndTurn(Player player)
     {
+        SelectionManager.Instance.UnhighlightAll();
         activePlayer = null;
     }
 

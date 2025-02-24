@@ -11,7 +11,7 @@ public class VirtueUI : MonoBehaviour
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueUIre);
+            TurnManager.Instance.ActivePlayer.selectedVirtues.Add(virtueUIre);
             //when i add this to a list does it just make a copy of the referance 
         }
     }

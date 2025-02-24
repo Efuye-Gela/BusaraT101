@@ -2,20 +2,25 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, SelectionManager.SlotSelectionListener
 {
     public Board board;
     public int Index;
     public bool isOccupied;
     public Resource resource;
 
+    [SerializeField] Image highlight;
+
     public static Action<Slot> OnSlotFilled;
     public static Action<Slot> OnSlotEmptied;
 
+    private Player currentPlayer => TurnManager.Instance.ActivePlayer;
+
     private void Start()
     {
-
+        SelectionManager.Instance.AddSlotSelectionListener(this);
     }
 
     public Resource EmptySlot()
@@ -44,4 +49,24 @@ public class Slot : MonoBehaviour
         resource.slot = slot;
     }
 
+
+    public void Onselection(Slot slot)
+    {
+        slot.Highlight();  
+    }
+
+    public void OnDeselection(Slot slot)
+    {
+        slot.UnHighlight();  
+    }
+
+    public void Highlight()
+    {
+        this.highlight.gameObject.SetActive(true);
+    }
+
+    public void UnHighlight()
+    {
+        this.highlight.gameObject.SetActive(false);
+    }
 }

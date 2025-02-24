@@ -25,17 +25,17 @@ public class Imagination : Power
     }
     public override void Excute()
     {
-        if (IsVaild(TurnManager.Instance.ActivePlayer.selectedVirtue))
+        if (IsVaild(TurnManager.Instance.ActivePlayer.selectedVirtues))
         {
-            if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
+            if (TurnManager.Instance.ActivePlayer.selectedPlayers.Count > 0)
                 Debug.Log("Please selecte a player u wish to use ur power on");
             else
             {
-                if (TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Count > 0)
+                if (TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues.Count > 0)
                 {
                     Debug.Log("Give me your virtue bitch");
-                    TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
-                    TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
+                    TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues[0]);
+                    TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues[0]);
                     TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
                 }
             }

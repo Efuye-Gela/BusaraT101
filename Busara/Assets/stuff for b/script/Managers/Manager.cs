@@ -1,6 +1,7 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-public abstract class Manager : MonoBehaviour
+public abstract class Manager : SerializedMonoBehaviour
 {
     public virtual void Initialize() { }
     public virtual void AfterInitialized() { }

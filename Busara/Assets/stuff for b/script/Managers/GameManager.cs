@@ -54,11 +54,12 @@ public class GameManager : Manager<GameManager>
 
     }
 
-    public void GetPlayer(Player player)
+    public void SetSelectedPlayer(Player player)
     {
         if(TurnManager.Instance.ActivePlayer != player)
         {
-            TurnManager.Instance.ActivePlayer.selectedPlayer = player;
+            TurnManager.Instance.ActivePlayer.selectedPlayers.Add(player);
+            //TurnManager.Instance.ActivePlayer.selectedPlayer = player;
         }
         //Debug.Log(player.Name +" , "+ player.name +" , "+ player.Kingdom + " , " + player.Kingdom.power + ". ");//just for test out
     }

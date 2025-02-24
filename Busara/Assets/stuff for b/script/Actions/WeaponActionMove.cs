@@ -6,25 +6,7 @@ using UnityEngine;
 public class WeaponActionMove : MonoBehaviour
 {
     private List<Resource> tobeWeaponizedResources = new List<Resource>();
-    private void Start()
-    {
-        Draggable.OnDraggableClicked += IsValidAction;
-    }
-
-
-    private void IsValidAction(GameObject gameObject) 
-    {
-        //Resource clickedOnResource = gameObject.GetComponent<Resource>();
-        //if (clickedOnResource != null)
-        //{ 
-        //    if (!tobeWeaponizedResources.Contains(clickedOnResource))
-        //    {
-        //        tobeWeaponizedResources.Add(clickedOnResource);
-        //    }
-        //}
-
-    }
-
+    
     public void OnTapUseWeapon()
     { 
        Player currentPlayer = TurnManager.Instance.ActivePlayer;

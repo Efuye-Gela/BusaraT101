@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-public class DrawResourceActionMove : MonoBehaviour
+public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSelectionListener, SelectionManager.SlotSelectionListener
 {
     [SerializeField] Transform parentTransform;
     [SerializeField] Canvas gameCanvas;
@@ -12,9 +12,16 @@ public class DrawResourceActionMove : MonoBehaviour
     [SerializeField] private GameObject FirePrefab;
     [SerializeField] private GameObject EarthPrefab;
 
-    //[SerializeField] private List<GameObject> placeableObjects;
-
     private Resource tobePlacedResource;
+    private Resource drawnResource;
+    private Slot destinationSlot;
+    
+
+    private void Start()
+    {
+        SelectionManager.Instance.AddResourceSelectionListener(this);
+        SelectionManager.Instance.AddSlotSelectionListener(this);
+    }
 
     public void OnTapDraw()
     {
@@ -26,7 +33,7 @@ public class DrawResourceActionMove : MonoBehaviour
                 return;
             }
         }
-
+        TurnManager.Instance.ActivePlayer.hasDrawnResource = true;
         GameObject newResource;
         Card drawnCard = DeckManager.Instance.Draw();
         GameManager.Instance.lastDrawnPlayer = TurnManager.Instance.ActivePlayer;
@@ -62,8 +69,7 @@ public class DrawResourceActionMove : MonoBehaviour
 
                 newResource = Instantiate(prefabObject, parentTransform);
                 newResource.GetComponent<Draggable>().canvas = gameCanvas;
-                tobePlacedResource = newResource.GetComponent<Resource>();
-
+                drawnResource = newResource.GetComponent<Resource>();
 
             }
             else if (drawnCard.GetType() == typeof(DisasterCard))
@@ -74,28 +80,47 @@ public class DrawResourceActionMove : MonoBehaviour
             }
         }   
 
-        DropHandler.OnItemPlaced += ResourcePlaced;
+        //DropHandler.OnItemPlaced += ResourcePlaced;
         
     }
 
-    private void ResourcePlaced(Resource resource,Slot slot)
+    // for drag and drop
+    //private void ResourcePlaced(Resource resource,Slot slot)
+    //{
+    //    if (resource != null && tobePlacedResource != null)
+    //    { 
+    //        if (resource.index == tobePlacedResource.index)
+    //        {
+    //            if (TurnManager.Instance.ActivePlayer == slot.board.player)
+    //            {
+    //                Debug.Log("Resource Placed");                
+    //                resource.gameObject.transform.SetParent(slot.gameObject.transform);
+    //                resource.gameObject.transform.localPosition = Vector3.zero;
+    //                updateState(resource, slot);
+    //                tobePlacedResource = null;
+    //                destinationSlot = null;
+    //                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+    //            }
+    //        }
+    //    }
+    //}
+    private void ResourcePlaced()
     {
-        if (resource != null && tobePlacedResource != null)
-            if (resource.index == tobePlacedResource.index)
+        if (tobePlacedResource != null)
+        {
+            if (TurnManager.Instance.ActivePlayer == destinationSlot.board.player)
             {
-                if (TurnManager.Instance.ActivePlayer == slot.board.player)
-                {
-                    Debug.Log("Resource Placed");
-                    tobePlacedResource = null;
-                    updateState(resource, slot);
-                    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-                }
-                else
-                { 
-                    resource.gameObject.transform.SetParent(parentTransform);
-                    resource.gameObject.transform.localPosition = Vector3.zero;
-                }
+                Debug.Log("Resource Placed");
+                tobePlacedResource.gameObject.transform.SetParent(destinationSlot.gameObject.transform);
+                tobePlacedResource.gameObject.transform.localPosition = Vector3.zero;
+                updateState(tobePlacedResource, destinationSlot);
+                tobePlacedResource = null;
+                destinationSlot = null;
+                TurnManager.Instance.ActivePlayer.hasDrawnResource = false;
+                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
+            
+        }
     }
 
     private void updateState(Resource resource, Slot slot)
@@ -104,4 +129,40 @@ public class DrawResourceActionMove : MonoBehaviour
         slot.resource = resource;
         resource.slot = slot;
     }
+
+    public void Onselection(Resource resource)
+    {
+        if (resource == drawnResource)
+            tobePlacedResource = resource;
+        else
+            Debug.Log("Can't place this resource");
+    }
+
+    public void OnDeselection(Resource resource)
+    {
+        tobePlacedResource = null;
+    }
+
+    public void Onselection(Slot slot)
+    {
+        if (TurnManager.Instance.ActivePlayer.Board.Slots.Contains(slot))
+        {
+            destinationSlot = slot;
+            ResourcePlaced();
+        }
+        else
+        { 
+            Debug.Log("Can't place on other players Board");
+            destinationSlot = null;
+            TurnManager.Instance.ActivePlayer.selectedSlots.Remove(slot);
+        }
+
+    }
+
+    public void OnDeselection(Slot slot)
+    {
+        destinationSlot = null;
+    }
+
+    
 }

@@ -2,7 +2,16 @@ using UnityEngine;
 
 public abstract class Move : MonoBehaviour
 {
-    public MoveManager MoveManager { get; private set; }
-
-
+    [SerializeField]
+    protected GameState gameState;
+    
+    public abstract bool Validate();
+    public abstract void Execute();
+    public abstract void Undo();
+    
+    protected virtual void Start()
+    {
+        gameState = GameState.Instance;
+    }
 }
+

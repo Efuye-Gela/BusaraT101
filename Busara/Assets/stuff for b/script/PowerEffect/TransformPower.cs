@@ -29,7 +29,7 @@ public class TransformPower : Power
     {
         if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
         {
-            if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
+            if (TurnManager.Instance.ActivePlayer.selectedPlayers.Count > 0)
                 Debug.Log("Please selecte a player u wish to use ur power on");
             else
             {

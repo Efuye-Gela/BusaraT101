@@ -1,14 +1,22 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using UnityEngine.UI;
 
-public class Board : MonoBehaviour
+[Serializable]
+public class Board : MonoBehaviour,TurnManager.TurnBeginListener,TurnManager.TurnEndListener
 {
     public Player player;
     public int boardId;
     public List<Slot> Slots;
+    public Image Highlight;
 
-
+    private void Start()
+    {
+        TurnManager.Instance.AddTurnEndListeners(this);
+        TurnManager.Instance.AddTurnBeginListeners(this);
+    }
     public Slot GetSlotByIndex(int searchIndex)
     {
         return Slots.FirstOrDefault(sl => sl.Index == searchIndex);
@@ -39,5 +47,41 @@ public class Board : MonoBehaviour
                 slotsOfType.Add(slot);
         }
         return slotsOfType;
+    }
+
+    
+
+    public void HighlightBoard()
+    { 
+        Highlight.gameObject.SetActive(true);
+    }
+
+    public void UnHighlightBoard()
+    {
+        Highlight.gameObject.SetActive(false);
+    }
+
+    public void OnTurnBegin()
+    {
+        foreach (Player player in PlayerManager.Instance.Players)
+        {
+            if(TurnManager.Instance.ActivePlayer==player)
+                player.Board.HighlightBoard();
+            else
+                player.Board.UnHighlightBoard();
+
+        }   
+        
+    }
+    public void OnTurnEnd()
+    {
+        foreach (Player player in PlayerManager.Instance.Players)
+        {
+            if (TurnManager.Instance.ActivePlayer == player)
+                player.Board.HighlightBoard();
+            else
+                player.Board.UnHighlightBoard();
+
+        }
     }
 }
