@@ -13,7 +13,7 @@ public class GameManager : Manager<GameManager>
 
     private void Awake()
     {
-        setPlayer();
+        currentPlayer = TurnManager.Instance.ActivePlayer;
     }
     void Start()
     {
@@ -21,7 +21,7 @@ public class GameManager : Manager<GameManager>
     }
     private void Update()
     {
-        setPlayer();
+        currentPlayer = TurnManager.Instance.ActivePlayer;
     }
     private void HandleSpacaileTurn()
     {

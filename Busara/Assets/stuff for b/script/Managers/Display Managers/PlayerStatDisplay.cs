@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerStatDisplay : Manager<PlayerStatDisplay>
 {
     public PlayerState PlayerStat;
+    public List<PlayerState> PlayersStats;
+
     public Transform StatParent;
     public List<PlayerState> TheState;
 
@@ -51,6 +53,25 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
         if(infoText != null)
         {
             infoText.text = info;
+        }
+    }
+    void Update()
+    {
+        ProfilePanale();
+    }
+
+    public void ProfilePanale()
+    {
+        foreach(PlayerState player in PlayersStats)
+        {
+            if(player.player == TurnManager.Instance.ActivePlayer)
+            {
+                player.gameObject.SetActive(true);
+            }
+            else
+            {
+                player.gameObject.SetActive(false);
+            }
         }
     }
 }
