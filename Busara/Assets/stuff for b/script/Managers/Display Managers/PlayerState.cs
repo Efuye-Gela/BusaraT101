@@ -4,8 +4,11 @@ using TMPro;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using System.Linq;
+using Sirenix.Serialization;
+using Sirenix.OdinInspector;
 
-public class PlayerState : MonoBehaviour
+[System.Serializable]
+public class PlayerState : SerializedMonoBehaviour
 {
     public Player player;
     public TMP_Text PlayerName;
@@ -14,6 +17,7 @@ public class PlayerState : MonoBehaviour
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
     public static PlayerState instance;
+    [OdinSerialize]
     public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
 
 

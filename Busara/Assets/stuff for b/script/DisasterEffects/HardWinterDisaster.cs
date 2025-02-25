@@ -36,7 +36,7 @@ public class HardWinterDisaster : DisasterEffect
         }
         else
         {
-            Debug.Log("Broke bitches !!!");
+            PlayerStatDisplay.Instance.Communication("Broke bitches !!!");
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
 
