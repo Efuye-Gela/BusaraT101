@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 4894649679968675624}
   - component: {fileID: 3387380085736798957}
   - component: {fileID: 6177354137960272518}
-  - component: {fileID: 5390927508921662314}
+  - component: {fileID: 2433730038843291216}
   m_Layer: 5
   m_Name: ViruteCanvas
   m_TagString: Untagged
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5390927508921662314
+--- !u!114 &2433730038843291216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtueUIre: {fileID: 0}
+  virtueImage: {fileID: 8155243295152963089}
   VirtueName: {fileID: 3023089791867624974}
   NumberOFvirtues: {fileID: 5969801370418534318}
 --- !u!1 &7029384832396323923
@@ -646,7 +647,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 982719990101617383}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2433730038843291216}
+        m_TargetAssemblyTypeName: VirtueUI, Assembly-CSharp
+        m_MethodName: AddVirtue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7374209259923341311
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +671,6 @@ GameObject:
   - component: {fileID: 2753890561169976076}
   - component: {fileID: 7553719663518530243}
   - component: {fileID: 8155243295152963089}
-  - component: {fileID: 1427756387386452162}
   m_Layer: 5
   m_Name: VirtueBacground
   m_TagString: Untagged
@@ -727,62 +739,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1427756387386452162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7374209259923341311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 8155243295152963089}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5390927508921662314}
-        m_TargetAssemblyTypeName: VirtueUI, Assembly-CSharp
-        m_MethodName: Getvirtue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &7711573958329005501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1039,4 +995,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1819016250658065233}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2433730038843291216}
+        m_TargetAssemblyTypeName: VirtueUI, Assembly-CSharp
+        m_MethodName: RemoveVirtue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

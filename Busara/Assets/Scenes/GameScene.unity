@@ -2567,6 +2567,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 673272960}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 8288665892993502534, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_Spacing.x
       value: 130
@@ -4145,6 +4149,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1161211927}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 8288665892993502534, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_Spacing.x
       value: 130
@@ -4779,6 +4787,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1161211927}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 7208560359659445239, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_SizeDelta.x
       value: 2326.936
@@ -5384,6 +5396,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 794165848}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 7208560359659445239, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_SizeDelta.x
       value: 2326.936
@@ -5736,6 +5752,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 794165848}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 8288665892993502534, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_Spacing.x
       value: 130
@@ -7877,6 +7897,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 673272960}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 7208560359659445239, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_SizeDelta.x
       value: 2326.936
@@ -8159,6 +8183,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1966992603}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 7208560359659445239, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_SizeDelta.x
       value: 2326.936
@@ -8347,6 +8375,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1966992603}
+    - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: VirtuePrefab
+      value: 
+      objectReference: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
     - target: {fileID: 8288665892993502534, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_Spacing.x
       value: 130

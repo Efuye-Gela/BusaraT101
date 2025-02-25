@@ -14,6 +14,8 @@ public class PlayerState : MonoBehaviour
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
     public static PlayerState instance;
+    public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
+
 
     private void Awake()
     {
@@ -50,8 +52,6 @@ public class PlayerState : MonoBehaviour
     {
         if (player == null || player.Virtues == null || VirtueUIList == null)
             return;
-
-        Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
 
         foreach (VirtueType type in System.Enum.GetValues(typeof(VirtueType)))
         {
