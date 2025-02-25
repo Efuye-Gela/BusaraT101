@@ -43,6 +43,7 @@ public class PlayerState : MonoBehaviour
             {
                 VerNew.virtueUIre = virtue;
                 VerNew.VirtueName.text = VName;
+                VerNew.virtueImage.sprite = virtue.virtueIcon;
                 VirtueUIList.Add(VerNew);
             } 
         }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(menuName ="Virtues", fileName ="New Virtue")]
 public class Virtue : ScriptableObject
 {
-   public Image virtueIcon;
+   public Sprite virtueIcon;
     
    public VirtueType type;
    public ResourceType componentOne;
