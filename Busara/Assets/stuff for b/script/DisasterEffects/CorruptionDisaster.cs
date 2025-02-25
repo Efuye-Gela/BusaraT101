@@ -36,6 +36,7 @@ public class CorruptionDisaster : DisasterEffect
         if (TheAnswer && players != null)
         {
             Debug.Log($"So {players} were naughty!!!");
+            PlayerStatDisplay.Instance.Communication($"So {players} were naughty!!!");
             TurnManager.Instance.OnSpecialCardDrawn(false,players);
         }
         else

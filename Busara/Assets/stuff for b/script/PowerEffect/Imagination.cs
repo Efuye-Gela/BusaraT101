@@ -12,37 +12,67 @@ public class Imagination : Power
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            if (virtue.Count > 0)
+            if (virtue.Count == 3)
             {
-                virtue.Clear();
-                return (true);
+                List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
+                foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
+                {
+                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueTobeDestroyed))
+                    {
+                        virtue.Remove(virtueTobeDestroyed);
+                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueTobeDestroyed);
+                    }
+                }
+                if (virtue.Count == 0)
+                {
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                    return (true);
+                }
+                else
+                {
+
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                    return false;
+                }
             }
             else
+            {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 return (false);
+            }
         }
         else
+        {
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
             return (false);
+        }
     }
     public override void Excute()
     {
-        if (IsVaild(TurnManager.Instance.ActivePlayer.selectedVirtues))
-        {
-            if (TurnManager.Instance.ActivePlayer.selectedPlayers.Count > 0)
-                Debug.Log("Please selecte a player u wish to use ur power on");
-            else
-            {
-                if (TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues.Count > 0)
-                {
-                    Debug.Log("Give me your virtue bitch");
-                    TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues[0]);
-                    TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayers[0].Virtues[0]);
-                    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-                }
-            }
-        }
+        if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
+            PlayerStatDisplay.Instance.Communication("Please selecte a player u wish to use ur power on");
         else
         {
-            Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
+            if (IsVaild(TurnManager.Instance.ActivePlayer.selectedVirtue))
+            {
+        
+                if (TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Count > 0)
+                {
+                    Debug.Log("Give me your virtue bitch");
+                    PlayerStatDisplay.Instance.Communication("Give me your virtue bitch");
+                    TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
+                    TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
+                    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                }
+            }
+            else
+            {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
+                PlayerStatDisplay.Instance.Communication("YOU CAN NOT USE UR POWER JUST YET");
+            }
         }
+        
     }
 }

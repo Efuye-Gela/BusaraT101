@@ -12,7 +12,7 @@ public class ResourceDisaster : DisasterEffect
         foreach (Player player in allPlayers)
         {
             resourseCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
-            if (player != null && resourseCount > threshold)
+            if (player != null && resourseCount >= threshold)
             {
                 Debug.Log("You lost a resource boho");
                 resourseCount = 0;
@@ -35,8 +35,8 @@ public class ResourceDisaster : DisasterEffect
         if (TheAnswer && players != null)
         {
             Debug.Log($"So {players} sucks to be you!!!");
+            PlayerStatDisplay.Instance.Communication("Please selecte a resource for you to discard!!!");
             TurnManager.Instance.OnSpecialCardDrawn(false, players);
-            //TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
         else
         {

@@ -13,8 +13,9 @@ public class PlayerState : MonoBehaviour
     public Transform SpawnArea;
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
-
     public static PlayerState instance;
+    public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
+
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class PlayerState : MonoBehaviour
     {
         PlayerName.text = player.Name;
         VirtueDisplay();
+        GetPlayerVirtueCount();
     }
     public void Update()
     {
@@ -45,34 +47,35 @@ public class PlayerState : MonoBehaviour
             } 
         }
     }
-   
+
     public void GetPlayerVirtueCount()
     {
-       /*count = 0;*/
-        if (player != null)
+        if (player == null || player.Virtues == null || VirtueUIList == null)
+            return;
+
+        foreach (VirtueType type in System.Enum.GetValues(typeof(VirtueType)))
         {
-            if (player.Virtues.Count > 0)
+            virtueCounts[type] = 0;
+        }
+
+        foreach (Virtue virtue in player.Virtues)
+        {
+            if (virtueCounts.ContainsKey(virtue.type))
             {
-                int count = 0;
-                
-                foreach (Virtue ver in player.Virtues)
-                {
-                    foreach (VirtueUI Vui in VirtueUIList)
-                    {
-                        if(ver != null && Vui != null)
-                        {
-                            if (player.Virtues.Contains(Vui.virtueUIre))
-                            {
-                                count++;
-                                Vui.NumberOFvirtues.text = count.ToString();
-                            }   
-                        }
-                    }//find a brtter way of doing this 
-                }
+                virtueCounts[virtue.type]++;
             }
         }
 
+        foreach (VirtueUI virtueUI in VirtueUIList)
+        {
+            if (virtueUI != null && virtueUI.virtueUIre != null)
+            {
+                VirtueType virtueType = virtueUI.virtueUIre.type;
+                virtueUI.NumberOFvirtues.text = virtueCounts[virtueType].ToString();
+            }
+        }
     }
+
 
 
 }

@@ -8,11 +8,21 @@ public class GameManager : Manager<GameManager>
     public bool isTournament = false;
 
     public bool IsSpecialTurn = false;
+
+    public Player currentPlayer;
+
+    private void Awake()
+    {
+        currentPlayer = TurnManager.Instance.ActivePlayer;
+    }
     void Start()
     {
         TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpacaileTurn; 
     }
-
+    private void Update()
+    {
+        currentPlayer = TurnManager.Instance.ActivePlayer;
+    }
     private void HandleSpacaileTurn()
     {
         IsSpecialTurn = true;
@@ -26,7 +36,7 @@ public class GameManager : Manager<GameManager>
             if (resources != null && resources.Count > 0)
             {
                 if (resources.Count > 1)
-                    Debug.Log("Please select one resource only");
+                    PlayerStatDisplay.Instance.Communication("Please select one resource only");
                 else
                 {
                     resources[0].slot.EmptySlot();
@@ -42,25 +52,26 @@ public class GameManager : Manager<GameManager>
     
     }
 
-    public void OnPowerUser()
+    public void OnPowerUser(Player player)
     {
         if(TurnManager.Instance.ActivePlayer.Kingdom.power != null)
         {
-            if(TurnManager.Instance.ActivePlayer)
+            if(TurnManager.Instance.ActivePlayer == player)
                 TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
-            else
-                Debug.Log("Not your turn");
+        }
+        if (TurnManager.Instance.ActivePlayer != player)
+        {
+            TurnManager.Instance.ActivePlayer.selectedPlayer = player;
+            Debug.Log($"{player.Name} touched.");
         }
 
     }
 
-    public void SetSelectedPlayer(Player player)
+    public void setPlayer()
     {
-        if(TurnManager.Instance.ActivePlayer != player)
+        if(currentPlayer == null)
         {
-            TurnManager.Instance.ActivePlayer.selectedPlayers.Add(player);
-            //TurnManager.Instance.ActivePlayer.selectedPlayer = player;
+            currentPlayer = TurnManager.Instance.ActivePlayer;
         }
-        //Debug.Log(player.Name +" , "+ player.name +" , "+ player.Kingdom + " , " + player.Kingdom.power + ". ");//just for test out
     }
 }

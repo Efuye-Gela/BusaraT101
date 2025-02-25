@@ -10,11 +10,60 @@ public class Invisibility : Power
     }
     public override bool IsVaild(List<Virtue> virtue)
     {
-        return false;
+        if (TurnManager.Instance.ActivePlayer)
+        {
+            if (virtue.Count == 2)
+            {
+                List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
+                foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
+                {
+                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueTobeDestroyed))
+                    {
+                        virtue.Remove(virtueTobeDestroyed);
+                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueTobeDestroyed);
+                    }
+                }
+                if (virtue.Count == 0)
+                {
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                    return (true);
+                }
+                else
+                {
+
+                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                    return false;
+                }
+            }
+            else
+            {
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                return (false);
+            }
+        }
+        else
+        {
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+            return (false);
+        }
     }
     public override void Excute()
     {
-        Debug.Log($"Fear the {TurnManager.Instance.ActivePlayer.Kingdom.kingdomName} kingdom." +
-            $" we use the {TurnManager.Instance.ActivePlayer.Kingdom.power.powerName}");
+        if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
+            PlayerStatDisplay.Instance.Communication("Please selecte a player u wish to use ur power on");
+        else
+        {
+            if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
+            {
+                TurnManager.Instance.ActivePlayer.state.gameObject.SetActive(false);
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            }
+            else
+            {
+                Debug.Log("Broke bitch !!!!");
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+            }
+        }
     }
 }

@@ -19,4 +19,5 @@ public class Player : MonoBehaviour
     [Space]
     public Board Board;
     public Kingdom Kingdom;
+    public PlayerState state;
 }
