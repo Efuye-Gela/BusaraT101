@@ -223,7 +223,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Half Swirl_0: 6790389537877150822
+      Half Swirl_1: -694585106986295599
+      Half Swirl_2: 2057248485505939497
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

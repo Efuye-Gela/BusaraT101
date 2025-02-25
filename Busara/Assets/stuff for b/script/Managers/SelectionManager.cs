@@ -91,7 +91,7 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
     private List<Resource> _selectedResources => TurnManager.Instance.ActivePlayer.selectedResources;
     private List<Slot> _selectedSlots => TurnManager.Instance.ActivePlayer.selectedSlots;
     private List<Player> _selectedPlayers => TurnManager.Instance.ActivePlayer.selectedPlayers;
-    private List<Virtue> _selectedVirtues => TurnManager.Instance.ActivePlayer.selectedVirtues;
+    private List<Virtue> _selectedVirtues => TurnManager.Instance.ActivePlayer.selectedVirtue;
 
     public Action OnSelectedPlayerChanged;
     public Action OnSelectedVirtueChanged;
@@ -169,15 +169,15 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
 
     public void SelectVirtue(Virtue virtue)
     {
-        if (!currentPlayer.selectedVirtues.Contains(virtue))
-            currentPlayer.selectedVirtues.Add(virtue);
+        if (!currentPlayer.selectedVirtue.Contains(virtue))
+            currentPlayer.selectedVirtue.Add(virtue);
         OnSelectedVirtueChanged?.Invoke();
     }
 
     public void DeselectVirtue(Virtue virtue)
     {
-        if (currentPlayer.selectedVirtues.Contains(virtue))
-            currentPlayer.selectedVirtues.Remove(virtue);
+        if (currentPlayer.selectedVirtue.Contains(virtue))
+            currentPlayer.selectedVirtue.Remove(virtue);
         OnSelectedVirtueChanged?.Invoke();
     }
 

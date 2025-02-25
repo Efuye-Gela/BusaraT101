@@ -12,9 +12,10 @@ public class Player : MonoBehaviour
     [Header("Selections")]
     public List<Resource> selectedResources = new List<Resource>();
     public List<Slot> selectedSlots = new List<Slot>();
-    public List<Virtue> selectedVirtues = new List<Virtue>();
+    public List<Virtue> selectedVirtue = new List<Virtue>();
+    public Player selectedPlayer;
     public List<Player> selectedPlayers = new List<Player>();
-    public  bool hasDrawnResource = false;
+    public bool hasDrawnResource = false;
 
     [Space]
     public Board Board;
