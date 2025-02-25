@@ -7,6 +7,7 @@ using System.Linq;
 public class VirtueUI : MonoBehaviour
 {
     public Virtue virtueUIre;
+    public Player currentPlayer;
     public Image virtueImage;
     public TMP_Text VirtueName;
     public TMP_Text NumberOfvirtues;
@@ -16,7 +17,7 @@ public class VirtueUI : MonoBehaviour
     {
         if (TurnManager.Instance.ActivePlayer == null) return;
 
-        Player currentPlayer = TurnManager.Instance.ActivePlayer;
+        //Player currentPlayer = TurnManager.Instance.ActivePlayer;
         Dictionary<VirtueType, int> TempVirtue = currentPlayer.state.virtueCounts;
         if (TempVirtue.ContainsKey(virtueUIre.type) && TempVirtue[virtueUIre.type] > 0)
         {
@@ -40,7 +41,7 @@ public class VirtueUI : MonoBehaviour
     {
         if (TurnManager.Instance.ActivePlayer == null) return;
 
-        Player currentPlayer = TurnManager.Instance.ActivePlayer;
+       //Player currentPlayer = TurnManager.Instance.ActivePlayer;
 
         if (currentPlayer.selectedVirtue.Contains(virtueUIre))
         {

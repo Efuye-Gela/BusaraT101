@@ -48,6 +48,7 @@ public class PlayerState : SerializedMonoBehaviour
                 VerNew.virtueUIre = virtue;
                 VerNew.VirtueName.text = VName;
                 VerNew.virtueImage.sprite = virtue.virtueIcon;
+                VerNew.currentPlayer = player;
                 VirtueUIList.Add(VerNew);
             } 
         }

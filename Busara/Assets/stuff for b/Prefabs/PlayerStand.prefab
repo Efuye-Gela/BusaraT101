@@ -383,7 +383,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1102, y: 66}
+  m_AnchoredPosition: {x: -1163, y: 51}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3580097895213864522
@@ -1002,7 +1002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &712858357023095250
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1010,7 +1010,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4221130186974405115}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1074,9 +1074,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e40f1a7453cb541bf37f232b5a5f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: virtueCounts
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[VirtueType, Assembly-CSharp],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[VirtueType, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
   player: {fileID: 0}
   PlayerName: {fileID: 5852036247448305947}
-  VirtuePrefab: {fileID: 5390927508921662314, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
+  VirtuePrefab: {fileID: 2433730038843291216, guid: 67796ef3ea0496d43a8270485f413cb9, type: 3}
   SpawnArea: {fileID: 7208560359659445239}
   VirtuesList:
   - {fileID: 11400000, guid: f47b8d6f75c1afe43acbd572adb2f4d1, type: 2}
@@ -1627,8 +1662,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 315.92676, y: 0.0005187988}
-  m_SizeDelta: {x: 2174.146, y: 535.48}
+  m_AnchoredPosition: {x: 331.205, y: 0.0005187988}
+  m_SizeDelta: {x: 2326.936, y: 535.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1772167518249495829
 CanvasRenderer:
@@ -1688,7 +1723,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 200}
-  m_Spacing: {x: 130, y: 50}
+  m_CellSize: {x: 300, y: 300}
+  m_Spacing: {x: 60, y: 50}
   m_Constraint: 0
   m_ConstraintCount: 2

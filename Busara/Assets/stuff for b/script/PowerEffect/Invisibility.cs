@@ -50,20 +50,15 @@ public class Invisibility : Power
     }
     public override void Execute()
     {
-        if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
-            PlayerStatDisplay.Instance.Communication("Please select a player u wish to use ur power on");
+        if (IsValid(TurnManager.Instance.ActivePlayer.selectedVirtue))
+        {
+            TurnManager.Instance.ActivePlayer.state.gameObject.SetActive(false);
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+        }
         else
         {
-            if (IsValid(TurnManager.Instance.ActivePlayer.selectedVirtue))
-            {
-                TurnManager.Instance.ActivePlayer.state.gameObject.SetActive(false);
-                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-            }
-            else
-            {
-                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-            }
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
         }
     }
 }
