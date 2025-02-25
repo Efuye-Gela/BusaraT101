@@ -36,7 +36,6 @@ public class TurnManager : Manager<TurnManager>
         
     }
     #endregion
-
     #region TURN END
     List<TurnEndListener> turnEndListeners = new List<TurnEndListener>();
 
