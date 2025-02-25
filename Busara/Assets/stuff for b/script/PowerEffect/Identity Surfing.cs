@@ -9,19 +9,19 @@ public class IdentitySurfing : Power
     {
 
     }
-    public override bool IsVaild(List<Virtue> virtue)
+    public override bool IsValid(List<Virtue> virtue)
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            if (virtue.Count == 3)
+            if (virtue.Count == virtueCost)
             {
                 List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
-                foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
+                foreach (Virtue virtueToeDestroyed in tempVirtuecollection)
                 {
-                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueTobeDestroyed))
+                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueToeDestroyed))
                     {
-                        virtue.Remove(virtueTobeDestroyed);
-                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueTobeDestroyed);
+                        virtue.Remove(virtueToeDestroyed);
+                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueToeDestroyed);
                     }
                 }
                 if (virtue.Count == 0)
@@ -38,6 +38,7 @@ public class IdentitySurfing : Power
             }
             else
             {
+                Debug.Log($"You must select only {virtueCost} virtue to use this power");
                 TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 return (false);
             }
@@ -48,13 +49,13 @@ public class IdentitySurfing : Power
             return (false);
         }
     }
-    public override void Excute()
+    public override void Execute()
     {
         if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
-            PlayerStatDisplay.Instance.Communication("Please selecte a player u wish to use ur power on");
+            PlayerStatDisplay.Instance.Communication("Please select a player u wish to use ur power on");
         else
         {
-            if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
+            if (IsValid(TurnManager.Instance.ActivePlayer.Virtues))
             {
                 PlayerStatDisplay.Instance.Communication("Give your kingdom");
                 Kingdom TempKingdom = TurnManager.Instance.ActivePlayer.Kingdom;

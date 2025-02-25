@@ -57,7 +57,7 @@ public class GameManager : Manager<GameManager>
         if(TurnManager.Instance.ActivePlayer.Kingdom.power != null)
         {
             if(TurnManager.Instance.ActivePlayer == player)
-                TurnManager.Instance.ActivePlayer.Kingdom.power.Excute();
+                TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
         }
         if (TurnManager.Instance.ActivePlayer != player)
         {

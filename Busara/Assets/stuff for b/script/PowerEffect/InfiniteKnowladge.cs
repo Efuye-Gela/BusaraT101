@@ -1,26 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Power/InfiniteKnowladge")]
-public class InfiniteKnowladge : Power
+[CreateAssetMenu(menuName = "Power/InfiniteKnowledge")]
+public class InfiniteKnowledge : Power
 {
-    public InfiniteKnowladge(string powerName, string powerDescription) : base(powerName, powerDescription)
+    public InfiniteKnowledge(string powerName, string powerDescription) : base(powerName, powerDescription)
     {
 
     }
-    public override bool IsVaild(List<Virtue> virtue)
+    public override bool IsValid(List<Virtue> virtue)
     {
         if (TurnManager.Instance.ActivePlayer)
         {
-            if (virtue.Count == 1)
+            if (virtue.Count == virtueCost)
             {
                 List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
-                foreach (Virtue virtueTobeDestroyed in tempVirtuecollection)
+                foreach (Virtue virtueToeDestroyed in tempVirtuecollection)
                 {
-                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueTobeDestroyed))
+                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueToeDestroyed))
                     {
-                        virtue.Remove(virtueTobeDestroyed);
-                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueTobeDestroyed);
+                        virtue.Remove(virtueToeDestroyed);
+                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueToeDestroyed);
                     }
                 }
                 if (virtue.Count == 0)
@@ -37,6 +37,7 @@ public class InfiniteKnowladge : Power
             }
             else
             {
+                Debug.Log($"You must select only {virtueCost} virtue to use this power");
                 TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
                 return (false);
             }
@@ -47,13 +48,13 @@ public class InfiniteKnowladge : Power
             return (false);
         }
     }   
-    public override void Excute()
+    public override void Execute()
     {
         if (TurnManager.Instance.ActivePlayer.selectedPlayer == null)
-            Debug.Log("Please selecte a player u wish to use ur power on");
+            Debug.Log("Please select a player u wish to use ur power on");
         else
         {
-            if (IsVaild(TurnManager.Instance.ActivePlayer.Virtues))
+            if (IsValid(TurnManager.Instance.ActivePlayer.selectedVirtue))
             {
                 Debug.Log($"show me who you are {TurnManager.Instance.ActivePlayer.selectedPlayers[0].Kingdom.kingdomName} kingdom." +
                 $" lets see what you can use {TurnManager.Instance.ActivePlayer.selectedPlayers[0].Kingdom.power.powerName}.");
@@ -62,7 +63,6 @@ public class InfiniteKnowladge : Power
             else
             {
                 TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-                Debug.Log("YOU CAN NOT USE UR POWER JUST YET");
             }
         }
     }

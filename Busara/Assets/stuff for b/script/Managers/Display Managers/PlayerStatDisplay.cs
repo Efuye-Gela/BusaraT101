@@ -36,15 +36,15 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
         Debug.Log("your stat my lord ");
     }
 
-    public void togelStatPanel(GameObject statPanal)
+    public void toggleStatPanel(GameObject statPanel)
     {
-        if (!statPanal.activeSelf)
+        if (!statPanel.activeSelf)
         {
-            statPanal.SetActive(true);
+            statPanel.SetActive(true);
         }
         else
         {
-            statPanal.SetActive(false);
+            statPanel.SetActive(false);
         }
     }
 
@@ -57,10 +57,10 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
     }
     void Update()
     {
-        ProfilePanale();
+        ProfilePanel();
     }
 
-    public void ProfilePanale()
+    public void ProfilePanel()
     {
         foreach(PlayerState player in PlayersStats)
         {

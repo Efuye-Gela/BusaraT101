@@ -17,3 +17,4 @@ MonoBehaviour:
     \r\nplayer is about to start their turn.\r\nTake their turn for them instead,
     \r\nchoosing an action for them. You \r\nmay not use this power to force \r\nthem
     to trade."
+  virtueCost: 3

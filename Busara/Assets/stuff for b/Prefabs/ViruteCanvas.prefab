@@ -510,7 +510,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
 --- !u!114 &2433730038843291216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,7 +526,7 @@ MonoBehaviour:
   virtueUIre: {fileID: 0}
   virtueImage: {fileID: 8155243295152963089}
   VirtueName: {fileID: 3023089791867624974}
-  NumberOFvirtues: {fileID: 5969801370418534318}
+  NumberOfvirtues: {fileID: 5969801370418534318}
 --- !u!1 &7029384832396323923
 GameObject:
   m_ObjectHideFlags: 0

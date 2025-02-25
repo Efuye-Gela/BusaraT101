@@ -9,7 +9,7 @@ public class VirtueUI : MonoBehaviour
     public Virtue virtueUIre;
     public Image virtueImage;
     public TMP_Text VirtueName;
-    public TMP_Text NumberOFvirtues;
+    public TMP_Text NumberOfvirtues;
 
 
     public void AddVirtue()

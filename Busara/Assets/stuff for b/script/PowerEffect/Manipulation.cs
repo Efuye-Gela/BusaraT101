@@ -8,11 +8,11 @@ public class Manipulation : Power
     {
 
     }
-    public override bool IsVaild(List<Virtue> virtue)
+    public override bool IsValid(List<Virtue> virtue)
     {
         return (false);
     }
-    public override void Excute()
+    public override void Execute()
     {
         Debug.Log($"Fear the {TurnManager.Instance.ActivePlayer.Kingdom.kingdomName} kingdom." +
             $" we use the {TurnManager.Instance.ActivePlayer.Kingdom.power.powerName}");

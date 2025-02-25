@@ -76,7 +76,7 @@ public class PlayerState : SerializedMonoBehaviour
             if (virtueUI != null && virtueUI.virtueUIre != null)
             {
                 VirtueType virtueType = virtueUI.virtueUIre.type;
-                virtueUI.NumberOFvirtues.text = virtueCounts[virtueType].ToString();
+                virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();    
             }
         }
     }

@@ -15,3 +15,4 @@ MonoBehaviour:
   powerName: INFINITE KNOWLEDGE
   powerDescription: "COST:\r\n- Discard 1 Virtue.\r\nAnother player of your choice
     must \r\nshow you their Kingdom Card."
+  virtueCost: 1
