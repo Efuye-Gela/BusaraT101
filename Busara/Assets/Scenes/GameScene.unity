@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -2123,17 +2123,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2d0117000000730065006c00650063007400650064005200650073006f00750072006300650043006c0065006100720065006400
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: selectedResourceCleared
-      Entry: 6
-      Data: 
+    SerializationNodes: []
   forgedResources: []
   AllVirtues:
   - {fileID: 11400000, guid: f47b8d6f75c1afe43acbd572adb2f4d1, type: 2}
@@ -2188,26 +2185,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 01010b0000006d006f007600650048006900730074006f00720079002f000000000145000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e0053007400610063006b00600031005b005b004d006f00760065002c00200041007300730065006d0062006c0079002d004300530068006100720070005d005d002c0020006d00730063006f0072006c0069006200000000000600000000000000000705
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: moveHistory
-      Entry: 7
-      Data: 0|System.Collections.Generic.Stack`1[[Move, Assembly-CSharp]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
 --- !u!1001 &542130926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3511,7 +3496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -3569,7 +3554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -4866,6 +4851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerStand
       objectReference: {fileID: 0}
+    - target: {fileID: 4221130186974405115, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6451217778357213702, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: player
       value: 
@@ -5070,7 +5059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -5358,7 +5347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -5601,7 +5590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.592041, y: -60.59204}
+  m_AnchoredPosition: {x: 10.591797, y: -60.591797}
   m_SizeDelta: {x: -221.18, y: -587.278}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1534698353
@@ -5781,11 +5770,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 712858357023095250, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2806.536
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 712858357023095250, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 535.486
+      value: 550
       objectReference: {fileID: 0}
     - target: {fileID: 712858357023095250, guid: 840616ff1a6c9b84691c29fa3c01360c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6002,20 +5991,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2d01170000004f006e00530065006c006500630074006500640050006c0061007900650072004300680061006e006700650064002d01170000004f006e00530065006c00650063007400650064005600690072007400750065004300680061006e00670065006400
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: OnSelectedPlayerChanged
-      Entry: 6
-      Data: 
-    - Name: OnSelectedVirtueChanged
-      Entry: 6
-      Data: 
+    SerializationNodes: []
 --- !u!1 &1679340335
 GameObject:
   m_ObjectHideFlags: 0
@@ -6338,7 +6321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -7654,7 +7637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -12047,35 +12030,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2d010b0000005f006f0066006600650072005400750070006c0065002d010e0000005400720061006400650049006e0069007400690061007400650064002d010c0000005400720061006400650043007200650061007400650064002d010e0000005400720061006400650043006f006d0070006c0065007400650064002d01120000005400720061006400650054006f006200650043006f006d0070006c0065007400650064002d010b000000540072006100640065004600610069006c00650064002d0113000000540072006100640065004f00660066006500720043006f006d0070006c006500740065006400
     ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: _offerTuple
-      Entry: 6
-      Data: 
-    - Name: TradeInitiated
-      Entry: 6
-      Data: 
-    - Name: TradeCreated
-      Entry: 6
-      Data: 
-    - Name: TradeCompleted
-      Entry: 6
-      Data: 
-    - Name: TradeTobeCompleted
-      Entry: 6
-      Data: 
-    - Name: TradeFailed
-      Entry: 6
-      Data: 
-    - Name: TradeOfferCompleted
-      Entry: 6
-      Data: 
+    SerializationNodes: []
   tobeTradedOutResources: []
   tobeTradedInResources: 
   acceptedPlayers: []

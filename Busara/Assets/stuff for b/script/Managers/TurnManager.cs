@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TurnManager : Manager<TurnManager>
 {
@@ -73,7 +72,7 @@ public class TurnManager : Manager<TurnManager>
     public bool isSpecialCardDrawn = false; // Flag for special card state
     public bool returnToFirstPlayer = false; // 
     private List<Player> specialActionList; //
-    Player lastSeqentialPlayer = null;
+    Player lastSequentialPlayer = null;
 
     public GameObject WonScreen;
     public event Action OnSpecialCardDrawnEvent;
@@ -127,11 +126,11 @@ public class TurnManager : Manager<TurnManager>
                 if (returnToFirstPlayer)
                 { 
                     returnToFirstPlayer = false;
-                    BeginTurn(lastSeqentialPlayer);
+                    BeginTurn(lastSequentialPlayer);
                 }
                 else
                 { 
-                    activePlayer = lastSeqentialPlayer;
+                    activePlayer = lastSequentialPlayer;
                     Player nextNormalPlayer = GetNextPlayer();
                     BeginTurn(nextNormalPlayer);
                 }
@@ -164,7 +163,7 @@ public class TurnManager : Manager<TurnManager>
     // Triggered when a special card is drawn
     public void OnSpecialCardDrawn(bool _returnToFirstPlayer,List<Player> players)
     {
-        lastSeqentialPlayer = activePlayer;
+        lastSequentialPlayer = activePlayer;
         returnToFirstPlayer = _returnToFirstPlayer;
         Debug.Log("Special Action to be Performed.");
         isSpecialCardDrawn = true;

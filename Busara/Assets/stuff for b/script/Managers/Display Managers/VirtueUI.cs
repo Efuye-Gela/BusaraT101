@@ -41,7 +41,7 @@ public class VirtueUI : MonoBehaviour
     {
         if (TurnManager.Instance.ActivePlayer == null) return;
 
-       //Player currentPlayer = TurnManager.Instance.ActivePlayer;
+       //sPlayer currentPlayer = TurnManager.Instance.ActivePlayer;
 
         if (currentPlayer.selectedVirtue.Contains(virtueUIre))
         {
