@@ -6,7 +6,6 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TurnManager : Manager<TurnManager>
 {
-    #region TURN BEGIN   
 
     List<TurnBeginListener> turnBeginListeners = new List<TurnBeginListener>();
 
@@ -35,8 +34,6 @@ public class TurnManager : Manager<TurnManager>
         void OnTurnBegin();
         
     }
-    #endregion
-    #region TURN END
     List<TurnEndListener> turnEndListeners = new List<TurnEndListener>();
 
     public void AddTurnEndListeners(TurnEndListener listener)
@@ -63,7 +60,7 @@ public class TurnManager : Manager<TurnManager>
         void OnTurnEnd();
 
     }
-    #endregion
+
 
 
     public Player firstPlayer;
