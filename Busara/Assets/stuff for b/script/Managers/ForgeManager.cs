@@ -1,13 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
-using static UnityEditor.Experimental.GraphView.GraphView;
-using System.Linq;
 using System;
 
 public class ForgeManager : Manager<ForgeManager>
 {
     public List<Resource> forgedResources = new List<Resource>();
-    List<Player> playersReceiveingVirtues = new List<Player>();
     List<Virtue> forgedVirtues = new List<Virtue>();
 
     public List<Virtue> AllVirtues;
@@ -28,7 +25,7 @@ public class ForgeManager : Manager<ForgeManager>
 
         forgedResources.Clear();
 
-        
+
         foreach (var selectedResource in selectedResources)
         {
             resourceList.Add(selectedResource);
@@ -44,6 +41,7 @@ public class ForgeManager : Manager<ForgeManager>
         }
 
         // Process items using a for loop
+        List<Player> receivingPlayers = new List<Player>();
         for (int i = 0; i < resourceList.Count - 1; i++)
         {
             Resource firstResource = resourceList[i];
@@ -54,24 +52,21 @@ public class ForgeManager : Manager<ForgeManager>
 
             Virtue forgedVirtue = CheckForgeCombination(firstResource, secondResource);
             if (forgedVirtue != null)
-            { 
-                UpdateForgeStatus(firstResource, secondResource);
+            {
+                UpdateForgeStatus(firstResource, secondResource, receivingPlayers, forgedVirtue);
                 forgedVirtues.Add(forgedVirtue);
-                if(!tobeRemovedResources.Contains(firstResource))
+                if (!tobeRemovedResources.Contains(firstResource))
                     tobeRemovedResources.Add(firstResource);
-                if(!tobeRemovedResources.Contains(secondResource))
+                if (!tobeRemovedResources.Contains(secondResource))
                     tobeRemovedResources.Add(secondResource);
             }
-                
+
             else
                 Debug.Log("Combination does not exist, moving to the next item.");
         }
-        GiveForges(playersReceiveingVirtues, forgedVirtues);
         RemoveForgedResources(tobeRemovedResources);
         TurnManager.Instance.ActivePlayer.selectedResources.Clear();
         selectedResourceCleared?.Invoke();
-        //Draggable.selectedResourcesChanged?.Invoke();
-        playersReceiveingVirtues.Clear();
         forgedVirtues.Clear();
         return true;
     }
@@ -94,28 +89,30 @@ public class ForgeManager : Manager<ForgeManager>
         return null;
     }
 
-    private void UpdateForgeStatus(Resource firstResource, Resource secondResource)
+    private void UpdateForgeStatus(Resource firstResource, Resource secondResource, List<Player> receivingPlayers, Virtue virtue)
     {
-        if (!playersReceiveingVirtues.Contains(firstResource.slot.board.player))
-            playersReceiveingVirtues.Add(firstResource.slot.board.player);
-        if (!playersReceiveingVirtues.Contains(secondResource.slot.board.player))
-            playersReceiveingVirtues.Add(secondResource.slot.board.player);
+        if (receivingPlayers.Count == 0)
+        {
+            receivingPlayers.Add(firstResource.slot.board.player);
+            receivingPlayers.Add(secondResource.slot.board.player);
 
-
-        //foreach (Player player in PlayerManager.Instance.Players)
-        //{
-        //    if (player.Board.Slots.Contains(firstResource.slot))
-        //        playersReceiveingVirtues.Add(player);
-        //    else if (player.Board.Slots.Contains(secondResource.slot))
-        //        playersReceiveingVirtues.Add(player);
-        //}
-
-        //foreach (Player player in playersReceiveingVirtues)
-        //{
-        //    player.Virtues.Add(forgedVirtue);
-        //}
+        }
+        else
+        {
+            AddVirtueReceivingPlayers(firstResource.slot.board.player, receivingPlayers);
+            AddVirtueReceivingPlayers(secondResource.slot.board.player, receivingPlayers);
+        }
+        
+        GiveForges(receivingPlayers, virtue);
 
     }
+
+    private void AddVirtueReceivingPlayers(Player player, List<Player> receivingPlayers)
+    {
+        if (!receivingPlayers.Contains(player))
+            receivingPlayers.Add(player);
+    }
+
 
     private void RemoveForgedResources(List<Resource> resources)
     {
@@ -126,16 +123,11 @@ public class ForgeManager : Manager<ForgeManager>
         }
     }
 
-    private void GiveForges(List<Player> players, List<Virtue> virtues)
+    private void GiveForges(List<Player> players, Virtue virtue)
     {
         foreach (var player in players)
         {
-            foreach (var virtue in virtues)
-            {
-                player.Virtues.Add(virtue);
-            }
+            player.Virtues.Add(virtue);
         }
     }
-
-
 }
