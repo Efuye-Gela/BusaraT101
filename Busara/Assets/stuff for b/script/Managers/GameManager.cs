@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : Manager<GameManager>
 {
@@ -74,14 +73,5 @@ public class GameManager : Manager<GameManager>
         {
             currentPlayer = TurnManager.Instance.ActivePlayer;
         }
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
-    }
-    public void Load(int index)
-    {
-      SceneManager.LoadScene(index);
     }
 }
