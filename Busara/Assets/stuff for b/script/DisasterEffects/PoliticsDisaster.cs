@@ -42,18 +42,18 @@ public class PoliticsDisaster : DisasterEffect
                 Destroy(player.gameObject);
             }
 
-            tempBoardCollection = new List<GameObject>(BoardCollection);
-            tempBoardCollection.Add(tempBoardCollection[0]);
-            tempBoardCollection.Remove(tempBoardCollection[0]);
-            foreach(GameObject board in BoardCollection)
-            {
-                Destroy(board.gameObject);
-            }
+            //tempBoardCollection = new List<GameObject>(BoardCollection);
+            //tempBoardCollection.Add(tempBoardCollection[0]);
+            //tempBoardCollection.Remove(tempBoardCollection[0]);
+            //foreach(GameObject board in BoardCollection)
+            //{
+            //    Destroy(board.gameObject);
+            //}
 
-            foreach(GameObject board in tempBoardCollection)
-            {
-               Instantiate(board, BoardPosition);
-            }
+            //foreach(GameObject board in tempBoardCollection)
+            //{
+            //   Instantiate(board, BoardPosition);
+            //}
 
             tempPlayers.Clear();
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
