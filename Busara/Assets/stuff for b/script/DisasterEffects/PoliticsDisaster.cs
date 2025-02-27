@@ -4,10 +4,6 @@ using UnityEngine.UIElements;
 
 public class PoliticsDisaster : DisasterEffect
 {
-    public RectTransform BoardHolder;
-    public List<GameObject> BoardCollection;
-    public List<GameObject> tempBoardCollection;
-    public Transform BoardPosition;
     private void Start()
     {
     }
@@ -42,19 +38,6 @@ public class PoliticsDisaster : DisasterEffect
                 Destroy(player.gameObject);
             }
 
-            tempBoardCollection = new List<GameObject>(BoardCollection);
-            tempBoardCollection.Add(tempBoardCollection[0]);
-            tempBoardCollection.Remove(tempBoardCollection[0]);
-            foreach(GameObject board in BoardCollection)
-            {
-                Destroy(board.gameObject);
-            }
-
-            foreach(GameObject board in tempBoardCollection)
-            {
-               Instantiate(board, BoardPosition);
-            }
-
             tempPlayers.Clear();
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
@@ -71,5 +54,9 @@ public class PoliticsDisaster : DisasterEffect
             return (true, PlayerManager.Instance.Players);
         else
             return (false, PlayerManager.Instance.Players);
+    }
+    public void BoardMovement()
+    {
+
     }
 }

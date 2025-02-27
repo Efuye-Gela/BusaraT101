@@ -17,13 +17,13 @@ public class GameManager : Manager<GameManager>
     }
     void Start()
     {
-        TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpacaileTurn; 
+        TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpecialTurn; 
     }
     private void Update()
     {
         currentPlayer = TurnManager.Instance.ActivePlayer;
     }
-    private void HandleSpacaileTurn()
+    private void HandleSpecialTurn()
     {
         IsSpecialTurn = true;
     }
