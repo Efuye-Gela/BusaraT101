@@ -57,8 +57,10 @@ public class GameManager : Manager<GameManager>
     {
         if(TurnManager.Instance.ActivePlayer.Kingdom.power != null)
         {
-            if(TurnManager.Instance.ActivePlayer == player)
+            if (TurnManager.Instance.ActivePlayer == player && TurnManager.Instance.ActivePlayer.Virtues.Count > 0)
                 TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
+            else
+                PlayerStatDisplay.Instance.Communication("You do not have enough virtue !");
         }
         if (TurnManager.Instance.ActivePlayer != player)
         {

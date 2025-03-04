@@ -13,6 +13,7 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
 
     public TMP_Text consoleText;
     public TMP_Text infoText;
+    public GameObject infoPanel;
 
     private void OnEnable()
     {
@@ -52,6 +53,7 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
     {
         if(infoText != null)
         {
+            infoPanel.gameObject.SetActive(true);
             infoText.text = info;
         }
     }
