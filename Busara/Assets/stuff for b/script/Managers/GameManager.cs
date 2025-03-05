@@ -59,10 +59,8 @@ public class GameManager : Manager<GameManager>
         {
             if (TurnManager.Instance.ActivePlayer == player)
             {
-                if(PowerVerification(TurnManager.Instance.ActivePlayer.selectedVirtue, TurnManager.Instance.ActivePlayer.Kingdom.power.virtueCost, player))
+                if(PowerVerification(player))
                     TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
-                else
-                    PlayerStatDisplay.Instance.Communication("You do not have enough virtue!!!");
             }
             else if (TurnManager.Instance.ActivePlayer != player)
             {
@@ -85,13 +83,38 @@ public class GameManager : Manager<GameManager>
         SceneManager.LoadScene(index);
     }
 
-    public bool PowerVerification(List<Virtue> virtue , int virtueCost, Player player)
+    public bool PowerVerification(Player player)
     {
-       if(player.Virtues.Count > 0)
-        {
+       if(player.Virtues.Count >= player.Kingdom.power.virtueCost)
+       {
+            int count = player.Kingdom.power.virtueCost;
+            if (!player.selectedPlayer)
+            {
+                PlayerStatDisplay.Instance.Communication("please select a player");
+                return false;
+            }
+            if(player.selectedVirtue.Count <= player.Kingdom.power.virtueCost)
+            {
+                PlayerStatDisplay.Instance.Communication($"please select {player.Kingdom.power.virtueCost} virtues!!");
+                return false;
+            }
+            foreach(Virtue virtue in player.selectedVirtue)
+            {
+                if(count > 0)
+                {
+                    player.Virtues.Remove(virtue);
+                    player.selectedVirtue.Remove(virtue);
+                    count--;
+                }   
+            }
             return true;
         }
-       else
+        else
+        {
+            PlayerStatDisplay.Instance.Communication("You do not have enough virtue!!!");
+            player.selectedVirtue.Clear();
             return false;
+        }
+            
     }
 }
