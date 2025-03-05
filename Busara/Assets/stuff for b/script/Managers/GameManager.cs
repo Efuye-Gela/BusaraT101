@@ -54,20 +54,22 @@ public class GameManager : Manager<GameManager>
     }
 
     public void OnPowerUser(Player player)
-    {
-        if(TurnManager.Instance.ActivePlayer.Kingdom.power != null)
+    { 
+        if (TurnManager.Instance.ActivePlayer != null && player != null)
         {
-            if (TurnManager.Instance.ActivePlayer == player && TurnManager.Instance.ActivePlayer.Virtues.Count > 0)
-                TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
-            else
-                PlayerStatDisplay.Instance.Communication("You do not have enough virtue !");
+            if (TurnManager.Instance.ActivePlayer == player)
+            {
+                if(PowerVerification(TurnManager.Instance.ActivePlayer.selectedVirtue, TurnManager.Instance.ActivePlayer.Kingdom.power.virtueCost, player))
+                    TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
+                else
+                    PlayerStatDisplay.Instance.Communication("You do not have enough virtue!!!");
+            }
+            else if (TurnManager.Instance.ActivePlayer != player)
+            {
+                TurnManager.Instance.ActivePlayer.selectedPlayer = player;
+                Debug.Log($"{player.Name} has been selected.");
+            }
         }
-        if (TurnManager.Instance.ActivePlayer != player)
-        {
-            TurnManager.Instance.ActivePlayer.selectedPlayer = player;
-            Debug.Log($"{player.Name} touched.");
-        }
-
     }
 
     public void setPlayer()
@@ -81,5 +83,15 @@ public class GameManager : Manager<GameManager>
     public void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
+    }
+
+    public bool PowerVerification(List<Virtue> virtue , int virtueCost, Player player)
+    {
+       if(player.Virtues.Count > 0)
+        {
+            return true;
+        }
+       else
+            return false;
     }
 }

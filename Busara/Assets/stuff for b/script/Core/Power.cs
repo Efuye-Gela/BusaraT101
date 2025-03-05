@@ -19,4 +19,5 @@ public abstract class Power : ScriptableObject
     public abstract bool IsValid(List<Virtue> virtue);
     public abstract void Execute();
 
+
 }
