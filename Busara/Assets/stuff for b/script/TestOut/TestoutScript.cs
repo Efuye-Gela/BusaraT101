@@ -5,12 +5,7 @@ public class TestoutScript : MonoBehaviour
 {
     [SerializeField]
       Virtue SpannableVirtue;
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
 

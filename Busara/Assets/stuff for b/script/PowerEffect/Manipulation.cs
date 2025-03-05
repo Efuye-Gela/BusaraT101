@@ -8,10 +8,7 @@ public class Manipulation : Power
     {
 
     }
-    public override bool IsValid(List<Virtue> virtue)
-    {
-        return (false);
-    }
+
     public override void Execute()
     {
         Debug.Log($"Fear the {TurnManager.Instance.ActivePlayer.Kingdom.kingdomName} kingdom." +

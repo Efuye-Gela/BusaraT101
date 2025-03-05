@@ -59,7 +59,7 @@ public class GameManager : Manager<GameManager>
         {
             if (TurnManager.Instance.ActivePlayer == player)
             {
-                if(PowerVerification(player))
+                if(Power.PowerVerification(player))
                     TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
             }
             else if (TurnManager.Instance.ActivePlayer != player)
@@ -83,38 +83,5 @@ public class GameManager : Manager<GameManager>
         SceneManager.LoadScene(index);
     }
 
-    public bool PowerVerification(Player player)
-    {
-       if(player.Virtues.Count >= player.Kingdom.power.virtueCost)
-       {
-            int count = player.Kingdom.power.virtueCost;
-            if (!player.selectedPlayer)
-            {
-                PlayerStatDisplay.Instance.Communication("please select a player");
-                return false;
-            }
-            if(player.selectedVirtue.Count <= player.Kingdom.power.virtueCost)
-            {
-                PlayerStatDisplay.Instance.Communication($"please select {player.Kingdom.power.virtueCost} virtues!!");
-                return false;
-            }
-            foreach(Virtue virtue in player.selectedVirtue)
-            {
-                if(count > 0)
-                {
-                    player.Virtues.Remove(virtue);
-                    player.selectedVirtue.Remove(virtue);
-                    count--;
-                }   
-            }
-            return true;
-        }
-        else
-        {
-            PlayerStatDisplay.Instance.Communication("You do not have enough virtue!!!");
-            player.selectedVirtue.Clear();
-            return false;
-        }
-            
-    }
 }
+    
