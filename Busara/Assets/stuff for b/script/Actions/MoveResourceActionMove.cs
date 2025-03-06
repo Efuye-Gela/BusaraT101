@@ -27,10 +27,11 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
             {
                 if (availableSlots.Contains(targetSlot))
                 {
-                    Slot.OccupySlot(targetSlot, tobeMovedResource);
-                    tobeMovedResource.gameObject.transform.SetParent(targetSlot.gameObject.transform);
-                    tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;                       
-                    Slot.EmptySlotByResource(tobeMovedResource);
+                    //Slot.OccupySlot(targetSlot, tobeMovedResource);
+                    //tobeMovedResource.gameObject.transform.SetParent(targetSlot.gameObject.transform);
+                    //tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;                       
+                    //Slot.EmptySlotByResource(tobeMovedResource);
+                    Board.MoveResource(tobeMovedResource, targetSlot);
                     UnHighlightAvailableSlots(availableSlots);
                     availableSlots.Clear();
                     TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);

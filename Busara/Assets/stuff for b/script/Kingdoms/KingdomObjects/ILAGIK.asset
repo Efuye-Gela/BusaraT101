@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1460eebbc7ea6e849afc721be54781b9, type: 3}
+  m_Name: ILAGIK
+  m_EditorClassIdentifier: 
+  kingdomName: ILAGIK
+  kingdomStory: The ILAGIK Kingdom dates back centuries ago in Rwanda, Between 10th
+    and 17th century. It is known for its interesting places and king Ruganzu, famous
+    for being a warrior, conqueror and mostly for having super powers, the reason
+    he was known as the King of Miracles.
+  power: {fileID: 0}
+  virtuesForWin:
+  - NumberofVirtues: 4
+    virtues: {fileID: 11400000, guid: 4624248e70a74634fb80c182de553610, type: 2}
+  - NumberofVirtues: 3
+    virtues: {fileID: 11400000, guid: 275b91d0a3e6ed64ab870dcc566413d9, type: 2}
+  - NumberofVirtues: 2
+    virtues: {fileID: 11400000, guid: 74d3f1677f21caa49a85fe7ed00d50df, type: 2}

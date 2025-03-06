@@ -8,6 +8,11 @@ public class BoardManager : Manager<BoardManager>
 {
     public List<Board> gameBoards;
     public static List<Slot> slots = new List<Slot>();
+    [Space]
+    [SerializeField] private GameObject AirPrefab;
+    [SerializeField] private GameObject WaterPrefab;
+    [SerializeField] private GameObject FirePrefab;
+    [SerializeField] private GameObject EarthPrefab;
 
     private void Start()
     {
@@ -60,5 +65,123 @@ public class BoardManager : Manager<BoardManager>
         return neighbors;
     }
 
+   
+    public void SaveGameState()
+    {
+        System.Text.StringBuilder state = new System.Text.StringBuilder();
 
+        foreach (var board in gameBoards)
+        {
+            foreach (var slot in board.Slots)
+            {
+                if (!slot.isOccupied)
+                {
+                    state.Append('0');
+                }
+                else
+                {
+                    switch (slot.resource.resourceType)
+                    {
+                        case ResourceType.Fire:
+                            state.Append('1');
+                            break;
+                        case ResourceType.Air:
+                            state.Append('2');
+                            break;
+                        case ResourceType.Water:
+                            state.Append('3');
+                            break;
+                        case ResourceType.Earth:
+                            state.Append('4');
+                            break;
+                    }
+                }
+            }
+        }
+
+        PlayerPrefs.SetString("BoardState", state.ToString());
+        PlayerPrefs.Save();
+        Debug.Log("Game state saved: " + state.ToString());
+    }
+
+    public void LoadGameState()
+    {
+        if (!PlayerPrefs.HasKey("BoardState"))
+        {
+            Debug.Log("No saved game state found!");
+            return;
+        }
+
+        string state = PlayerPrefs.GetString("BoardState");
+        if (state.Length != 64)  // Validate state length
+        {
+            Debug.LogError("Invalid save state length!");
+            return;
+        }
+
+        // Clear existing resources
+        foreach (var board in gameBoards)
+        {
+            foreach (var slot in board.Slots)
+            {
+                if (slot.resource != null)
+                {
+                    Destroy(slot.resource.gameObject);
+                    slot.resource = null;
+                    slot.isOccupied = false;
+                }
+            }
+        }
+
+        // Load saved state
+        int stateIndex = 0;
+        foreach (var board in gameBoards)
+        {
+            foreach (var slot in board.Slots)
+            {
+                char resourceChar = state[stateIndex++];
+                if (resourceChar != '0')
+                {
+                    ResourceType type = ResourceType.Fire; // Default initialization
+                    switch (resourceChar)
+                    {
+                        case '1': type = ResourceType.Fire; break;
+                        case '2': type = ResourceType.Air; break;
+                        case '3': type = ResourceType.Water; break;
+                        case '4': type = ResourceType.Earth; break;
+                    }
+                    GameObject prefabObject = null;
+                    switch (type)
+                    {
+                        case ResourceType.Water:
+                            prefabObject = WaterPrefab;
+                            break;
+                        case ResourceType.Earth:
+                            prefabObject = EarthPrefab;
+                            break;
+                        case ResourceType.Fire:
+                            prefabObject = FirePrefab;
+                            break;
+                        case ResourceType.Air:
+                            prefabObject = AirPrefab;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //newResource = Instantiate(prefabObject, parentTransform);
+                    //GameObject resourcePrefab = GetResourcePrefab(type);
+                    if (prefabObject != null)
+                    {
+                        GameObject resourceObj = Instantiate(prefabObject, slot.transform);
+                        resourceObj.transform.localPosition = Vector3.zero;
+                        Resource resource = resourceObj.GetComponent<Resource>();
+                        Board.PlaceResource(resource, slot);
+                    }
+                }
+            }
+        }
+        Debug.Log("Game state loaded!");
+    }
+    
 }

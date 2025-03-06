@@ -111,12 +111,14 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
             if (TurnManager.Instance.ActivePlayer == destinationSlot.board.player)
             {
                 Debug.Log("Resource Placed");
-                tobePlacedResource.gameObject.transform.SetParent(destinationSlot.gameObject.transform);
-                tobePlacedResource.gameObject.transform.localPosition = Vector3.zero;
-                updateState(tobePlacedResource, destinationSlot);
-                tobePlacedResource = null;
-                destinationSlot = null;
+                //tobePlacedResource.gameObject.transform.SetParent(destinationSlot.gameObject.transform);
+                //tobePlacedResource.gameObject.transform.localPosition = Vector3.zero;
+                //updateState(tobePlacedResource, destinationSlot);
+                //tobePlacedResource = null;
+                //destinationSlot = null;
+                Board.PlaceResource(tobePlacedResource, destinationSlot);
                 TurnManager.Instance.ActivePlayer.hasDrawnResource = false;
+                BoardManager.Instance.SaveGameState();
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
             

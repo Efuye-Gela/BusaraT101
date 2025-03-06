@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 
 [Serializable]
-public class Board : MonoBehaviour,TurnManager.TurnBeginListener,TurnManager.TurnEndListener
+public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.TurnEndListener
 {
     public Player player;
     public int boardId;
@@ -49,7 +49,24 @@ public class Board : MonoBehaviour,TurnManager.TurnBeginListener,TurnManager.Tur
         return slotsOfType;
     }
 
-    
+    public static void MoveResource(Resource tobeMovedResource, Slot targetSlot)
+    {
+        Slot.OccupySlot(targetSlot, tobeMovedResource);
+        tobeMovedResource.gameObject.transform.SetParent(targetSlot.gameObject.transform);
+        tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;
+        Slot.EmptySlotByResource(tobeMovedResource);
+    }
+
+    public static void PlaceResource(Resource tobePlacedResource, Slot destinationSlot)
+    {
+        tobePlacedResource.gameObject.transform.SetParent(destinationSlot.gameObject.transform);
+        tobePlacedResource.gameObject.transform.localPosition = Vector3.zero;
+        destinationSlot.isOccupied = true;
+        destinationSlot.resource = tobePlacedResource;
+        tobePlacedResource.slot = destinationSlot;
+        tobePlacedResource = null;
+        destinationSlot = null;
+    }
 
     public void HighlightBoard()
     { 
