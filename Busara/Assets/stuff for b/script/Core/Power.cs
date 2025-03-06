@@ -17,28 +17,24 @@ public abstract class Power : ScriptableObject
     }
     public static bool PowerVerification(Player player)
     {
-        if (player.Virtues.Count >= player.Kingdom.power.virtueCost)
+        if (player.selectedVirtue.Count >= player.Kingdom.power.virtueCost)
         {
             if (!player.selectedPlayer)
             {
                 PlayerStatDisplay.Instance.Communication("please select a player");
                 return false;
             }
-            if (player.selectedVirtue.Count < player.Kingdom.power.virtueCost)
-            {
-                PlayerStatDisplay.Instance.Communication($"please select {player.Kingdom.power.virtueCost} virtues!!");
-                return false;
-            }
             return true;
         }
         else
         {
-            PlayerStatDisplay.Instance.Communication("You do not have enough virtue!!!");
+            PlayerStatDisplay.Instance.Communication($"please select {player.Kingdom.power.virtueCost} virtues!!!");
             player.selectedVirtue.Clear();
             return false;
         }
 
     }
+    public abstract bool IsValid();
     public abstract void Execute();
 
 

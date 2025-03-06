@@ -26,6 +26,9 @@ public class VirtueUI : MonoBehaviour
             {
                 currentPlayer.selectedVirtue.Add(virtueUIre);
                 Debug.Log($"Virtue {virtueUIre.name} added to selected virtues.");
+
+                Debug.Log($"Virtue selected {currentPlayer.selectedVirtue.Count}.");
+
             }
             else
             {

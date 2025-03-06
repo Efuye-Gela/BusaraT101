@@ -9,14 +9,35 @@ public class IdentitySurfing : Power
     {
 
     }
-  
+    public override bool IsValid()
+    {
+        Player TemPlayer = TurnManager.Instance.ActivePlayer;
+
+        List<Virtue> virtuesToRemove = new List<Virtue>(TemPlayer.selectedVirtue);
+        int count = TemPlayer.Kingdom.power.virtueCost;
+        foreach (Virtue virtue in virtuesToRemove)
+        {
+            if (count > 0)
+            {
+                TemPlayer.Virtues.Remove(virtue);
+                TemPlayer.selectedVirtue.Remove(virtue);
+                count--;
+            }
+        }
+        return true;
+    }
+
     public override void Execute()
     {
-        PlayerStatDisplay.Instance.Communication("Give your kingdom");
-        Kingdom TempKingdom = TurnManager.Instance.ActivePlayer.Kingdom;
-        TurnManager.Instance.ActivePlayer.Kingdom = TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom;
-        TurnManager.Instance.ActivePlayer.selectedPlayer.Kingdom = TempKingdom;
-        TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-        TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+        Player TemPlayer = TurnManager.Instance.ActivePlayer;
+        if (IsValid())
+        {
+            PlayerStatDisplay.Instance.Communication("Give your kingdom");
+            Kingdom TempKingdom = TemPlayer.Kingdom;
+            TemPlayer.Kingdom = TemPlayer.selectedPlayer.Kingdom;
+            TemPlayer.selectedPlayer.Kingdom = TempKingdom;
+            TurnManager.Instance.CompleteTurn(TemPlayer);
+        }
     }
+
 }

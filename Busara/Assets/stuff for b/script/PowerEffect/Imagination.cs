@@ -8,30 +8,41 @@ public class Imagination : Power
     {
 
     }
-    public override void Execute()
+    public override bool IsValid()
     {
-        if (TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Count == 0)
+        Player TemPlayer = TurnManager.Instance.ActivePlayer;
+        if (TemPlayer.selectedPlayer.Virtues.Count == 0)
         {
             PlayerStatDisplay.Instance.Communication("player does not contain any virtue");
-            return;
+            return false;
         }
-        List<Virtue> virtuesToRemove = new List<Virtue>(TurnManager.Instance.ActivePlayer.selectedVirtue);
-        int count = TurnManager.Instance.ActivePlayer.Kingdom.power.virtueCost;
+        
+        List<Virtue> virtuesToRemove = new List<Virtue>(TemPlayer.selectedVirtue);
+        int count = TemPlayer.Kingdom.power.virtueCost;
         foreach (Virtue virtue in virtuesToRemove)
         {
             if (count > 0)
             {
-                TurnManager.Instance.ActivePlayer.Virtues.Remove(virtue);
-                TurnManager.Instance.ActivePlayer.selectedVirtue.Remove(virtue);
+                TemPlayer.Virtues.Remove(virtue);
+                TemPlayer.selectedVirtue.Remove(virtue);
                 count--;
             }
         }
-        Debug.Log($"Player {TurnManager.Instance.ActivePlayer.Name} has taken {TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0].name} " +
-            $"virtue from {TurnManager.Instance.ActivePlayer.selectedPlayer.Name}");
-        TurnManager.Instance.ActivePlayer.Virtues.Add(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
-        TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues.Remove(TurnManager.Instance.ActivePlayer.selectedPlayer.Virtues[0]);
-        TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-        TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
+        return true;
+    }
+    public override void Execute()
+    {
+        if (IsValid())
+        {
+            Player TemPlayer = TurnManager.Instance.ActivePlayer;
+            Debug.Log($" {TemPlayer.name} has taken {TemPlayer.selectedPlayer.Virtues[0].name} " +
+            $"virtue from {TemPlayer.selectedPlayer.name}");
+
+            TemPlayer.Virtues.Add(TemPlayer.selectedPlayer.Virtues[0]);
+            TemPlayer.selectedPlayer.Virtues.Remove(TemPlayer.selectedPlayer.Virtues[0]);
+            TurnManager.Instance.CompleteTurn(TemPlayer);
+        }
+
     }
 }
     

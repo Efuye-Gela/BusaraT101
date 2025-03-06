@@ -48,7 +48,7 @@ public class GameManager : Manager<GameManager>
         }
         else
         {
-            Debug.Log("only on specail turn");
+            Debug.Log("only on special turn");
         }
     
     }
