@@ -25,7 +25,7 @@ public class BlessingOfPlenty : Power, SelectionManager.ResourceSelectionListene
     public override void Execute()
     {
 
-        if (IsValid(TurnManager.Instance.ActivePlayer.selectedVirtue))
+        if (IsValid())
         {
             List<Slot> occupiedSlots = TurnManager.Instance.ActivePlayer.Board.GetOccupiedSlots();
             foreach (Slot slot in occupiedSlots)
@@ -80,45 +80,22 @@ public class BlessingOfPlenty : Power, SelectionManager.ResourceSelectionListene
         }
     }
 
-    public override bool IsValid(List<Virtue> virtue)
+    public override bool IsValid()
     {
-        if (TurnManager.Instance.ActivePlayer)
-        {
-            if (virtue.Count == virtueCost)
-            {
-                List<Virtue> tempVirtuecollection = new List<Virtue>(virtue);
-                foreach (Virtue virtueToeDestroyed in tempVirtuecollection)
-                {
-                    if (TurnManager.Instance.ActivePlayer.Virtues.Contains(virtueToeDestroyed))
-                    {
-                        virtue.Remove(virtueToeDestroyed);
-                        TurnManager.Instance.ActivePlayer.Virtues.Remove(virtueToeDestroyed);
-                    }
-                }
-                if (virtue.Count == 0)
-                {
-                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-                    return (true);
-                }
-                else
-                {
+        Player TemPlayer = TurnManager.Instance.ActivePlayer;
 
-                    TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-                    return false;
-                }
-            }
-            else
-            {
-                Debug.Log($"You must select only {virtueCost} virtue to use this power");
-                TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-                return (false);
-            }
-        }
-        else
+        List<Virtue> virtuesToRemove = new List<Virtue>(TemPlayer.selectedVirtue);
+        int count = TemPlayer.Kingdom.power.virtueCost;
+        foreach (Virtue virtue in virtuesToRemove)
         {
-            TurnManager.Instance.ActivePlayer.selectedVirtue.Clear();
-            return (false);
+            if (count > 0)
+            {
+                TemPlayer.Virtues.Remove(virtue);
+                TemPlayer.selectedVirtue.Remove(virtue);
+                count--;
+            }
         }
+        return true;
     }
 
     public void Onselection(Resource resource)
