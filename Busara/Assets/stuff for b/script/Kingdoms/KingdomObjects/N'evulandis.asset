@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 825a991940599d442a2497294d73f27f, type: 3}
-  m_Name: Nevulandis
+  m_Script: {fileID: 11500000, guid: 1460eebbc7ea6e849afc721be54781b9, type: 3}
+  m_Name: N'evulandis
   m_EditorClassIdentifier: 
   kingdomName: N'evulandis
-  kingdomStory: "N'Evulandis, pronounced \r\n'Neverlandis', is a futuristic \r\ncivilization
-    in the 30th century \r\ngoverned by the House of IO's, sort \r\nof a monarchy.
-    The people are called \r\nN'evula, they speak Lota and use \r\nData as currency.
-    Their house values \r\nare Peace, Information, Loyalty and \r\nCollaboration."
+  kingdomStory: N'Evulandis, pronounced 'Neverlandis', is a futuristic civilization
+    in the 30th century governed by the House of IO's, sort of a monarchy. The people
+    are called N'evula, they speak Lota and use Data as currency. Their house values
+    are Peace, Information, Loyalty and Collaboration.
   power: {fileID: 11400000, guid: a9c4f0c8a1a60944297b9c551c909358, type: 2}
   virtuesForWin:
   - NumberofVirtues: 4

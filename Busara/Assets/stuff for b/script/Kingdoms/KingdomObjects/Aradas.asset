@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb34265a941e6ee44a96614f4828493e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1460eebbc7ea6e849afc721be54781b9, type: 3}
   m_Name: Aradas
   m_EditorClassIdentifier: 
-  kingdomName: the aradas
-  kingdomStory: "The Aradas are the people of \r\nomniscience. They are origins of\r\nhumanity
-    so they identify \r\nthemselves with all that is out\r\nthere which makes them
-    \r\nunidentifable. They are everyone\r\nand no one at the same time. They\r\nsurf
-    through identities because\r\nthey know identities are \r\nabstractions of the
-    human mind."
+  kingdomName: The Aradas
+  kingdomStory: 'The Aradas are the people of omniscience. They are origins of humanity
+    so they identify themselves with all that is out there which makes them unidentifiable.
+    They are everyone and no one at the same time. They surf through identities because
+    they know identities are abstractions of the human mind. '
   power: {fileID: 11400000, guid: 462178388ca1f844283a618e673c1e81, type: 2}
   virtuesForWin:
   - NumberofVirtues: 2

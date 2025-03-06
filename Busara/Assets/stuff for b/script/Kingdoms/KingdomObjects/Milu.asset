@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7499df1a75c9de4e9da94bfe4a11c23, type: 3}
+  m_Script: {fileID: 11500000, guid: 1460eebbc7ea6e849afc721be54781b9, type: 3}
   m_Name: Milu
   m_EditorClassIdentifier: 
   kingdomName: Milu
-  kingdomStory: "The kingdom is ruled by a woman \r\nwho is strong and powerful.
-    She \r\ngoverns with a democratic system in \r\nwhich the power is spread and
-    \r\nbelongs to the people in order to \r\nincrease impact, efectiveness and \r\ncredibility
-    and guarantee development.\r\nAnd the queen is actually a simple \r\nwoman, deeply
-    rooted in her culture \r\nand traditions, but also very curious \r\nof the world."
+  kingdomStory: The kingdom is ruled by a woman who is strong and powerful. She governs
+    with a democratic system in which the power is spread and belongs to the people
+    in order to increase impact, effectiveness and credibility and guarantee development.
+    And the queen is actually a simple woman, deeply rooted in her culture and traditions,
+    but also very curious of the world.
   power: {fileID: 11400000, guid: 09f95afeb7a1a764290827a18c292265, type: 2}
   virtuesForWin:
   - NumberofVirtues: 2

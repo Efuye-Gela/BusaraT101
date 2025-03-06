@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcb23c549a1c4ca478cca91294fc71fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 1460eebbc7ea6e849afc721be54781b9, type: 3}
   m_Name: Ubunifu
   m_EditorClassIdentifier: 
   kingdomName: Ubunifu
-  kingdomStory: "\"Ubunifu\" means Creativity and\r\nImagination in Swahili. The
-    kingdom \r\nis ruled by an elite council. It began \r\nin the 22nd century after
-    a long war \r\nof minds and skills.\r\nThe people are Craftsmen of all sorts
-    \r\n& skilled Juju men who developed \r\nhyper neural activity hence ability
-    to \r\nread and translate thoughts."
+  kingdomStory: '"Ubunifu" means Creativity and Imagination in Swahili. The kingdom
+    is ruled by an elite council. It began in the 22nd century after a long war of
+    minds and skills. The people are Craftsmen of all sorts & skilled Juju men who
+    developed hyper neural activity hence ability to read and translate thoughts.'
   power: {fileID: 11400000, guid: c632c4aea09803e4aace7d0a05bec2dd, type: 2}
   virtuesForWin:
   - NumberofVirtues: 2
