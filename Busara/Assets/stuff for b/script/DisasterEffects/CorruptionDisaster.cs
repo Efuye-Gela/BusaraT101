@@ -14,7 +14,7 @@ public class CorruptionDisaster : DisasterEffect
             resourceCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
             if (player != null && resourceCount > threshold)
             {
-                Debug.Log("Bad Bad Boy you Greedy man");
+                Debug.Log("those who are greedy shall be punished Greedy man");
                 resourceCount = 0;
                 playerList.Add(player);
             }

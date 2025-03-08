@@ -56,7 +56,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
                         break;
                     case ResourceType.Earth:
                         prefabObject = EarthPrefab;
-                        break;
+                        break;  
                     case ResourceType.Fire:
                         prefabObject = FirePrefab;
                         break;
@@ -68,6 +68,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
                 }
 
                 newResource = Instantiate(prefabObject, parentTransform);
+               //newResource.transform.localScale = Vector3.one;
                 newResource.GetComponent<Draggable>().canvas = gameCanvas;
                 drawnResource = newResource.GetComponent<Resource>();
 
@@ -118,7 +119,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
                 //destinationSlot = null;
                 Board.PlaceResource(tobePlacedResource, destinationSlot);
                 TurnManager.Instance.ActivePlayer.hasDrawnResource = false;
-                BoardManager.Instance.SaveGameState();
+                //BoardManager.Instance.SaveGameState();
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
             

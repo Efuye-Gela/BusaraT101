@@ -7,19 +7,19 @@ public class ResourceDisaster : DisasterEffect
 
     public override (bool, List<Player>) IsValid(List<Player> allPlayers)
     {
-        int resourseCount = 0;
+        int resourceCount = 0;
         List<Player> playerList = new List<Player>();
         foreach (Player player in allPlayers)
         {
-            resourseCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
-            if (player != null && resourseCount >= threshold)
+            resourceCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
+            if (player != null && resourceCount >= threshold)
             {
                 Debug.Log("You lost a resource boho");
-                resourseCount = 0;
+                resourceCount = 0;
                 playerList.Add(player);
             }
             else
-                resourseCount = 0;
+                resourceCount = 0;
         }
 
         if (playerList.Count == 0)
@@ -35,12 +35,12 @@ public class ResourceDisaster : DisasterEffect
         if (TheAnswer && players != null)
         {
             Debug.Log($"So {players} sucks to be you!!!");
-            PlayerStatDisplay.Instance.Communication("Please selecte a resource for you to discard!!!");
+            PlayerStatDisplay.Instance.Communication("Please select a resource for you to discard!!!");
             TurnManager.Instance.OnSpecialCardDrawn(false, players);
         }
         else
         {
-            Debug.Log("Broke Bitch");
+            Debug.Log("Broke");
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
     }

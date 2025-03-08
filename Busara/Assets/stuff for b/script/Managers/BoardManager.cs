@@ -175,6 +175,7 @@ public class BoardManager : Manager<BoardManager>
                     {
                         GameObject resourceObj = Instantiate(prefabObject, slot.transform);
                         resourceObj.transform.localPosition = Vector3.zero;
+                        resourceObj.transform.localScale = Vector3.one;
                         Resource resource = resourceObj.GetComponent<Resource>();
                         Board.PlaceResource(resource, slot);
                     }
