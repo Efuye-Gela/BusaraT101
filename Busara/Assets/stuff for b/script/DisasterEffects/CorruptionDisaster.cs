@@ -14,7 +14,6 @@ public class CorruptionDisaster : DisasterEffect
             resourceCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
             if (player != null && resourceCount > threshold)
             {
-                Debug.Log("those who are greedy shall be punished Greedy man");
                 resourceCount = 0;
                 playerList.Add(player);
             }
@@ -35,13 +34,12 @@ public class CorruptionDisaster : DisasterEffect
         var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
         if (TheAnswer && players != null)
         {
-            Debug.Log($"So {players} were naughty!!!");
-            PlayerStatDisplay.Instance.Communication($"So {players} were naughty!!!");
+            PlayerStatDisplay.Instance.Communication($"Players who were greedy shall be punished ");
             TurnManager.Instance.OnSpecialCardDrawn(false,players);
         }
         else
         {
-            Debug.Log("I see no one was greedy");
+            PlayerStatDisplay.Instance.Communication("Corruption has occurred ");
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
     }
