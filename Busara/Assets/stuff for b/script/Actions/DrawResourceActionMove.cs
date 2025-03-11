@@ -118,7 +118,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
                 //destinationSlot = null;
                 Board.PlaceResource(tobePlacedResource, destinationSlot);
                 TurnManager.Instance.ActivePlayer.hasDrawnResource = false;
-                BoardManager.Instance.SaveGameState();
+                //BoardManager.Instance.SaveGameState();
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
             
@@ -136,8 +136,8 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
     {
         if (resource == drawnResource)
             tobePlacedResource = resource;
-        else
-            Debug.Log("Can't place this resource");
+        //else
+        //    Debug.Log("Can't place this resource");
     }
 
     public void OnDeselection(Resource resource)
@@ -154,7 +154,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
         }
         else
         { 
-            Debug.Log("Can't place on other players Board");
+            //Debug.Log("Can't place on other players Board");
             destinationSlot = null;
             TurnManager.Instance.ActivePlayer.selectedSlots.Remove(slot);
         }

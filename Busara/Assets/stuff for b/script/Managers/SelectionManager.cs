@@ -192,7 +192,7 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
         else if (currentPlayer.selectedResources.Contains(resource))
         {
             currentPlayer.selectedResources.Remove(resource);
-            TriggerResourceSelectionListeners(resource);
+            TriggerResourceDeselectionListeners(resource);
         }
     }
 

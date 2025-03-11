@@ -51,10 +51,11 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
 
     public static void MoveResource(Resource tobeMovedResource, Slot targetSlot)
     {
+        Slot.EmptySlotByResource(tobeMovedResource);
         Slot.OccupySlot(targetSlot, tobeMovedResource);
         tobeMovedResource.gameObject.transform.SetParent(targetSlot.gameObject.transform);
         tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;
-        Slot.EmptySlotByResource(tobeMovedResource);
+        
     }
 
     public static void PlaceResource(Resource tobePlacedResource, Slot destinationSlot)

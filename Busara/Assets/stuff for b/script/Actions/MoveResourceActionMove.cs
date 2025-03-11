@@ -37,8 +37,8 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
                     TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
                         
                 }
-                else
-                    Debug.Log("Can't move to this slot");
+                //else
+                //    Debug.Log("Can't move to this slot");
 
             }
              
@@ -47,24 +47,27 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
 
     private void ResourceClicked(Resource clickedOnResource)
     {
-        List<Slot> adjacentSlots = new List<Slot>();
-        if (clickedOnResource != null)
+        if (TurnManager.Instance.ActivePlayer.Board.Slots.Contains(clickedOnResource.slot))
         {
-            if (clickedOnResource.slot != null)
+            List<Slot> adjacentSlots = new List<Slot>();
+            if (clickedOnResource != null)
             {
-                tobeMovedResource = clickedOnResource;
-                
-                adjacentSlots = BoardManager.GetAdjacentSlots(clickedOnResource.slot);
-                foreach (Slot slot in adjacentSlots) 
+                if (clickedOnResource.slot != null)
                 {
-                    if (!slot.isOccupied) { 
-                        availableSlots.Add(slot);
+                    tobeMovedResource = clickedOnResource;
+
+                    adjacentSlots = BoardManager.GetAdjacentSlots(clickedOnResource.slot);
+                    foreach (Slot slot in adjacentSlots)
+                    {
+                        if (!slot.isOccupied)
+                        {
+                            availableSlots.Add(slot);
+                        }
                     }
+                    HighlightAvailableSlots(availableSlots);
                 }
-                HighlightAvailableSlots(availableSlots);
             }
         }
-        
     }
 
     private void HighlightAvailableSlots(List<Slot> slots)
@@ -102,10 +105,17 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
             tobeMovedResource = resource;
             ResourceClicked(tobeMovedResource);
         }
+        if (TurnManager.Instance.ActivePlayer.selectedResources.Count>1)
+        {
+            UnHighlightAvailableSlots(availableSlots);
+        }
     }
 
     public void OnDeselection(Resource resource)
     {
         tobeMovedResource = null;
+        UnHighlightAvailableSlots(availableSlots);
+        availableSlots.Clear();
+
     }
 }
