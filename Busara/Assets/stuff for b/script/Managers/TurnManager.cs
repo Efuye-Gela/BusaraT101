@@ -89,10 +89,30 @@ public class TurnManager : Manager<TurnManager>
 
     void BeginTurn(Player player)
     {
+
         activePlayer = player;
-        Debug.Log("Current Turn : " + player.name +" Board:"+ player.Board.name);
+        Debug.Log("Current Turn : " + player.name + " Board:" + player.Board.name);
         //onTurn?.Invoke(player);
         TriggerTurnBeginListeners();
+
+
+        //Resource check
+        //int resource = 0;
+        //if(ActivePlayer != null)
+        //{
+        //    foreach (Slot slot in ActivePlayer.Board.Slots)
+        //    {
+        //        if (slot.resource)
+        //        {
+        //            resource++;
+        //        }
+        //    }
+        //    if (resource == 0)
+        //    {
+        //        TurnManager.Instance.CompleteTurn(ActivePlayer);
+        //    }
+        //}
+
     }
 
     public bool HasTurn(Player player)
