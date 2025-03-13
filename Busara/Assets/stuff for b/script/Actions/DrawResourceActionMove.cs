@@ -2,15 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
+[System.Serializable]
 public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSelectionListener, SelectionManager.SlotSelectionListener
 {
-    [SerializeField] Transform parentTransform;
+    [SerializeField] GameObject parent;
     [SerializeField] Canvas gameCanvas;
-    [Space]
-    [SerializeField] private GameObject AirPrefab;
-    [SerializeField] private GameObject WaterPrefab;
-    [SerializeField] private GameObject FirePrefab;
-    [SerializeField] private GameObject EarthPrefab;
+
 
     private Resource tobePlacedResource;
     private Resource drawnResource;
@@ -48,26 +45,27 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
             if (drawnCard.GetType() == typeof(ResourceCard))
             {
                 ResourceCard drawnResourceCard = (ResourceCard)drawnCard;
-                GameObject prefabObject = null;
-                switch (drawnResourceCard.Resource)
-                {
-                    case ResourceType.Water:
-                        prefabObject = WaterPrefab;
-                        break;
-                    case ResourceType.Earth:
-                        prefabObject = EarthPrefab;
-                        break;
-                    case ResourceType.Fire:
-                        prefabObject = FirePrefab;
-                        break;
-                    case ResourceType.Air:
-                        prefabObject = AirPrefab;
-                        break;
-                    default:
-                        break;
-                }
+                //GameObject prefabObject = null;
+                //switch (drawnResourceCard.Resource)
+                //{
+                //    case ResourceType.Water:
+                //        prefabObject = WaterPrefab;
+                //        break;
+                //    case ResourceType.Earth:
+                //        prefabObject = EarthPrefab;
+                //        break;
+                //    case ResourceType.Fire:
+                //        prefabObject = FirePrefab;
+                //        break;
+                //    case ResourceType.Air:
+                //        prefabObject = AirPrefab;
+                //        break;
+                //    default:
+                //        break;
+                //}
 
-                newResource = Instantiate(prefabObject, parentTransform);
+                //newResource = Instantiate(prefabObject, parentTransform);
+                newResource = BoardManager.Instance.SpawnByResourceType(drawnResourceCard.Resource, parent);
                 newResource.GetComponent<Draggable>().canvas = gameCanvas;
                 drawnResource = newResource.GetComponent<Resource>();
 

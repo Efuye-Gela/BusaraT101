@@ -65,7 +65,6 @@ public class BoardManager : Manager<BoardManager>
         return neighbors;
     }
 
-   
     public void SaveGameState()
     {
         System.Text.StringBuilder state = new System.Text.StringBuilder();
@@ -182,6 +181,32 @@ public class BoardManager : Manager<BoardManager>
             }
         }
         Debug.Log("Game state loaded!");
+    }
+
+    public GameObject SpawnByResourceType(ResourceType type,GameObject parent)
+    {
+        GameObject newResource;
+        GameObject prefabObject = null;
+        switch (type)
+        {
+            case ResourceType.Water:
+                prefabObject = WaterPrefab;
+                break;
+            case ResourceType.Earth:
+                prefabObject = EarthPrefab;
+                break;
+            case ResourceType.Fire:
+                prefabObject = FirePrefab;
+                break;
+            case ResourceType.Air:
+                prefabObject = AirPrefab;
+                break;
+            default:
+                break;
+        }
+
+        newResource = Instantiate(prefabObject, parent.transform);
+        return newResource;
     }
     
 }

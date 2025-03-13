@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public Player selectedPlayer;
     public List<Player> selectedPlayers = new List<Player>();
     public bool hasDrawnResource = false;
+    public List<ResourceType> resourceTypeCollection= new List<ResourceType>();
 
     [Space]
     public Board Board;
