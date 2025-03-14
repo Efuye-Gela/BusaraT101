@@ -19,7 +19,7 @@ public class PoliticsDisaster : DisasterEffect
         {           
             PlayerStatDisplay.Instance.Communication("Change your lands !!!");
 
-            // Copy and instantiate players
+            PlayerStatDisplay.Instance.Communication("Land Exchange!!!");
             foreach (Player player in PlayerManager.Instance.Players)
             {
                 Player newPlayer = Instantiate(player);

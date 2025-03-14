@@ -10,8 +10,8 @@ public class HardWinterDisaster : DisasterEffect
         var (Answer, Players) = IsValid(PlayerManager.Instance.Players);
         if (Answer)
         {
+            //special turn management
             Debug.Log("Winter has struck!!!");
-            PlayerStatDisplay.Instance.Communication("Winter has struck!!!");
             foreach (Player player in Players)
             {
                 for (int i = 0; i < player.Virtues.Count; i++)
@@ -36,7 +36,8 @@ public class HardWinterDisaster : DisasterEffect
         }
         else
         {
-            PlayerStatDisplay.Instance.Communication("Broke bitches !!!");
+            PlayerStatDisplay.Instance.Communication("Hard winter struck \n But all of you are broke");
+            Debug.Log("Broke");
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
 
