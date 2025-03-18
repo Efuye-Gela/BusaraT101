@@ -112,16 +112,48 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
 
     public void UnhighlightAllResources()
     {
-        foreach (Resource resource in _selectedResources)
+        foreach (Slot slot in TurnManager.Instance.ActivePlayer.Board.GetOccupiedSlots())
         {
+            Resource resource = slot.resource;
             resource.UnHighlight();
         }
     }
     public void UnhighlightAllSlots()
     {
-        foreach (Slot  slot in _selectedSlots)
+        foreach (Slot  slot in TurnManager.Instance.ActivePlayer.Board.Slots)
         {
             slot.UnHighlight();
+        }
+    }
+
+    public void UnhighlightAllResources(Player player)
+    {
+        foreach (Slot slot in player.Board.GetOccupiedSlots())
+        {
+            Resource resource = slot.resource;
+            resource.UnHighlight();
+        }
+    }
+    public void UnhighlightAllSlots(Player player)
+    {
+        foreach (Slot slot in player.Board.Slots)
+        {
+            slot.UnHighlight();
+        }
+    }
+
+    public void UnhighlightAll(Player player)
+    {
+        UnhighlightAllResources(player);
+        UnhighlightAllSlots(player);
+
+    }
+
+    public void UnhighlightAllPlayerBoards()
+    {
+        foreach (Player player in PlayerManager.Instance.Players)
+        {
+            Instance.UnhighlightAll(player);
         }
     }
 
@@ -151,6 +183,7 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
         {
             DeselectVirtue(virtue);
         }
+        UnhighlightAllPlayerBoards();
     }
 
     public void SelectPlayer(Player player)

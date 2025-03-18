@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Manager<GameManager>
@@ -14,11 +15,14 @@ public class GameManager : Manager<GameManager>
 
     private void Awake()
     {
+        MakeFullScreen();
         currentPlayer = TurnManager.Instance.ActivePlayer;
     }
     void Start()
     {
-        TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpecialTurn; 
+       
+        if (TurnManager.Instance!=null)
+            TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpecialTurn; 
     }
     private void Update()
     {
@@ -81,6 +85,12 @@ public class GameManager : Manager<GameManager>
     public void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
+    }
+
+    public void MakeFullScreen()
+    {
+        Screen.fullScreen = true;
+        //Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
     }
 
 }

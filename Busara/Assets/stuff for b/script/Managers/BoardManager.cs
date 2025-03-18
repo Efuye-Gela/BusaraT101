@@ -174,7 +174,7 @@ public class BoardManager : Manager<BoardManager>
                     {
                         GameObject resourceObj = Instantiate(prefabObject, slot.transform);
                         resourceObj.transform.localPosition = Vector3.zero;
-                        resourceObj.transform.localScale = Vector3.one;
+                        //resourceObj.transform.localScale = Vector3.one;
                         Resource resource = resourceObj.GetComponent<Resource>();
                         Board.PlaceResource(resource, slot);
                     }
@@ -182,6 +182,7 @@ public class BoardManager : Manager<BoardManager>
             }
         }
         Debug.Log("Game state loaded!");
+        SelectionManager.Instance.UnhighlightAllPlayerBoards();
     }
 
     public GameObject SpawnByResourceType(ResourceType type,GameObject parent)
@@ -207,6 +208,7 @@ public class BoardManager : Manager<BoardManager>
         }
 
         newResource = Instantiate(prefabObject, parent.transform);
+        //newResource.transform.localScale = new Vector3(1, 1, 1);
         return newResource;
     }
     

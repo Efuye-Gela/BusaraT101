@@ -1,0 +1,3094 @@
+fileFormatVersion: 2
+guid: c2633b19e62031f4893c002a0329d4f9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6420580229328847285
+    second: EfuyeGela Publishers-01-09_0
+  - first:
+      213: -5170096104809696416
+    second: EfuyeGela Publishers-01-09_1
+  - first:
+      213: -5302052782101332953
+    second: EfuyeGela Publishers-01-09_2
+  - first:
+      213: 3928201280140818328
+    second: EfuyeGela Publishers-01-09_3
+  - first:
+      213: 4089719368431606512
+    second: EfuyeGela Publishers-01-09_4
+  - first:
+      213: -7474246358819468146
+    second: EfuyeGela Publishers-01-09_5
+  - first:
+      213: -6601487358447298512
+    second: EfuyeGela Publishers-01-09_6
+  - first:
+      213: 1944403560074131067
+    second: EfuyeGela Publishers-01-09_7
+  - first:
+      213: 4551688201447589162
+    second: EfuyeGela Publishers-01-09_8
+  - first:
+      213: -3712910264250786217
+    second: EfuyeGela Publishers-01-09_9
+  - first:
+      213: 4541065304947359714
+    second: EfuyeGela Publishers-01-09_10
+  - first:
+      213: -1553085041442774199
+    second: EfuyeGela Publishers-01-09_11
+  - first:
+      213: -5475032353772291288
+    second: EfuyeGela Publishers-01-09_12
+  - first:
+      213: -2927090351441134511
+    second: EfuyeGela Publishers-01-09_13
+  - first:
+      213: 678079123691887352
+    second: EfuyeGela Publishers-01-09_14
+  - first:
+      213: -1539092485990253353
+    second: EfuyeGela Publishers-01-09_15
+  - first:
+      213: 2617442292414350389
+    second: EfuyeGela Publishers-01-09_16
+  - first:
+      213: 9060264351441570683
+    second: EfuyeGela Publishers-01-09_17
+  - first:
+      213: 4134114070256168816
+    second: EfuyeGela Publishers-01-09_18
+  - first:
+      213: -4122702413866084908
+    second: EfuyeGela Publishers-01-09_19
+  - first:
+      213: -2284326843855150712
+    second: EfuyeGela Publishers-01-09_20
+  - first:
+      213: -4456507336064355001
+    second: EfuyeGela Publishers-01-09_21
+  - first:
+      213: 9195076569863197786
+    second: EfuyeGela Publishers-01-09_22
+  - first:
+      213: -4659327712986688766
+    second: EfuyeGela Publishers-01-09_23
+  - first:
+      213: 5546135572203887552
+    second: EfuyeGela Publishers-01-09_24
+  - first:
+      213: 6816646791807740635
+    second: EfuyeGela Publishers-01-09_25
+  - first:
+      213: -411787671972795717
+    second: EfuyeGela Publishers-01-09_26
+  - first:
+      213: 1154082550655898572
+    second: EfuyeGela Publishers-01-09_27
+  - first:
+      213: 411153452703023490
+    second: EfuyeGela Publishers-01-09_28
+  - first:
+      213: -1904304429812393280
+    second: EfuyeGela Publishers-01-09_29
+  - first:
+      213: 6299629027307542036
+    second: EfuyeGela Publishers-01-09_30
+  - first:
+      213: 8734617629622798079
+    second: EfuyeGela Publishers-01-09_31
+  - first:
+      213: -5317377963681584308
+    second: EfuyeGela Publishers-01-09_32
+  - first:
+      213: -6074837813073283849
+    second: EfuyeGela Publishers-01-09_33
+  - first:
+      213: -7280497701985226400
+    second: EfuyeGela Publishers-01-09_34
+  - first:
+      213: -3546892961618235745
+    second: EfuyeGela Publishers-01-09_35
+  - first:
+      213: -5416333535943005053
+    second: EfuyeGela Publishers-01-09_36
+  - first:
+      213: -2664904822697224053
+    second: EfuyeGela Publishers-01-09_37
+  - first:
+      213: 4133734212157950168
+    second: EfuyeGela Publishers-01-09_38
+  - first:
+      213: -4148717130814343983
+    second: EfuyeGela Publishers-01-09_39
+  - first:
+      213: 2814484430629866732
+    second: EfuyeGela Publishers-01-09_40
+  - first:
+      213: 7740614668332585725
+    second: EfuyeGela Publishers-01-09_41
+  - first:
+      213: 8802914382095114508
+    second: EfuyeGela Publishers-01-09_42
+  - first:
+      213: -8507999522972529694
+    second: EfuyeGela Publishers-01-09_43
+  - first:
+      213: -2404208309198435355
+    second: EfuyeGela Publishers-01-09_44
+  - first:
+      213: 4732026888924021234
+    second: EfuyeGela Publishers-01-09_45
+  - first:
+      213: 3527029029930975570
+    second: EfuyeGela Publishers-01-09_46
+  - first:
+      213: -8607376828855582760
+    second: EfuyeGela Publishers-01-09_47
+  - first:
+      213: 4373609197216461593
+    second: EfuyeGela Publishers-01-09_48
+  - first:
+      213: -2379216262876493090
+    second: EfuyeGela Publishers-01-09_49
+  - first:
+      213: 4698462154363150223
+    second: EfuyeGela Publishers-01-09_50
+  - first:
+      213: 1305062605413253516
+    second: EfuyeGela Publishers-01-09_51
+  - first:
+      213: 7509737226992192309
+    second: EfuyeGela Publishers-01-09_52
+  - first:
+      213: 3006708700251973790
+    second: EfuyeGela Publishers-01-09_53
+  - first:
+      213: 6095887351963355125
+    second: EfuyeGela Publishers-01-09_54
+  - first:
+      213: 5709140799285059235
+    second: EfuyeGela Publishers-01-09_55
+  - first:
+      213: 5112796953881547708
+    second: EfuyeGela Publishers-01-09_56
+  - first:
+      213: 1273259032904889189
+    second: EfuyeGela Publishers-01-09_57
+  - first:
+      213: -5632726669099120520
+    second: EfuyeGela Publishers-01-09_58
+  - first:
+      213: -4767444334456668779
+    second: EfuyeGela Publishers-01-09_59
+  - first:
+      213: -3502683893219093299
+    second: EfuyeGela Publishers-01-09_60
+  - first:
+      213: -1277882797197858572
+    second: EfuyeGela Publishers-01-09_61
+  - first:
+      213: -3462567908547328812
+    second: EfuyeGela Publishers-01-09_62
+  - first:
+      213: -1282811035579211614
+    second: EfuyeGela Publishers-01-09_63
+  - first:
+      213: -5789903336422165994
+    second: EfuyeGela Publishers-01-09_64
+  - first:
+      213: -4169324990762282985
+    second: EfuyeGela Publishers-01-09_65
+  - first:
+      213: -6604199040355712450
+    second: EfuyeGela Publishers-01-09_66
+  - first:
+      213: 12485200986185595
+    second: EfuyeGela Publishers-01-09_67
+  - first:
+      213: 7611691346281767481
+    second: EfuyeGela Publishers-01-09_68
+  - first:
+      213: -3707208776223043947
+    second: EfuyeGela Publishers-01-09_69
+  - first:
+      213: -5751471785056529193
+    second: EfuyeGela Publishers-01-09_70
+  - first:
+      213: -1734297134443572877
+    second: EfuyeGela Publishers-01-09_71
+  - first:
+      213: 7366127342202191788
+    second: EfuyeGela Publishers-01-09_72
+  - first:
+      213: -3658421870037402740
+    second: EfuyeGela Publishers-01-09_73
+  - first:
+      213: -7601605743452493141
+    second: EfuyeGela Publishers-01-09_74
+  - first:
+      213: 8482162488517954025
+    second: EfuyeGela Publishers-01-09_75
+  - first:
+      213: 3973677541162424747
+    second: EfuyeGela Publishers-01-09_76
+  - first:
+      213: 9016922131172483231
+    second: EfuyeGela Publishers-01-09_77
+  - first:
+      213: 3584185293520573285
+    second: EfuyeGela Publishers-01-09_78
+  - first:
+      213: 8139116276053962366
+    second: EfuyeGela Publishers-01-09_79
+  - first:
+      213: 7491106728908902876
+    second: EfuyeGela Publishers-01-09_80
+  - first:
+      213: -4724044517715666814
+    second: EfuyeGela Publishers-01-09_81
+  - first:
+      213: -3040176730656370808
+    second: EfuyeGela Publishers-01-09_82
+  - first:
+      213: -5581831316871683707
+    second: EfuyeGela Publishers-01-09_83
+  - first:
+      213: -8397751634194205214
+    second: EfuyeGela Publishers-01-09_84
+  - first:
+      213: -4827020783459679994
+    second: EfuyeGela Publishers-01-09_85
+  - first:
+      213: -5728909786766629939
+    second: EfuyeGela Publishers-01-09_86
+  - first:
+      213: 8718787927761301743
+    second: EfuyeGela Publishers-01-09_87
+  - first:
+      213: -3680490804095913765
+    second: EfuyeGela Publishers-01-09_88
+  - first:
+      213: 4699749787286697828
+    second: EfuyeGela Publishers-01-09_89
+  - first:
+      213: -7788536750567719345
+    second: EfuyeGela Publishers-01-09_90
+  - first:
+      213: -2907771265123247471
+    second: EfuyeGela Publishers-01-09_91
+  - first:
+      213: -8564271011482733018
+    second: EfuyeGela Publishers-01-09_92
+  - first:
+      213: 4998645741605987325
+    second: EfuyeGela Publishers-01-09_93
+  - first:
+      213: -1651270540481839998
+    second: EfuyeGela Publishers-01-09_94
+  - first:
+      213: 4540753392639107615
+    second: EfuyeGela Publishers-01-09_95
+  - first:
+      213: -2867250870221797316
+    second: EfuyeGela Publishers-01-09_96
+  - first:
+      213: 3426204572336431476
+    second: EfuyeGela Publishers-01-09_97
+  - first:
+      213: 6759672425634260162
+    second: EfuyeGela Publishers-01-09_98
+  - first:
+      213: -3946350386159427910
+    second: EfuyeGela Publishers-01-09_99
+  - first:
+      213: 7680854991150416043
+    second: EfuyeGela Publishers-01-09_100
+  - first:
+      213: 2357608086784321265
+    second: EfuyeGela Publishers-01-09_101
+  - first:
+      213: -940518846602579135
+    second: EfuyeGela Publishers-01-09_102
+  - first:
+      213: -2372260416943814964
+    second: EfuyeGela Publishers-01-09_103
+  - first:
+      213: -7424997309801066242
+    second: EfuyeGela Publishers-01-09_104
+  - first:
+      213: -4356843771752113967
+    second: EfuyeGela Publishers-01-09_105
+  - first:
+      213: -7463005134014695045
+    second: EfuyeGela Publishers-01-09_106
+  - first:
+      213: -7121513763574738140
+    second: EfuyeGela Publishers-01-09_107
+  - first:
+      213: -3571629980560230689
+    second: EfuyeGela Publishers-01-09_108
+  - first:
+      213: -200187348947290216
+    second: EfuyeGela Publishers-01-09_109
+  - first:
+      213: 7602128090567000124
+    second: EfuyeGela Publishers-01-09_110
+  - first:
+      213: -6500505107199655445
+    second: EfuyeGela Publishers-01-09_111
+  - first:
+      213: 7493714574064831562
+    second: EfuyeGela Publishers-01-09_112
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_0
+      rect:
+        serializedVersion: 2
+        x: 1445
+        y: 3230
+        width: 72
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4e35f29c4485e6a0800000000000000
+      internalID: -6420580229328847285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_1
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 3274
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 063ff2a2cf02048b0800000000000000
+      internalID: -5170096104809696416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_2
+      rect:
+        serializedVersion: 2
+        x: 1724
+        y: 3270
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72c7a7e06135b66b0800000000000000
+      internalID: -5302052782101332953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_3
+      rect:
+        serializedVersion: 2
+        x: 1859
+        y: 3220
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89737057046c38630800000000000000
+      internalID: 3928201280140818328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_4
+      rect:
+        serializedVersion: 2
+        x: 1997
+        y: 3255
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fa966ae81a91c830800000000000000
+      internalID: 4089719368431606512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_5
+      rect:
+        serializedVersion: 2
+        x: 1329
+        y: 3144
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8c0fc27984264890800000000000000
+      internalID: -7474246358819468146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_6
+      rect:
+        serializedVersion: 2
+        x: 1538
+        y: 3193
+        width: 63
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0385482493ec264a0800000000000000
+      internalID: -6601487358447298512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_7
+      rect:
+        serializedVersion: 2
+        x: 1607
+        y: 3156
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b76393a6cb8ebfa10800000000000000
+      internalID: 1944403560074131067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_8
+      rect:
+        serializedVersion: 2
+        x: 1659
+        y: 3210
+        width: 64
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a25ce97ad48da2f30800000000000000
+      internalID: 4551688201447589162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_9
+      rect:
+        serializedVersion: 2
+        x: 1778
+        y: 3190
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75e1e6859c7197cc0800000000000000
+      internalID: -3712910264250786217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_10
+      rect:
+        serializedVersion: 2
+        x: 2074
+        y: 3189
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2effc33d5da150f30800000000000000
+      internalID: 4541065304947359714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_11
+      rect:
+        serializedVersion: 2
+        x: 1427
+        y: 3143
+        width: 65
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 943a4d62265527ae0800000000000000
+      internalID: -1553085041442774199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_12
+      rect:
+        serializedVersion: 2
+        x: 1508
+        y: 3124
+        width: 58
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82bb1ab0517c404b0800000000000000
+      internalID: -5475032353772291288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_13
+      rect:
+        serializedVersion: 2
+        x: 1663
+        y: 3113
+        width: 49
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15cb0e075d2e067d0800000000000000
+      internalID: -2927090351441134511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_14
+      rect:
+        serializedVersion: 2
+        x: 1710
+        y: 3151
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fa5341de55096900800000000000000
+      internalID: 678079123691887352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_15
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 3118
+        width: 55
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dcf318d98b04aae0800000000000000
+      internalID: -1539092485990253353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_16
+      rect:
+        serializedVersion: 2
+        x: 1934
+        y: 3057
+        width: 105
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 534017ba5e5035420800000000000000
+      internalID: 2617442292414350389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_17
+      rect:
+        serializedVersion: 2
+        x: 2232
+        y: 3062
+        width: 73
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7b4fce9c668cbd70800000000000000
+      internalID: 9060264351441570683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_18
+      rect:
+        serializedVersion: 2
+        x: 2346
+        y: 3023
+        width: 77
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07f209ae7d25f5930800000000000000
+      internalID: 4134114070256168816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_19
+      rect:
+        serializedVersion: 2
+        x: 1346
+        y: 3054
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d5ddd26ff739c6c0800000000000000
+      internalID: -4122702413866084908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_20
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 3066
+        width: 57
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 881ef11a6d07c40e0800000000000000
+      internalID: -2284326843855150712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_21
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 3061
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74536fe703e4722c0800000000000000
+      internalID: -4456507336064355001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_22
+      rect:
+        serializedVersion: 2
+        x: 1577
+        y: 3100
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5496353c697b9f70800000000000000
+      internalID: 9195076569863197786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_23
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 3097
+        width: 47
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2039b47912eb65fb0800000000000000
+      internalID: -4659327712986688766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_24
+      rect:
+        serializedVersion: 2
+        x: 1827
+        y: 3028
+        width: 100
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cbde511be4d7fc40800000000000000
+      internalID: 5546135572203887552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_25
+      rect:
+        serializedVersion: 2
+        x: 2119
+        y: 3072
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdaa1091428999e50800000000000000
+      internalID: 6816646791807740635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_26
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 3027
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bba2d294b49094af0800000000000000
+      internalID: -411787671972795717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_27
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 2979
+        width: 58
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc3525917ff140010800000000000000
+      internalID: 1154082550655898572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_28
+      rect:
+        serializedVersion: 2
+        x: 1395
+        y: 2330
+        width: 459
+        height: 714
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2810a8803e5b4b500800000000000000
+      internalID: 411153452703023490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_29
+      rect:
+        serializedVersion: 2
+        x: 1441
+        y: 3002
+        width: 47
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ca54d4e53d8295e0800000000000000
+      internalID: -1904304429812393280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_30
+      rect:
+        serializedVersion: 2
+        x: 1958
+        y: 2986
+        width: 97
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 416d7653937cc6750800000000000000
+      internalID: 6299629027307542036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_31
+      rect:
+        serializedVersion: 2
+        x: 2218
+        y: 2986
+        width: 65
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff60886c478973970800000000000000
+      internalID: 8734617629622798079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_32
+      rect:
+        serializedVersion: 2
+        x: 1207
+        y: 2895
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4be44a2ae0e436b0800000000000000
+      internalID: -5317377963681584308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_33
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 2952
+        width: 58
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f4f7a3e137d1bba0800000000000000
+      internalID: -6074837813073283849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_34
+      rect:
+        serializedVersion: 2
+        x: 2015
+        y: 2949
+        width: 44
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0617f1de9e976fa90800000000000000
+      internalID: -7280497701985226400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_35
+      rect:
+        serializedVersion: 2
+        x: 2102
+        y: 2949
+        width: 53
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9e6966c4a7e6cec0800000000000000
+      internalID: -3546892961618235745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_36
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 2822
+        width: 72
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38ce415985155d4b0800000000000000
+      internalID: -5416333535943005053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_37
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 2882
+        width: 59
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8818eade2b540bd0800000000000000
+      internalID: -2664904822697224053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_38
+      rect:
+        serializedVersion: 2
+        x: 2130
+        y: 2827
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d8cd8f4d59fd5930800000000000000
+      internalID: 4133734212157950168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_39
+      rect:
+        serializedVersion: 2
+        x: 2237
+        y: 2895
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d4bb3810cbcc66c0800000000000000
+      internalID: -4148717130814343983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_40
+      rect:
+        serializedVersion: 2
+        x: 1391
+        y: 2842
+        width: 49
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cec8f898dae0f0720800000000000000
+      internalID: 2814484430629866732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_41
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2805
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df2542187003c6b60800000000000000
+      internalID: 7740614668332585725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_42
+      rect:
+        serializedVersion: 2
+        x: 1969
+        y: 2839
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c01e4fc9dfb3a2a70800000000000000
+      internalID: 8802914382095114508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_43
+      rect:
+        serializedVersion: 2
+        x: 1213
+        y: 2753
+        width: 72
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2eb870cd2838de980800000000000000
+      internalID: -8507999522972529694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_44
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 2780
+        width: 59
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eb4f24e74982aed0800000000000000
+      internalID: -2404208309198435355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_45
+      rect:
+        serializedVersion: 2
+        x: 1952
+        y: 2738
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f1c9e552698ba140800000000000000
+      internalID: 4732026888924021234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_46
+      rect:
+        serializedVersion: 2
+        x: 2040
+        y: 2768
+        width: 64
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 251c689373682f030800000000000000
+      internalID: 3527029029930975570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_47
+      rect:
+        serializedVersion: 2
+        x: 1301
+        y: 2711
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8df7224c0647c8880800000000000000
+      internalID: -8607376828855582760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_48
+      rect:
+        serializedVersion: 2
+        x: 1383
+        y: 2687
+        width: 54
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 913f77a746e22bc30800000000000000
+      internalID: 4373609197216461593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_49
+      rect:
+        serializedVersion: 2
+        x: 1890
+        y: 2725
+        width: 45
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda0a6f1a635bfed0800000000000000
+      internalID: -2379216262876493090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_50
+      rect:
+        serializedVersion: 2
+        x: 1972
+        y: 2660
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8f9e659f6a443140800000000000000
+      internalID: 4698462154363150223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_51
+      rect:
+        serializedVersion: 2
+        x: 2135
+        y: 2670
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c818d4d66838c1210800000000000000
+      internalID: 1305062605413253516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_52
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 2618
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b856b3832f73860800000000000000
+      internalID: 7509737226992192309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_53
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 2603
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e986895f1a9f9b920800000000000000
+      internalID: 3006708700251973790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_54
+      rect:
+        serializedVersion: 2
+        x: 1839
+        y: 2654
+        width: 44
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f7829ccf31f89450800000000000000
+      internalID: 6095887351963355125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_55
+      rect:
+        serializedVersion: 2
+        x: 1904
+        y: 2653
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ae53120f41fa3f40800000000000000
+      internalID: 5709140799285059235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_56
+      rect:
+        serializedVersion: 2
+        x: 1825
+        y: 2583
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb31fc4adbd44f640800000000000000
+      internalID: 5112796953881547708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_57
+      rect:
+        serializedVersion: 2
+        x: 1897
+        y: 2567
+        width: 65
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5637a5b28568ba110800000000000000
+      internalID: 1273259032904889189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_58
+      rect:
+        serializedVersion: 2
+        x: 1995
+        y: 2565
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8784a7b10f884d1b0800000000000000
+      internalID: -5632726669099120520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_59
+      rect:
+        serializedVersion: 2
+        x: 1353
+        y: 2505
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59df24603a2a6ddb0800000000000000
+      internalID: -4767444334456668779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_60
+      rect:
+        serializedVersion: 2
+        x: 1798
+        y: 2501
+        width: 65
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc49130ae87f36fc0800000000000000
+      internalID: -3502683893219093299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_61
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 2469
+        width: 73
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f86070dd5c044ee0800000000000000
+      internalID: -1277882797197858572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_62
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 1983
+        width: 68
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d48e5825dc72ffc0800000000000000
+      internalID: -3462567908547328812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_63
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 1983
+        width: 66
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a0a956e82a823ee0800000000000000
+      internalID: -1282811035579211614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_64
+      rect:
+        serializedVersion: 2
+        x: 1066
+        y: 1980
+        width: 74
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61235bc779126afa0800000000000000
+      internalID: -5789903336422165994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_65
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 1983
+        width: 85
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 710947cc2059326c0800000000000000
+      internalID: -4169324990762282985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_66
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 1983
+        width: 68
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e324f9d96fb2954a0800000000000000
+      internalID: -6604199040355712450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_67
+      rect:
+        serializedVersion: 2
+        x: 1365
+        y: 1980
+        width: 74
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7f1bb1693b5c2000800000000000000
+      internalID: 12485200986185595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_68
+      rect:
+        serializedVersion: 2
+        x: 1467
+        y: 1983
+        width: 68
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9322a0373f822a960800000000000000
+      internalID: 7611691346281767481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_69
+      rect:
+        serializedVersion: 2
+        x: 1562
+        y: 1983
+        width: 66
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59ec30972495d8cc0800000000000000
+      internalID: -3707208776223043947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_70
+      rect:
+        serializedVersion: 2
+        x: 1648
+        y: 1983
+        width: 85
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d4160452eaae20b0800000000000000
+      internalID: -5751471785056529193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_71
+      rect:
+        serializedVersion: 2
+        x: 1808
+        y: 1983
+        width: 74
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3715386e1f98ee7e0800000000000000
+      internalID: -1734297134443572877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_72
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 1980
+        width: 74
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: caff0425acdb93660800000000000000
+      internalID: 7366127342202191788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_73
+      rect:
+        serializedVersion: 2
+        x: 2012
+        y: 1983
+        width: 77
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8b76ed31bcaa3dc0800000000000000
+      internalID: -3658421870037402740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_74
+      rect:
+        serializedVersion: 2
+        x: 2116
+        y: 1983
+        width: 66
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baae1f2f9dba18690800000000000000
+      internalID: -7601605743452493141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_75
+      rect:
+        serializedVersion: 2
+        x: 2206
+        y: 1983
+        width: 27
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e98147c7d1b6b570800000000000000
+      internalID: 8482162488517954025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_76
+      rect:
+        serializedVersion: 2
+        x: 2260
+        y: 1980
+        width: 74
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba91fe49ba6552730800000000000000
+      internalID: 3973677541162424747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_77
+      rect:
+        serializedVersion: 2
+        x: 2361
+        y: 1983
+        width: 77
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f90e4e397ea822d70800000000000000
+      internalID: 9016922131172483231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_78
+      rect:
+        serializedVersion: 2
+        x: 2469
+        y: 1983
+        width: 68
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 563197dd8859db130800000000000000
+      internalID: 3584185293520573285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_79
+      rect:
+        serializedVersion: 2
+        x: 2564
+        y: 1983
+        width: 77
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7eebc35123f3f070800000000000000
+      internalID: 8139116276053962366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_80
+      rect:
+        serializedVersion: 2
+        x: 2663
+        y: 1980
+        width: 74
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd1572f51e1c5f760800000000000000
+      internalID: 7491106728908902876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_81
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 1766
+        width: 10
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2881d6a4a82d07eb0800000000000000
+      internalID: -4724044517715666814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_82
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 1766
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88f81dafe5f1fc5d0800000000000000
+      internalID: -3040176730656370808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_83
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 1766
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58166b9bdf95982b0800000000000000
+      internalID: -5581831316871683707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_84
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e5f5e3c161357b80800000000000000
+      internalID: -8397751634194205214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_85
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 1766
+        width: 52
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 601457e0c2af20db0800000000000000
+      internalID: -4827020783459679994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_86
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 1766
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc32489e6e2de70b0800000000000000
+      internalID: -5728909786766629939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_87
+      rect:
+        serializedVersion: 2
+        x: 1221
+        y: 1766
+        width: 39
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe03d2a1d6b5ff870800000000000000
+      internalID: 8718787927761301743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_88
+      rect:
+        serializedVersion: 2
+        x: 1271
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd075ce1d154cecc0800000000000000
+      internalID: -3680490804095913765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_89
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 1752
+        width: 10
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 467f07cf78dd83140800000000000000
+      internalID: 4699749787286697828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_90
+      rect:
+        serializedVersion: 2
+        x: 1396
+        y: 1766
+        width: 56
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4ef55e371f89e390800000000000000
+      internalID: -7788536750567719345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_91
+      rect:
+        serializedVersion: 2
+        x: 1466
+        y: 1766
+        width: 31
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19a9d3eb07585a7d0800000000000000
+      internalID: -2907771265123247471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_92
+      rect:
+        serializedVersion: 2
+        x: 1506
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6267568f3e8952980800000000000000
+      internalID: -8564271011482733018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_93
+      rect:
+        serializedVersion: 2
+        x: 1570
+        y: 1766
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df3a17a61d1ce5540800000000000000
+      internalID: 4998645741605987325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_94
+      rect:
+        serializedVersion: 2
+        x: 1631
+        y: 1766
+        width: 39
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28c338631328519e0800000000000000
+      internalID: -1651270540481839998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_95
+      rect:
+        serializedVersion: 2
+        x: 1681
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1267e4172ff30f30800000000000000
+      internalID: 4540753392639107615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_96
+      rect:
+        serializedVersion: 2
+        x: 1745
+        y: 1752
+        width: 10
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c38008e568a7538d0800000000000000
+      internalID: -2867250870221797316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_97
+      rect:
+        serializedVersion: 2
+        x: 1805
+        y: 1766
+        width: 56
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 471aeedd7e25c8f20800000000000000
+      internalID: 3426204572336431476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_98
+      rect:
+        serializedVersion: 2
+        x: 1875
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c4eeefb14e2fcd50800000000000000
+      internalID: 6759672425634260162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_99
+      rect:
+        serializedVersion: 2
+        x: 1940
+        y: 1766
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abeddb18b3fbb39c0800000000000000
+      internalID: -3946350386159427910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_100
+      rect:
+        serializedVersion: 2
+        x: 2006
+        y: 1766
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba08ec66be0e79a60800000000000000
+      internalID: 7680854991150416043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_101
+      rect:
+        serializedVersion: 2
+        x: 2071
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f62e545018e7b020800000000000000
+      internalID: 2357608086784321265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_102
+      rect:
+        serializedVersion: 2
+        x: 2135
+        y: 1766
+        width: 41
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14371b3971b92f2f0800000000000000
+      internalID: -940518846602579135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_103
+      rect:
+        serializedVersion: 2
+        x: 2182
+        y: 1766
+        width: 39
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc6085538b9041fd0800000000000000
+      internalID: -2372260416943814964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_104
+      rect:
+        serializedVersion: 2
+        x: 2232
+        y: 1752
+        width: 10
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef0931b394c15f890800000000000000
+      internalID: -7424997309801066242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_105
+      rect:
+        serializedVersion: 2
+        x: 2293
+        y: 1766
+        width: 55
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d897d25ca16983c0800000000000000
+      internalID: -4356843771752113967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_106
+      rect:
+        serializedVersion: 2
+        x: 2365
+        y: 1766
+        width: 50
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b79332e0f541e6890800000000000000
+      internalID: -7463005134014695045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_107
+      rect:
+        serializedVersion: 2
+        x: 2430
+        y: 1766
+        width: 41
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4239213a6fc4b2d90800000000000000
+      internalID: -7121513763574738140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_108
+      rect:
+        serializedVersion: 2
+        x: 2482
+        y: 1766
+        width: 41
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd6729bb4750f6ec0800000000000000
+      internalID: -3571629980560230689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_109
+      rect:
+        serializedVersion: 2
+        x: 2533
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8973871baaac83df0800000000000000
+      internalID: -200187348947290216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_110
+      rect:
+        serializedVersion: 2
+        x: 2597
+        y: 1766
+        width: 51
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c30c347783f208960800000000000000
+      internalID: 7602128090567000124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_111
+      rect:
+        serializedVersion: 2
+        x: 2661
+        y: 1766
+        width: 50
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be180c0db0199c5a0800000000000000
+      internalID: -6500505107199655445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EfuyeGela Publishers-01-09_112
+      rect:
+        serializedVersion: 2
+        x: 2726
+        y: 1766
+        width: 10
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4c4d43a3b50ff760800000000000000
+      internalID: 7493714574064831562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      EfuyeGela Publishers-01-09_0: -6420580229328847285
+      EfuyeGela Publishers-01-09_1: -5170096104809696416
+      EfuyeGela Publishers-01-09_10: 4541065304947359714
+      EfuyeGela Publishers-01-09_100: 7680854991150416043
+      EfuyeGela Publishers-01-09_101: 2357608086784321265
+      EfuyeGela Publishers-01-09_102: -940518846602579135
+      EfuyeGela Publishers-01-09_103: -2372260416943814964
+      EfuyeGela Publishers-01-09_104: -7424997309801066242
+      EfuyeGela Publishers-01-09_105: -4356843771752113967
+      EfuyeGela Publishers-01-09_106: -7463005134014695045
+      EfuyeGela Publishers-01-09_107: -7121513763574738140
+      EfuyeGela Publishers-01-09_108: -3571629980560230689
+      EfuyeGela Publishers-01-09_109: -200187348947290216
+      EfuyeGela Publishers-01-09_11: -1553085041442774199
+      EfuyeGela Publishers-01-09_110: 7602128090567000124
+      EfuyeGela Publishers-01-09_111: -6500505107199655445
+      EfuyeGela Publishers-01-09_112: 7493714574064831562
+      EfuyeGela Publishers-01-09_12: -5475032353772291288
+      EfuyeGela Publishers-01-09_13: -2927090351441134511
+      EfuyeGela Publishers-01-09_14: 678079123691887352
+      EfuyeGela Publishers-01-09_15: -1539092485990253353
+      EfuyeGela Publishers-01-09_16: 2617442292414350389
+      EfuyeGela Publishers-01-09_17: 9060264351441570683
+      EfuyeGela Publishers-01-09_18: 4134114070256168816
+      EfuyeGela Publishers-01-09_19: -4122702413866084908
+      EfuyeGela Publishers-01-09_2: -5302052782101332953
+      EfuyeGela Publishers-01-09_20: -2284326843855150712
+      EfuyeGela Publishers-01-09_21: -4456507336064355001
+      EfuyeGela Publishers-01-09_22: 9195076569863197786
+      EfuyeGela Publishers-01-09_23: -4659327712986688766
+      EfuyeGela Publishers-01-09_24: 5546135572203887552
+      EfuyeGela Publishers-01-09_25: 6816646791807740635
+      EfuyeGela Publishers-01-09_26: -411787671972795717
+      EfuyeGela Publishers-01-09_27: 1154082550655898572
+      EfuyeGela Publishers-01-09_28: 411153452703023490
+      EfuyeGela Publishers-01-09_29: -1904304429812393280
+      EfuyeGela Publishers-01-09_3: 3928201280140818328
+      EfuyeGela Publishers-01-09_30: 6299629027307542036
+      EfuyeGela Publishers-01-09_31: 8734617629622798079
+      EfuyeGela Publishers-01-09_32: -5317377963681584308
+      EfuyeGela Publishers-01-09_33: -6074837813073283849
+      EfuyeGela Publishers-01-09_34: -7280497701985226400
+      EfuyeGela Publishers-01-09_35: -3546892961618235745
+      EfuyeGela Publishers-01-09_36: -5416333535943005053
+      EfuyeGela Publishers-01-09_37: -2664904822697224053
+      EfuyeGela Publishers-01-09_38: 4133734212157950168
+      EfuyeGela Publishers-01-09_39: -4148717130814343983
+      EfuyeGela Publishers-01-09_4: 4089719368431606512
+      EfuyeGela Publishers-01-09_40: 2814484430629866732
+      EfuyeGela Publishers-01-09_41: 7740614668332585725
+      EfuyeGela Publishers-01-09_42: 8802914382095114508
+      EfuyeGela Publishers-01-09_43: -8507999522972529694
+      EfuyeGela Publishers-01-09_44: -2404208309198435355
+      EfuyeGela Publishers-01-09_45: 4732026888924021234
+      EfuyeGela Publishers-01-09_46: 3527029029930975570
+      EfuyeGela Publishers-01-09_47: -8607376828855582760
+      EfuyeGela Publishers-01-09_48: 4373609197216461593
+      EfuyeGela Publishers-01-09_49: -2379216262876493090
+      EfuyeGela Publishers-01-09_5: -7474246358819468146
+      EfuyeGela Publishers-01-09_50: 4698462154363150223
+      EfuyeGela Publishers-01-09_51: 1305062605413253516
+      EfuyeGela Publishers-01-09_52: 7509737226992192309
+      EfuyeGela Publishers-01-09_53: 3006708700251973790
+      EfuyeGela Publishers-01-09_54: 6095887351963355125
+      EfuyeGela Publishers-01-09_55: 5709140799285059235
+      EfuyeGela Publishers-01-09_56: 5112796953881547708
+      EfuyeGela Publishers-01-09_57: 1273259032904889189
+      EfuyeGela Publishers-01-09_58: -5632726669099120520
+      EfuyeGela Publishers-01-09_59: -4767444334456668779
+      EfuyeGela Publishers-01-09_6: -6601487358447298512
+      EfuyeGela Publishers-01-09_60: -3502683893219093299
+      EfuyeGela Publishers-01-09_61: -1277882797197858572
+      EfuyeGela Publishers-01-09_62: -3462567908547328812
+      EfuyeGela Publishers-01-09_63: -1282811035579211614
+      EfuyeGela Publishers-01-09_64: -5789903336422165994
+      EfuyeGela Publishers-01-09_65: -4169324990762282985
+      EfuyeGela Publishers-01-09_66: -6604199040355712450
+      EfuyeGela Publishers-01-09_67: 12485200986185595
+      EfuyeGela Publishers-01-09_68: 7611691346281767481
+      EfuyeGela Publishers-01-09_69: -3707208776223043947
+      EfuyeGela Publishers-01-09_7: 1944403560074131067
+      EfuyeGela Publishers-01-09_70: -5751471785056529193
+      EfuyeGela Publishers-01-09_71: -1734297134443572877
+      EfuyeGela Publishers-01-09_72: 7366127342202191788
+      EfuyeGela Publishers-01-09_73: -3658421870037402740
+      EfuyeGela Publishers-01-09_74: -7601605743452493141
+      EfuyeGela Publishers-01-09_75: 8482162488517954025
+      EfuyeGela Publishers-01-09_76: 3973677541162424747
+      EfuyeGela Publishers-01-09_77: 9016922131172483231
+      EfuyeGela Publishers-01-09_78: 3584185293520573285
+      EfuyeGela Publishers-01-09_79: 8139116276053962366
+      EfuyeGela Publishers-01-09_8: 4551688201447589162
+      EfuyeGela Publishers-01-09_80: 7491106728908902876
+      EfuyeGela Publishers-01-09_81: -4724044517715666814
+      EfuyeGela Publishers-01-09_82: -3040176730656370808
+      EfuyeGela Publishers-01-09_83: -5581831316871683707
+      EfuyeGela Publishers-01-09_84: -8397751634194205214
+      EfuyeGela Publishers-01-09_85: -4827020783459679994
+      EfuyeGela Publishers-01-09_86: -5728909786766629939
+      EfuyeGela Publishers-01-09_87: 8718787927761301743
+      EfuyeGela Publishers-01-09_88: -3680490804095913765
+      EfuyeGela Publishers-01-09_89: 4699749787286697828
+      EfuyeGela Publishers-01-09_9: -3712910264250786217
+      EfuyeGela Publishers-01-09_90: -7788536750567719345
+      EfuyeGela Publishers-01-09_91: -2907771265123247471
+      EfuyeGela Publishers-01-09_92: -8564271011482733018
+      EfuyeGela Publishers-01-09_93: 4998645741605987325
+      EfuyeGela Publishers-01-09_94: -1651270540481839998
+      EfuyeGela Publishers-01-09_95: 4540753392639107615
+      EfuyeGela Publishers-01-09_96: -2867250870221797316
+      EfuyeGela Publishers-01-09_97: 3426204572336431476
+      EfuyeGela Publishers-01-09_98: 6759672425634260162
+      EfuyeGela Publishers-01-09_99: -3946350386159427910
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

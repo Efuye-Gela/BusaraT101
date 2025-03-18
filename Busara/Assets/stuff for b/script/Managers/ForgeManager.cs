@@ -94,7 +94,8 @@ public class ForgeManager : Manager<ForgeManager>
         if (receivingPlayers.Count == 0)
         {
             receivingPlayers.Add(firstResource.slot.board.player);
-            receivingPlayers.Add(secondResource.slot.board.player);
+            if(!receivingPlayers.Contains(secondResource.slot.board.player))
+                receivingPlayers.Add(secondResource.slot.board.player);
 
         }
         else

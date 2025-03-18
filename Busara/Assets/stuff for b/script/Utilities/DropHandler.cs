@@ -15,7 +15,7 @@ public class DropHandler : MonoBehaviour, IDropHandler, IPointerDownHandler
         {
             GameObject currentGameObject = eventData.pointerDrag.gameObject;
             //eventData.pointerDrag.GetComponent<RectTransform>().localPosition = GetComponent<RectTransform>().anchoredPosition;
-            currentGameObject.transform.SetParent(GetComponent<RectTransform>().gameObject.transform);
+            currentGameObject.transform.SetParent(GetComponent<RectTransform>().gameObject.transform,true);
             currentGameObject.transform.localPosition = Vector3.zero;
             OnItemPlaced?.Invoke(currentGameObject.GetComponent<Resource>(),this.GetComponent<Slot>());
         }

@@ -1,12 +1,14 @@
 
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSelectionListener, TurnManager.TurnBeginListener
 {
-    [SerializeField] List<ResourceType> collectionResources = new List<ResourceType>();
+    [SerializeField] SetupCard setupCard = null;
+    [SerializeField] List<ResourceType> collectionResources = null;
     [SerializeField] GameObject CollectionDisplay;
     [SerializeField] TMP_Text airResourceCountText;
     [SerializeField] TMP_Text earthResourceCountText;
@@ -21,16 +23,7 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
     {
         TurnManager.Instance.AddTurnBeginListeners(this);
         SelectionManager.Instance.AddSlotSelectionListener(this);
-        //Testing
-        //List<ResourceType> TestResources = new List<ResourceType>() {
-        //    ResourceType.Air,
-        //    ResourceType.Air,
-        //    ResourceType.Fire,
-        //    ResourceType.Fire,
-        //    ResourceType.Fire
-        //};
-        //collectionResources.AddRange(TestResources);
-        
+       
     }
 
     public void Display()
@@ -42,7 +35,8 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
     public void Hide()
     { 
         CollectionDisplay.SetActive(false);
-        collectionResources.Clear();
+        setupCard = null;
+        //collectionResources.Clear();
     }
     
 
@@ -85,7 +79,20 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
          if (collectionResources.Count==0)
         {
             Hide();
+            TurnManager.Instance.ActivePlayer.hasFinishedSettingUp = true;
+            CheckForCompletion();
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+        }
+        
+    }
+
+    private void CheckForCompletion()
+    {
+
+        if (PlayerManager.Instance.Players.Where(p => p.hasFinishedSettingUp == true).Count() == PlayerManager.Instance.Players.Count)
+        {
+            Hide();
+            SelectionManager.Instance.RemoveSlotSelectionListener(this);
         }
     }
 
@@ -108,11 +115,14 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
 
     public void OnTurnBegin()
     {
-        if (TurnManager.Instance.ActivePlayer.resourceTypeCollection.Count>0)
+        if (TurnManager.Instance.ActivePlayer.setupcard != null & TurnManager.Instance.ActivePlayer.hasFinishedSettingUp == false)
         {
-            collectionResources = TurnManager.Instance.ActivePlayer.resourceTypeCollection;
+            setupCard = TurnManager.Instance.ActivePlayer.setupcard;
+            collectionResources = new List<ResourceType>(setupCard.collectionResources);
             Display();
         }
+        else
+            Hide();
     }
 }
 
