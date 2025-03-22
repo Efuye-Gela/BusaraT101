@@ -208,7 +208,6 @@ public class BoardManager : Manager<BoardManager>
         }
 
         newResource = Instantiate(prefabObject, parent.transform);
-        //newResource.transform.localScale = new Vector3(1, 1, 1);
         return newResource;
     }
     
