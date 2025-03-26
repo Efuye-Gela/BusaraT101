@@ -55,13 +55,13 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
         Slot.OccupySlot(targetSlot, tobeMovedResource);
         tobeMovedResource.gameObject.transform.SetParent(targetSlot.gameObject.transform, true);
         tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;
-        
     }
 
     public static void PlaceResource(Resource tobePlacedResource, Slot destinationSlot)
     {
         tobePlacedResource.gameObject.transform.SetParent(destinationSlot.gameObject.transform, true);
         tobePlacedResource.gameObject.transform.localPosition = Vector3.zero;
+        tobePlacedResource.gameObject.transform.localScale = Vector3.one;
         destinationSlot.isOccupied = true;
         destinationSlot.resource = tobePlacedResource;
         tobePlacedResource.slot = destinationSlot;
