@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
+[DefaultExecutionOrder(200)]
 public class TurnManager : Manager<TurnManager>
 {
 
