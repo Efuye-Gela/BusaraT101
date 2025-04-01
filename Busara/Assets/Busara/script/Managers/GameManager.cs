@@ -11,22 +11,25 @@ public class GameManager : Manager<GameManager>
 
     public bool IsSpecialTurn = false;
 
-    public Player currentPlayer;
+    public Player ActivePlayer;
+    public GameObject WinScreen;
 
     private void Awake()
     {
         MakeFullScreen();
-        currentPlayer = TurnManager.Instance.ActivePlayer;
+        ActivePlayer = TurnManager.Instance.ActivePlayer;
     }
+
     void Start()
     {
        
         if (TurnManager.Instance!=null)
             TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpecialTurn; 
     }
+
     private void Update()
     {
-        currentPlayer = TurnManager.Instance.ActivePlayer;
+        ActivePlayer = TurnManager.Instance.ActivePlayer;
     }
     private void HandleSpecialTurn()
     {
@@ -76,9 +79,9 @@ public class GameManager : Manager<GameManager>
 
     public void setPlayer()
     {
-        if(currentPlayer == null)
+        if(ActivePlayer == null)
         {
-            currentPlayer = TurnManager.Instance.ActivePlayer;
+            ActivePlayer = TurnManager.Instance.ActivePlayer;
         }
     }
 
@@ -93,5 +96,64 @@ public class GameManager : Manager<GameManager>
         //Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
     }
 
+    public void CheckWinConditions()
+    {
+        if (ActivePlayer.Kingdom == null || ActivePlayer.Virtues == null)
+        {
+            Debug.Log("No Kingdom assigned or Virtues list is empty.");
+            return;
+        }
+
+        Dictionary<VirtueType, int> playerVirtueCounts = new Dictionary<VirtueType, int>();
+
+
+        foreach (VirtueType type in System.Enum.GetValues(typeof(VirtueType)))
+        {
+            playerVirtueCounts[type] = 0;
+        }
+        foreach (Virtue virtue in ActivePlayer.Virtues)
+        {
+            if (virtue != null)
+            {
+                playerVirtueCounts[virtue.type]++;
+            }
+        }
+
+        foreach (Kingdom.VirtuesForCost requirement in ActivePlayer.Kingdom.virtuesForWin)
+        {
+            if (requirement == null || requirement.virtues == null)
+                continue;
+
+            VirtueType requiredType = requirement.virtues.type;
+            int requiredCount = requirement.NumberofVirtues;
+
+            if (!playerVirtueCounts.ContainsKey(requiredType) || playerVirtueCounts[requiredType] < requiredCount)
+            {
+                return;
+            }
+        }
+
+        Debug.Log(ActivePlayer.Name + " has met the win conditions!");
+        WinScreen.SetActive(true);
+    }
+
+    public void CheckResource()
+    {
+        int resource = 0;
+        if (ActivePlayer != null)
+        {
+            foreach (Slot slot in ActivePlayer.Board.Slots)
+            {
+                if (slot.resource)
+                {
+                    resource++;
+                }
+            }
+            if (resource == 0)
+            {
+                Debug.Log("NO resource Turn Skip");
+                TurnManager.Instance.CompleteTurn(ActivePlayer);
+            }
+        }
+    }
 }
-    

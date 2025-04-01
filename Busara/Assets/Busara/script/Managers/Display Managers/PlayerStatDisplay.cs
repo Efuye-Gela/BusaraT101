@@ -34,7 +34,7 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
     }
     public void generatePlayer()
     {
-        Debug.Log("your stat my lord ");
+       // Debug.Log("your stat my lord ");
     }
 
     public void toggleStatPanel(GameObject statPanel)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
+[DefaultExecutionOrder(200)]
 public class TurnManager : Manager<TurnManager>
 {
 
@@ -74,7 +75,7 @@ public class TurnManager : Manager<TurnManager>
     private List<Player> specialActionList; //
     Player lastSequentialPlayer = null;
 
-    public GameObject WonScreen;
+    
     public event Action OnSpecialCardDrawnEvent;
 
     void Start()
@@ -94,24 +95,9 @@ public class TurnManager : Manager<TurnManager>
         Debug.Log("Current Turn : " + player.name + " Board:" + player.Board.name);
         //onTurn?.Invoke(player);
         TriggerTurnBeginListeners();
+        GameManager.Instance.CheckResource();
 
-
-        //Resource check
-        //int resource = 0;
-        //if(ActivePlayer != null)
-        //{
-        //    foreach (Slot slot in ActivePlayer.Board.Slots)
-        //    {
-        //        if (slot.resource)
-        //        {
-        //            resource++;
-        //        }
-        //    }
-        //    if (resource == 0)
-        //    {
-        //        TurnManager.Instance.CompleteTurn(ActivePlayer);
-        //    }
-        //}
+        
 
     }
 
@@ -176,7 +162,8 @@ public class TurnManager : Manager<TurnManager>
     void EndTurn(Player player)
     {
         SelectionManager.Instance.UnhighlightAll();
-        WinconditionMeet();
+        GameManager.Instance.CheckWinConditions();
+        
         activePlayer = null;
     }
 
@@ -194,46 +181,7 @@ public class TurnManager : Manager<TurnManager>
         Debug.Log("Special Turn for "+ nextPlayer.name);
         OnSpecialCardDrawnEvent?.Invoke();
     }
-    public void WinconditionMeet()
-    {
-        if (ActivePlayer.Kingdom == null || ActivePlayer.Virtues == null)
-        {
-            Debug.Log("No Kingdom assigned or Virtues list is empty.");
-            return;
-        }
-
-        Dictionary<VirtueType, int> playerVirtueCounts = new Dictionary<VirtueType, int>();
-
-
-        foreach (VirtueType type in System.Enum.GetValues(typeof(VirtueType)))
-        {
-            playerVirtueCounts[type] = 0;
-        }
-        foreach (Virtue virtue in ActivePlayer.Virtues)
-        {
-            if (virtue != null)
-            {
-                playerVirtueCounts[virtue.type]++;
-            }
-        }
-
-        foreach (Kingdom.VirtuesForCost requirement in ActivePlayer.Kingdom.virtuesForWin)
-        {
-            if (requirement == null || requirement.virtues == null)
-                continue;
-
-            VirtueType requiredType = requirement.virtues.type;
-            int requiredCount = requirement.NumberofVirtues;
-
-            if (!playerVirtueCounts.ContainsKey(requiredType) || playerVirtueCounts[requiredType] < requiredCount)
-            {
-                return;
-            }
-        }
-
-        Debug.Log(ActivePlayer.Name + " has met the win conditions!");
-        WonScreen.SetActive(true);
-    }
+    
 
 
 

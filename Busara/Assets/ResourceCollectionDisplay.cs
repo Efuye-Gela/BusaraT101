@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DefaultExecutionOrder(100)]
 public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSelectionListener, TurnManager.TurnBeginListener
 {
     [SerializeField] SetupCard setupCard = null;
@@ -36,7 +37,7 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
     { 
         CollectionDisplay.SetActive(false);
         setupCard = null;
-        //collectionResources.Clear();
+        collectionResources.Clear();
     }
     
 
@@ -63,17 +64,34 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         destinationSlot = null;
     }
 
+    private bool CanBePlaced(Slot slot)
+    {
+        List<Slot> playerSlots = TurnManager.Instance.ActivePlayer.Board.Slots;
+        List<Slot> neighbouringSlots = BoardManager.GetAdjacentSlots(slot);
+        List<Slot> pnSlots = playerSlots.Intersect(neighbouringSlots).ToList();
+
+        foreach (Slot pnslot in pnSlots)
+        {
+            if (pnslot.isOccupied)
+                return false;
+        }
+        return true;
+    }
+
     private void PlaceResource(Slot slot)
     {
         if (collectionResources.Count > 0)
         {
             if (collectionResources.Contains(selectedResourceType.resourceType))
             {
-                GameObject spawnedObject = BoardManager.Instance.SpawnByResourceType(selectedResourceType.resourceType, slot.gameObject);
-                tobePlacedResource = spawnedObject.GetComponent<Resource>();
-                Board.PlaceResource(tobePlacedResource, destinationSlot);
-                collectionResources.Remove(tobePlacedResource.resourceType);
-                DisplayCount();
+                if (CanBePlaced(slot))
+                { 
+                    GameObject spawnedObject = BoardManager.Instance.SpawnByResourceType(selectedResourceType.resourceType, slot.gameObject);
+                    tobePlacedResource = spawnedObject.GetComponent<Resource>();
+                    Board.PlaceResource(tobePlacedResource, destinationSlot);
+                    collectionResources.Remove(tobePlacedResource.resourceType);
+                    DisplayCount();
+                }
             }  
         }
          if (collectionResources.Count==0)
