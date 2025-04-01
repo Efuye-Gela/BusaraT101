@@ -160,13 +160,14 @@ public class TradeManager : Manager<TradeManager>
         Slot.OccupySlot(targetSlot, resourceOut);
         tradedOutResourceClone.transform.SetParent(targetSlot.gameObject.transform,true);
         tradedOutResourceClone.transform.localPosition = Vector3.zero;
+        tradedOutResourceClone.transform.localScale = Vector3.one;
 
         sourceSlot.EmptySlot();
         Resource resourceIn = tradedInResourceClone.GetComponent<Resource>();
         Slot.OccupySlot(sourceSlot, resourceIn);
         tradedInResourceClone.transform.SetParent(sourceSlot.gameObject.transform,true);
         tradedInResourceClone.transform.localPosition = Vector3.zero;
-
+        tradedInResourceClone.transform.localScale = Vector3.one;
 
         //TurnManager.Instance.ActivePlayer.selectedResources.Clear();
         TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);

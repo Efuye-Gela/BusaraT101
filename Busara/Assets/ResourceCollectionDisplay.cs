@@ -66,10 +66,18 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
 
     private bool CanBePlaced(Slot slot)
     {
+        
         List<Slot> playerSlots = TurnManager.Instance.ActivePlayer.Board.Slots;
+        if (!playerSlots.Contains(slot))
+        {
+            return false;
+        }
         List<Slot> neighbouringSlots = BoardManager.GetAdjacentSlots(slot);
         List<Slot> pnSlots = playerSlots.Intersect(neighbouringSlots).ToList();
-
+        if(pnSlots.Count == 0)
+        {
+            return false;
+        }
         foreach (Slot pnslot in pnSlots)
         {
             if (pnslot.isOccupied)
