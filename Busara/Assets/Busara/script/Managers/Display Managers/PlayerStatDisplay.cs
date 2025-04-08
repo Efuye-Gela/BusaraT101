@@ -64,9 +64,9 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
 
     public void ProfilePanel()
     {
-        foreach(PlayerState player in PlayersStats)
+   /*     foreach(PlayerState player in PlayersStats)
         {
-            if(player.player == TurnManager.Instance.ActivePlayer)
+            if(player.player == TurnManager.Instance.ActivePlayer) 
             {
                 player.gameObject.SetActive(true);
             }
@@ -74,6 +74,6 @@ public class PlayerStatDisplay : Manager<PlayerStatDisplay>
             {
                 player.gameObject.SetActive(false);
             }
-        }
+        }*/
     }
 }
