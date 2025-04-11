@@ -15,19 +15,19 @@ public class VirtueUI : MonoBehaviour
 
     public void AddVirtue()
     {
+        Player currentPlayer = TurnManager.Instance.ActivePlayer;
         if (TurnManager.Instance.ActivePlayer == null) return;
 
-        //Player currentPlayer = TurnManager.Instance.ActivePlayer;
-        Dictionary<VirtueType, int> TempVirtue = currentPlayer.state.virtueCounts;
+        Dictionary<VirtueType, int> TempVirtue = TurnManager.Instance.ActivePlayer.state.virtueCounts;
         if (TempVirtue.ContainsKey(virtueUIre.type) && TempVirtue[virtueUIre.type] > 0)
         {
-            int selectedCount = currentPlayer.selectedVirtue.Count(v => v.type == virtueUIre.type);
+            int selectedCount = TurnManager.Instance.ActivePlayer.selectedVirtue.Count(v => v.type == virtueUIre.type);
             if (selectedCount < TempVirtue[virtueUIre.type])
             {
-                currentPlayer.selectedVirtue.Add(virtueUIre);
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueUIre);
                 Debug.Log($"Virtue {virtueUIre.name} added to selected virtues.");
 
-                Debug.Log($"Virtue selected {currentPlayer.selectedVirtue.Count}.");
+                Debug.Log($"selected {virtueUIre.name}. Total virtue selected {TurnManager.Instance.ActivePlayer.selectedVirtue.Count}.");
 
             }
             else
@@ -42,13 +42,13 @@ public class VirtueUI : MonoBehaviour
     }
     public void RemoveVirtue()
     {
+        Player currentPlayer = TurnManager.Instance.ActivePlayer;
         if (TurnManager.Instance.ActivePlayer == null) return;
 
-       //sPlayer currentPlayer = TurnManager.Instance.ActivePlayer;
 
-        if (currentPlayer.selectedVirtue.Contains(virtueUIre))
+        if (TurnManager.Instance.ActivePlayer.selectedVirtue.Contains(virtueUIre))
         {
-            currentPlayer.selectedVirtue.Remove(virtueUIre);
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Remove(virtueUIre);
             Debug.Log($"Virtue {virtueUIre.name} removed from selected virtues.");
         }
         else

@@ -3435,7 +3435,7 @@ MonoBehaviour:
   setupcard: {fileID: 11400000, guid: d26e4dca95455414a91b1b06e4c056b5, type: 2}
   Board: {fileID: 3155246867480275316}
   Kingdom: {fileID: 11400000, guid: e01d6e08f3d633b41bb7103ef7af99e0, type: 2}
-  state: {fileID: 0}
+  state: {fileID: 899330091}
 --- !u!1 &690362372
 GameObject:
   m_ObjectHideFlags: 0
@@ -4327,7 +4327,7 @@ MonoBehaviour:
   setupcard: {fileID: 11400000, guid: 80dd86cd9fc43cc4293898653984c23e, type: 2}
   Board: {fileID: 1497443363392985100}
   Kingdom: {fileID: 11400000, guid: e01d6e08f3d633b41bb7103ef7af99e0, type: 2}
-  state: {fileID: 0}
+  state: {fileID: 899330091}
 --- !u!1 &796887692
 GameObject:
   m_ObjectHideFlags: 0
@@ -5162,6 +5162,10 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 1595974707096420381, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
+    - target: {fileID: 1646422079867372041, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2465485848728272070, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5185,6 +5189,10 @@ PrefabInstance:
     - target: {fileID: 2465485848728272070, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -219.741
+      objectReference: {fileID: 0}
+    - target: {fileID: 3482350228086448029, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3861414813174608876, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_Pivot.x
@@ -5248,11 +5256,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3861414813174608876, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -277
+      value: -218
       objectReference: {fileID: 0}
     - target: {fileID: 3861414813174608876, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -91.130005
+      value: 203
       objectReference: {fileID: 0}
     - target: {fileID: 3861414813174608876, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5296,11 +5304,11 @@ PrefabInstance:
       objectReference: {fileID: 5999050876016452704, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
     - target: {fileID: 6063198483739564259, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8445702183531232224, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8487710527873219060, guid: 7758a4535c9c0bf45bce9528b0c5bab7, type: 3}
       propertyPath: player
@@ -5732,7 +5740,7 @@ MonoBehaviour:
   setupcard: {fileID: 11400000, guid: 78edad2fb91b937459544e4da41da47a, type: 2}
   Board: {fileID: 8173527558451526766}
   Kingdom: {fileID: 11400000, guid: e01d6e08f3d633b41bb7103ef7af99e0, type: 2}
-  state: {fileID: 0}
+  state: {fileID: 899330091}
 --- !u!1 &1191288896
 GameObject:
   m_ObjectHideFlags: 0
@@ -9216,7 +9224,7 @@ MonoBehaviour:
   setupcard: {fileID: 11400000, guid: cc9641c6fce1343449db269314e53f81, type: 2}
   Board: {fileID: 6939067054827705317}
   Kingdom: {fileID: 11400000, guid: e01d6e08f3d633b41bb7103ef7af99e0, type: 2}
-  state: {fileID: 0}
+  state: {fileID: 899330091}
 --- !u!1 &1968854752
 GameObject:
   m_ObjectHideFlags: 0

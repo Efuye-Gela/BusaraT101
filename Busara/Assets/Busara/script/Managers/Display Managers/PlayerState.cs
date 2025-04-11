@@ -53,7 +53,7 @@ public class PlayerState : SerializedMonoBehaviour
         {
             PlayerName.text = player.Name;
         }
-        //GetPlayerVirtueCount();
+        GetPlayerVirtueCount();
     }
 
 
@@ -62,7 +62,6 @@ public class PlayerState : SerializedMonoBehaviour
         foreach (Virtue virtue in VirtuesList)
         {
             string VName = virtue.name;
-           // Debug.Log(VName);
             VirtueUI VerNew = Instantiate(VirtuePrefab, SpawnArea);
             if(VerNew != null && VName != null)
             {
