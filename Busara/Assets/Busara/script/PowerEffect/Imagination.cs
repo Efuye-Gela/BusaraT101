@@ -13,7 +13,7 @@ public class Imagination : Power
         Player TemPlayer = TurnManager.Instance.ActivePlayer;
         if (TemPlayer.selectedPlayer.Virtues.Count == 0)
         {
-            PlayerStatDisplay.Instance.Communication("player does not contain any virtue");
+            DisplayManager.Instance.Communication("player does not contain any virtue");
             return false;
         }
         

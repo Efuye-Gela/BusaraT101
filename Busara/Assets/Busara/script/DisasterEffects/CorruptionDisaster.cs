@@ -34,12 +34,12 @@ public class CorruptionDisaster : DisasterEffect
         var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
         if (TheAnswer && players != null)
         {
-            PlayerStatDisplay.Instance.Communication($"Players who were greedy shall be punished \n Discard Half of your resource!!!");
+            DisplayManager.Instance.Communication($"Players who were greedy shall be punished \n Discard Half of your resource!!!");
             TurnManager.Instance.OnSpecialCardDrawn(false,players);
         }
         else
         {
-            PlayerStatDisplay.Instance.Communication("Corruption has occurred \n I see no one was corrupt");
+            DisplayManager.Instance.Communication("Corruption has occurred \n I see no one was corrupt");
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
     }

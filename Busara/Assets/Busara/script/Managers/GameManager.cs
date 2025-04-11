@@ -44,7 +44,7 @@ public class GameManager : Manager<GameManager>
             if (resources != null && resources.Count > 0)
             {
                 if (resources.Count > 1)
-                    PlayerStatDisplay.Instance.Communication("Please select one resource only");
+                    DisplayManager.Instance.Communication("Please select one resource only");
                 else
                 {
                     resources[0].slot.EmptySlot();

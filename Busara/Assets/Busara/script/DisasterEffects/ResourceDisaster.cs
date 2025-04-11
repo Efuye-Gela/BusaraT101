@@ -32,10 +32,10 @@ public class ResourceDisaster : DisasterEffect
     public override void Execute()
     {
         var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
-        PlayerStatDisplay.Instance.Communication("Resource disaster struck");
+        DisplayManager.Instance.Communication("Resource disaster struck");
         if (TheAnswer && players != null)
         {
-            PlayerStatDisplay.Instance.Communication("Please select a resource for you to discard!!!");
+            DisplayManager.Instance.Communication("Please select a resource for you to discard!!!");
             TurnManager.Instance.OnSpecialCardDrawn(false, players);
         }
         else

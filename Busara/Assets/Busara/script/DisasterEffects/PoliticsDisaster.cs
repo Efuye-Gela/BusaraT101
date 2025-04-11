@@ -17,9 +17,9 @@ public class PoliticsDisaster : DisasterEffect
         List<Player> tempPlayers = new List<Player>();
         if (Accepted)
         {           
-            PlayerStatDisplay.Instance.Communication("Change your lands !!!");
+            DisplayManager.Instance.Communication("Change your lands !!!");
 
-            PlayerStatDisplay.Instance.Communication("Land Exchange!!!");
+            DisplayManager.Instance.Communication("Land Exchange!!!");
             foreach (Player player in PlayerManager.Instance.Players)
             {
                 Player newPlayer = Instantiate(player);

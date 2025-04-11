@@ -36,7 +36,7 @@ public class HardWinterDisaster : DisasterEffect
         }
         else
         {
-            PlayerStatDisplay.Instance.Communication("Hard winter struck \n But all of you are broke");
+            DisplayManager.Instance.Communication("Hard winter struck \n But all of you are broke");
             Debug.Log("Broke");
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }

@@ -10,7 +10,7 @@ using Sirenix.OdinInspector;
 [System.Serializable]
 public class PlayerState : SerializedMonoBehaviour
 {
-    public Player player;
+    private Player player;
     public TMP_Text PlayerName;
     public VirtueUI VirtuePrefab;
     public Transform SpawnArea;
@@ -28,14 +28,35 @@ public class PlayerState : SerializedMonoBehaviour
 
     private void Start()
     {
-        PlayerName.text = player.Name;
+        if (TurnManager.Instance.ActivePlayer != null)
+        {
+            player = TurnManager.Instance.ActivePlayer;
+        }
+        if (player != null)
+        {
+            PlayerName.text = player.Name;
+        }
+        else
+        {
+            Debug.Log("No name");
+        }
         VirtueDisplay();
         GetPlayerVirtueCount();
     }
     public void Update()
     {
-        GetPlayerVirtueCount();
+        if (TurnManager.Instance.ActivePlayer != null)
+        {
+            player = TurnManager.Instance.ActivePlayer;
+        }
+        if (player != null)
+        {
+            PlayerName.text = player.Name;
+        }
+        //GetPlayerVirtueCount();
     }
+
+
     public void VirtueDisplay()
     {
         foreach (Virtue virtue in VirtuesList)
