@@ -37,7 +37,7 @@ public class VirtueUI : MonoBehaviour
         }
         else
         {
-            Debug.Log($"Player does not have {virtueUIre.name} to add.");
+            Debug.Log($"Player does not have {virtueUIre.name} to add.");  
         }
     }
     public void RemoveVirtue()
