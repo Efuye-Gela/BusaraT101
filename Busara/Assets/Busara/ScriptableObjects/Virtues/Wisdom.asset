@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d7e775e75101247b73db130d3e083d, type: 3}
   m_Name: Wisdom
   m_EditorClassIdentifier: 
-  virtueIcon: {fileID: -4728843798175259996, guid: 84a61e25bc619834bbd0b0245acad7bf, type: 3}
+  virtueIcon: {fileID: 1980375423881769832, guid: afcfff6b932f5724094f40bd60c66d9c, type: 3}
   type: 2
   componentOne: 2
   componentTwo: 3

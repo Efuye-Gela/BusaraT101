@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d7e775e75101247b73db130d3e083d, type: 3}
   m_Name: Security
   m_EditorClassIdentifier: 
-  virtueIcon: {fileID: -3263958302072815727, guid: a90dfe86fe00f994fa2521751bce25ea, type: 3}
+  virtueIcon: {fileID: 8282848358830805105, guid: 6716b022f2e7b704d96bea4bf45b1aae, type: 3}
   type: 1
   componentOne: 2
   componentTwo: 1

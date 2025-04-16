@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d7e775e75101247b73db130d3e083d, type: 3}
   m_Name: Art
   m_EditorClassIdentifier: 
-  virtueIcon: {fileID: 4820889819736967701, guid: dbe6e9222e39e6944b374b5520f18483, type: 3}
+  virtueIcon: {fileID: 8999781029529400320, guid: 54debe85dc4deb54c96a7525944f0cea, type: 3}
   type: 0
   componentOne: 2
   componentTwo: 0

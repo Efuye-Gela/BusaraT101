@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d7e775e75101247b73db130d3e083d, type: 3}
   m_Name: Economy
   m_EditorClassIdentifier: 
-  virtueIcon: {fileID: -269277678258474547, guid: 245fe94aa5a5cea4fb9447381daa1952, type: 3}
+  virtueIcon: {fileID: 5797214068957558267, guid: e71bac00b2debe94ea2679fffc9ad6c4, type: 3}
   type: 4
   componentOne: 3
   componentTwo: 0

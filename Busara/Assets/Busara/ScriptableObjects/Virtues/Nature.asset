@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53d7e775e75101247b73db130d3e083d, type: 3}
   m_Name: Nature
   m_EditorClassIdentifier: 
-  virtueIcon: {fileID: 7726249056677587023, guid: 835ef0db75e16b747af98dcd7ec67fcc, type: 3}
+  virtueIcon: {fileID: 2818415227679610127, guid: 8b9f3e3050c1ebb4b911734134d048c0, type: 3}
   type: 5
   componentOne: 0
   componentTwo: 1
