@@ -34,4 +34,6 @@ public class DisplayManager : Manager<DisplayManager>
             PopUpText.text = info;
         }
     }
+
+
 }
