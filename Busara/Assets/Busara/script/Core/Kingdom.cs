@@ -25,7 +25,6 @@ public class Kingdom : ScriptableObject
     [System.Serializable]
     public class VirtuesForCost
     {
-       
        public int NumberofVirtues;
        public Virtue virtues;
     }

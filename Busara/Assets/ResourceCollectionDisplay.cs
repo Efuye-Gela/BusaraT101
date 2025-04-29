@@ -141,9 +141,9 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
 
     public void OnTurnBegin()
     {
-        if (TurnManager.Instance.ActivePlayer.setupcard != null & TurnManager.Instance.ActivePlayer.hasFinishedSettingUp == false)
+        if (TurnManager.Instance.ActivePlayer.setUpCard != null & TurnManager.Instance.ActivePlayer.hasFinishedSettingUp == false)
         {
-            setupCard = TurnManager.Instance.ActivePlayer.setupcard;
+            setupCard = TurnManager.Instance.ActivePlayer.setUpCard;
             collectionResources = new List<ResourceType>(setupCard.collectionResources);
             Display();
         }
