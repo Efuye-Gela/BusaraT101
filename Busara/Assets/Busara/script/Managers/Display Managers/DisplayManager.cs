@@ -35,5 +35,15 @@ public class DisplayManager : Manager<DisplayManager>
         }
     }
 
-
+    public void UIToggle(GameObject gameObject) 
+    {
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+    }
 }
