@@ -12,7 +12,7 @@ public class CorruptionDisaster : DisasterEffect
         foreach(Player player in allPlayers)
         {
             resourceCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
-            if (player != null && resourceCount > threshold)
+            if (player != null && resourceCount >= threshold)
             {
                 resourceCount = 0;
                 playerList.Add(player);

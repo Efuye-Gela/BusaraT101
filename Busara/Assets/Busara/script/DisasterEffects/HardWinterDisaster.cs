@@ -5,33 +5,17 @@ public class HardWinterDisaster : DisasterEffect
 {
     public override void Execute()
     {
-       
-        string info = "";
         var (Answer, Players) = IsValid(PlayerManager.Instance.Players);
         if (Answer)
         {
-            //special turn management
-            Debug.Log("Winter has struck!!!");
+            DisplayManager.Instance.Communication("Winter has struck");
             foreach (Player player in Players)
             {
-                for (int i = 0; i < player.Virtues.Count; i++)
-                {
-                    if (i < player.Virtues.Count - 1)
-                    {
-                        info += player.Virtues[i] + " ,";
-                    }
-                    else
-                        info += player.Virtues[i];
-                }
-
                 if (player.Virtues.Count > 0)
                 {
                     player.Virtues.Remove(player.Virtues[0]);
-                    Debug.Log("After winter");
-                    Debug.Log(info);
                 }
             }
-
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
         else

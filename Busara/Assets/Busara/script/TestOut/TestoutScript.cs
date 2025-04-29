@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestoutScript : MonoBehaviour
+public class TestOutScript : MonoBehaviour
 {
     [SerializeField]
       Virtue SpannableVirtue;

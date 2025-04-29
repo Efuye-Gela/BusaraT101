@@ -1,5 +1,7 @@
 using DG.Tweening;
+using JetBrains.Annotations;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,20 +13,22 @@ public class PoliticsDisaster : DisasterEffect
     [SerializeField] float roateHolderAngle = 90;
     [SerializeField] bool shiftLeft = false;
 
+    
+
     public override void Execute()
     {
+
         var (Accepted, players) = IsValid(PlayerManager.Instance.Players);
         List<Player> tempPlayers = new List<Player>();
         if (Accepted)
-        {           
-            DisplayManager.Instance.Communication("Change your lands !!!");
-
+        {   
             DisplayManager.Instance.Communication("Land Exchange!!!");
             foreach (Player player in PlayerManager.Instance.Players)
             {
                 Player newPlayer = Instantiate(player);
                 tempPlayers.Add(newPlayer);
             }
+
 
             if (shiftLeft)
             {
@@ -38,7 +42,7 @@ public class PoliticsDisaster : DisasterEffect
                 // Shift Right: Move the last element to the first position
                 tempPlayers.Insert(0, tempPlayers[tempPlayers.Count - 1]);
                 tempPlayers.RemoveAt(tempPlayers.Count - 1);
-                BoardsRotateRight();    
+                BoardsRotateRight();
             }
 
             // Reassign boards based on the new order
@@ -106,8 +110,5 @@ public class PoliticsDisaster : DisasterEffect
         else
             return (false, PlayerManager.Instance.Players);
     }
-    public void BoardMovement()
-    {
 
-    }
 }

@@ -1014,3 +1014,4 @@ MonoBehaviour:
   virtueImage: {fileID: 7563128640656988108}
   VirtueName: {fileID: 3210900060140377094}
   NumberOfvirtues: {fileID: 5404440916227180771}
+  IncDecButtons: {fileID: 1019506842957737261}

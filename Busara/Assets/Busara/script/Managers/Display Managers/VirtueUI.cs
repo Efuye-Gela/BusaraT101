@@ -11,7 +11,13 @@ public class VirtueUI : MonoBehaviour
     public Image virtueImage;
     public TMP_Text VirtueName;
     public TMP_Text NumberOfvirtues;
+    public GameObject IncDecButtons;
+    public VirtueUI instance;
 
+    private void Start()
+    {
+        instance = this;
+    }
 
     public void AddVirtue()
     {
@@ -55,6 +61,15 @@ public class VirtueUI : MonoBehaviour
         {
             Debug.Log($"Cannot remove {virtueUIre.name} as it is not in selected virtues.");
         }
+    }
+
+    public void TurnOnINCDEC()
+    {
+        IncDecButtons.SetActive(true);
+    }
+    public void TurnOffINCDEC()
+    {
+        IncDecButtons.SetActive(false);
     }
 
 }
