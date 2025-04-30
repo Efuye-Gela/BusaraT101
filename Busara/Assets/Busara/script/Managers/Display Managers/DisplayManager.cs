@@ -1,8 +1,10 @@
+using NUnit.Framework;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static Kingdom;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using System.Collections.Generic;
 
 public class DisplayManager : Manager<DisplayManager>
 {
@@ -14,13 +16,14 @@ public class DisplayManager : Manager<DisplayManager>
 
     public TMP_Text kingdomName;
     public TMP_Text kingdomDescription;
-
     public VirtueImages[] VirtueImages;
 
     /*Power display*/
     public TMP_Text PowerName;
     public TMP_Text PowerDescription;
-    public TMP_Text[] PlayerName;
+    public PlayerRepresentation ThePlayer;
+    public List<PlayerRepresentation> ThePlayersList = new List<PlayerRepresentation>();
+    public Transform SpawnArea;
 
     private void OnEnable()
     {
@@ -92,16 +95,50 @@ public class DisplayManager : Manager<DisplayManager>
         {
             PowerName.text = ThePlayer.Kingdom.power.powerName;
             PowerDescription.text = ThePlayer.Kingdom.power.powerDescription;
-            PlayerInfo();
+            PlayerListInfo();
+            TOnIncDec();
         }
     }
 
-    /*Player info list*/
-    public void PlayerInfo()
+    /*Player list for the power card info list*/
+    public void PlayerListInfo()
     {
-        for(int i = 0; i < PlayerManager.Instance.Players.Count; i++) 
+        if(ThePlayer == null || SpawnArea == null)
+            return;
+
+        /*Make sure that there is no representation of players*/
+        if(ThePlayersList.Count > 0)
         {
-            PlayerName[i].text = PlayerManager.Instance.Players[i].Name;
+            foreach (PlayerRepresentation playerRep in ThePlayersList)
+            {
+                if(playerRep != null)
+                    Destroy(playerRep.gameObject);
+            }
+        }
+   
+
+        foreach (Player player in  PlayerManager.Instance.Players) 
+        {
+            PlayerRepresentation PlayerRep = Instantiate(ThePlayer, SpawnArea.transform);
+            PlayerRep.player = player;
+            PlayerRep.PlayerName.text = player.Name;
+            ThePlayersList.Add(PlayerRep);
+        }
+    }
+
+    /*Display the increase and Decrease*/
+    public void TOnIncDec()
+    {
+        foreach (VirtueUI VUI in TurnManager.Instance.ActivePlayer.state.VirtueUIList)
+        {
+            VUI.instance.TurnOnINCDEC();
+        }
+    }
+    public void TOffIncDec()
+    {
+        foreach (VirtueUI VUI in TurnManager.Instance.ActivePlayer.state.VirtueUIList)
+        {
+            VUI.instance.TurnOffINCDEC();
         }
     }
 }
