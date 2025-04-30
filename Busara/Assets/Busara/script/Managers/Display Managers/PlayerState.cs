@@ -16,14 +16,21 @@ public class PlayerState : SerializedMonoBehaviour
     public Transform SpawnArea;
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
-    public static PlayerState instance;
+    public static PlayerState instance { get; private set; }
     [OdinSerialize]
     public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
 
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()

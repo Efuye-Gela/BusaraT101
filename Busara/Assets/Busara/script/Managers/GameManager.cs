@@ -60,19 +60,17 @@ public class GameManager : Manager<GameManager>
     
     }
 
-    public void OnPowerUser(Player player)
-    { 
-        if (TurnManager.Instance.ActivePlayer != null && player != null)
+    public void OnPowerUser()
+    {
+        Player player = TurnManager.Instance.ActivePlayer;
+        if (player != null)
         {
-            if (TurnManager.Instance.ActivePlayer == player)
+            if (player)
             {
                 if(Power.PowerVerification(player))
-                    TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
-            }
-            else if (TurnManager.Instance.ActivePlayer != player)
-            {
-                TurnManager.Instance.ActivePlayer.selectedPlayer = player;
-                Debug.Log($"{player.Name} has been selected.");
+                {
+                  TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
+                }
             }
         }
     }

@@ -126,7 +126,7 @@ public class DisplayManager : Manager<DisplayManager>
         }
     }
 
-    /*Display the increase and Decrease*/
+    /*Display on and off the increase and Decrease*/
     public void TOnIncDec()
     {
         foreach (VirtueUI VUI in TurnManager.Instance.ActivePlayer.state.VirtueUIList)
