@@ -20,7 +20,7 @@ PlayerSettings:
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
-  m_SplashScreenAnimation: 1
+  m_SplashScreenAnimation: 2
   m_SplashScreenLogoStyle: 1
   m_SplashScreenDrawMode: 0
   m_SplashScreenBackgroundAnimationZoom: 1
@@ -40,7 +40,7 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 875516660244910995, guid: baa571396af738248963ea4c1269490e, type: 3}
+  - logo: {fileID: 426457868754945836, guid: bb7fa592e859cc94b8f7b26568aecb10, type: 3}
     duration: 2
   - logo: {fileID: 21300000, guid: c2633b19e62031f4893c002a0329d4f9, type: 3}
     duration: 2
@@ -295,7 +295,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: ac475bc710a486b458c82b94adbdf8ec, type: 3}
+      m_Icon: {fileID: 2800000, guid: 0b235d54885d6fa419d973d1ae28e689, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -536,6 +536,9 @@ PlayerSettings:
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
   m_TemplateCustomTags:
+    CONTAINER_BACKGROUND_COLOR: 
+    MAX_ASPECT_RATIO: 
+    MIN_ASPECT_RATIO: 
     PRODUCT_DESCRIPTION: 
   mobileMTRendering:
     Android: 1
@@ -800,7 +803,7 @@ PlayerSettings:
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: APPLICATION:Default
+  webGLTemplate: APPLICATION:PWA
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 0

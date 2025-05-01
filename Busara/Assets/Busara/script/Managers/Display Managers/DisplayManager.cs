@@ -34,6 +34,14 @@ public class DisplayManager : Manager<DisplayManager>
     {
         Application.logMessageReceived -= LogMessage;
     }
+    private void Update()
+    {
+        if (ThePlayer != null)
+        {
+            PowerInfoDisplay();
+            KingdomInfoDisplay();
+        }
+    }
 
     private void LogMessage(string logString, string stackTrace, LogType type)
     {
@@ -96,7 +104,6 @@ public class DisplayManager : Manager<DisplayManager>
             PowerName.text = ThePlayer.Kingdom.power.powerName;
             PowerDescription.text = ThePlayer.Kingdom.power.powerDescription;
             PlayerListInfo();
-            TOnIncDec();
         }
     }
 
