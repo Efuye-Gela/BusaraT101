@@ -17,7 +17,8 @@ public class GameManager : Manager<GameManager>
     private void Awake()
     {
         MakeFullScreen();
-        ActivePlayer = TurnManager.Instance.ActivePlayer;
+        if(TurnManager.Instance != null)
+            ActivePlayer = TurnManager.Instance.ActivePlayer;
     }
 
     void Start()
@@ -29,7 +30,8 @@ public class GameManager : Manager<GameManager>
 
     private void Update()
     {
-        ActivePlayer = TurnManager.Instance.ActivePlayer;
+        if (TurnManager.Instance != null)
+            ActivePlayer = TurnManager.Instance.ActivePlayer;
     }
     private void HandleSpecialTurn()
     {
