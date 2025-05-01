@@ -20,6 +20,11 @@ public class PlayerState : SerializedMonoBehaviour
     [OdinSerialize]
     public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
 
+    /*Player info spawn */
+    public PlayerInfoCard playerInfoCard;
+    public List<PlayerInfoCard> playerInfoCardList = new List<PlayerInfoCard>();
+    public Transform InfoCardSpawnArea;
+
 
     private void Awake()
     {
@@ -49,6 +54,7 @@ public class PlayerState : SerializedMonoBehaviour
         }
         VirtueDisplay();
         GetPlayerVirtueCount();
+
     }
     public void Update()
     {
@@ -107,6 +113,26 @@ public class PlayerState : SerializedMonoBehaviour
                 virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();    
             }
         }
+    }
+
+    public void playerInfoSpawner()
+    {
+        
+        foreach(PlayerInfoCard PIC in playerInfoCardList)
+        {
+            if (PIC != null)
+                Destroy(PIC.gameObject);
+        }
+        foreach (Player player in PlayerManager.Instance.Players)
+        {
+            if(player != TurnManager.Instance.ActivePlayer)
+            {
+                PlayerInfoCard playerInfo = Instantiate(playerInfoCard, InfoCardSpawnArea);
+                playerInfo.player = player;
+                playerInfoCardList.Add(playerInfo);
+            }
+        }
+
     }
 
 

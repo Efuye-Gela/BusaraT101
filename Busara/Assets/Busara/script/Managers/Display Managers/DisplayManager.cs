@@ -25,6 +25,10 @@ public class DisplayManager : Manager<DisplayManager>
     public List<PlayerRepresentation> ThePlayersList = new List<PlayerRepresentation>();
     public Transform SpawnArea;
 
+    /* Player information area */
+    public TMP_Text[] playerName;
+
+
     private void OnEnable()
     {
         Application.logMessageReceived += LogMessage;
@@ -43,6 +47,7 @@ public class DisplayManager : Manager<DisplayManager>
         }
     }
 
+    /* Display consile info */
     private void LogMessage(string logString, string stackTrace, LogType type)
     {
         if (consoleText != null)
@@ -51,7 +56,7 @@ public class DisplayManager : Manager<DisplayManager>
         }
     }
 
-    /* Display special Pop Up */
+    /* Display special info Pop Up */
     public void Communication(string info)
     {
         if (PopUpText != null)
