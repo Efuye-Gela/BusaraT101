@@ -103,6 +103,130 @@ public class BoardManager : Manager<BoardManager>
         Debug.Log("Game state saved: " + state.ToString());
     }
 
+    // Modified SaveGameState with key parameter
+    public void SaveGameState(string saveKey)
+    {
+        System.Text.StringBuilder state = new System.Text.StringBuilder();
+
+        foreach (var board in gameBoards)
+        {
+            foreach (var slot in board.Slots)
+            {
+                if (!slot.isOccupied)
+                {
+                    state.Append('0');
+                }
+                else
+                {
+                    switch (slot.resource.resourceType)
+                    {
+                        case ResourceType.Fire:
+                            state.Append('1');
+                            break;
+                        case ResourceType.Air:
+                            state.Append('2');
+                            break;
+                        case ResourceType.Water:
+                            state.Append('3');
+                            break;
+                        case ResourceType.Earth:
+                            state.Append('4');
+                            break;
+                    }
+                }
+            }
+        }
+
+        PlayerPrefs.SetString(saveKey, state.ToString());
+        PlayerPrefs.Save();
+        Debug.Log($"Game state saved to {saveKey}: {state}");
+    }
+
+    // Modified LoadGameState with key parameter
+    public void LoadGameState(string saveKey)
+    {
+        if (!PlayerPrefs.HasKey(saveKey))
+        {
+            Debug.Log("No saved game state found!");
+            return;
+        }
+
+        string state = PlayerPrefs.GetString(saveKey);
+        if (state.Length != 64)  // Validate state length
+        {
+            Debug.LogError("Invalid save state length!");
+            return;
+        }
+
+        // Clear existing resources
+        foreach (var board in gameBoards)
+        {
+            foreach (var slot in board.Slots)
+            {
+                if (slot.resource != null)
+                {
+                    Destroy(slot.resource.gameObject);
+                    slot.resource = null;
+                    slot.isOccupied = false;
+                }
+            }
+        }
+
+        // Load saved state
+        int stateIndex = 0;
+        foreach (var board in gameBoards)
+        {
+            foreach (var slot in board.Slots)
+            {
+                char resourceChar = state[stateIndex++];
+                if (resourceChar != '0')
+                {
+                    ResourceType type = ResourceType.Fire; // Default initialization
+                    switch (resourceChar)
+                    {
+                        case '1': type = ResourceType.Fire; break;
+                        case '2': type = ResourceType.Air; break;
+                        case '3': type = ResourceType.Water; break;
+                        case '4': type = ResourceType.Earth; break;
+                    }
+                    GameObject prefabObject = null;
+                    switch (type)
+                    {
+                        case ResourceType.Water:
+                            prefabObject = WaterPrefab;
+                            break;
+                        case ResourceType.Earth:
+                            prefabObject = EarthPrefab;
+                            break;
+                        case ResourceType.Fire:
+                            prefabObject = FirePrefab;
+                            break;
+                        case ResourceType.Air:
+                            prefabObject = AirPrefab;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    //newResource = Instantiate(prefabObject, parentTransform);
+                    //GameObject resourcePrefab = GetResourcePrefab(type);
+                    if (prefabObject != null)
+                    {
+                        GameObject resourceObj = Instantiate(prefabObject, slot.transform);
+                        resourceObj.transform.localPosition = Vector3.zero;
+                        //resourceObj.transform.localScale = Vector3.one;
+                        Resource resource = resourceObj.GetComponent<Resource>();
+                        Board.PlaceResource(resource, slot);
+                    }
+                }
+            }
+        }
+
+        Debug.Log($"Game state loaded from {saveKey}!");
+        SelectionManager.Instance.UnhighlightAllPlayerBoards();
+    }
+
+
     public void LoadGameState()
     {
         if (!PlayerPrefs.HasKey("BoardState"))

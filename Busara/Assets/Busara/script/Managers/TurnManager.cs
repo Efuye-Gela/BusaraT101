@@ -34,6 +34,7 @@ public class TurnManager : Manager<TurnManager>
         void OnTurnBegin();
         
     }
+
     List<TurnEndListener> turnEndListeners = new List<TurnEndListener>();
 
     public void AddTurnEndListeners(TurnEndListener listener)
@@ -181,8 +182,31 @@ public class TurnManager : Manager<TurnManager>
         Debug.Log("Special Turn for "+ nextPlayer.name);
         OnSpecialCardDrawnEvent?.Invoke();
     }
-    
 
+
+    public void SkipTurns(int count)
+    {
+        if (isSpecialCardDrawn)
+        {
+            Debug.LogWarning("Cannot skip turns during special card phase.");
+            return;
+        }
+
+        Player playerToStartAfterSkip = activePlayer;
+
+        for (int i = 0; i < count; i++)
+        {
+            playerToStartAfterSkip = PlayerManager.Instance.GetNextPlayer(playerToStartAfterSkip);
+        }
+
+        Debug.Log($"{count} turn(s) skipped. Next turn: {playerToStartAfterSkip.name}");
+
+        // End current turn
+        EndTurn(activePlayer);
+
+        // Start new turn after skipping
+        BeginTurn(playerToStartAfterSkip);
+    }
 
 
 }
