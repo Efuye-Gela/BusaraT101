@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TestManager : MonoBehaviour
+public class TestManager : Manager<TestManager>
 {
     [SerializeField] GameObject BoardsHolder;
     [SerializeField] List<GameObject> boards;
@@ -36,6 +36,17 @@ public class TestManager : MonoBehaviour
                     slot.gameObject.transform.rotation = Quaternion.Euler(0, 0, -rotateBoardAngle);
                 }
             }
+        }
+    }
+
+    public void TestSkipSetup()
+    {
+        foreach (Player player in PlayerManager.Instance.Players)
+        {
+            player.setupcard = null;
+            player.hasFinishedSettingUp = true;
+            BoardManager.Instance.LoadGameState("Save_SkipSetup");
+            TurnManager.Instance.SkipTurns(4);
         }
     }
 }

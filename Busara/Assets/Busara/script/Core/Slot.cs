@@ -62,11 +62,17 @@ public class Slot : MonoBehaviour, SelectionManager.SlotSelectionListener
 
     public void Highlight()
     {
-        this.highlight.gameObject.SetActive(true);
+        if(!isOccupied)
+            this.highlight.gameObject.SetActive(true);
     }
 
     public void UnHighlight()
     {
         this.highlight.gameObject.SetActive(false);
+    }
+
+    public Player GetPlayer()
+    {
+        return board.player;
     }
 }

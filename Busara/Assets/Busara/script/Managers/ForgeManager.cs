@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class ForgeManager : Manager<ForgeManager>
 {
@@ -20,6 +21,12 @@ public class ForgeManager : Manager<ForgeManager>
         if (selectedResources.Count < 2)
         {
             Debug.Log("Not enough resources selected to forge.");
+            return false;
+        }
+
+        if (selectedResources[0].slot.GetPlayer()!= TurnManager.Instance.ActivePlayer)
+        {
+            Debug.Log("You must start with your resource first");
             return false;
         }
 
@@ -50,25 +57,35 @@ public class ForgeManager : Manager<ForgeManager>
             int firstResourceIndex = resourceList[i].index;
             int secondResourceIndex = resourceList[i + 1].index;
 
-            Virtue forgedVirtue = CheckForgeCombination(firstResource, secondResource);
-            if (forgedVirtue != null)
+            if (firstResource.IsAdjcentTo(secondResource))
             {
-                UpdateForgeStatus(firstResource, secondResource, receivingPlayers, forgedVirtue);
-                forgedVirtues.Add(forgedVirtue);
-                if (!tobeRemovedResources.Contains(firstResource))
-                    tobeRemovedResources.Add(firstResource);
-                if (!tobeRemovedResources.Contains(secondResource))
-                    tobeRemovedResources.Add(secondResource);
+                Virtue forgedVirtue = CheckForgeCombination(firstResource, secondResource);
+                if (forgedVirtue != null)
+                {
+                    UpdateForgeStatus(firstResource, secondResource, receivingPlayers, forgedVirtue);
+                    forgedVirtues.Add(forgedVirtue);
+                    if (!tobeRemovedResources.Contains(firstResource))
+                        tobeRemovedResources.Add(firstResource);
+                    if (!tobeRemovedResources.Contains(secondResource))
+                        tobeRemovedResources.Add(secondResource);
+                }
+                else
+                    Debug.Log("Combination does not exist, moving to the next item.");
+            }
+            else
+            { 
+                Debug.Log("Non AdjcentResources selected.Forge Failed");
+                selectedResources.Clear();
+                return false;
             }
 
-            else
-                Debug.Log("Combination does not exist, moving to the next item.");
         }
         RemoveForgedResources(tobeRemovedResources);
         TurnManager.Instance.ActivePlayer.selectedResources.Clear();
         selectedResourceCleared?.Invoke();
         forgedVirtues.Clear();
         return true;
+        
     }
 
     private Virtue CheckForgeCombination(Resource resourceA, Resource resourceB)

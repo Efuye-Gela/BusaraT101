@@ -8,7 +8,10 @@ public class TestOutScript : MonoBehaviour
 
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            TestManager.Instance.TestSkipSetup();
+        }
         if (Input.GetKeyDown(KeyCode.V))
         {
             spawnVirtue();

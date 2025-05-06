@@ -55,8 +55,13 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
 
     public void Onselection(Slot slot)
     {
-        destinationSlot = slot;
-        PlaceResource(slot);
+        if (TurnManager.Instance.ActivePlayer.setupcard == null || TurnManager.Instance.ActivePlayer.hasFinishedSettingUp == true)
+            return;
+        if (tobePlacedResource != null)
+        { 
+            destinationSlot = slot;
+            PlaceResource(slot); 
+        }
     }
 
     public void OnDeselection(Slot slot)
