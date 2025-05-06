@@ -43,7 +43,7 @@ public class TestManager : Manager<TestManager>
     {
         foreach (Player player in PlayerManager.Instance.Players)
         {
-            player.setupcard = null;
+            player.setUpCard = null;
             player.hasFinishedSettingUp = true;
             BoardManager.Instance.LoadGameState("Save_SkipSetup");
             TurnManager.Instance.SkipTurns(4);

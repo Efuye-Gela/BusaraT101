@@ -55,7 +55,7 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
 
     public void Onselection(Slot slot)
     {
-        if (TurnManager.Instance.ActivePlayer.setupcard == null || TurnManager.Instance.ActivePlayer.hasFinishedSettingUp == true)
+        if (TurnManager.Instance.ActivePlayer.setUpCard == null || TurnManager.Instance.ActivePlayer.hasFinishedSettingUp == true)
             return;
         if (tobePlacedResource != null)
         { 
