@@ -27,6 +27,12 @@ public class WeaponActionMove : MonoBehaviour
 
     private void UseWeapon(List<Resource> resources)
     {
+
+        List<Resource> selectedResources = TurnManager.Instance.ActivePlayer.selectedResources;
+        if (selectedResources[0].slot.GetPlayer() != TurnManager.Instance.ActivePlayer)
+        {
+            Debug.Log("You must start with your resource first");
+        }
         foreach (Resource resource in resources) 
         {
             Slot removerSlot = resource.slot;

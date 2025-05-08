@@ -13,6 +13,7 @@ public class ForgeManager : Manager<ForgeManager>
     public Action selectedResourceCleared;
 
 
+
     public bool Forge()
     {
         List<Resource> resourceList = new List<Resource>();

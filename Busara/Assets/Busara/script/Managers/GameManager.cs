@@ -13,12 +13,13 @@ public class GameManager : Manager<GameManager>
 
     public Player ActivePlayer;
     public GameObject WinScreen;
-
+   
     private void Awake()
     {
-        MakeFullScreen();
         if(TurnManager.Instance != null)
             ActivePlayer = TurnManager.Instance.ActivePlayer;
+
+
     }
 
     void Start()
@@ -31,7 +32,8 @@ public class GameManager : Manager<GameManager>
     private void Update()
     {
         if (TurnManager.Instance != null)
-            ActivePlayer = TurnManager.Instance.ActivePlayer;
+            ActivePlayer = TurnManager.Instance.ActivePlayer;   
+
     }
     private void HandleSpecialTurn()
     {
@@ -95,7 +97,16 @@ public class GameManager : Manager<GameManager>
         Screen.fullScreen = true;
         //Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
     }
+    public void UnMakeFullScreen()
+    {
+        Screen.fullScreen = false;
+        //Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
+    }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
     public void CheckWinConditions()
     {
         if (ActivePlayer.Kingdom == null || ActivePlayer.Virtues == null)
