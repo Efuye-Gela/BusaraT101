@@ -16,7 +16,8 @@ public class GameManager : Manager<GameManager>
    
     private void Awake()
     {
-        if(TurnManager.Instance != null)
+        MakeFullScreen();
+        if (TurnManager.Instance != null)
             ActivePlayer = TurnManager.Instance.ActivePlayer;
 
 
