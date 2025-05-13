@@ -96,9 +96,7 @@ public class TurnManager : Manager<TurnManager>
         Debug.Log("Current Turn : " + player.name + " Board:" + player.Board.name);
         //onTurn?.Invoke(player);
         TriggerTurnBeginListeners();
-        GameManager.Instance.CheckResource();
-
-        
+        GameManager.Instance.CheckResource();   
 
     }
 
