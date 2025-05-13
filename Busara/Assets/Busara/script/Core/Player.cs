@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public string Name;
     public List<Virtue> Virtues;
+    public int PlayerNumber;
 
     [Space]
     [Header("Selections")]

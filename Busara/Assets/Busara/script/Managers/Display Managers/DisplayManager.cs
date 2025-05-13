@@ -21,7 +21,6 @@ public class DisplayManager : Manager<DisplayManager>
     /*Power display*/
     public TMP_Text PowerName;
     public TMP_Text PowerDescription;
-    public PlayerRepresentation ThePlayer;
     public List<PlayerRepresentation> ThePlayersList = new List<PlayerRepresentation>();
     public Transform SpawnArea;
 
@@ -40,11 +39,8 @@ public class DisplayManager : Manager<DisplayManager>
     }
     private void Update()
     {
-        if (ThePlayer != null)
-        {
-            PowerInfoDisplay();
-            KingdomInfoDisplay();
-        }
+        PowerInfoDisplay();
+        KingdomInfoDisplay();
     }
 
     /* Display consile info */
@@ -115,27 +111,38 @@ public class DisplayManager : Manager<DisplayManager>
     /*Player list for the power card info list*/
     public void PlayerListInfo()
     {
-        if(ThePlayer == null || SpawnArea == null)
+        if (SpawnArea == null)
             return;
+        //list of players
+        List <Player> players = PlayerManager.Instance.Players;
 
-        /*Make sure that there is no representation of players*/
-        if(ThePlayersList.Count > 0)
+        foreach(Player player in players)
         {
-            foreach (PlayerRepresentation playerRep in ThePlayersList)
+
+            ThePlayersList[player.PlayerNumber].player = players[player.PlayerNumber];
+            ThePlayersList[player.PlayerNumber].PlayerName.text = players[player.PlayerNumber].Name;
+            if (player == TurnManager.Instance.ActivePlayer)
             {
-                if(playerRep != null)
-                    Destroy(playerRep.gameObject);
+                ThePlayersList[player.PlayerNumber].gameObject.SetActive(false);
+            }
+            if (player != TurnManager.Instance.ActivePlayer)
+            {
+                ThePlayersList[player.PlayerNumber].gameObject.SetActive(true);
             }
         }
-   
+        /*Player one*//*
+        ThePlayersList[0].player = players[0];
+        ThePlayersList[0].PlayerName.text = players[0].Name;
+        *//*Player two*//*
+        ThePlayersList[1].player = players[1];
+        ThePlayersList[1].PlayerName.text = players[1].Name;
+        *//*Player three*//*
+        ThePlayersList[2].player = players[2];
+        ThePlayersList[2].PlayerName.text = players[2].Name;
+        *//*Player four*//*
+        ThePlayersList[3].player = players[3];
+        ThePlayersList[3].PlayerName.text = players[3].Name;*/
 
-        foreach (Player player in  PlayerManager.Instance.Players) 
-        {
-            PlayerRepresentation PlayerRep = Instantiate(ThePlayer, SpawnArea.transform);
-            PlayerRep.player = player;
-            PlayerRep.PlayerName.text = player.Name;
-            ThePlayersList.Add(PlayerRep);
-        }
     }
 
     /*Display on and off the increase and Decrease*/
