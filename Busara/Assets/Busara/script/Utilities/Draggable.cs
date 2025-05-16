@@ -29,20 +29,20 @@ public class Draggable : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, 
     public void OnBeginDrag(PointerEventData eventData)
     {
         // Debug.Log("OnBeginDrag");
-        canvasGroup.alpha = .6f;
-        canvasGroup.blocksRaycasts = false;
+        //canvasGroup.alpha = .6f;
+        //canvasGroup.blocksRaycasts = false;
 
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        //rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.alpha = 1f;
-        canvasGroup.blocksRaycasts = true;
+        //canvasGroup.alpha = 1f;
+        //canvasGroup.blocksRaycasts = true;
     }
 
     public void OnPointerDown(PointerEventData eventData)

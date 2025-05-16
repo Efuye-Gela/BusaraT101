@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Background for the selection area _0: -1350800937484271225
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

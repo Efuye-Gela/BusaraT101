@@ -10,7 +10,7 @@ public class DropHandler : MonoBehaviour, IDropHandler, IPointerDownHandler
 
     public  void OnDrop(PointerEventData eventData)
     {
-        //Debug.Log("OnDrop");
+ /*       //Debug.Log("OnDrop");
         if (eventData.pointerDrag != null)
         {
             GameObject currentGameObject = eventData.pointerDrag.gameObject;
@@ -18,7 +18,7 @@ public class DropHandler : MonoBehaviour, IDropHandler, IPointerDownHandler
             currentGameObject.transform.SetParent(GetComponent<RectTransform>().gameObject.transform,true);
             currentGameObject.transform.localPosition = Vector3.zero;
             OnItemPlaced?.Invoke(currentGameObject.GetComponent<Resource>(),this.GetComponent<Slot>());
-        }
+        }*/
     }
     public void OnPointerDown(PointerEventData eventData)
     {
