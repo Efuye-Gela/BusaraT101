@@ -48,7 +48,7 @@ public class Witchcraft : Power, SelectionManager.ResourceSelectionListener, Sel
                 TemPlayer.selectedVirtue.Remove(virtue);
                 count--;
             }
-        }//test out
+        }
         return true;
     }
 
