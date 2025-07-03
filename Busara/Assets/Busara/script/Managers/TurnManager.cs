@@ -77,7 +77,6 @@ public class TurnManager : Manager<TurnManager>
     Player lastSequentialPlayer = null;
 
     
-    public event Action OnSpecialCardDrawnEvent;
 
     void Start()
     {
@@ -96,7 +95,7 @@ public class TurnManager : Manager<TurnManager>
         Debug.Log("Current Turn : " + player.name + " Board:" + player.Board.name);
         //onTurn?.Invoke(player);
         TriggerTurnBeginListeners();
-        GameManager.Instance.CheckResource();   
+       // GameManager.Instance.CheckResource();   
 
     }
 
@@ -161,7 +160,7 @@ public class TurnManager : Manager<TurnManager>
     void EndTurn(Player player)
     {
         SelectionManager.Instance.UnhighlightAll();
-        GameManager.Instance.CheckWinConditions();
+        //GameManager.Instance.CheckWinConditions();
         
         activePlayer = null;
     }
@@ -178,7 +177,6 @@ public class TurnManager : Manager<TurnManager>
         EndTurn(activePlayer);
         BeginTurn(nextPlayer);
         Debug.Log("Special Turn for "+ nextPlayer.name);
-        OnSpecialCardDrawnEvent?.Invoke();
     }
 
 

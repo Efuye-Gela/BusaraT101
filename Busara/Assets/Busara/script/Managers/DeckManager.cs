@@ -4,10 +4,12 @@ using System.Collections.Generic;
 public class DeckManager : Manager<DeckManager>
 {
     public List<Card> Cards;
+    public Card initCard;
 
     private void Start()
     {
         Shuffle();
+        initCard = Cards[0];
     }
 
     void Shuffle()
@@ -28,6 +30,11 @@ public class DeckManager : Manager<DeckManager>
     {
         if (Cards[0] != null)
         { 
+            return Cards[0];
+        }
+        else if (Cards[0] == initCard)
+        {
+            Shuffle();
             return Cards[0];
         }
         else

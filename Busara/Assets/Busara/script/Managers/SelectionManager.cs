@@ -100,8 +100,6 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
     {
         TurnManager.Instance.AddTurnEndListeners(this);
     }
-    
-
 
     public void UnhighlightAll()
     { 

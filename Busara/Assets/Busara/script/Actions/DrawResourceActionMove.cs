@@ -9,7 +9,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
     [SerializeField] Canvas gameCanvas;
 
 
-    private Resource tobePlacedResource;
+    private Resource toBePlacedResource;
     private Resource drawnResource;
     private Slot destinationSlot;
     
@@ -22,20 +22,12 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
 
     public void OnTapDraw()
     {
-        if (!GameManager.Instance.multidraw)
-        {
-            if (TurnManager.Instance.ActivePlayer == GameManager.Instance.lastDrawnPlayer)
-            {
-                Debug.Log("Can't Draw Resource Again");
-                return;
-            }
-        }
-        TurnManager.Instance.ActivePlayer.hasDrawnResource = true;
+        TurnManager.Instance.ActivePlayer.hasDrawnResource = true; //okay
         GameObject newResource;
         Card drawnCard = DeckManager.Instance.Draw();
-        GameManager.Instance.lastDrawnPlayer = TurnManager.Instance.ActivePlayer;
 
         DeckManager.Instance.GoToNext();
+
         if (drawnCard == default(Card))
             Debug.LogError("Null card");
         else
@@ -45,78 +37,28 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
             if (drawnCard.GetType() == typeof(ResourceCard))
             {
                 ResourceCard drawnResourceCard = (ResourceCard)drawnCard;
-                //GameObject prefabObject = null;
-                //switch (drawnResourceCard.Resource)
-                //{
-                //    case ResourceType.Water:
-                //        prefabObject = WaterPrefab;
-                //        break;
-                //    case ResourceType.Earth:
-                //        prefabObject = EarthPrefab;
-                //        break;
-                //    case ResourceType.Fire:
-                //        prefabObject = FirePrefab;
-                //        break;
-                //    case ResourceType.Air:
-                //        prefabObject = AirPrefab;
-                //        break;
-                //    default:
-                //        break;
-                //}
-
-                //newResource = Instantiate(prefabObject, parentTransform);
                 newResource = BoardManager.Instance.SpawnByResourceType(drawnResourceCard.Resource, parent);
-                newResource.GetComponent<Draggable>().canvas = gameCanvas;
+                newResource.GetComponent<Selectable>().canvas = gameCanvas;
                 drawnResource = newResource.GetComponent<Resource>();
 
             }
             else if (drawnCard.GetType() == typeof(DisasterCard))
             {
-                
                 DisasterCard drawnDisasterCard = (DisasterCard)drawnCard;
                 drawnDisasterCard.effect.Execute();
             }
-        }   
-
-        //DropHandler.OnItemPlaced += ResourcePlaced;
+        }  
         
     }
-
-    // for drag and drop
-    //private void ResourcePlaced(Resource resource,Slot slot)
-    //{
-    //    if (resource != null && tobePlacedResource != null)
-    //    { 
-    //        if (resource.index == tobePlacedResource.index)
-    //        {
-    //            if (TurnManager.Instance.ActivePlayer == slot.board.player)
-    //            {
-    //                Debug.Log("Resource Placed");                
-    //                resource.gameObject.transform.SetParent(slot.gameObject.transform);
-    //                resource.gameObject.transform.localPosition = Vector3.zero;
-    //                updateState(resource, slot);
-    //                tobePlacedResource = null;
-    //                destinationSlot = null;
-    //                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-    //            }
-    //        }
-    //    }
-    //}
     private void ResourcePlaced()
     {
-        if (tobePlacedResource != null)
+        if (toBePlacedResource != null)
         {
             if (TurnManager.Instance.ActivePlayer == destinationSlot.board.player)
             {
                 Debug.Log("Resource Placed");
-                //tobePlacedResource.gameObject.transform.SetParent(destinationSlot.gameObject.transform);
-                //tobePlacedResource.gameObject.transform.localPosition = Vector3.zero;
-                //updateState(tobePlacedResource, destinationSlot);
-                //tobePlacedResource = null;
-                //destinationSlot = null;
-                Board.PlaceResource(tobePlacedResource, destinationSlot);
+                Board.PlaceResource(toBePlacedResource, destinationSlot);
                 TurnManager.Instance.ActivePlayer.hasDrawnResource = false;
-                //BoardManager.Instance.SaveGameState();
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
             
@@ -133,14 +75,12 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
     public void Onselection(Resource resource)
     {
         if (resource == drawnResource)
-            tobePlacedResource = resource;
-        //else
-        //    Debug.Log("Can't place this resource");
+            toBePlacedResource = resource;
     }
 
     public void OnDeselection(Resource resource)
     {
-        tobePlacedResource = null;
+        toBePlacedResource = null;
     }
 
     public void Onselection(Slot slot)

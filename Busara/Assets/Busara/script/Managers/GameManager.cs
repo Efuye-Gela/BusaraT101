@@ -3,113 +3,40 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Manager<GameManager>
+public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener, TurnManager.TurnEndListener
 {
     public bool multidraw = false;
     public Player lastDrawnPlayer = null;
     public bool isTournament = false;
 
-    public bool IsSpecialTurn = false;
-
     public Player ActivePlayer;
     public GameObject WinScreen;
-   
-    private void Awake()
+
+    public void Start()
     {
-        MakeFullScreen();
-        if (TurnManager.Instance != null)
-            ActivePlayer = TurnManager.Instance.ActivePlayer;
-
-
-    }
-
-    void Start()
-    {
-       
-        if (TurnManager.Instance!=null)
-            TurnManager.Instance.OnSpecialCardDrawnEvent += HandleSpecialTurn; 
-    }
-
-    private void Update()
-    {
-        if (TurnManager.Instance != null)
-            ActivePlayer = TurnManager.Instance.ActivePlayer;   
-
-    }
-    private void HandleSpecialTurn()
-    {
-        IsSpecialTurn = true;
+        TurnManager.Instance.AddTurnBeginListeners(this);
+        TurnManager.Instance.AddTurnBeginListeners(this);
     }
 
     public void OnTapRemove()
     {
-        if (IsSpecialTurn)
+        List<Resource> resources = TurnManager.Instance.ActivePlayer.selectedResources;
+        if (resources != null && resources.Count > 0)
         {
-            List<Resource> resources = TurnManager.Instance.ActivePlayer.selectedResources;
-            if (resources != null && resources.Count > 0)
+            if (resources.Count > 1)
+                DisplayManager.Instance.Communication("Please select one resource only");
+            else
             {
-                if (resources.Count > 1)
-                    DisplayManager.Instance.Communication("Please select one resource only");
-                else
-                {
-                    resources[0].slot.EmptySlot();
-                    TurnManager.Instance.ActivePlayer.selectedResources.Clear();
-                    TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-                }
+                resources[0].slot.EmptySlot();
+                TurnManager.Instance.ActivePlayer.selectedResources.Clear();
+                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
             }
         }
-        else
-        {
-            Debug.Log("only on special turn");
-        }
-    
-    }
-
-    public void OnPowerUser()
-    {
-        Player player = TurnManager.Instance.ActivePlayer;
-        if (player != null)
-        {
-            if (player)
-            {
-                if(Power.PowerVerification(player))
-                {
-                  TurnManager.Instance.ActivePlayer.Kingdom.power.Execute();
-                }
-            }
-        }
-    }
-
-    public void setPlayer()
-    {
-        if(ActivePlayer == null)
-        {
-            ActivePlayer = TurnManager.Instance.ActivePlayer;
-        }
-    }
-
-    public void LoadScene(int index)
-    {
-        SceneManager.LoadScene(index);
-    }
-
-    public void MakeFullScreen()
-    {
-        Screen.fullScreen = true;
-        //Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
-    }
-    public void UnMakeFullScreen()
-    {
-        Screen.fullScreen = false;
-        //Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
     }
     public void CheckWinConditions()
     {
+        if (TurnManager.Instance != null)
+            ActivePlayer = TurnManager.Instance.ActivePlayer;
         if (ActivePlayer.Kingdom == null || ActivePlayer.Virtues == null)
         {
             Debug.Log("No Kingdom assigned or Virtues list is empty.");
@@ -148,9 +75,10 @@ public class GameManager : Manager<GameManager>
         Debug.Log(ActivePlayer.Name + " has met the win conditions!");
         WinScreen.SetActive(true);
     }
-
     public void CheckResource()
     {
+        if (TurnManager.Instance != null)
+            ActivePlayer = TurnManager.Instance.ActivePlayer;
         int resource = 0;
         if (ActivePlayer != null)
         {
@@ -164,10 +92,24 @@ public class GameManager : Manager<GameManager>
             if (resource == 0)
             {
                 Debug.Log("NO resource Turn Skip");
-                TurnManager.Instance.CompleteTurn(ActivePlayer);
             }
         }
     }
+    public void setPlayer()
+    {
+        if(ActivePlayer == null)
+        {
+            ActivePlayer = TurnManager.Instance.ActivePlayer;
+        }
+    }
 
-    
+    public void OnTurnBegin()
+    {
+        CheckResource();
+    }
+
+    public void OnTurnEnd()
+    {
+        CheckWinConditions();
+    }
 }
