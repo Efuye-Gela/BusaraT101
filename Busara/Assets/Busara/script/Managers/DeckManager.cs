@@ -4,12 +4,12 @@ using System.Collections.Generic;
 public class DeckManager : Manager<DeckManager>
 {
     public List<Card> Cards;
-    public Card initCard;
+    public int CardCount = 0;
 
     private void Start()
     {
         Shuffle();
-        initCard = Cards[0];
+        CardCount = Cards.Count;
     }
 
     void Shuffle()
@@ -28,13 +28,9 @@ public class DeckManager : Manager<DeckManager>
 
     public Card Draw()
     {
+
         if (Cards[0] != null)
         { 
-            return Cards[0];
-        }
-        else if (Cards[0] == initCard)
-        {
-            Shuffle();
             return Cards[0];
         }
         else
@@ -64,7 +60,17 @@ public class DeckManager : Manager<DeckManager>
     public void GoToNext()
     {
         Card firstItem = Cards[0]; 
-        Cards.RemoveAt(0); 
+        Cards.RemoveAt(0);
         Cards.Add(firstItem);
+        if (CardCount == 0)
+        {
+            Debug.LogWarning("Deck is empty, reshuffling...");
+            Shuffle();
+            CardCount = Cards.Count;
+        }
+        else
+        {
+            CardCount--;
+        }
     }
 }
