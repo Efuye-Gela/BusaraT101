@@ -102,6 +102,7 @@ public class BlessingOfPlenty : Power, SelectionManager.ResourceSelectionListene
     {
         if (tobeAddedResources.Contains(resource))
         {
+            TurnManager.Instance.ActivePlayer.selectedResources.Add(resource);
             tobePlacedResource = resource;
         }
     }

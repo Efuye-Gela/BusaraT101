@@ -52,7 +52,7 @@ public class Slot : MonoBehaviour, SelectionManager.SlotSelectionListener
 
     public void Onselection(Slot slot)
     {
-        slot.Highlight();  //sometimes some null
+        //slot.Highlight();  //sometimes some null
     }
 
     public void OnDeselection(Slot slot)

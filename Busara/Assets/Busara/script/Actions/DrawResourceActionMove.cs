@@ -60,6 +60,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
                 Board.PlaceResource(toBePlacedResource, destinationSlot);
                 TurnManager.Instance.ActivePlayer.hasDrawnResource = false;
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+                drawnResource = null;
             }
             
         }
@@ -75,7 +76,11 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
     public void Onselection(Resource resource)
     {
         if (resource == drawnResource)
+        {
+            //TurnManager.Instance.ActivePlayer.selectedResources.Add(resource);
             toBePlacedResource = resource;
+        }
+
     }
 
     public void OnDeselection(Resource resource)

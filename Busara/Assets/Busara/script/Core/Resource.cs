@@ -34,17 +34,18 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
 
     public Resource(ResourceType type)
     {
-            resourceType = type;
+          resourceType = type;
     }
 
     public void OnDeselection(Resource resource)
     {
-        resource.UnHighlight();
+            resource.UnHighlight();
     }
 
     public void Onselection(Resource resource)
     {
-        resource.Highlight();
+        if (TurnManager.Instance.ActivePlayer.selectedResources.Contains(resource))
+            resource.Highlight();
     }
 
     public void Highlight()

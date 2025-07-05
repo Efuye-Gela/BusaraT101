@@ -54,8 +54,11 @@ public class Witchcraft : Power, SelectionManager.ResourceSelectionListener, Sel
 
     public void Onselection(Resource resource)
     {
-        if(tobeMovedResources.Contains(resource))
+        if (tobeMovedResources.Contains(resource))
+        {
+            TurnManager.Instance.ActivePlayer.selectedResources.Add(resource);
             tobeMovedResource = resource;
+        }
     }
 
     public void OnDeselection(Resource resource)

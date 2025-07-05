@@ -213,10 +213,20 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
     }
 
 
+    // Observer pattern using interface from below 
     public void ToggleSelect(Resource resource)
     {
         if (!currentPlayer.selectedResources.Contains(resource))
         {
+            //Not Every clicked resource should be added to the player list
+           if (currentPlayer.selectedResources.Count == 0 && !TurnManager.Instance.ActivePlayer.hasDrawnResource)
+            {
+
+                if (!currentPlayer.Board.Slots.Contains(resource.slot))
+                {
+                    return;
+                }
+            }
             currentPlayer.selectedResources.Add(resource);
             TriggerResourceSelectionListeners(resource);
         }
@@ -229,6 +239,7 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
 
     public void ToggleSelect(Slot slot)
     {
+
         if (!currentPlayer.selectedSlots.Contains(slot))
         {
             currentPlayer.selectedSlots.Add(slot);

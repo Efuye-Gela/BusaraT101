@@ -43,7 +43,7 @@ public class ForgeManager : Manager<ForgeManager>
             if (resourceList[j].resourceType == resourceList[j + 1].resourceType)
             {
                 Debug.Log("You can't have the same item forged");
-                selectedResources.Clear();
+                //selectedResources.Clear();
                 return false;
             }
         }

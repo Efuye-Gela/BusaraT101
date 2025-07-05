@@ -69,11 +69,9 @@ public class TurnManager : Manager<TurnManager>
     private Player activePlayer;
     public Player ActivePlayer => activePlayer;
 
-    //public Action<Player> onTurn;
-
-    public bool isSpecialCardDrawn = false; // Flag for special card state
-    public bool returnToFirstPlayer = false; // 
-    private List<Player> specialActionList; //
+    public bool isSpecialCardDrawn = false;
+    public bool returnToFirstPlayer = false;
+    private List<Player> specialActionList;
     Player lastSequentialPlayer = null;
 
     
