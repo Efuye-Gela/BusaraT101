@@ -22,7 +22,7 @@ public class PoliticsDisaster : DisasterEffect
         List<Player> tempPlayers = new List<Player>();
         if (Accepted)
         {   
-            DisplayManager.Instance.ErrorMassage("Land Exchange!!!");
+           // DisplayManager.Instance.ErrorMassage("Land Exchange!!!");
             foreach (Player player in PlayerManager.Instance.Players)
             {
                 Player newPlayer = Instantiate(player);

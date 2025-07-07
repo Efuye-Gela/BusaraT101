@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 
-public class DisplayManager : Manager<DisplayManager>
+public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginListener, TurnManager.TurnEndListener
 {
     public GameObject PopUpInfoPanel;
     public TMP_Text consoleText;
@@ -27,7 +27,11 @@ public class DisplayManager : Manager<DisplayManager>
 
     /* Player information area */
     public TMP_Text[] playerName;
-
+    private void Start()
+    {
+        TurnManager.Instance.AddTurnEndListeners(this);
+        TurnManager.Instance.AddTurnBeginListeners(this);
+    }
     private void Update()
     {
         PowerInfoDisplay();
@@ -64,7 +68,7 @@ public class DisplayManager : Manager<DisplayManager>
             elapsed += Time.deltaTime;
             yield return null;
         }
-
+            
         // Ensure fully transparent
         Color finalColor = consoleText.color;
         finalColor.a = 0f;
@@ -180,6 +184,16 @@ public class DisplayManager : Manager<DisplayManager>
         {
             VUI.instance.TurnOffINCDEC();
         }
+    }
+
+    public void OnTurnBegin()
+    {
+        StartCoroutine(Massage("Current Turn : " + TurnManager.Instance.ActivePlayer.name));
+    }
+
+    public void OnTurnEnd()
+    {
+        throw new System.NotImplementedException();
     }
 }
 

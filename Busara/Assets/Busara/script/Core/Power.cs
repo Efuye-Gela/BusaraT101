@@ -21,14 +21,14 @@ public abstract class Power : ScriptableObject
         {
             if (!player.selectedPlayer)
             {
-                DisplayManager.Instance.ErrorMassage("please select a player");
+                //DisplayManager.Instance.ErrorMassage("please select a player");
                 return false;
             }
             return true;
         }
         else
         {
-            DisplayManager.Instance.ErrorMassage($"please select {player.Kingdom.power.virtueCost} virtues!!!");
+            //DisplayManager.Instance.ErrorMassage($"please select {player.Kingdom.power.virtueCost} virtues!!!");
             player.selectedVirtue.Clear();
             return false;
         }

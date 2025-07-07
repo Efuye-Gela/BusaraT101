@@ -91,11 +91,7 @@ public class TurnManager : Manager<TurnManager>
 
         activePlayer = player;
         Debug.Log("Current Turn : " + player.name + " Board:" + player.Board.name);
-        
-        StartCoroutine(DisplayManager.Instance.Massage("Current Turn : " + player.name + " Board:" + player.Board.name));
-        //onTurn?.Invoke(player);
-        TriggerTurnBeginListeners();
-       // GameManager.Instance.CheckResource();   
+        TriggerTurnBeginListeners(); 
 
     }
 
