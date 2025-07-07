@@ -105,7 +105,7 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
 
     public void OnTurnBegin()
     {
-        CheckResource();
+        //CheckResource();
     }
 
     public void OnTurnEnd()

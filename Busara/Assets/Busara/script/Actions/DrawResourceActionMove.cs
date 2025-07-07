@@ -77,7 +77,6 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
     {
         if (resource == drawnResource)
         {
-            //TurnManager.Instance.ActivePlayer.selectedResources.Add(resource);
             toBePlacedResource = resource;
         }
 

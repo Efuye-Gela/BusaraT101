@@ -41,7 +41,6 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
 
     private void ResourceClicked(Resource clickedOnResource)
     {
-        //availableSlots.Clear();
         if (TurnManager.Instance.ActivePlayer.Board.Slots.Contains(clickedOnResource.slot))
         {
             List<Slot> adjacentSlots = new List<Slot>();
@@ -95,10 +94,8 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
 
     public void Onselection(Resource resource)
     {
-       
         if (!TurnManager.Instance.ActivePlayer.hasDrawnResource) 
         {
-            //TurnManager.Instance.ActivePlayer.selectedResources.Add(resource);
             tobeMovedResource = resource;
             ResourceClicked(tobeMovedResource);
         }

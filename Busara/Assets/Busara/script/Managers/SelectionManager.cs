@@ -216,14 +216,14 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
     // Observer pattern using interface from below 
     public void ToggleSelect(Resource resource)
     {
+        //need a check if the what action is the player taking 
         if (!currentPlayer.selectedResources.Contains(resource))
         {
-            //Not Every clicked resource should be added to the player list
            if (currentPlayer.selectedResources.Count == 0 && !TurnManager.Instance.ActivePlayer.hasDrawnResource)
             {
-
                 if (!currentPlayer.Board.Slots.Contains(resource.slot))
                 {
+                    Debug.Log("First resource you select must be yours");
                     return;
                 }
             }
