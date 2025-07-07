@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 
-public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginListener, TurnManager.TurnEndListener
+public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginListener
 {
     public GameObject PopUpInfoPanel;
     public TMP_Text consoleText;
@@ -29,7 +29,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     public TMP_Text[] playerName;
     private void Start()
     {
-        TurnManager.Instance.AddTurnEndListeners(this);
+       // TurnManager.Instance.AddTurnEndListeners(this);
         TurnManager.Instance.AddTurnBeginListeners(this);
     }
     private void Update()
@@ -189,11 +189,6 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     public void OnTurnBegin()
     {
         StartCoroutine(Massage("Current Turn : " + TurnManager.Instance.ActivePlayer.name));
-    }
-
-    public void OnTurnEnd()
-    {
-        throw new System.NotImplementedException();
     }
 }
 

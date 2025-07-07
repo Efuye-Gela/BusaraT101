@@ -108,9 +108,15 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
 
     public void OnDeselection(Resource resource)
     {
-        tobeMovedResource = null;
-        UnHighlightAvailableSlots(availableSlots);
-        availableSlots.Clear();
-
+        if (TurnManager.Instance.ActivePlayer.selectedResources.Count == 1)
+        {
+            ResourceClicked(TurnManager.Instance.ActivePlayer.selectedResources[0]);
+        }
+        else
+        {
+            tobeMovedResource = null;
+            UnHighlightAvailableSlots(availableSlots);
+            availableSlots.Clear();
+        }
     }
 }
