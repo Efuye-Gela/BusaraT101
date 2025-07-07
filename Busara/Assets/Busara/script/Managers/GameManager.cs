@@ -24,7 +24,7 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
         if (resources != null && resources.Count > 0)
         {
             if (resources.Count > 1)
-                DisplayManager.Instance.Communication("Please select one resource only");
+                DisplayManager.Instance.ErrorMassage("Please select one resource only");
             else
             {
                 resources[0].slot.EmptySlot();

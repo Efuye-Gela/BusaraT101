@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class DisplayManager : Manager<DisplayManager>
 {
@@ -27,33 +28,53 @@ public class DisplayManager : Manager<DisplayManager>
     /* Player information area */
     public TMP_Text[] playerName;
 
-
-    private void OnEnable()
-    {
-        Application.logMessageReceived += LogMessage;
-    }
-
-    private void OnDisable()
-    {
-        Application.logMessageReceived -= LogMessage;
-    }
     private void Update()
     {
         PowerInfoDisplay();
         KingdomInfoDisplay();
     }
 
-    /* Display consile info */
-    private void LogMessage(string logString, string stackTrace, LogType type)
+    /* Display  info */
+    public IEnumerator Massage(string logString)
     {
+        consoleText.gameObject.SetActive(true);
+
         if (consoleText != null)
         {
             consoleText.text = logString;
         }
+
+        // Reset full opacity
+        Color originalColor = consoleText.color;
+        originalColor.a = 1f;
+        consoleText.color = originalColor;
+
+        // Wait before fading
+        yield return new WaitForSeconds(0.5f);
+
+        // Fade Out
+        float fadeDuration = 0.75f;
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            float t = elapsed / fadeDuration;
+            Color newColor = consoleText.color;
+            newColor.a = Mathf.Lerp(1f, 0f, t);
+            consoleText.color = newColor;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure fully transparent
+        Color finalColor = consoleText.color;
+        finalColor.a = 0f;
+        consoleText.color = finalColor;
+
+        consoleText.gameObject.SetActive(false);
     }
 
     /* Display special info Pop Up */
-    public void Communication(string info)
+    public void ErrorMassage(string info)
     {
         if (PopUpText != null)
         {

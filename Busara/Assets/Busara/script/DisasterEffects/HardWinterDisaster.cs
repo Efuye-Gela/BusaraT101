@@ -8,7 +8,7 @@ public class HardWinterDisaster : DisasterEffect
         var (Answer, Players) = IsValid(PlayerManager.Instance.Players);
         if (Answer)
         {
-            DisplayManager.Instance.Communication("Winter has struck");
+            DisplayManager.Instance.ErrorMassage("Winter has struck");
             foreach (Player player in Players)
             {
                 if (player.Virtues.Count > 0)
@@ -20,7 +20,7 @@ public class HardWinterDisaster : DisasterEffect
         }
         else
         {
-            DisplayManager.Instance.Communication("Hard winter struck \n But all of you are broke");
+            DisplayManager.Instance.ErrorMassage("Hard winter struck \n But all of you are broke");
             Debug.Log("Broke");
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }

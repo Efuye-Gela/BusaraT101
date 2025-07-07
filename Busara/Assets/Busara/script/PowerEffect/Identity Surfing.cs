@@ -32,7 +32,7 @@ public class IdentitySurfing : Power
         Player TemPlayer = TurnManager.Instance.ActivePlayer;
         if (IsValid())
         {
-            DisplayManager.Instance.Communication("Give your kingdom");
+            DisplayManager.Instance.ErrorMassage("Give your kingdom");
             Kingdom TempKingdom = TemPlayer.Kingdom;
             TemPlayer.Kingdom = TemPlayer.selectedPlayer.Kingdom;
             TemPlayer.selectedPlayer.Kingdom = TempKingdom;
