@@ -22,6 +22,12 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
 
     public void OnTapDraw()
     {
+        if(TurnManager.Instance.ActivePlayer.hasDrawnResource)
+        {
+            StartCoroutine(DisplayManager.Instance.Massage("You have already drawn a resource this turn."));
+            return;
+        }
+
         TurnManager.Instance.ActivePlayer.hasDrawnResource = true; //okay
         GameObject newResource;
         Card drawnCard = DeckManager.Instance.Draw();

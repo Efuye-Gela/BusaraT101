@@ -11,6 +11,7 @@ public class TradeDisplayManager : Manager<TradeDisplayManager>
     [SerializeField] private GameObject tradeDisplay;
     [SerializeField] private GameObject tradePlayersDisplay;
     [SerializeField] private GameObject ConfrimDisplay;
+    [SerializeField] private GameObject BG;
 
     private void OnEnable()
     {
@@ -36,12 +37,14 @@ public class TradeDisplayManager : Manager<TradeDisplayManager>
     private void OnTradeCreated(Tuple<ResourceType, ResourceType> tuple)
     {
         ActivateDisplay(tradeDisplay);
+        BG.gameObject.SetActive(true);
         tradeDisplay.GetComponent<TradeDisplay>().DisplayOffer(tuple);
     }
 
     private void OnTradeOfferCompleted()
     {
         ActivateDisplay(tradePlayersDisplay);
+        BG.gameObject.SetActive(false);
         tradePlayersDisplay.GetComponent<TradePlayersDisplay>().DisplayTradeStatus();
     }
 

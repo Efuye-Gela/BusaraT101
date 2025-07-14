@@ -107,7 +107,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         kingdomDescription.text = ThePlayer.Kingdom.kingdomStory;
         virtueAssigner();
     }
-    /*virtue assignment*/
+    /*virtue assignment for Kingdom*/
     public void virtueAssigner()
     {
         Player ThePlayer = TurnManager.Instance.ActivePlayer;
@@ -188,7 +188,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
 
     public void OnTurnBegin()
     {
-        StartCoroutine(Massage("Current Turn : " + TurnManager.Instance.ActivePlayer.name));
+        StartCoroutine(Massage("Current Turn : " + TurnManager.Instance.ActivePlayer.Name));
     }
 }
 
