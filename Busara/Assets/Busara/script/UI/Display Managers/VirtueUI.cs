@@ -6,7 +6,7 @@ using System.Linq;
 
 public class VirtueUI : MonoBehaviour
 {
-    public Virtue virtueUIre;
+    public Virtue virtueType;
     public Player currentPlayer;
     public Image virtueImage;
     public TMP_Text VirtueName;
@@ -25,25 +25,25 @@ public class VirtueUI : MonoBehaviour
         if (TurnManager.Instance.ActivePlayer == null) return;
 
         Dictionary<VirtueType, int> TempVirtue = TurnManager.Instance.ActivePlayer.state.virtueCounts;
-        if (TempVirtue.ContainsKey(virtueUIre.type) && TempVirtue[virtueUIre.type] > 0)
+        if (TempVirtue.ContainsKey(virtueType.type) && TempVirtue[virtueType.type] > 0)
         {
-            int selectedCount = TurnManager.Instance.ActivePlayer.selectedVirtue.Count(v => v.type == virtueUIre.type);
-            if (selectedCount < TempVirtue[virtueUIre.type])
+            int selectedCount = TurnManager.Instance.ActivePlayer.selectedVirtue.Count(v => v.type == virtueType.type);
+            if (selectedCount < TempVirtue[virtueType.type])
             {
-                TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueUIre);
-                Debug.Log($"Virtue {virtueUIre.name} added to selected virtues.");
+                TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueType);
+                Debug.Log($"Virtue {virtueType.name} added to selected virtues.");
 
-                Debug.Log($"selected {virtueUIre.name}. Total virtue selected {TurnManager.Instance.ActivePlayer.selectedVirtue.Count}.");
+                Debug.Log($"selected {virtueType.name}. Total virtue selected {TurnManager.Instance.ActivePlayer.selectedVirtue.Count}.");
 
             }
             else
             {
-                Debug.Log($"Cannot add more {virtueUIre.name}, maximum allowed based on available virtues reached.");
+                Debug.Log($"Cannot add more {virtueType.name}, maximum allowed based on available virtues reached.");
             }
         }
         else
         {
-            Debug.Log($"Player does not have {virtueUIre.name} to add.");  
+            Debug.Log($"Player does not have {virtueType.name} to add.");  
         }
     }
     public void RemoveVirtue()
@@ -52,14 +52,14 @@ public class VirtueUI : MonoBehaviour
         if (TurnManager.Instance.ActivePlayer == null) return;
 
 
-        if (TurnManager.Instance.ActivePlayer.selectedVirtue.Contains(virtueUIre))
+        if (TurnManager.Instance.ActivePlayer.selectedVirtue.Contains(virtueType))
         {
-            TurnManager.Instance.ActivePlayer.selectedVirtue.Remove(virtueUIre);
-            Debug.Log($"Virtue {virtueUIre.name} removed from selected virtues.");
+            TurnManager.Instance.ActivePlayer.selectedVirtue.Remove(virtueType);
+            Debug.Log($"Virtue {virtueType.name} removed from selected virtues.");
         }
         else
         {
-            Debug.Log($"Cannot remove {virtueUIre.name} as it is not in selected virtues.");
+            Debug.Log($"Cannot remove {virtueType.name} as it is not in selected virtues.");
         }
     }
 

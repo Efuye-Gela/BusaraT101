@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using static ForgeManager;
 
 public class ForgeManager : Manager<ForgeManager>
 {
@@ -11,12 +12,31 @@ public class ForgeManager : Manager<ForgeManager>
     public List<Virtue> AllVirtues;
 
     public Action selectedResourceCleared;
+    private readonly List<IForgeListener> forgeListeners = new();
 
+    public void RegisterForgeListener(IForgeListener listener)
+    {
+        if (!forgeListeners.Contains(listener))
+            forgeListeners.Add(listener);
+    }
+
+    public void UnregisterForgeListener(IForgeListener listener)
+    {
+        if (forgeListeners.Contains(listener))
+            forgeListeners.Remove(listener);
+    }
+
+    public interface IForgeListener
+    {
+        void OnForgeCompleted(List<Virtue> forgedVirtues, List<Resource> usedResources);
+    }
 
 
     public bool Forge()
     {
-        List<Resource> resourceList = new List<Resource>();
+   
+
+    List<Resource> resourceList = new List<Resource>();
         List<Resource> tobeRemovedResources = new List<Resource>();
         List<Resource> selectedResources = TurnManager.Instance.ActivePlayer.selectedResources;
         if (selectedResources.Count < 2)
@@ -84,6 +104,10 @@ public class ForgeManager : Manager<ForgeManager>
         RemoveForgedResources(tobeRemovedResources);
         TurnManager.Instance.ActivePlayer.selectedResources.Clear();
         selectedResourceCleared?.Invoke();
+        foreach (var listener in forgeListeners)
+        {
+            listener.OnForgeCompleted(new List<Virtue>(forgedVirtues), new List<Resource>(tobeRemovedResources));
+        }
         forgedVirtues.Clear();
         return true;
         

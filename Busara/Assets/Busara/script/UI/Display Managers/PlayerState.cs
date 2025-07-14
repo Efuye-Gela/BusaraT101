@@ -8,7 +8,7 @@ using Sirenix.Serialization;
 using Sirenix.OdinInspector;
 
 [System.Serializable]
-public class PlayerState : SerializedMonoBehaviour
+public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener
 {
     private Player player;
     public TMP_Text PlayerName;
@@ -25,6 +25,15 @@ public class PlayerState : SerializedMonoBehaviour
     public List<PlayerInfoCard> playerInfoCardList = new List<PlayerInfoCard>();
     public Transform InfoCardSpawnArea;
 
+    private void OnEnable()
+    {
+        ForgeManager.Instance.RegisterForgeListener(this);
+    }
+
+    private void OnDisable()
+    {
+        ForgeManager.Instance.UnregisterForgeListener(this);
+    }
 
     private void Awake()
     {
@@ -53,8 +62,6 @@ public class PlayerState : SerializedMonoBehaviour
             Debug.Log("No name");
         }
         VirtueDisplay();
-        GetPlayerVirtueCount();
-
     }
     public void Update()
     {
@@ -72,18 +79,12 @@ public class PlayerState : SerializedMonoBehaviour
 
     public void VirtueDisplay()
     {
-        foreach (Virtue virtue in VirtuesList)
+        for(int i = 0; i < VirtuesList.Count; i++)
         {
-            string VName = virtue.name;
-            VirtueUI VerNew = Instantiate(VirtuePrefab, SpawnArea);
-            if(VerNew != null && VName != null)
-            {
-                VerNew.virtueUIre = virtue;
-                VerNew.VirtueName.text = VName;
-                VerNew.virtueImage.sprite = virtue.virtueIcon;
-                VerNew.currentPlayer = player;
-                VirtueUIList.Add(VerNew);
-            } 
+            VirtueUIList[i].virtueType = VirtuesList[i];
+            VirtueUIList[i].VirtueName.text = VirtuesList[i].name;
+            VirtueUIList[i].virtueImage.sprite = VirtuesList[i].virtueIcon;
+            VirtueUIList[i].currentPlayer = player;
         }
     }
 
@@ -107,33 +108,16 @@ public class PlayerState : SerializedMonoBehaviour
 
         foreach (VirtueUI virtueUI in VirtueUIList)
         {
-            if (virtueUI != null && virtueUI.virtueUIre != null)
+            if (virtueUI != null && virtueUI.virtueType != null)
             {
-                VirtueType virtueType = virtueUI.virtueUIre.type;
+                VirtueType virtueType = virtueUI.virtueType.type;
                 virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();    
             }
         }
     }
 
-    public void playerInfoSpawner()
+    public void OnForgeCompleted(List<Virtue> forgedVirtues, List<Resource> usedResources)
     {
-        
-        foreach(PlayerInfoCard PIC in playerInfoCardList)
-        {
-            if (PIC != null)
-                Destroy(PIC.gameObject);
-        }
-        foreach (Player player in PlayerManager.Instance.Players)
-        {
-            if(player != TurnManager.Instance.ActivePlayer)
-            {
-                PlayerInfoCard playerInfo = Instantiate(playerInfoCard, InfoCardSpawnArea);
-                playerInfo.player = player;
-                playerInfoCardList.Add(playerInfo);
-            }
-        }
-
+        GetPlayerVirtueCount();
     }
-
-
 }

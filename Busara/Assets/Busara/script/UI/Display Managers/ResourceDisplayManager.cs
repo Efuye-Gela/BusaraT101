@@ -9,5 +9,4 @@ public class ResourceDisplayManager : MonoBehaviour
         tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;
     }
 
-
 }

@@ -34,8 +34,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     }
     private void Update()
     {
-        PowerInfoDisplay();
-        KingdomInfoDisplay();
+
     }
 
     /* Display  info */
@@ -122,72 +121,9 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     }
 
     /*Power info Display*/
-    public void PowerInfoDisplay()
-    {
-        Player ThePlayer = TurnManager.Instance.ActivePlayer;
-        if (ThePlayer.Kingdom.power != null)
-        {
-            PowerName.text = ThePlayer.Kingdom.power.powerName;
-            PowerDescription.text = ThePlayer.Kingdom.power.powerDescription;
-            PlayerListInfo();
-        }
-    }
-
-    /*Player list for the power card info list*/
-    public void PlayerListInfo()
-    {
-        if (SpawnArea == null)
-            return;
-        //list of players
-        List <Player> players = PlayerManager.Instance.Players;
-
-        foreach(Player player in players)
-        {
-
-            ThePlayersList[player.PlayerNumber].player = players[player.PlayerNumber];
-            ThePlayersList[player.PlayerNumber].PlayerName.text = players[player.PlayerNumber].Name;
-            if (player == TurnManager.Instance.ActivePlayer)
-            {
-                ThePlayersList[player.PlayerNumber].gameObject.SetActive(false);
-            }
-            if (player != TurnManager.Instance.ActivePlayer)
-            {
-                ThePlayersList[player.PlayerNumber].gameObject.SetActive(true);
-            }
-        }
-        /*Player one*//*
-        ThePlayersList[0].player = players[0];
-        ThePlayersList[0].PlayerName.text = players[0].Name;
-        *//*Player two*//*
-        ThePlayersList[1].player = players[1];
-        ThePlayersList[1].PlayerName.text = players[1].Name;
-        *//*Player three*//*
-        ThePlayersList[2].player = players[2];
-        ThePlayersList[2].PlayerName.text = players[2].Name;
-        *//*Player four*//*
-        ThePlayersList[3].player = players[3];
-        ThePlayersList[3].PlayerName.text = players[3].Name;*/
-
-    }
-
-    /*Display on and off the increase and Decrease*/
-    public void TOnIncDec()
-    {
-        foreach (VirtueUI VUI in TurnManager.Instance.ActivePlayer.state.VirtueUIList)
-        {
-            VUI.instance.TurnOnINCDEC();
-        }
-    }
-    public void TOffIncDec()
-    {
-        foreach (VirtueUI VUI in TurnManager.Instance.ActivePlayer.state.VirtueUIList)
-        {
-            VUI.instance.TurnOffINCDEC();
-        }
-    }
-
     public void OnTurnBegin()
     {
+        KingdomInfoDisplay();
         StartCoroutine(Massage("Current Turn : " + TurnManager.Instance.ActivePlayer.Name));
     }
 }

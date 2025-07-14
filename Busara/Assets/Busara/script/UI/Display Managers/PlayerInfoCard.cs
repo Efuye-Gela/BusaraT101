@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerInfoCard : MonoBehaviour
+public class PlayerInfoCard : MonoBehaviour, ForgeManager.IForgeListener
 {
     public Player player;
     public TMP_Text PlayerName;
@@ -15,14 +15,13 @@ public class PlayerInfoCard : MonoBehaviour
     public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
 
 
-
     private void Start()
     {
         if (player != null)
         {
             PlayerName.text = player.Name;
-            VirtueDisplay();
-            GetPlayerVirtueCount();
+            //VirtueDisplay();
+            
         }
     }
     public void VirtueDisplay()
@@ -33,7 +32,7 @@ public class PlayerInfoCard : MonoBehaviour
             VirtueUI VerNew = Instantiate(VirtuePrefab, SpawnArea);
             if (VerNew != null && VName != null)
             {
-                VerNew.virtueUIre = virtue;
+                VerNew.virtueType = virtue;
                 VerNew.VirtueName.text = VName;
                 VerNew.virtueImage.sprite = virtue.virtueIcon;
                 VerNew.currentPlayer = player;
@@ -41,7 +40,6 @@ public class PlayerInfoCard : MonoBehaviour
             }
         }
     }
-
     public void GetPlayerVirtueCount()
     {
         if (player == null || player.Virtues == null || VirtueUIList == null)
@@ -62,11 +60,17 @@ public class PlayerInfoCard : MonoBehaviour
 
         foreach (VirtueUI virtueUI in VirtueUIList)
         {
-            if (virtueUI != null && virtueUI.virtueUIre != null)
+            if (virtueUI != null && virtueUI.virtueType != null)
             {
-                VirtueType virtueType = virtueUI.virtueUIre.type;
+                VirtueType virtueType = virtueUI.virtueType.type;
                 virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();
             }
         }
+    }
+
+    public void OnForgeCompleted(List<Virtue> forgedVirtues, List<Resource> usedResources)
+    {
+        GetPlayerVirtueCount();
+        Debug.Log("Has Forged");
     }
 }
