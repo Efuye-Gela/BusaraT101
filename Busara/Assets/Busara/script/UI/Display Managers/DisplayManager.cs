@@ -27,7 +27,6 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
 
     /* Player information area */
     public TMP_Text[] playerName;
-
     public List<GameObject> UIComponentList;
     private void Start()
     {
@@ -84,17 +83,6 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         }
     }
     /*Toggling the Left side UI*/
-    public void UIToggle(GameObject gameObject) 
-    {
-        if (gameObject.activeSelf)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
-    }
 
     /*Kingdom info display*/
     public void KingdomInfoDisplay()

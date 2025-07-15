@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine.UI;
+using TMPro;
 
 [Serializable]
 public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.TurnEndListener
@@ -11,9 +12,11 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
     public int boardId;
     public List<Slot> Slots;
     public Image Highlight;
+    public TMP_Text BoardOwnerName;
 
     private void Start()
     {
+        BoardOwnerName.text = player.Name;
         TurnManager.Instance.AddTurnEndListeners(this);
         TurnManager.Instance.AddTurnBeginListeners(this);
     }
