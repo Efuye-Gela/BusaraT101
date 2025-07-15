@@ -27,14 +27,12 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
 
     /* Player information area */
     public TMP_Text[] playerName;
+
+    public List<GameObject> UIComponentList;
     private void Start()
     {
        // TurnManager.Instance.AddTurnEndListeners(this);
         TurnManager.Instance.AddTurnBeginListeners(this);
-    }
-    private void Update()
-    {
-
     }
 
     /* Display  info */
@@ -119,13 +117,29 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         VirtueImages[2].virtues.sprite = ThePlayer.Kingdom.virtuesForWin[2].virtues.virtueIcon;
         VirtueImages[2].NumberOfVirtues.text = "X" + ThePlayer.Kingdom.virtuesForWin[2].NumberofVirtues.ToString();
     }
+    /*UI component Display*/
+    public void UIToggleDisplayer(GameObject gameObject)
+    {
+        foreach(GameObject UI in UIComponentList)
+        {
+            if(UI == gameObject)
+            {
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                UI.SetActive(false);
+            }
+        }
+    }
 
-    /*Power info Display*/
     public void OnTurnBegin()
     {
         KingdomInfoDisplay();
         StartCoroutine(Massage("Current Turn : " + TurnManager.Instance.ActivePlayer.Name));
     }
+
+
 }
 
 public class VirtueImages

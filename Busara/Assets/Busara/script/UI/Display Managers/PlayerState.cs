@@ -8,7 +8,7 @@ using Sirenix.Serialization;
 using Sirenix.OdinInspector;
 
 [System.Serializable]
-public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener
+public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener, TurnManager.TurnBeginListener
 {
     private Player player;
     public TMP_Text PlayerName;
@@ -27,12 +27,18 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener
 
     private void OnEnable()
     {
-        ForgeManager.Instance.RegisterForgeListener(this);
+        if (ForgeManager.Instance != null)
+            ForgeManager.Instance.RegisterForgeListener(this);
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.AddTurnBeginListeners(this);
     }
 
     private void OnDisable()
     {
-        ForgeManager.Instance.UnregisterForgeListener(this);
+        if (ForgeManager.Instance != null)
+            ForgeManager.Instance.UnregisterForgeListener(this);
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.RemoveTurnBeginListener(this);
     }
 
     private void Awake()
@@ -62,18 +68,6 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener
             Debug.Log("No name");
         }
         VirtueDisplay();
-    }
-    public void Update()
-    {
-        if (TurnManager.Instance.ActivePlayer != null)
-        {
-            player = TurnManager.Instance.ActivePlayer;
-        }
-        if (player != null)
-        {
-            PlayerName.text = player.Name;
-        }
-        GetPlayerVirtueCount();
     }
 
 
@@ -115,9 +109,22 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener
             }
         }
     }
-
+    public void OnTurnBegin()
+    {
+        if (TurnManager.Instance.ActivePlayer != null)
+        {
+            player = TurnManager.Instance.ActivePlayer;
+        }
+        if (player != null)
+        {
+            PlayerName.text = player.Name;
+        }
+        GetPlayerVirtueCount();
+    }
     public void OnForgeCompleted(List<Virtue> forgedVirtues, List<Resource> usedResources)
     {
         GetPlayerVirtueCount();
     }
+
+
 }
