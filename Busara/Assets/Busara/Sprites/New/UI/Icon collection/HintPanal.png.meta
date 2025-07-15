@@ -285,7 +285,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      HintPanal_0: 2285366198492054028
+      HintPanal_1: 1229744603062500689
+      HintPanal_2: 9068883657637907386
+      HintPanal_3: 8340933251420618599
+      HintPanal_4: 609971928525727445
+      HintPanal_5: -8167547341521738346
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

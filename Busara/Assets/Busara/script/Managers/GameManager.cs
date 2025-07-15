@@ -12,10 +12,12 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
     public Player ActivePlayer;
     public GameObject WinScreen;
 
-    public void Start()
+    public void Start() 
     {
-        TurnManager.Instance.AddTurnBeginListeners(this);
-        TurnManager.Instance.AddTurnBeginListeners(this);
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.AddTurnBeginListeners(this);
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.AddTurnEndListeners(this);
     }
 
     public void OnTapRemove()

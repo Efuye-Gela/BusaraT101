@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: efuyegela
   productName: Busara
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: 89bad52e3ffa5ce478eaeca4d8f135b3, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -40,8 +40,6 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 426457868754945836, guid: bb7fa592e859cc94b8f7b26568aecb10, type: 3}
-    duration: 2
   - logo: {fileID: 21300000, guid: c2633b19e62031f4893c002a0329d4f9, type: 3}
     duration: 2
   m_VirtualRealitySplashScreen: {fileID: 0}

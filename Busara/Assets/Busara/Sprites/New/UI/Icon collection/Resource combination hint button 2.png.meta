@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Resource combination hint button 2_0: -6621099787341422340
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
