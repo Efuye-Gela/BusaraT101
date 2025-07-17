@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Economy
   m_EditorClassIdentifier: 
   virtueIcon: {fileID: 5797214068957558267, guid: e71bac00b2debe94ea2679fffc9ad6c4, type: 3}
+  ResourceOne: {fileID: 2800372535441725844, guid: 8721ee26f0cd61347b418dce5b3fe1cf, type: 3}
+  ResourceTwo: {fileID: 2800372535441725844, guid: 7542d65c7e5156e4aa8760e382c12048, type: 3}
   type: 4
   componentOne: 3
   componentTwo: 0

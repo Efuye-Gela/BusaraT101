@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class Virtue : ScriptableObject
 {
    public Sprite virtueIcon;
-    
+   public Resource ResourceOne;
+   public Resource ResourceTwo;
    public VirtueType type;
    public ResourceType componentOne;
    public ResourceType componentTwo;

@@ -20,7 +20,8 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
 
     private void SlotClicked()
     {
-        if (targetSlot != null) {
+        if (targetSlot != null) 
+        {
 
             List<Slot> adjacentSlots = new List<Slot>();
             if (targetSlot.isOccupied == false)

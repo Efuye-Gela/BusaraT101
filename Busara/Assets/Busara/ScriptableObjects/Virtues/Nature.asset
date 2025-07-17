@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Nature
   m_EditorClassIdentifier: 
   virtueIcon: {fileID: 2818415227679610127, guid: 8b9f3e3050c1ebb4b911734134d048c0, type: 3}
+  ResourceOne: {fileID: 2800372535441725844, guid: 7542d65c7e5156e4aa8760e382c12048, type: 3}
+  ResourceTwo: {fileID: 2800372535441725844, guid: 5bc1264c339481f4086b88efd5c2553c, type: 3}
   type: 5
   componentOne: 0
   componentTwo: 1

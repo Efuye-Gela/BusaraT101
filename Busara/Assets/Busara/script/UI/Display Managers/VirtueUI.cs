@@ -9,14 +9,17 @@ public class VirtueUI : MonoBehaviour
     public Virtue virtueType;
     public Player currentPlayer;
     public Image virtueImage;
+    public Transform ResourcePanel;
+    public Image ResourceOneImage;
+    public Image ResourceTwoImage;
     public TMP_Text VirtueName;
     public TMP_Text NumberOfvirtues;
     public GameObject IncDecButtons;
-    public VirtueUI instance;
-
-    private void Start()
+    public void SetResourceCombo()
     {
-        instance = this;
+        ResourcePanel.gameObject.SetActive(true);
+        ResourceOneImage.sprite = virtueType.ResourceOne.resourceIcon;
+        ResourceTwoImage.sprite = virtueType .ResourceTwo.resourceIcon;
     }
 
     public void AddVirtue()

@@ -28,6 +28,10 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     /* Player information area */
     public TMP_Text[] playerName;
     public List<GameObject> UIComponentList;
+
+
+    public Transform SideBarPanel;
+    public TMP_Text sideBarMassage;
     private void Start()
     {
        // TurnManager.Instance.AddTurnEndListeners(this);
@@ -72,7 +76,50 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
 
         consoleText.gameObject.SetActive(false);
     }
+    /*Side bar message*/
+    public void Deliver(string InfoString)
+    {
+        StartCoroutine(SiderBarMassage(InfoString));
+    }
+    private IEnumerator SiderBarMassage(string logString)
+    {
+        sideBarMassage.gameObject.SetActive(true);
+        SideBarPanel.gameObject.SetActive(true);
 
+        if (consoleText != null)
+        {
+            sideBarMassage.text = logString;
+        }
+
+        // Reset full opacity
+        Color originalColor = sideBarMassage.color;
+        originalColor.a = 1f;
+        sideBarMassage.color = originalColor;
+
+        // Wait before fading
+        yield return new WaitForSeconds(3f);
+
+        // Fade Out
+        float fadeDuration = 0.75f;
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            float t = elapsed / fadeDuration;
+            Color newColor = sideBarMassage.color;
+            newColor.a = Mathf.Lerp(1f, 0f, t);
+            sideBarMassage.color = newColor;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure fully transparent
+        Color finalColor = sideBarMassage.color;
+        finalColor.a = 0f;
+        sideBarMassage.color = finalColor;
+
+        sideBarMassage.gameObject.SetActive(false);
+        SideBarPanel.gameObject.SetActive(false);
+    }
     /* Display special info Pop Up */
     public void ErrorMassage(string info)
     {

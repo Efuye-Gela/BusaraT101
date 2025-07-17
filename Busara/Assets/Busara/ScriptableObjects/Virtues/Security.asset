@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Security
   m_EditorClassIdentifier: 
   virtueIcon: {fileID: 8282848358830805105, guid: 6716b022f2e7b704d96bea4bf45b1aae, type: 3}
+  ResourceOne: {fileID: 2800372535441725844, guid: db47cbac8b6792449ac97ccb9500fc26, type: 3}
+  ResourceTwo: {fileID: 2800372535441725844, guid: 5bc1264c339481f4086b88efd5c2553c, type: 3}
   type: 1
   componentOne: 2
   componentTwo: 1

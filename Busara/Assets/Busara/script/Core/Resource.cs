@@ -18,7 +18,10 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
     {
         SelectionManager.Instance.AddResourceSelectionListener(this);
     }
-
+    public void OnclickDestroy()
+    {
+        Destroy(gameObject);
+    }
     public bool IsAdjcentTo(Resource secondResource)
     { 
        List<Slot> adjcentSlots = BoardManager.GetAdjacentSlots(slot);

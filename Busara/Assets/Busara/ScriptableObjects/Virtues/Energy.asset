@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Energy
   m_EditorClassIdentifier: 
   virtueIcon: {fileID: -7213742777133032008, guid: 7e21f0cab2eb0394f91035b0f212161c, type: 3}
+  ResourceOne: {fileID: 2800372535441725844, guid: 8721ee26f0cd61347b418dce5b3fe1cf, type: 3}
+  ResourceTwo: {fileID: 2800372535441725844, guid: 5bc1264c339481f4086b88efd5c2553c, type: 3}
   type: 3
   componentOne: 3
   componentTwo: 1

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Art
   m_EditorClassIdentifier: 
   virtueIcon: {fileID: 8999781029529400320, guid: 54debe85dc4deb54c96a7525944f0cea, type: 3}
+  ResourceOne: {fileID: 2800372535441725844, guid: db47cbac8b6792449ac97ccb9500fc26, type: 3}
+  ResourceTwo: {fileID: 2800372535441725844, guid: 7542d65c7e5156e4aa8760e382c12048, type: 3}
   type: 0
   componentOne: 2
   componentTwo: 0

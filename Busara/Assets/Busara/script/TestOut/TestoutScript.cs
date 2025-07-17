@@ -66,11 +66,5 @@ public class TestOutScript : MonoBehaviour
         TurnManager.Instance.ActivePlayer.Virtues.Add(SpannableVirtue);
     }
 
-    public void TOn()
-    {
-        foreach (VirtueUI VUI in TurnManager.Instance.ActivePlayer.state.VirtueUIList)
-        {
-            VUI.instance.TurnOnINCDEC();
-        }
-    }
+
 }
