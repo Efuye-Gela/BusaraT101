@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Error Tab_0: 2398532645874090666
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

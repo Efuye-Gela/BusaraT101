@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Error panale_0: -6756039215258347674
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
