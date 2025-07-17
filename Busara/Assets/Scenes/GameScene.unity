@@ -25739,6 +25739,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021166983}
   - component: {fileID: 1021166984}
+  - component: {fileID: 1021166985}
   m_Layer: 5
   m_Name: ResourcecollectionDisplay
   m_TagString: Untagged
@@ -25781,12 +25782,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setupCard: {fileID: 0}
   collectionResources: 
-  CollectionDisplay: {fileID: 0}
+  CollectionDisplay: {fileID: 1021166982}
   airResourceCountText: {fileID: 6737255507173746089}
   earthResourceCountText: {fileID: 1257099101542891125}
   fireResourceCountText: {fileID: 5294485644503997341}
   waterResourceCountText: {fileID: 6128145757228695467}
-  selectedResourceType: {fileID: 0}
+  selectedResourceType: {fileID: 1021166985}
+--- !u!114 &1021166985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021166982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc1aa52be639e749bb1ed92f773e3e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceType: 0
 --- !u!1 &1025105190
 GameObject:
   m_ObjectHideFlags: 0
@@ -58606,7 +58620,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1021166984}
         m_TargetAssemblyTypeName: ResourceCollectionDisplay, Assembly-CSharp
         m_MethodName: SetResourceTypeAir
         m_Mode: 1
@@ -62158,7 +62172,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1021166984}
         m_TargetAssemblyTypeName: ResourceCollectionDisplay, Assembly-CSharp
         m_MethodName: SetResourceTypeEarth
         m_Mode: 1
@@ -69076,7 +69090,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1021166984}
         m_TargetAssemblyTypeName: ResourceCollectionDisplay, Assembly-CSharp
         m_MethodName: SetResourceTypeWater
         m_Mode: 1
@@ -76002,7 +76016,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1021166984}
         m_TargetAssemblyTypeName: ResourceCollectionDisplay, Assembly-CSharp
         m_MethodName: SetResourceTypeFire
         m_Mode: 1
