@@ -17,9 +17,13 @@ public class VirtueUI : MonoBehaviour
     public GameObject IncDecButtons;
     public void SetResourceCombo()
     {
-        ResourcePanel.gameObject.SetActive(true);
-        ResourceOneImage.sprite = virtueType.ResourceOne.resourceIcon;
-        ResourceTwoImage.sprite = virtueType .ResourceTwo.resourceIcon;
+        if(ResourcePanel != null && ResourceOneImage != null && ResourceTwoImage != null)
+        {
+            ResourcePanel.gameObject.SetActive(true);
+            ResourceOneImage.sprite = virtueType.ResourceOne.resourceIcon;
+            ResourceTwoImage.sprite = virtueType.ResourceTwo.resourceIcon;
+        }
+
     }
 
     public void AddVirtue()

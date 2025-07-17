@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerInfoCard : MonoBehaviour, ForgeManager.IForgeListener
+public class PlayerInfoCard : MonoBehaviour
 {
     public Player player;
     public TMP_Text PlayerName;
@@ -14,30 +14,34 @@ public class PlayerInfoCard : MonoBehaviour, ForgeManager.IForgeListener
     [OdinSerialize]
     public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
 
+    private void OnEnable()
+    {
+        GetPlayerVirtueCount();
+    }
+
+    private void OnDisable()
+    {
+        GetPlayerVirtueCount();
+    }
+
 
     private void Start()
     {
         if (player != null)
         {
             PlayerName.text = player.Name;
-            //VirtueDisplay();
-            
+            VirtueDisplay();
+            GetPlayerVirtueCount();
         }
     }
     public void VirtueDisplay()
     {
-        foreach (Virtue virtue in VirtuesList)
+        for (int i = 0; i < VirtuesList.Count; i++)
         {
-            string VName = virtue.name;
-            VirtueUI VerNew = Instantiate(VirtuePrefab, SpawnArea);
-            if (VerNew != null && VName != null)
-            {
-                VerNew.virtueType = virtue;
-                VerNew.VirtueName.text = VName;
-                VerNew.virtueImage.sprite = virtue.virtueIcon;
-                VerNew.currentPlayer = player;
-                VirtueUIList.Add(VerNew);
-            }
+            VirtueUIList[i].virtueType = VirtuesList[i];
+            VirtueUIList[i].VirtueName.text = VirtuesList[i].name;
+            VirtueUIList[i].virtueImage.sprite = VirtuesList[i].virtueIcon;
+            VirtueUIList[i].currentPlayer = player;
         }
     }
     public void GetPlayerVirtueCount()
@@ -66,11 +70,5 @@ public class PlayerInfoCard : MonoBehaviour, ForgeManager.IForgeListener
                 virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();
             }
         }
-    }
-
-    public void OnForgeCompleted(List<Virtue> forgedVirtues, List<Resource> usedResources)
-    {
-        GetPlayerVirtueCount();
-        Debug.Log("Has Forged");
     }
 }

@@ -16,7 +16,6 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
     public Transform SpawnArea;
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
-    public static PlayerState instance { get; private set; }
     [OdinSerialize]
     public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
 
@@ -32,25 +31,12 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
         if (TurnManager.Instance != null)
             TurnManager.Instance.AddTurnBeginListeners(this);
     }
-
     private void OnDisable()
     {
         if (ForgeManager.Instance != null)
             ForgeManager.Instance.UnregisterForgeListener(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.RemoveTurnBeginListener(this);
-    }
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void Start()
@@ -69,8 +55,6 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
         }
         VirtueDisplay();
     }
-
-
     public void VirtueDisplay()
     {
         for(int i = 0; i < VirtuesList.Count; i++)
