@@ -35,7 +35,7 @@ public class CorruptionDisaster : DisasterEffect
         if (TheAnswer && players != null)
         {
            // DisplayManager.Instance.ErrorMassage($"Players who were greedy shall be punished \n Discard Half of your resource!!!");
-            TurnManager.Instance.OnSpecialCardDrawn(false,players);
+            TurnManager.Instance.OnSpecialTurn(false,players);
         }
         else
         {

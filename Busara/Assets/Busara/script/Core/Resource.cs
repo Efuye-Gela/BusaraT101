@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
+public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener, WeaponActionMove.IWeaponUsed, TurnManager.ISpecialTurnEndListeners
 {
     public int index;
     public ResourceType resourceType;
@@ -11,18 +11,41 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
     public Color pieceColor;
     public Slot slot;
     [SerializeField] Image highlightImage;
+    public Transform DeleteBtn;
 
-    private Player currentPlayer => TurnManager.Instance.ActivePlayer;
-
+    private void OnEnable()
+    {
+        if (WeaponActionMove.Instance != null)
+             WeaponActionMove.Instance.AddWeaponUsedListeners(this);
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.AddSpecialTurnEndListeners(this);
+    }
+    private void OnDisable()
+    {
+        if (WeaponActionMove.Instance != null)
+            WeaponActionMove.Instance.RemoveWeaponUsedListeners(this);
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.RemoveSpecialTurnEndListeners(this);
+    }
     private void Start()
     {
         SelectionManager.Instance.AddResourceSelectionListener(this);
     }
+    public void TurnOnDeleteBtn()
+    {
+        DeleteBtn.gameObject.SetActive(true);
+    }
+    public void TurnOffDeleteBtn()
+    {
+        DeleteBtn.gameObject.SetActive(false);
+    }
     public void OnclickDestroy()
     {
+        slot.EmptySlot();
         Destroy(gameObject);
+        TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer);
     }
-    public bool IsAdjcentTo(Resource secondResource)
+    public bool IsAdjacentTo(Resource secondResource)
     { 
        List<Slot> adjcentSlots = BoardManager.GetAdjacentSlots(slot);
         foreach (Slot slot in adjcentSlots)
@@ -58,6 +81,17 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
 
     public void UnHighlight()
     {
-        this.highlightImage.gameObject.SetActive(false);
+        if(this.highlightImage != null)
+            this.highlightImage.gameObject.SetActive(false);
+    }
+
+    public void WeaponActivated()
+    {
+        TurnOnDeleteBtn();
+    }
+    public void OnSpecialTurnEnd()
+    {
+        TurnOffDeleteBtn();
+        ActionManager.Instance.ResetActionState();
     }
 }

@@ -63,6 +63,33 @@ public class TurnManager : Manager<TurnManager>
     }
 
 
+    List<ISpecialTurnEndListeners> SpecialTurnEndListeners = new List<ISpecialTurnEndListeners>();
+
+    public void AddSpecialTurnEndListeners(ISpecialTurnEndListeners listener)
+    {
+        if (!SpecialTurnEndListeners.Contains(listener))
+            SpecialTurnEndListeners.Add(listener);
+    }
+
+    public void RemoveSpecialTurnEndListeners(ISpecialTurnEndListeners listener)
+    {
+        if (SpecialTurnEndListeners.Contains(listener))
+            SpecialTurnEndListeners.Remove(listener);
+    }
+
+    public void TriggerSpecialTurnEndListeners()
+    {
+        foreach (ISpecialTurnEndListeners listener in SpecialTurnEndListeners.ToArray())
+        {
+            listener.OnSpecialTurnEnd();
+        }
+    }
+    public interface ISpecialTurnEndListeners
+    {
+        void OnSpecialTurnEnd();
+
+    }
+
 
     public Player firstPlayer;
 
@@ -94,13 +121,85 @@ public class TurnManager : Manager<TurnManager>
         TriggerTurnBeginListeners(); 
 
     }
+    Player GetNextPlayer()
+    {
+        return PlayerManager.Instance.GetNextPlayer(activePlayer);
+    }
+
+    void EndTurn(Player player)
+    {
+        SelectionManager.Instance.UnhighlightAll();
+        activePlayer = null;
+    }
 
     public bool HasTurn(Player player)
     {
         return activePlayer == player;
     }
 
-    public void CompleteTurn(Player player, Action onSpecialActionComplete = null)
+
+    // Triggered when a special card is drawn
+    public void OnSpecialTurn(bool _returnToFirstPlayer, List<Player> players)
+    {
+        lastSequentialPlayer = activePlayer;
+        returnToFirstPlayer = _returnToFirstPlayer;
+        Debug.Log("Special Action to be Performed.");
+        isSpecialCardDrawn = true;
+        specialActionList = players;
+        Player nextPlayer = players[0];
+        EndTurn(activePlayer);
+        BeginTurn(nextPlayer);
+        Debug.Log("Special Turn for " + nextPlayer.name);
+    }
+    public void CompleteTurn(Player player)
+    {
+        if (player != activePlayer)
+            return;
+
+/*        if (isSpecialCardDrawn)
+        {
+            Player nextSpecialPlayer = null;
+            Debug.Log("Special Turn Ended for " + player.name);
+            if (specialActionList.Count > 1)
+            {
+                specialActionList.Remove(player);
+                nextSpecialPlayer = specialActionList[0];
+                EndTurn(activePlayer);
+                BeginTurn(nextSpecialPlayer);
+            }
+            else if (specialActionList.Count == 1)
+            {
+                specialActionList.Remove(player);
+
+                Debug.Log("Last Special Turn Ended");
+                isSpecialCardDrawn = false;
+                EndTurn(player);
+                if (returnToFirstPlayer)
+                {
+                    returnToFirstPlayer = false;
+                    BeginTurn(lastSequentialPlayer);
+                }
+                else
+                {
+                    activePlayer = lastSequentialPlayer;
+                    Player nextNormalPlayer = GetNextPlayer();
+                    BeginTurn(nextNormalPlayer);
+                }
+
+                // Execute the passed action if provided
+                onSpecialActionComplete?.Invoke();
+            }
+            return;
+        }*/
+
+        Player nextPlayer = GetNextPlayer();
+        TriggerTurnEndListeners();
+        EndTurn(activePlayer);
+        Debug.Log("Turn Ended");
+        BeginTurn(nextPlayer);
+    }
+
+    public void CompleteSpecialTurn(Player player, Action onSpecialActionComplete = null)
     {
         if (player != activePlayer)
             return;
@@ -119,63 +218,31 @@ public class TurnManager : Manager<TurnManager>
             else if (specialActionList.Count == 1)
             {
                 specialActionList.Remove(player);
-                
                 Debug.Log("Last Special Turn Ended");
+
                 isSpecialCardDrawn = false;
+                TriggerTurnEndListeners();
                 EndTurn(player);
+
                 if (returnToFirstPlayer)
-                { 
+                {
                     returnToFirstPlayer = false;
                     BeginTurn(lastSequentialPlayer);
                 }
                 else
-                { 
-                    activePlayer = lastSequentialPlayer;
-                    Player nextNormalPlayer = GetNextPlayer();
+                {
+                    Player nextNormalPlayer = PlayerManager.Instance.GetNextPlayer(lastSequentialPlayer);
                     BeginTurn(nextNormalPlayer);
                 }
 
-                // Execute the passed action if provided
+                TriggerSpecialTurnEndListeners();
                 onSpecialActionComplete?.Invoke();
             }
             return;
         }
 
-        Player nextPlayer = GetNextPlayer();
-        TriggerTurnEndListeners();
-        EndTurn(activePlayer);
-        Debug.Log("Turn Ended");
-        BeginTurn(nextPlayer);
+        CompleteTurn(player);
     }
-
-    Player GetNextPlayer()
-    {
-        return PlayerManager.Instance.GetNextPlayer(activePlayer);
-    }
-
-    void EndTurn(Player player)
-    {
-        SelectionManager.Instance.UnhighlightAll();
-        //GameManager.Instance.CheckWinConditions();
-        
-        activePlayer = null;
-    }
-
-    // Triggered when a special card is drawn
-    public void OnSpecialCardDrawn(bool _returnToFirstPlayer,List<Player> players)
-    {
-        lastSequentialPlayer = activePlayer;
-        returnToFirstPlayer = _returnToFirstPlayer;
-        Debug.Log("Special Action to be Performed.");
-        isSpecialCardDrawn = true;
-        specialActionList = players;
-        Player nextPlayer = players[0];
-        EndTurn(activePlayer);
-        BeginTurn(nextPlayer);
-        Debug.Log("Special Turn for "+ nextPlayer.name);
-    }
-
-
     public void SkipTurns(int count)
     {
         if (isSpecialCardDrawn)

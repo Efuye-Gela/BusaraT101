@@ -81,7 +81,7 @@ public class ForgeManager : Manager<ForgeManager>
             int firstResourceIndex = resourceList[i].index;
             int secondResourceIndex = resourceList[i + 1].index;
 
-            if (firstResource.IsAdjcentTo(secondResource))
+            if (firstResource.IsAdjacentTo(secondResource))
             {
                 Virtue forgedVirtue = CheckForgeCombination(firstResource, secondResource);
                 if (forgedVirtue != null)

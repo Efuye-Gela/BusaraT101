@@ -68,6 +68,7 @@ MonoBehaviour:
   pieceColor: {r: 1, g: 1, b: 1, a: 1}
   slot: {fileID: 0}
   highlightImage: {fileID: 8450707591078984167}
+  DeleteBtn: {fileID: 1064308418071359240}
 --- !u!114 &7175269711627146336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,8 +366,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2800372535441725844}
-        m_TargetAssemblyTypeName: UnityEngine.MonoBehaviour, UnityEngine
-        m_MethodName: CancelInvoke
+        m_TargetAssemblyTypeName: Resource, Assembly-CSharp
+        m_MethodName: OnclickDestroy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

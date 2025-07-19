@@ -223,6 +223,7 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
             {
                 if (!currentPlayer.Board.Slots.Contains(resource.slot))
                 {
+                    DisplayManager.Instance.Deliver("First resource you select must be yours");
                     Debug.Log("First resource you select must be yours");
                     return;
                 }

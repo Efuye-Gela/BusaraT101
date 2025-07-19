@@ -49,7 +49,7 @@ public class TradeManager : Manager<TradeManager>
         List<Player> otherPlayers = new List<Player>(PlayerManager.Instance.Players);
         Player player = TurnManager.Instance.ActivePlayer;
         otherPlayers.Remove(player);
-        TurnManager.Instance.OnSpecialCardDrawn(true,otherPlayers);
+        TurnManager.Instance.OnSpecialTurn(true,otherPlayers);
         TradeCreated?.Invoke(_offerTuple);
     }
 
@@ -69,7 +69,7 @@ public class TradeManager : Manager<TradeManager>
         int totalPlayersCount = acceptedPlayers.Distinct().ToList().Count + rejectedPlayers.Distinct().ToList().Count;
         if (totalPlayersCount == PlayerManager.Instance.Players.Count - 1)
         {
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer,OnTradeOfferCompleted);
+            TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer,OnTradeOfferCompleted);
         }
         else
         { 
@@ -88,7 +88,7 @@ public class TradeManager : Manager<TradeManager>
         int totalPlayersCount = acceptedPlayers.Distinct().ToList().Count + rejectedPlayers.Distinct().ToList().Count;
         if (totalPlayersCount == PlayerManager.Instance.Players.Count - 1)
         {
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer, OnTradeOfferCompleted);
+            TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer, OnTradeOfferCompleted);
         }
         else
         { 
@@ -110,7 +110,7 @@ public class TradeManager : Manager<TradeManager>
             if (tradePartner.Board.GetOccupiedSlotByResourceType(_offerTuple.Item2).Count > 1)
             {
                 tradePlayer.Add(tradePartner);
-                TurnManager.Instance.OnSpecialCardDrawn(true, tradePlayer);
+                TurnManager.Instance.OnSpecialTurn(true, tradePlayer);
                 TradeTobeCompleted?.Invoke();
             }
             else

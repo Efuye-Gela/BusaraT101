@@ -36,7 +36,7 @@ public class ResourceDisaster : DisasterEffect
         if (TheAnswer && players != null)
         {
             //DisplayManager.Instance.ErrorMassage("Please select a resource for you to discard!!!");
-            TurnManager.Instance.OnSpecialCardDrawn(false, players);
+            TurnManager.Instance.OnSpecialTurn(false, players);
         }
         else
         {

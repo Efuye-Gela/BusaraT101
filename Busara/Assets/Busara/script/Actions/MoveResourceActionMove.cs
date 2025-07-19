@@ -95,11 +95,13 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
 
     public void Onselection(Resource resource)
     {
-        if (!TurnManager.Instance.ActivePlayer.hasDrawnResource) 
+        if (!ActionManager.Instance.CanPerformAction()) 
         {
-            tobeMovedResource = resource;
-            ResourceClicked(tobeMovedResource);
+            return;
         }
+
+        tobeMovedResource = resource;
+        ResourceClicked(tobeMovedResource);
         if (TurnManager.Instance.ActivePlayer.selectedResources.Count > 1)
         {
             UnHighlightAvailableSlots(availableSlots);

@@ -7,6 +7,10 @@ public class TradeActionMove : MonoBehaviour
 {
     public void OnTapTrade()
     {
+        if (!ActionManager.Instance.CanPerformAction()) {
+            DisplayManager.Instance.Deliver("You have already performed an action this turn.");
+            return; }
+        //ActionManager.Instance.SetAction(ActionManager.ActionState.Traded);
         List<Resource> selectedResources = TurnManager.Instance.ActivePlayer.selectedResources;
         // TODO: Game Mode and Ruleset based trade logic
         if (selectedResources.Count != 1)
@@ -18,8 +22,4 @@ public class TradeActionMove : MonoBehaviour
         }
 
     }
-
-    
-
-
 }

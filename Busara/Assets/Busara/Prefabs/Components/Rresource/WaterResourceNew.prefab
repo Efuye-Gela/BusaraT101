@@ -68,6 +68,7 @@ MonoBehaviour:
   pieceColor: {r: 1, g: 1, b: 1, a: 1}
   slot: {fileID: 0}
   highlightImage: {fileID: 8450707591078984167}
+  DeleteBtn: {fileID: 176292207628210965}
 --- !u!114 &-5632151037942260544
 MonoBehaviour:
   m_ObjectHideFlags: 0
