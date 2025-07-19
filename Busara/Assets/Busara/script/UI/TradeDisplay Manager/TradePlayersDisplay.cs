@@ -8,7 +8,7 @@ public class TradePlayersDisplay : MonoBehaviour
 {
     [SerializeField] private List<Button> playerButtons;
 
-    public void DisplayTradeStatus( )
+    public void DisplayTradeStatus()
     {
         List<Player> playerList = new List<Player>(TradeManager.Instance.acceptedPlayers);
         List<Player> rejectedPlayers = new List<Player>(TradeManager.Instance.rejectedPlayers);
