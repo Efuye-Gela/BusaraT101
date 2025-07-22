@@ -34,9 +34,10 @@ public class TradeManager : Manager<TradeManager>
             ResourceType type = tobeTradedOutResources.Select(x => x.resourceType).Distinct().First();
             List<ResourceType> otherTypes = Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>().ToList();
             otherTypes.Remove(type);
-            Tuple<ResourceType, List<ResourceType>> offerTuple = new Tuple<ResourceType, List<ResourceType>>(type, otherTypes);
+            _offerTuple = new Tuple<ResourceType, ResourceType>(type, otherTypes[0]); // pick first as default
+            TradeInitiated?.Invoke(new Tuple<ResourceType, List<ResourceType>>(type, otherTypes));
 
-            TradeInitiated?.Invoke(offerTuple);
+            ActionManager.Instance.SetAction(ActionManager.ActionState.Traded);
         }
 
     }
@@ -73,7 +74,7 @@ public class TradeManager : Manager<TradeManager>
         }
         else
         { 
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer);
         }
     }
 
@@ -92,10 +93,11 @@ public class TradeManager : Manager<TradeManager>
         }
         else
         { 
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer);
         }
 
     }
+
 
     public void PlayerSelectsTradePartner(Player player)
     {

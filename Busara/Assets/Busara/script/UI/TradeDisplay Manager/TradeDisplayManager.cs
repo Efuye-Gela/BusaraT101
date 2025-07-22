@@ -31,20 +31,19 @@ public class TradeDisplayManager : Manager<TradeDisplayManager>
     private void SetupOffer(Tuple<ResourceType, List<ResourceType>> tuple)
     {
         ActivateDisplay(tradeSetupDisplay);
+        BG.gameObject.SetActive(true);
         tradeSetupDisplay.GetComponent<TradeSetupDisplay>().DisplayOffer(tuple);
     }
 
     private void OnTradeCreated(Tuple<ResourceType, ResourceType> tuple)
     {
         ActivateDisplay(tradeDisplay);
-        BG.gameObject.SetActive(true);
         tradeDisplay.GetComponent<TradeDisplay>().DisplayOffer(tuple);
     }
 
     private void OnTradeOfferCompleted()
     {
         ActivateDisplay(tradePlayersDisplay);
-        BG.gameObject.SetActive(false);
         tradePlayersDisplay.GetComponent<TradePlayersDisplay>().DisplayTradeStatus();
     }
 
