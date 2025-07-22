@@ -42,14 +42,14 @@ public class ForgeManager : Manager<ForgeManager>
         if (selectedResources.Count < 2)
         {
             Debug.Log("Not enough resources selected to forge.");
-            DisplayManager.Instance.Deliver("Not enough resources selected to forge.");
+            DisplayManager.Instance.DeliverError("Not enough resources selected to forge.");
             return false;
         }
 
         if (selectedResources[0].slot.GetPlayer()!= TurnManager.Instance.ActivePlayer)
         {
             Debug.Log("You must start with your resource first");
-            DisplayManager.Instance.Deliver("You must start with your resource first");
+            DisplayManager.Instance.DeliverError("You must start with your resource first");
             return false;
         }
 
@@ -65,7 +65,7 @@ public class ForgeManager : Manager<ForgeManager>
             if (resourceList[j].resourceType == resourceList[j + 1].resourceType)
             {
                 Debug.Log("You can't have the same item forged");
-                DisplayManager.Instance.Deliver("You can't have the same item forged");
+                DisplayManager.Instance.DeliverError("You can't have the same item forged");
                 //selectedResources.Clear();
                 return false;
             }
@@ -99,7 +99,7 @@ public class ForgeManager : Manager<ForgeManager>
             else
             { 
                 Debug.Log("Non AdjacentResources selected.Forge Failed");
-                DisplayManager.Instance.Deliver("Non Adjacent Resources selected.Forge Failed");
+                DisplayManager.Instance.DeliverError("Non Adjacent Resources selected.Forge Failed");
                 selectedResources.Clear();
                 return false;
             }

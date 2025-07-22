@@ -75,7 +75,7 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         List<Slot> playerSlots = TurnManager.Instance.ActivePlayer.Board.Slots;
         if (!playerSlots.Contains(slot))
         {
-            DisplayManager.Instance.Deliver("You can only place on your own slot");
+            DisplayManager.Instance.DeliverError("You can only place on your own slot");
             return false;
         }
         List<Slot> neighbouringSlots = BoardManager.GetAdjacentSlots(slot);
@@ -88,7 +88,7 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         {
             if (pnslot.isOccupied)
             {
-                DisplayManager.Instance.Deliver("You can not place on adjacent slot during card set up");
+                DisplayManager.Instance.DeliverError("You can not place on adjacent slot during card set up");
                 return false;
             }
 
@@ -116,7 +116,7 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             else
             {
                 TurnManager.Instance.ActivePlayer.selectedSlots.Clear();
-                DisplayManager.Instance.Deliver("Please choose a resource to place");
+                DisplayManager.Instance.DeliverError("Please choose a resource to place");
             } 
         }
          if (collectionResources.Count==0)

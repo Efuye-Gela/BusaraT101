@@ -26,8 +26,7 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
         if (resources != null && resources.Count > 0)
         {
             if (resources.Count > 1)
-               StartCoroutine(DisplayManager.Instance.Massage("Please select one resource only"));
-            else
+                DisplayManager.Instance.DeliverError("Please select one resource only"); 
             {
                 resources[0].slot.EmptySlot();
                 TurnManager.Instance.ActivePlayer.selectedResources.Clear();

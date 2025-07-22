@@ -29,9 +29,13 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     public TMP_Text[] playerName;
     public List<GameObject> UIComponentList;
 
-
+    /*Error massage*/
     public Transform SideBarPanel;
     public TMP_Text sideBarMassage;
+
+    /*Instruction Information*/
+    public Transform TopPanel;
+    public TMP_Text TopMassages;
     private void Start()
     {
        // TurnManager.Instance.AddTurnEndListeners(this);
@@ -39,6 +43,10 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     }
 
     /* Display  info */
+    public void DeliverMassage(string info)
+    {
+        StartCoroutine(Massage(info));
+    }
     public IEnumerator Massage(string logString)
     {
         consoleText.gameObject.SetActive(true);
@@ -76,8 +84,8 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
 
         consoleText.gameObject.SetActive(false);
     }
-    /*Side bar message*/
-    public void Deliver(string InfoString)
+    /*Side bar message Error massage*/
+    public void DeliverError(string InfoString)
     {
         StartCoroutine(SiderBarMassage(InfoString));
     }
@@ -86,7 +94,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         sideBarMassage.gameObject.SetActive(true);
         SideBarPanel.gameObject.SetActive(true);
 
-        if (consoleText != null)
+        if (sideBarMassage != null)
         {
             sideBarMassage.text = logString;
         }
@@ -120,17 +128,51 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         sideBarMassage.gameObject.SetActive(false);
         SideBarPanel.gameObject.SetActive(false);
     }
-    /* Display special info Pop Up */
-    public void ErrorMassage(string info)
-    {
-        if (PopUpText != null)
-        {
-            PopUpInfoPanel.gameObject.SetActive(true);
-            PopUpText.text = info;
-        }
-    }
-    /*Toggling the Left side UI*/
 
+    /*Instruction*/
+    public void DeliverInstructions(string info)
+    {
+        StartCoroutine(TopMassage(info));
+    }
+    private IEnumerator TopMassage(string logString)
+    {
+        TopMassages.gameObject.SetActive(true);
+        TopPanel.gameObject.SetActive(true);
+
+        if (TopMassages != null)
+        {
+            TopMassages.text = logString;
+        }
+
+        // Reset full opacity
+        Color originalColor = TopMassages.color;
+        originalColor.a = 1f;
+        TopMassages.color = originalColor;
+
+        // Wait before fading
+        yield return new WaitForSeconds(3f);
+
+        // Fade Out
+        float fadeDuration = 0.75f;
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            float t = elapsed / fadeDuration;
+            Color newColor = TopMassages.color;
+            newColor.a = Mathf.Lerp(1f, 0f, t);
+            TopMassages.color = newColor;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure fully transparent
+        Color finalColor = TopMassages.color;
+        finalColor.a = 0f;
+        TopMassages.color = finalColor;
+
+        TopMassages.gameObject.SetActive(false);
+        TopPanel.gameObject.SetActive(false);
+    }
     /*Kingdom info display*/
     public void KingdomInfoDisplay()
     {
@@ -171,7 +213,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     public void OnTurnBegin()
     {
         KingdomInfoDisplay();
-        StartCoroutine(Massage("Current Turn : " + TurnManager.Instance.ActivePlayer.Name));
+        DeliverMassage("Current Turn : " + TurnManager.Instance.ActivePlayer.Name);
     }
 
 

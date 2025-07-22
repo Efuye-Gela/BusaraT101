@@ -49,7 +49,6 @@ public class TradePlayersDisplay : MonoBehaviour
 
     public void OnTapConfirmTrade()
     {
-
         TradeManager.Instance.TradeResources();
     }
 

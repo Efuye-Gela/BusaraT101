@@ -9,7 +9,7 @@ public class TradeActionMove : MonoBehaviour
     {
         if (!ActionManager.Instance.CanPerformAction()) 
         {
-            DisplayManager.Instance.Deliver("You have already performed an action this turn.");
+            DisplayManager.Instance.DeliverError("You have already performed an action this turn.");
             return; 
         }
         List<Resource> selectedResources = TurnManager.Instance.ActivePlayer.selectedResources;

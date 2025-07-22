@@ -45,12 +45,12 @@ public class WeaponActionMove : MonoBehaviour
     {
         if (TurnManager.Instance.ActivePlayer.selectedResources[0].slot.GetPlayer() != TurnManager.Instance.ActivePlayer)
         {
-            DisplayManager.Instance.Deliver("You must start with your resource first");
+            DisplayManager.Instance.DeliverError("You must start with your resource first");
             return;
         }
         if (!ActionManager.Instance.CanPerformAction())
         {
-            DisplayManager.Instance.Deliver("You have already performed an action this turn.");
+            DisplayManager.Instance.DeliverError("You have already performed an action this turn.");
             return;
         }
         Player currentPlayer = TurnManager.Instance.ActivePlayer;
@@ -68,12 +68,12 @@ public class WeaponActionMove : MonoBehaviour
                 }
                 else
                 {
-                    DisplayManager.Instance.Deliver("Selected resource must be similar to activate weapon");
+                    DisplayManager.Instance.DeliverError("Selected resource must be similar to activate weapon");
                 }
             }
             else
             {
-                DisplayManager.Instance.Deliver("You must select 3 resource to Use Weapon");
+                DisplayManager.Instance.DeliverError("You must select 3 resource to Use Weapon");
             }
         }
 

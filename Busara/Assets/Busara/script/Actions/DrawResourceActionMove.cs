@@ -37,7 +37,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
         //}
         if (!ActionManager.Instance.CanPerformAction())
         {
-            DisplayManager.Instance.Deliver("You have already performed an action this turn.");
+            DisplayManager.Instance.DeliverError("You have already performed an action this turn.");
             return;
         }
         ActionManager.Instance.SetAction(ActionManager.ActionState.DrewCard);

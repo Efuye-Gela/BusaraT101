@@ -266,6 +266,30 @@ public class TurnManager : Manager<TurnManager>
         // Start new turn after skipping
         BeginTurn(playerToStartAfterSkip);
     }
+    public void CancelSpecialTurn()
+    {
+        if (!isSpecialCardDrawn)
+        {
+            Debug.LogWarning("No active special turn to cancel.");
+            return;
+        }
+
+        Debug.Log("Special turn canceled.");
+
+        // Cleanup special turn state
+        isSpecialCardDrawn = false;
+        returnToFirstPlayer = false;
+        specialActionList = null;
+
+        TriggerTurnEndListeners();
+        TriggerSpecialTurnEndListeners();
+
+        EndTurn(activePlayer);
+
+        // Resume normal play to the player who would have gone next
+        Player nextNormalPlayer = PlayerManager.Instance.GetNextPlayer(lastSequentialPlayer);
+        BeginTurn(nextNormalPlayer);
+    }
 
 
 }

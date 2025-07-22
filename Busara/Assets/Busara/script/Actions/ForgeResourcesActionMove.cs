@@ -9,7 +9,7 @@ public class ForgeResourcesActionMove : MonoBehaviour
     {
         if (!ActionManager.Instance.CanPerformAction())
         {
-            DisplayManager.Instance.Deliver("You have already performed an action this turn.");
+            DisplayManager.Instance.DeliverError("You have already performed an action this turn.");
             return;
         }
         bool forged = ForgeManager.Instance.Forge();
