@@ -10,7 +10,6 @@ using System.Collections;
 public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginListener
 {
     public GameObject PopUpInfoPanel;
-    public TMP_Text consoleText;
     public TMP_Text PopUpText;
 
    /*[Kingdom display]*/
@@ -49,17 +48,21 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     }
     public IEnumerator Massage(string logString)
     {
-        consoleText.gameObject.SetActive(true);
+        PopUpInfoPanel.gameObject.SetActive(false);
+        PopUpText.gameObject.SetActive(false);
 
-        if (consoleText != null)
+        PopUpInfoPanel.gameObject.SetActive(true);
+        PopUpText.gameObject.SetActive(true);
+
+        if (PopUpText != null)
         {
-            consoleText.text = logString;
+            PopUpText.text = logString;
         }
 
         // Reset full opacity
-        Color originalColor = consoleText.color;
+        Color originalColor = PopUpText.color;
         originalColor.a = 1f;
-        consoleText.color = originalColor;
+        PopUpText.color = originalColor;
 
         // Wait before fading
         yield return new WaitForSeconds(0.5f);
@@ -70,19 +73,20 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         while (elapsed < fadeDuration)
         {
             float t = elapsed / fadeDuration;
-            Color newColor = consoleText.color;
+            Color newColor = PopUpText.color;
             newColor.a = Mathf.Lerp(1f, 0f, t);
-            consoleText.color = newColor;
+            PopUpText.color = newColor;
             elapsed += Time.deltaTime;
             yield return null;
         }
             
         // Ensure fully transparent
-        Color finalColor = consoleText.color;
+        Color finalColor = PopUpText.color;
         finalColor.a = 0f;
-        consoleText.color = finalColor;
+        PopUpText.color = finalColor;
 
-        consoleText.gameObject.SetActive(false);
+        PopUpText.gameObject.SetActive(false);
+        PopUpInfoPanel.gameObject.SetActive(false);
     }
     /*Side bar message Error massage*/
     public void DeliverError(string InfoString)
@@ -91,6 +95,10 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     }
     private IEnumerator SiderBarMassage(string logString)
     {
+
+        PopUpInfoPanel.gameObject.SetActive(false);
+        PopUpText.gameObject.SetActive(false);
+
         sideBarMassage.gameObject.SetActive(true);
         SideBarPanel.gameObject.SetActive(true);
 
@@ -150,7 +158,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         TopMassages.color = originalColor;
 
         // Wait before fading
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
 
         // Fade Out
         float fadeDuration = 0.75f;
@@ -213,7 +221,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     public void OnTurnBegin()
     {
         KingdomInfoDisplay();
-        DeliverMassage("Current Turn : " + TurnManager.Instance.ActivePlayer.Name);
+        DeliverMassage(TurnManager.Instance.ActivePlayer.Name + " Turn");
     }
 
 
