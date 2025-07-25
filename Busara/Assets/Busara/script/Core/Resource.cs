@@ -41,6 +41,7 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
     }
     public void OnclickDestroy()
     {
+        if (!TurnManager.Instance.ActivePlayer.Board.Slots.Contains(slot)) return;
         slot.EmptySlot();
         Destroy(gameObject);
         TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer);

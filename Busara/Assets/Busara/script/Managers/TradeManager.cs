@@ -115,7 +115,7 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
                 waitingForResourceSelection = true;
                 SelectionManager.Instance.AddResourceSelectionListener(this);
                 TradeTobeCompleted?.Invoke();
-                DisplayManager.Instance.DeliverInstructions("Choose a resource player " + tradePartner.Name);
+                DisplayManager.Instance.DeliverInstructions($"Choose {_offerTuple.Item2} resource player " + tradePartner.Name);
             }
             else
             {

@@ -64,7 +64,14 @@ public class WeaponActionMove : MonoBehaviour
                 sameResourceType = tobeWeaponizedResources.Select(x => x.resourceType).Distinct().Count() == 1;
                 if (sameResourceType)
                 {
-                    UseWeapon(tobeWeaponizedResources);
+                    if (AreResourcesAdjacent(tobeWeaponizedResources))
+                    {
+                        UseWeapon(tobeWeaponizedResources);
+                    }
+                    else
+                    {
+                        DisplayManager.Instance.DeliverError("Weapon resources must be adjacent to each other.");
+                    }
                 }
                 else
                 {
@@ -78,6 +85,23 @@ public class WeaponActionMove : MonoBehaviour
         }
 
     }
+    private bool AreResourcesAdjacent(List<Resource> resources)
+    {
+        if (resources.Count != 3) return false;
+
+        Resource res1 = resources[0];
+        Resource res2 = resources[1];
+        Resource res3 = resources[2];
+
+        // Check how many adjacency connections exist between the three resources.
+        // A connected group of 3 requires at least 2 connections (e.g., a line 1-2-3 or a cluster 2-1-3).
+        int connectionCount = 0;
+        if (res1.IsAdjacentTo(res2)) connectionCount++;
+        if (res1.IsAdjacentTo(res3)) connectionCount++;
+        if (res2.IsAdjacentTo(res3)) connectionCount++;
+
+        return connectionCount >= 2;
+    }
 
     private void UseWeapon(List<Resource> resources)
     {
@@ -89,10 +113,27 @@ public class WeaponActionMove : MonoBehaviour
 
         Player player = TurnManager.Instance.ActivePlayer;
         TurnManager.Instance.ActivePlayer.selectedResources.Clear();
+
+        // Get all other players
         List<Player> otherPlayers = new List<Player>(PlayerManager.Instance.Players);
         otherPlayers.Remove(player);
+
+        // Filter the list to only include players who have resources on their board
+        List<Player> targetPlayers = otherPlayers.Where(p => p.Board.GetOccupiedSlots().Count > 0).ToList();
+
         ActionManager.Instance.SetAction(ActionManager.ActionState.UsedWeapon);
-        TurnManager.Instance.OnSpecialTurn(false,otherPlayers);
-        NotifyWeaponUsed();
+
+        // Only start a special turn if there are players to target
+        if (targetPlayers.Count > 0)
+        {
+            TurnManager.Instance.OnSpecialTurn(false, targetPlayers);
+            NotifyWeaponUsed();
+        }
+        else
+        {
+            // If no players have resources, just end the current player's turn
+            DisplayManager.Instance.DeliverError("No other players have resources to target!");
+            TurnManager.Instance.CompleteTurn(player);
+        }
     }
 }
