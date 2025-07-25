@@ -1,9 +1,10 @@
-using UnityEngine;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.TurnEndListener
@@ -13,7 +14,7 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
     public List<Slot> Slots;
     public Image Highlight;
     public TMP_Text BoardOwnerName;
-
+    private Coroutine highlightCoroutine;
     private void Start()
     {
         BoardOwnerName.text = player.Name;
@@ -58,6 +59,7 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
         Slot.OccupySlot(targetSlot, tobeMovedResource);
         tobeMovedResource.gameObject.transform.SetParent(targetSlot.gameObject.transform, true);
         tobeMovedResource.gameObject.transform.localPosition = Vector3.zero;
+        tobeMovedResource.UnHighlight();
     }
 
     public static void PlaceResource(Resource tobePlacedResource, Slot destinationSlot)
@@ -73,14 +75,59 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
     }
 
     public void HighlightBoard()
-    { 
-        Highlight.gameObject.SetActive(true);
+    {
+        // Check if the coroutine is not already running to avoid multiple instances
+        if (highlightCoroutine == null)
+        {
+            highlightCoroutine = StartCoroutine(FadeHighlight());
+        }
     }
-
     public void UnHighlightBoard()
     {
+        // If the coroutine is running, stop it
+        if (highlightCoroutine != null)
+        {
+            StopCoroutine(highlightCoroutine);
+            highlightCoroutine = null;
+        }
+        // Ensure the highlight is turned off
         Highlight.gameObject.SetActive(false);
     }
+
+    private IEnumerator FadeHighlight()
+    {
+        float fadeDuration = 0.7f;
+        Highlight.gameObject.SetActive(true);
+
+        while (true)
+        {
+            // Fade In
+            float elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float newAlpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+                Color newColor = Highlight.color;
+                newColor.a = newAlpha;
+                Highlight.color = newColor;
+                yield return null;
+            }
+
+            // Fade Out
+            elapsedTime = 0f;
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                float newAlpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+                Color newColor = Highlight.color;
+                newColor.a = newAlpha;
+                Highlight.color = newColor;
+                yield return null;
+            }
+        }
+    }
+
+
 
     public void OnTurnBegin()
     {

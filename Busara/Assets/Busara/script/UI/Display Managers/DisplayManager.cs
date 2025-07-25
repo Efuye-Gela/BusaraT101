@@ -65,7 +65,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         PopUpText.color = originalColor;
 
         // Wait before fading
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         // Fade Out
         float fadeDuration = 0.75f;
