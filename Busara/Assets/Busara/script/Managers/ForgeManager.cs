@@ -100,7 +100,7 @@ public class ForgeManager : Manager<ForgeManager>
             { 
                 Debug.Log("Non AdjacentResources selected.Forge Failed");
                 DisplayManager.Instance.DeliverError("Non Adjacent Resources selected.Forge Failed");
-                selectedResources.Clear();
+                //selectedResources.Clear();
                 return false;
             }
 
