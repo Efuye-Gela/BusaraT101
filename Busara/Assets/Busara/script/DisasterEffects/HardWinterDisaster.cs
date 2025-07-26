@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,13 +14,28 @@ public class HardWinterDisaster : DisasterEffect
 
     public override void Execute(List<Player> affectedPlayers, Action onDisasterComplete)
     {
+        StartCoroutine(EndDisasterProcess(affectedPlayers, onDisasterComplete));    
+
+    }
+    public IEnumerator EndDisasterProcess(List<Player> affectedPlayers, Action onDisasterComplete)
+    {
+        if (affectedPlayers.Count == 0)
+        {
+            DisplayManager.Instance.DeliverInstructions("A resource shortage was announced, but no one had anything to lose!");
+
+            onDisasterComplete?.Invoke();
+            yield return null;
+        }
+
         if (affectedPlayers.Count == 0)
         {
             DisplayManager.Instance.DeliverMassage("A hard winter strikes, but no one had any virtues to lose.");
+            yield return new WaitForSeconds(0.95f);
         }
         else
         {
             DisplayManager.Instance.DeliverMassage("A hard winter strikes! Every player with virtues must discard one!");
+            yield return new WaitForSeconds(0.95f);
             foreach (Player player in affectedPlayers)
             {
                 // Remove the first virtue from each affected player's list.
@@ -28,8 +44,6 @@ public class HardWinterDisaster : DisasterEffect
                 Debug.Log($"{player.Name} discarded the virtue: {removedVirtue.name}");
             }
         }
-
-        // This disaster resolves instantly.
         onDisasterComplete?.Invoke();
     }
 }
