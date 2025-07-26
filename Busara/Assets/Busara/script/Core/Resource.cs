@@ -19,13 +19,29 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
              WeaponActionMove.Instance.AddWeaponUsedListeners(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.AddSpecialTurnEndListeners(this);
+
+        ResourceDisaster.OnResourceDisaster += ResourceDisaster_OnResourceDisaster;
+        CorruptionDisaster.OnCorruptionDisaster += CorruptionDisaster_OnCorruptionDisaster;
     }
+
+    static Dictionary<Player, int> ResourceCount;
+    private void CorruptionDisaster_OnCorruptionDisaster(Dictionary<Player, int> Count)
+    {
+        TurnOnDeleteBtn();
+        ResourceCount = Count;
+    }
+    private void ResourceDisaster_OnResourceDisaster()
+    {
+        TurnOnDeleteBtn();
+    }
+
     private void OnDisable()
     {
         if (WeaponActionMove.Instance != null)
             WeaponActionMove.Instance.RemoveWeaponUsedListeners(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.RemoveSpecialTurnEndListeners(this);
+        ResourceDisaster.OnResourceDisaster -= ResourceDisaster_OnResourceDisaster;
     }
     private void Start()
     {
@@ -42,9 +58,21 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
     public void OnclickDestroy()
     {
         if (!TurnManager.Instance.ActivePlayer.Board.Slots.Contains(slot)) return;
-        slot.EmptySlot();
-        Destroy(gameObject);
-        TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer);
+
+
+        if (ResourceCount[TurnManager.Instance.ActivePlayer] - 1 > 0)
+        {
+            slot.EmptySlot();
+            Destroy(gameObject);
+            ResourceCount[TurnManager.Instance.ActivePlayer]--;
+        }
+        else
+        {
+            slot.EmptySlot();
+            Destroy(gameObject);
+            TurnManager.Instance.CompleteSpecialTurn(TurnManager.Instance.ActivePlayer);
+        }
+
     }
     public bool IsAdjacentTo(Resource secondResource)
     { 

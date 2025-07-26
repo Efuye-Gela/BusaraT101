@@ -1,47 +1,25 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HardWinterDisaster : DisasterEffect
 {
-    public override void Execute()
+    public override List<Player> GetAffectedPlayers()
     {
-        var (Answer, Players) = IsValid(PlayerManager.Instance.Players);
-        if (Answer)
-        {
-            //DisplayManager.Instance.ErrorMassage("Winter has struck");
-            foreach (Player player in Players)
-            {
-                if (player.Virtues.Count > 0)
-                {
-                    player.Virtues.Remove(player.Virtues[0]);
-                }
-            }
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-        }
-        else
-        {
-            //DisplayManager.Instance.ErrorMassage("Hard winter struck \n But all of you are broke");
-            Debug.Log("Broke");
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-        }
-
+        // This disaster affects all players.
+        return new List<Player>(PlayerManager.Instance.Players);
     }
 
-    public override (bool, List<Player>) IsValid(List<Player> allPlayers)
+    public override void Execute(List<Player> affectedPlayers, Action onDisasterComplete)
     {
-        List<Player> TempPlayers = new List<Player>();
-        foreach (Player player in allPlayers)
+        if (affectedPlayers.Count < 2)
         {
-            if(player.Virtues.Count > 0)
-            {
-                TempPlayers.Add(player);
-            }
+            Debug.Log("Not enough players for Politics Disaster.");
+            onDisasterComplete?.Invoke();
+            return;
         }
-        if(TempPlayers.Count > 0)
-        {
-            return (true, TempPlayers);
-        }
-        else
-            return (false, PlayerManager.Instance.Players);
+
+        DisplayManager.Instance.DeliverMassage("Virtue is for those who deserve it");
+        onDisasterComplete?.Invoke();
     }
 }

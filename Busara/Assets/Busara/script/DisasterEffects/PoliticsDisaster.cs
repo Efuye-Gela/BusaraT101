@@ -1,5 +1,7 @@
 using DG.Tweening;
 using JetBrains.Annotations;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,108 +9,55 @@ using UnityEngine.UIElements;
 
 public class PoliticsDisaster : DisasterEffect
 {
-    [SerializeField] GameObject BoardsHolder;
-    [SerializeField] List<GameObject> boards;
-    [SerializeField] float rotateBoardAngle = -90;
-    [SerializeField] float roateHolderAngle = 90;
-    [SerializeField] bool shiftLeft = false;
-
-    
-
-    public override void Execute()
+       public override List<Player> GetAffectedPlayers()
     {
+        // This disaster affects all players.
+        return new List<Player>(PlayerManager.Instance.Players);
+    }
 
-        var (Accepted, players) = IsValid(PlayerManager.Instance.Players);
-        List<Player> tempPlayers = new List<Player>();
-        if (Accepted)
-        {   
-           // DisplayManager.Instance.ErrorMassage("Land Exchange!!!");
-            foreach (Player player in PlayerManager.Instance.Players)
-            {
-                Player newPlayer = Instantiate(player);
-                tempPlayers.Add(newPlayer);
-            }
-
-
-            if (shiftLeft)
-            {
-                // Shift Left: Move the first element to the last position
-                tempPlayers.Add(tempPlayers[0]);
-                tempPlayers.RemoveAt(0);
-                BoardsRotateLeft();
-            }
-            else
-            {
-                // Shift Right: Move the last element to the first position
-                tempPlayers.Insert(0, tempPlayers[tempPlayers.Count - 1]);
-                tempPlayers.RemoveAt(tempPlayers.Count - 1);
-                BoardsRotateRight();
-            }
-
-            // Reassign boards based on the new order
-            foreach (Player player in players)
-            {
-                player.Board = tempPlayers[player.Board.boardId].Board;
-            }
-            
-
-            // this is for the board side 
-            foreach (Player player in players)
-            {
-                player.Board.player = player;
-            }
-            foreach (Player player in tempPlayers)
-            {
-                Destroy(player.gameObject);
-            }
-
-            tempPlayers.Clear();
-            
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-        }
-        else
+    public override void Execute(List<Player> affectedPlayers, Action onDisasterComplete)
+    {
+        StartCoroutine(EndDisasterProcess(affectedPlayers, onDisasterComplete));
+    }
+    public IEnumerator EndDisasterProcess(List<Player> affectedPlayers, Action onDisasterComplete)
+    {
+        if (affectedPlayers.Count < 2)
         {
-           TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            Debug.Log("Not enough players for Politics Disaster.");
+            yield return new WaitForSeconds(0.95f);
+            onDisasterComplete?.Invoke();
+            yield return null;
         }
 
-    }
+        DisplayManager.Instance.DeliverInstructions("Political upheaval! All players exchange their lands!");
+        yield return new WaitForSeconds(0.95f);
 
-    private void BoardsRotateLeft()
-    {
-        if (BoardsHolder.transform.rotation != Quaternion.Euler(0, 0, roateHolderAngle))
+        // 1. Save the state of every player's board using the BoardManager.
+        Dictionary<Player, string> originalBoardStates = new Dictionary<Player, string>();
+        foreach (Player p in affectedPlayers)
         {
-            BoardsHolder.transform.DORotate(new Vector3(0, 0, roateHolderAngle), 1f);
-            foreach (var board in BoardManager.Instance.gameBoards)
-            {
-                foreach (var slot in board.Slots)
-                {
-                    slot.gameObject.transform.rotation = Quaternion.Euler(0, 0, rotateBoardAngle);
-                }
-            }
+            originalBoardStates[p] = p.Board.GetBoardState(p.Board);
         }
-    }
 
-    public void BoardsRotateRight()
-    {
-        if (BoardsHolder.transform.rotation != Quaternion.Euler(0, 0, -roateHolderAngle))
+        // 2. Determine the new board assignments (each player gets the board from the player to their "right").
+        Dictionary<Player, string> newBoardAssignments = new Dictionary<Player, string>();
+        for (int i = 0; i < affectedPlayers.Count; i++)
         {
-            BoardsHolder.transform.DORotate(new Vector3(0, 0, -roateHolderAngle), 1f);
-            foreach (var board in BoardManager.Instance.gameBoards)
-            {
-                foreach (var slot in board.Slots)
-                {
-                    slot.gameObject.transform.rotation = Quaternion.Euler(0, 0, -rotateBoardAngle);
-                }
-            }
+            Player currentPlayer = affectedPlayers[i];
+            // The player to the "right" is the previous player in the list (with wrap-around)
+            Player previousPlayer = affectedPlayers[(i - 1 + affectedPlayers.Count) % affectedPlayers.Count];
+            newBoardAssignments[currentPlayer] = originalBoardStates[previousPlayer];
         }
-    }
 
-    public override (bool, List<Player>) IsValid(List<Player> allPlayers)
-    {
-        if (allPlayers != null)
-            return (true, PlayerManager.Instance.Players);
-        else
-            return (false, PlayerManager.Instance.Players);
-    }
+        // 3. Load the new states onto each player's board using the BoardManager.
+        foreach (Player p in affectedPlayers)
+        {
+            p.Board.LoadBoardState(p.Board, newBoardAssignments[p]);
+        }
 
+        yield return new WaitForSeconds(1f);
+
+        // This disaster resolves instantly, so we call the completion callback right away.
+        onDisasterComplete?.Invoke();
+    }
 }

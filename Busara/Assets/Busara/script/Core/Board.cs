@@ -152,4 +152,56 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
 
         }
     }
+
+    public string GetBoardState(Board board)
+    {
+        System.Text.StringBuilder state = new System.Text.StringBuilder();
+        foreach (var slot in board.Slots)
+        {
+            if (!slot.isOccupied)
+            {
+                state.Append('0'); // '0' represents an empty slot
+            }
+            else
+            {
+                // Add 1 to the resource type's int value to avoid conflict with '0'
+                int valueToSave = (int)slot.resource.resourceType + 1;
+                state.Append(valueToSave);
+            }
+        }
+        return state.ToString();
+    }
+
+    public void LoadBoardState(Board board, string state)
+    {
+        // Clear existing resources from the specific board
+        foreach (var slot in board.Slots)
+        {
+            if (slot.resource != null)
+            {
+                Destroy(slot.resource.gameObject);
+                slot.resource = null;
+                slot.isOccupied = false;
+            }
+        }
+
+        // Load new state onto the board
+        for (int i = 0; i < state.Length; i++)
+        {
+            if (i >= board.Slots.Count) break; // Safety check
+
+            char resourceChar = state[i];
+            if (resourceChar != '0')
+            {
+                // Convert the character back to an integer
+                int savedValue = (int)Char.GetNumericValue(resourceChar);
+                // Subtract 1 to get the correct enum index, then cast to the enum type
+                ResourceType type = (ResourceType)(savedValue - 1);
+
+                GameObject resourceObj = BoardManager.Instance.SpawnByResourceType(type, board.Slots[i].gameObject);
+                Resource resource = resourceObj.GetComponent<Resource>();
+                Board.PlaceResource(resource, board.Slots[i]);
+            }
+        }
+    }
 }

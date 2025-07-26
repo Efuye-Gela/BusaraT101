@@ -23,18 +23,6 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
     public void OnTapDraw()
     {
 
-
-        /*        if (TurnManager.Instance.ActivePlayer.hasDrawnResource)
-                {
-                    StartCoroutine(DisplayManager.Instance.Massage("You have already drawn a resource this turn."));
-                    return;
-                }*/
-
-        //if (TurnManager.Instance.ActivePlayer.hasDrawnResource)
-        //{
-        //    DisplayManager.Instance.Deliver("You have already drawn a resource this turn.");
-        //    return;
-        //}
         if (!ActionManager.Instance.CanPerformAction())
         {
             DisplayManager.Instance.DeliverError("You have already performed an action this turn.");
@@ -65,7 +53,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
             else if (drawnCard.GetType() == typeof(DisasterCard))
             {
                 DisasterCard drawnDisasterCard = (DisasterCard)drawnCard;
-                drawnDisasterCard.effect.Execute();
+                DisasterManager.Instance.TriggerDisaster(drawnDisasterCard.effect);
             }
         }  
         

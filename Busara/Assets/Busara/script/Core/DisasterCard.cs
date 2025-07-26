@@ -11,9 +11,4 @@ public class DisasterCard : Card
     {
         this.effect = effect;
     }
-
-    public void ActivatePower(Player currentPlayer, List<Player> allPlayers)
-    {
-        effect.Execute();
-    }
-}
+}   

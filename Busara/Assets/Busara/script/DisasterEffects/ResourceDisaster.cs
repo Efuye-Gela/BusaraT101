@@ -1,47 +1,34 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ResourceDisaster : DisasterEffect
 {
-    [SerializeField] private int threshold;
-
-    public override (bool, List<Player>) IsValid(List<Player> allPlayers)
+    public static event Action OnResourceDisaster;
+    public override List<Player> GetAffectedPlayers()
     {
-        int resourceCount = 0;
-        List<Player> playerList = new List<Player>();
-        foreach (Player player in allPlayers)
-        {
-            resourceCount = player.Board.Slots.FindAll(s => s.isOccupied).Count;
-            if (player != null && resourceCount >= threshold)
-            {
-                Debug.Log("You lost a resource");
-                resourceCount = 0;
-                playerList.Add(player);
-            }
-            else
-                resourceCount = 0;
-        }
-
-        if (playerList.Count == 0)
-            return (false, playerList);
-        else
-            return (true, playerList);
-
+        // This disaster affects all players.
+        return PlayerManager.Instance.Players.Where(p => p.Board.GetOccupiedSlots().Count > 0).ToList();
     }
 
-    public override void Execute()
+    public override void Execute(List<Player> affectedPlayers, Action onDisasterComplete)
     {
-        var (TheAnswer, players) = IsValid(PlayerManager.Instance.Players);
-        //DisplayManager.Instance.ErrorMassage("Resource disaster struck");
-        if (TheAnswer && players != null)
-        {
-            //DisplayManager.Instance.ErrorMassage("Please select a resource for you to discard!!!");
-            TurnManager.Instance.OnSpecialTurn(false, players);
-        }
-        else
-        {
-            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-        }
+        StartCoroutine(EndDisasterProcess(affectedPlayers, onDisasterComplete));
     }
-
+    public IEnumerator EndDisasterProcess(List<Player> affectedPlayers,Action onDisasterComplete)
+    {
+        if (affectedPlayers.Count == 0)
+        {
+            DisplayManager.Instance.DeliverInstructions("A resource shortage was announced, but no one had anything to lose!");
+            yield return new WaitForSeconds(0.95f);
+            onDisasterComplete?.Invoke();
+            yield return null;
+        }
+        DisplayManager.Instance.DeliverInstructions("Resource shortage! Players must discard one resource!");
+        yield return new WaitForSeconds(0.95f);
+        TurnManager.Instance.OnSpecialTurn(false, affectedPlayers);
+        OnResourceDisaster?.Invoke();
+    }
 }

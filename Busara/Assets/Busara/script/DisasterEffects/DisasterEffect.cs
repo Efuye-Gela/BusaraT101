@@ -1,9 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public abstract class DisasterEffect : MonoBehaviour
 {
-    
-    public abstract (bool, List<Player>) IsValid(List<Player> allPlayers);
-    public abstract void Execute();
+    [TextArea]
+    public string description;
+
+    public abstract List<Player> GetAffectedPlayers();
+    public abstract void Execute(List<Player> affectedPlayers, Action onDisasterComplete);
 }
+    

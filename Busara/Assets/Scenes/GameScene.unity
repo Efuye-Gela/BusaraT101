@@ -17066,6 +17066,59 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 56}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &636923532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 636923533}
+  - component: {fileID: 636923534}
+  m_Layer: 0
+  m_Name: DisasterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &636923533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636923532}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1272437068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &636923534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636923532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc76e6ebb8d1c054a8908cb743348271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &640968513
 GameObject:
   m_ObjectHideFlags: 0
@@ -22404,6 +22457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4978d9b71dbaa4ba2534f3d2c2747a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  description: 
 --- !u!114 &853240521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25707,15 +25761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f4ac59690fead47808f2abf91448b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoardsHolder: {fileID: 8588604151279440725}
-  boards:
-  - {fileID: 7275103614399823615}
-  - {fileID: 98961532404521629}
-  - {fileID: 1188145766903264534}
-  - {fileID: 6627065200194047879}
-  rotateBoardAngle: -90
-  roateHolderAngle: 90
-  shiftLeft: 0
+  description: 
 --- !u!1 &996727107
 GameObject:
   m_ObjectHideFlags: 0
@@ -32306,6 +32352,7 @@ Transform:
   - {fileID: 1667099728}
   - {fileID: 2067435259}
   - {fileID: 684813870}
+  - {fileID: 636923533}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1276321298
@@ -35703,30 +35750,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   Cards:
-  - {fileID: 236796174}
-  - {fileID: 1313413768}
-  - {fileID: 1877564831}
-  - {fileID: 955338074}
-  - {fileID: 43553113}
-  - {fileID: 1679340336}
-  - {fileID: 231428226}
-  - {fileID: 2110280228}
-  - {fileID: 1681359002}
-  - {fileID: 1258593479}
-  - {fileID: 417951846}
-  - {fileID: 690362373}
-  - {fileID: 584165799}
-  - {fileID: 1765098063}
-  - {fileID: 217254882}
-  - {fileID: 611553109}
-  - {fileID: 159768646}
-  - {fileID: 746138443}
   - {fileID: 1236021396}
-  - {fileID: 101010217}
-  - {fileID: 9839365}
-  - {fileID: 338109524}
-  - {fileID: 1934216416}
-  - {fileID: 1564177876}
   CardCount: 0
 --- !u!1 &1410945778
 GameObject:
@@ -36601,7 +36625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e281c99959ad8684d8816259b1ba7afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 1
+  description: 
 --- !u!1 &1456173462
 GameObject:
   m_ObjectHideFlags: 0
@@ -42884,11 +42908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f4ac59690fead47808f2abf91448b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoardsHolder: {fileID: 0}
-  boards: []
-  rotateBoardAngle: -90
-  roateHolderAngle: 90
-  shiftLeft: 0
+  description: 
 --- !u!1 &1731461215
 GameObject:
   m_ObjectHideFlags: 0
@@ -47131,7 +47151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46649aea711ca2749bfc45ab71d301b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 9
+  description: 
 --- !u!1 &1864281249
 GameObject:
   m_ObjectHideFlags: 0
