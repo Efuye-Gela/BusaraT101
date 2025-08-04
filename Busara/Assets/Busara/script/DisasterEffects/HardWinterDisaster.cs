@@ -15,11 +15,11 @@ public class HardWinterDisaster : DisasterEffect
     {
         if (affectedPlayers.Count == 0)
         {
-            DisplayManager.Instance.DeliverMassage("A hard winter strikes, but no one had any virtues to lose.");
+            DisplayManager.Instance.DeliverInstructions("A hard winter strikes, but no one had any virtues to lose.");
         }
         else
         {
-            DisplayManager.Instance.DeliverMassage("A hard winter strikes! Every player with virtues must discard one!");
+            DisplayManager.Instance.DeliverInstructions("A hard winter strikes! Every player with virtues must discard one!");
             foreach (Player player in affectedPlayers)
             {
                 // Remove the first virtue from each affected player's list.

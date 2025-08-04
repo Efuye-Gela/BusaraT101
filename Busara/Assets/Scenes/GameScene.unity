@@ -35749,7 +35749,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  Cards: []
+  Cards:
+  - {fileID: 853240521}
   CardCount: 0
 --- !u!1 &1410945778
 GameObject:
