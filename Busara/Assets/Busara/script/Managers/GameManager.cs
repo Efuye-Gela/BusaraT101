@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener, TurnManager.TurnEndListener
+public class GameManager : Manager<GameManager>, TurnManager.TurnBeginListener, TurnManager.TurnEndListener
 {
     public bool multidraw = false;
     public Player lastDrawnPlayer = null;
@@ -11,8 +12,11 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
 
     public Player ActivePlayer;
     public GameObject WinScreen;
+    public GameObject DrawScreen;
 
-    public void Start() 
+    private int consecutiveSkips = 0;
+
+    public void Start()
     {
         if (TurnManager.Instance != null)
             TurnManager.Instance.AddTurnBeginListeners(this);
@@ -20,20 +24,6 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
             TurnManager.Instance.AddTurnEndListeners(this);
     }
 
-    public void OnTapRemove()
-    {
-        List<Resource> resources = TurnManager.Instance.ActivePlayer.selectedResources;
-        if (resources != null && resources.Count > 0)
-        {
-            if (resources.Count > 1)
-                DisplayManager.Instance.DeliverError("Please select one resource only"); 
-            {
-                resources[0].slot.EmptySlot();
-                TurnManager.Instance.ActivePlayer.selectedResources.Clear();
-                TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-            }
-        }
-    }
     public void CheckWinConditions()
     {
         if (TurnManager.Instance != null)
@@ -76,37 +66,47 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
         Debug.Log(ActivePlayer.Name + " has met the win conditions!");
         WinScreen.SetActive(true);
     }
-    public void CheckResource()
+    public bool PlayerHasResources()
     {
-        if (TurnManager.Instance != null)
-            ActivePlayer = TurnManager.Instance.ActivePlayer;
-        int resource = 0;
-        if (ActivePlayer != null)
+        if (TurnManager.Instance.ActivePlayer != null && TurnManager.Instance.ActivePlayer.hasFinishedSettingUp)
         {
-            foreach (Slot slot in ActivePlayer.Board.Slots)
+            return TurnManager.Instance.ActivePlayer.Board.GetOccupiedSlots().Count > 0;
+        }
+        return true;
+    }
+    public void CheckIfPlayerHasResource()
+    {
+        if (!PlayerHasResources())
+        {
+            consecutiveSkips++;
+            if (consecutiveSkips > PlayerManager.Instance.Players.Count)
             {
-                if (slot.resource)
+                Debug.Log("All players have no resources. The game has ended in a stalemate.");
+                if (TurnManager.Instance != null)
                 {
-                    resource++;
+                    TurnManager.Instance.enabled = false;
                 }
+                if (DrawScreen != null)
+                    DrawScreen.SetActive(true);
+                return;
             }
-            if (resource == 0)
-            {
-                Debug.Log("NO resource Turn Skip");
-            }
+            DisplayManager.Instance.DeliverInstructions($"{TurnManager.Instance.ActivePlayer.Name} has no resources turn Skipped!");
+            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            //StartCoroutine(SkipTurnAfterDelay(TurnManager.Instance.ActivePlayer));
         }
-    }
-    public void setPlayer()
-    {
-        if(ActivePlayer == null)
+        else
         {
-            ActivePlayer = TurnManager.Instance.ActivePlayer;
+            consecutiveSkips = 0;
         }
     }
-
+    private IEnumerator SkipTurnAfterDelay(Player playerToSkip)
+    {
+        yield return new WaitForSeconds(1.5f);
+        TurnManager.Instance.CompleteTurn(playerToSkip);
+    }
     public void OnTurnBegin()
     {
-        //CheckResource();
+        CheckIfPlayerHasResource();
     }
 
     public void OnTurnEnd()

@@ -4760,8 +4760,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1467538572}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2067435260}
+        m_TargetAssemblyTypeName: BusaraSceneManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
         m_Arguments:
@@ -35749,8 +35749,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  Cards:
-  - {fileID: 853240521}
+  Cards: []
   CardCount: 0
 --- !u!1 &1410945778
 GameObject:
@@ -37296,6 +37295,7 @@ MonoBehaviour:
   isTournament: 0
   ActivePlayer: {fileID: 0}
   WinScreen: {fileID: 742812240}
+  DrawScreen: {fileID: 742812240}
 --- !u!1 &1469628303
 GameObject:
   m_ObjectHideFlags: 0
