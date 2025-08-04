@@ -11,7 +11,7 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
 
     public Player ActivePlayer;
     public GameObject WinScreen;
-
+    private int consecutiveSkips = 0;
     public void Start() 
     {
         if (TurnManager.Instance != null)
@@ -76,37 +76,48 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
         Debug.Log(ActivePlayer.Name + " has met the win conditions!");
         WinScreen.SetActive(true);
     }
-    public void CheckResource()
+    public bool PlayerHasResources()
     {
-        if (TurnManager.Instance != null)
-            ActivePlayer = TurnManager.Instance.ActivePlayer;
-        int resource = 0;
-        if (ActivePlayer != null)
+        if (TurnManager.Instance.ActivePlayer != null && TurnManager.Instance.ActivePlayer.hasFinishedSettingUp)
         {
-            foreach (Slot slot in ActivePlayer.Board.Slots)
-            {
-                if (slot.resource)
-                {
-                    resource++;
-                }
-            }
-            if (resource == 0)
-            {
-                Debug.Log("NO resource Turn Skip");
-            }
+            return TurnManager.Instance.ActivePlayer.Board.GetOccupiedSlots().Count > 0;
         }
-    }
-    public void setPlayer()
-    {
-        if(ActivePlayer == null)
-        {
-            ActivePlayer = TurnManager.Instance.ActivePlayer;
-        }
+        return true;
     }
 
     public void OnTurnBegin()
     {
-        //CheckResource();
+        // At the beginning of a turn, check if the active player has any resources.
+        if (!PlayerHasResources())
+        {
+            consecutiveSkips++;
+            if (consecutiveSkips > PlayerManager.Instance.Players.Count)
+            {
+                Debug.Log("All players have no resources. The game has ended in a stalemate.");
+                if (TurnManager.Instance != null)
+                {
+                    TurnManager.Instance.enabled = false;
+                }
+                // if (DrawScreen != null) DrawScreen.SetActive(true);
+                return; // Stop processing to prevent the loop from continuing.
+            }
+
+            // If they have no resources, immediately complete their turn.
+            DisplayManager.Instance.DeliverInstructions($"{TurnManager.Instance.ActivePlayer.Name} has no resources and skips their turn!");
+            StartCoroutine(SkipTurnAfterDelay(TurnManager.Instance.ActivePlayer));
+        }
+        else
+        {
+            // If a player can make a move, reset the skip counter.
+            consecutiveSkips = 0;
+        }
+    }
+
+    private System.Collections.IEnumerator SkipTurnAfterDelay(Player playerToSkip)
+    {
+        // Wait for a short moment to ensure the player sees the message.
+        yield return new WaitForSeconds(1.5f);
+        TurnManager.Instance.CompleteTurn(playerToSkip);
     }
 
     public void OnTurnEnd()
