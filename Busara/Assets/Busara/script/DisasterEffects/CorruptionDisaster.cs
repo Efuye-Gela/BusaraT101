@@ -20,20 +20,17 @@ public class CorruptionDisaster : DisasterEffect
     }
     public override void Execute(List<Player> affectedPlayers, Action onDisasterComplete)
     {
-
+        if (affectedPlayers.Count == 0)
+        {
+            DisplayManager.Instance.DeliverInstructions("A wave of anti-corruption sweeps the land, but all rulers were found to be just!");
+            onDisasterComplete?.Invoke();
+            return;
+        }
         StartCoroutine(EndDisasterProcess(affectedPlayers, onDisasterComplete));
 
     }
     public IEnumerator EndDisasterProcess(List<Player> affectedPlayers, Action onDisasterComplete)
     {
-        if (affectedPlayers.Count == 0)
-        {
-            DisplayManager.Instance.DeliverInstructions("A wave of anti-corruption sweeps the land, but all rulers were found to be just!");
-            yield return new WaitForSeconds(0.95f);
-            onDisasterComplete?.Invoke();
-            yield return null;
-        }
-
         DisplayManager.Instance.DeliverInstructions("Corruption! Wealthy players must discard half of their resources!");
         yield return new WaitForSeconds(0.95f);
         discardsRequired.Clear();

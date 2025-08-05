@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener, TurnManager.TurnEndListener
+public class GameManager : Manager<GameManager>, TurnManager.TurnBeginListener, TurnManager.TurnEndListener
 {
     public bool multidraw = false;
     public Player lastDrawnPlayer = null;
@@ -15,7 +16,7 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
 
     private int consecutiveSkips = 0;
 
-    public void Start() 
+    public void Start()
     {
         if (TurnManager.Instance != null)
             TurnManager.Instance.AddTurnBeginListeners(this);
@@ -73,43 +74,39 @@ public class GameManager : Manager<GameManager> , TurnManager.TurnBeginListener,
         }
         return true;
     }
-    public void OnTurnBegin()
+    public void CheckIfPlayerHasResource()
     {
-        // At the beginning of a turn, check if the active player has any resources.
         if (!PlayerHasResources())
         {
             consecutiveSkips++;
-            // If we have skipped more turns than there are players, the game is stuck in a loop.
             if (consecutiveSkips > PlayerManager.Instance.Players.Count)
             {
                 Debug.Log("All players have no resources. The game has ended in a stalemate.");
-                // Here you would trigger a "Draw" screen or end the game.
-                // For now, we can just stop the game loop by disabling the TurnManager.
                 if (TurnManager.Instance != null)
                 {
                     TurnManager.Instance.enabled = false;
                 }
                 if (DrawScreen != null)
                     DrawScreen.SetActive(true);
-                return; // Stop processing to prevent the loop from continuing.
+                return;
             }
-
-            // If they have no resources, immediately complete their turn.
-            DisplayManager.Instance.DeliverMassage($"{TurnManager.Instance.ActivePlayer.Name} has no resources and skips their turn!");
-            StartCoroutine(SkipTurnAfterDelay(TurnManager.Instance.ActivePlayer));
+            DisplayManager.Instance.DeliverInstructions($"{TurnManager.Instance.ActivePlayer.Name} has no resources turn Skipped!");
+            TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
+            //StartCoroutine(SkipTurnAfterDelay(TurnManager.Instance.ActivePlayer));
         }
         else
         {
-            // If a player can make a move, reset the skip counter.
             consecutiveSkips = 0;
         }
     }
-
-    private System.Collections.IEnumerator SkipTurnAfterDelay(Player playerToSkip)
+    private IEnumerator SkipTurnAfterDelay(Player playerToSkip)
     {
-        // Wait for a short moment to ensure the player sees the message.
         yield return new WaitForSeconds(1.5f);
         TurnManager.Instance.CompleteTurn(playerToSkip);
+    }
+    public void OnTurnBegin()
+    {
+        CheckIfPlayerHasResource();
     }
 
     public void OnTurnEnd()

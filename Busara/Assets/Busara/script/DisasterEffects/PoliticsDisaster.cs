@@ -17,17 +17,16 @@ public class PoliticsDisaster : DisasterEffect
 
     public override void Execute(List<Player> affectedPlayers, Action onDisasterComplete)
     {
+        if (affectedPlayers.Count < 2)
+        {
+            Debug.Log("Not enough players for Politics Disaster.");    
+            onDisasterComplete?.Invoke();
+            return;
+        }
         StartCoroutine(EndDisasterProcess(affectedPlayers, onDisasterComplete));
     }
     public IEnumerator EndDisasterProcess(List<Player> affectedPlayers, Action onDisasterComplete)
     {
-        if (affectedPlayers.Count < 2)
-        {
-            Debug.Log("Not enough players for Politics Disaster.");
-            yield return new WaitForSeconds(0.95f);
-            onDisasterComplete?.Invoke();
-            yield return null;
-        }
 
         DisplayManager.Instance.DeliverInstructions("Political upheaval! All players exchange their lands!");
         yield return new WaitForSeconds(0.95f);
