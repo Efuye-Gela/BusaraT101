@@ -114,9 +114,10 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
             this.highlightImage.gameObject.SetActive(false);
     }
 
-    public void WeaponActivated()
+    public void WeaponActivated(Dictionary<Player, int> DiscardedResource)
     {
         TurnOnDeleteBtn();
+        ResourceCount = DiscardedResource;
     }
     public void OnSpecialTurnEnd()
     {

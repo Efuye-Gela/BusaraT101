@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -30,16 +31,16 @@ public class WeaponActionMove : MonoBehaviour
             this.weaponUsed.Remove(weaponUsed);
         }
     }
-    public void NotifyWeaponUsed()
+    public void NotifyWeaponUsed(Dictionary<Player, int> DiscardedResource)
     {
         foreach(IWeaponUsed w in weaponUsed)
         {
-            w.WeaponActivated();
+            w.WeaponActivated(DiscardedResource);
         }
     }
     public interface IWeaponUsed
     {
-        public void WeaponActivated();
+        public void WeaponActivated(Dictionary<Player, int> DiscardedResource);
     }
     public void OnTapUseWeapon()
     {
@@ -122,12 +123,16 @@ public class WeaponActionMove : MonoBehaviour
         List<Player> targetPlayers = otherPlayers.Where(p => p.Board.GetOccupiedSlots().Count > 0).ToList();
 
         ActionManager.Instance.SetAction(ActionManager.ActionState.UsedWeapon);
-
+        Dictionary<Player, int> discardsRequired = new Dictionary<Player, int>();
         // Only start a special turn if there are players to target
         if (targetPlayers.Count > 0)
         {
+            foreach (Player p in targetPlayers)
+            {
+                discardsRequired[p] = 1;
+            }
             TurnManager.Instance.OnSpecialTurn(false, targetPlayers);
-            NotifyWeaponUsed();
+            NotifyWeaponUsed(discardsRequired);
         }
         else
         {
