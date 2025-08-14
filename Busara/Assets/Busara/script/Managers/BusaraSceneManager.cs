@@ -18,6 +18,10 @@ public class BusaraSceneManager : MonoBehaviour
     }
     public void Quit()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        Application.ExternalEval("window.close();");
+#else
         Application.Quit();
+#endif
     }
 }

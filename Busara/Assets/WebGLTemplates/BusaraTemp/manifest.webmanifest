@@ -1,13 +1,13 @@
 {
-    "name": "2048MergeShoot",
-    "short_name": "2048MergeShoot",
+    "name": "Busara",
+    "short_name": "Busara",
     "start_url": "index.html",
     "display": "fullscreen",
     "background_color": "#231F20",
     "theme_color": "#000",
-    "description": "2048 game",
+    "description": "Busara",
     "icons": [{
-      "src": "logo_512x512.png",
+      "src": "logo.svg",
       "sizes": "256x256",
       "type": "image/png",
       "purpose": "any maskable"
