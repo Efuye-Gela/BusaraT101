@@ -12,7 +12,7 @@ public class PowerManager : Manager<PowerManager>
         UsedPower = PlayersPower;
         Debug.Log($"you wish to use your power: {UsedPower.powerName}");
         OnPowerActivated();
-        ActionManager.Instance.SetAction(ActionManager.ActionState.UsedPower);
+       // ActionManager.Instance.SetAction(ActionManager.ActionState.UsedPower);
     }
     public bool IsValid()
     {
