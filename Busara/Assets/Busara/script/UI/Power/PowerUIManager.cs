@@ -1,34 +1,27 @@
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using NUnit.Framework;
-using Unity.VisualScripting;
-using System.Linq;
 using Sirenix.Serialization;
-using Sirenix.OdinInspector;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
 
-[System.Serializable]
-public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener, TurnManager.TurnBeginListener
+public class PowerUIManager : Manager<PowerUIManager>, TurnManager.TurnBeginListener
 {
     private Player player;
-    public TMP_Text PlayerName;
     public List<Virtue> VirtuesList;
     public List<VirtueUI> VirtueUIList;
     [OdinSerialize]
     public Dictionary<VirtueType, int> virtueCounts = new Dictionary<VirtueType, int>();
-
+    public TMP_Text powerInfo;
+    public List<Transform> PowerPanelComponents;
 
     private void OnEnable()
     {
-        if (ForgeManager.Instance != null)
-            ForgeManager.Instance.RegisterForgeListener(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.AddTurnBeginListeners(this);
     }
     private void OnDisable()
     {
-        if (ForgeManager.Instance != null)
-            ForgeManager.Instance.UnregisterForgeListener(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.RemoveTurnBeginListener(this);
     }
@@ -39,19 +32,35 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
         {
             player = TurnManager.Instance.ActivePlayer;
         }
-        if (player != null)
-        {
-            PlayerName.text = player.Name;
-        }
         else
         {
             Debug.Log("No name");
         }
+        PowerManager.Instance.OnPowerActivated += PowerActivated;
+        PowerManager.Instance.OnPowerDeactivated += PowerDeactivated;
+    }
+
+    private void PowerActivated()
+    {
         VirtueDisplay();
+        GetPlayerVirtueCount();
+        PowerPanelLayout();
+        PowerMassage($"Please select virtue to use your power");
+    }
+
+    private void PowerDeactivated()
+    {
+        PowerPanelComponents[0].gameObject.SetActive(false);
+    }
+    public void PowerPanelLayout()
+    {
+        PowerPanelComponents[0].gameObject.SetActive(true);
+        PowerPanelComponents[1].gameObject.SetActive(true);
+        PowerPanelComponents[2].gameObject.SetActive(false);
     }
     public void VirtueDisplay()
     {
-        for(int i = 0; i < VirtuesList.Count; i++)
+        for (int i = 0; i < VirtuesList.Count; i++)
         {
             VirtueUIList[i].virtueType = VirtuesList[i];
             VirtueUIList[i].VirtueName.text = VirtuesList[i].name;
@@ -59,7 +68,6 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
             VirtueUIList[i].currentPlayer = player;
         }
     }
-
     public void GetPlayerVirtueCount()
     {
         if (player == null || player.Virtues == null || VirtueUIList == null)
@@ -83,7 +91,7 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
             if (virtueUI != null && virtueUI.virtueType != null)
             {
                 VirtueType virtueType = virtueUI.virtueType.type;
-                virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();    
+                virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();
             }
         }
     }
@@ -93,16 +101,16 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
         {
             player = TurnManager.Instance.ActivePlayer;
         }
-        if (player != null)
-        {
-            PlayerName.text = player.Name;
-        }
         GetPlayerVirtueCount();
     }
-    public void OnForgeCompleted(List<Virtue> forgedVirtues, List<Resource> usedResources)
+    public void PowerMassage(string logString)
     {
-        GetPlayerVirtueCount();
+        powerInfo.gameObject.SetActive(true);
+        if (powerInfo != null)
+        {
+            powerInfo.text = logString;
+        }
+
+
     }
-
-
 }

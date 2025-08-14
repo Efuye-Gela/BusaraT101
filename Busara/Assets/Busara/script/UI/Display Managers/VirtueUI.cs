@@ -31,26 +31,35 @@ public class VirtueUI : MonoBehaviour
         Player currentPlayer = TurnManager.Instance.ActivePlayer;
         if (TurnManager.Instance.ActivePlayer == null) return;
 
-        Dictionary<VirtueType, int> TempVirtue = TurnManager.Instance.ActivePlayer.state.virtueCounts;
+        Dictionary<VirtueType, int> TempVirtue = PowerUIManager.Instance.virtueCounts;
         if (TempVirtue.ContainsKey(virtueType.type) && TempVirtue[virtueType.type] > 0)
         {
             int selectedCount = TurnManager.Instance.ActivePlayer.selectedVirtue.Count(v => v.type == virtueType.type);
             if (selectedCount < TempVirtue[virtueType.type])
             {
+                int virtueCount = int.Parse(NumberOfvirtues.text);
+                virtueCount--;
+                NumberOfvirtues.text = virtueCount.ToString();
+
                 TurnManager.Instance.ActivePlayer.selectedVirtue.Add(virtueType);
                 Debug.Log($"Virtue {virtueType.name} added to selected virtues.");
 
                 Debug.Log($"selected {virtueType.name}. Total virtue selected {TurnManager.Instance.ActivePlayer.selectedVirtue.Count}.");
 
+                PowerUIManager.Instance.PowerMassage($"Virtue {virtueType.name} added to selected virtues. \n selected {virtueType.name}. Total virtue selected {TurnManager.Instance.ActivePlayer.selectedVirtue.Count}.");
+
             }
             else
             {
                 Debug.Log($"Cannot add more {virtueType.name}, maximum allowed based on available virtues reached.");
+                PowerUIManager.Instance.PowerMassage($"Cannot add more {virtueType.name}, maximum allowed based on available virtues reached.");
+
             }
         }
         else
         {
-            Debug.Log($"Player does not have {virtueType.name} to add.");  
+            Debug.Log($"Player does not have {virtueType.name} to add.");
+            PowerUIManager.Instance.PowerMassage($"Player does not have {virtueType.name} to add.");
         }
     }
     public void RemoveVirtue()
@@ -63,10 +72,15 @@ public class VirtueUI : MonoBehaviour
         {
             TurnManager.Instance.ActivePlayer.selectedVirtue.Remove(virtueType);
             Debug.Log($"Virtue {virtueType.name} removed from selected virtues.");
+            int virtueCount = int.Parse(NumberOfvirtues.text);
+            virtueCount++;
+            NumberOfvirtues.text = virtueCount.ToString();
+            PowerUIManager.Instance.PowerMassage($"Virtue {virtueType.name} removed from selected virtues.");
         }
         else
         {
             Debug.Log($"Cannot remove {virtueType.name} as it is not in selected virtues.");
+            PowerUIManager.Instance.PowerMassage($"Cannot remove {virtueType.name} as it is not in selected virtues.");
         }
     }
 

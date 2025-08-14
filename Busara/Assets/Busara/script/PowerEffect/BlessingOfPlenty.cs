@@ -24,22 +24,13 @@ public class BlessingOfPlenty : Power, SelectionManager.ResourceSelectionListene
 
     public override void Execute()
     {
-
-        if (IsValid())
+        List<Slot> occupiedSlots = TurnManager.Instance.ActivePlayer.Board.GetOccupiedSlots();
+        foreach (Slot slot in occupiedSlots)
         {
-            List<Slot> occupiedSlots = TurnManager.Instance.ActivePlayer.Board.GetOccupiedSlots();
-            foreach (Slot slot in occupiedSlots)
-            {
-                if (slot.resource != null)
-                    tobeAddedResources.Add(slot.resource);
-            }
-            currentIndex = 0;
-            SpawnExtraResource(tobeAddedResources);
+            if (slot.resource != null)
+                tobeAddedResources.Add(slot.resource);
         }
-        else
-        {
-            
-        }
+        currentIndex = 0;
     }
 
     private void SpawnExtraResource(List<Resource> tobeAddedResources)
@@ -80,23 +71,6 @@ public class BlessingOfPlenty : Power, SelectionManager.ResourceSelectionListene
         }
     }
 
-    public override bool IsValid()
-    {
-        Player TemPlayer = TurnManager.Instance.ActivePlayer;
-
-        List<Virtue> virtuesToRemove = new List<Virtue>(TemPlayer.selectedVirtue);
-        int count = TemPlayer.Kingdom.power.virtueCost;
-        foreach (Virtue virtue in virtuesToRemove)
-        {
-            if (count > 0)
-            {
-                TemPlayer.Virtues.Remove(virtue);
-                TemPlayer.selectedVirtue.Remove(virtue);
-                count--;
-            }
-        }
-        return true;
-    }
 
     public void Onselection(Resource resource)
     {

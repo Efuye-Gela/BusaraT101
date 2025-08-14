@@ -15,8 +15,6 @@ public class Witchcraft : Power, SelectionManager.ResourceSelectionListener, Sel
 
     public override void Execute()
     {
-        if (IsValid())
-        {
             SelectionManager.Instance.AddResourceSelectionListener(this);
             SelectionManager.Instance.AddSlotSelectionListener(this);
 
@@ -26,30 +24,6 @@ public class Witchcraft : Power, SelectionManager.ResourceSelectionListener, Sel
                 if (slot.resource != null)
                     tobeMovedResources.Add(slot.resource);
             }
-        }
-        else
-        {
-            
-        }
-        
-    }
-
-    public override bool IsValid()
-    {
-        Player TemPlayer = TurnManager.Instance.ActivePlayer;
-
-        List<Virtue> virtuesToRemove = new List<Virtue>(TemPlayer.selectedVirtue);
-        int count = TemPlayer.Kingdom.power.virtueCost;
-        foreach (Virtue virtue in virtuesToRemove)
-        {
-            if (count > 0)
-            {
-                TemPlayer.Virtues.Remove(virtue);
-                TemPlayer.selectedVirtue.Remove(virtue);
-                count--;
-            }
-        }
-        return true;
     }
 
     public void Onselection(Resource resource)

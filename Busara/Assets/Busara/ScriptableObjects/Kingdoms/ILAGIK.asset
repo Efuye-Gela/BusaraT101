@@ -17,7 +17,7 @@ MonoBehaviour:
     and 17th century. It is known for its interesting places and king Ruganzu, famous
     for being a warrior, conqueror and mostly for having super powers, the reason
     he was known as the King of Miracles.
-  power: {fileID: 0}
+  power: {fileID: 11400000, guid: c888ecd5777d275418728b3cbe05dbfa, type: 2}
   virtuesForWin:
   - NumberofVirtues: 4
     virtues: {fileID: 11400000, guid: 4624248e70a74634fb80c182de553610, type: 2}
