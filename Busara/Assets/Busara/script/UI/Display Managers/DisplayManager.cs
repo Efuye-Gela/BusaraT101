@@ -197,16 +197,21 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         VirtueImages[0].NumberOfVirtues.text = "X" + ThePlayer.Kingdom.virtuesForWin[0].NumberofVirtues.ToString();
         VirtueImages[0].resourceOne.sprite = ThePlayer.Kingdom.virtuesForWin[0].virtues.ResourceOne.resourceIcon;
         VirtueImages[0].resourceTwo.sprite = ThePlayer.Kingdom.virtuesForWin[0].virtues.ResourceTwo.resourceIcon;
+        VirtueImages[0].VirtueName.text = ThePlayer.Kingdom.virtuesForWin[1].virtues.name;
 
         VirtueImages[1].virtues.sprite = ThePlayer.Kingdom.virtuesForWin[1].virtues.virtueIcon;
         VirtueImages[1].NumberOfVirtues.text = "X" + ThePlayer.Kingdom.virtuesForWin[1].NumberofVirtues.ToString();
         VirtueImages[1].resourceOne.sprite = ThePlayer.Kingdom.virtuesForWin[1].virtues.ResourceOne.resourceIcon;
         VirtueImages[1].resourceTwo.sprite = ThePlayer.Kingdom.virtuesForWin[1].virtues.ResourceTwo.resourceIcon;
+        VirtueImages[1].VirtueName.text = ThePlayer.Kingdom.virtuesForWin[1].virtues.name;
 
         VirtueImages[2].virtues.sprite = ThePlayer.Kingdom.virtuesForWin[2].virtues.virtueIcon;
         VirtueImages[2].NumberOfVirtues.text = "X" + ThePlayer.Kingdom.virtuesForWin[2].NumberofVirtues.ToString();
         VirtueImages[2].resourceOne.sprite = ThePlayer.Kingdom.virtuesForWin[2].virtues.ResourceOne.resourceIcon;
         VirtueImages[2].resourceTwo.sprite = ThePlayer.Kingdom.virtuesForWin[2].virtues.ResourceTwo.resourceIcon;
+        VirtueImages[2].VirtueName.text = ThePlayer.Kingdom.virtuesForWin[2].virtues.name;
+
+
     }
     /*UI component Display*/
     public void UIToggleDisplayer(GameObject gameObject)
@@ -237,6 +242,7 @@ public class VirtueImages
 {
     public Image virtues;
     public TMP_Text NumberOfVirtues;
+    public TMP_Text VirtueName;
     public Image resourceOne;
     public Image resourceTwo;
 }
