@@ -30,9 +30,10 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
         TurnOnDeleteBtn();
         ResourceCount = Count;
     }
-    private void ResourceDisaster_OnResourceDisaster()
+    private void ResourceDisaster_OnResourceDisaster(Dictionary<Player, int> Count)
     {
         TurnOnDeleteBtn();
+        ResourceCount = Count;
     }
 
     private void OnDisable()
@@ -41,7 +42,8 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
             WeaponActionMove.Instance.RemoveWeaponUsedListeners(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.RemoveSpecialTurnEndListeners(this);
-        ResourceDisaster.OnResourceDisaster -= ResourceDisaster_OnResourceDisaster;
+            ResourceDisaster.OnResourceDisaster -= ResourceDisaster_OnResourceDisaster;
+            CorruptionDisaster.OnCorruptionDisaster -= CorruptionDisaster_OnCorruptionDisaster;
     }
     private void Start()
     {

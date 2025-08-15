@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class ResourceDisaster : DisasterEffect
 {
-    public static event Action OnResourceDisaster;
+
+    private Dictionary<Player, int> discardsRequired = new Dictionary<Player, int>();
+    public static event Action<Dictionary<Player, int>> OnResourceDisaster;
     public override List<Player> GetAffectedPlayers()
     {
         // This disaster affects all players.
@@ -28,6 +30,10 @@ public class ResourceDisaster : DisasterEffect
         DisplayManager.Instance.DeliverInstructions("Resource shortage! Players must discard one resource!");
         yield return new WaitForSeconds(0.95f);
         TurnManager.Instance.OnSpecialTurn(false, affectedPlayers);
-        OnResourceDisaster?.Invoke();
+        foreach (Player p in affectedPlayers)
+        {
+            discardsRequired[p] = 1;
+        }
+        OnResourceDisaster?.Invoke(discardsRequired);
     }
 }
