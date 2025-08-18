@@ -44,6 +44,7 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
     {
         if (TurnManager.Instance.ActivePlayer.Board.Slots.Contains(clickedOnResource.slot))
         {
+            availableSlots.Clear();
             List<Slot> adjacentSlots = new List<Slot>();
             if (clickedOnResource != null)
             {
@@ -99,14 +100,15 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
         {
             return;
         }
-
-        tobeMovedResource = resource;
-        ResourceClicked(tobeMovedResource);
         if (TurnManager.Instance.ActivePlayer.selectedResources.Count > 1)
         {
             UnHighlightAvailableSlots(availableSlots);
             availableSlots.Clear();
+            return;
         }
+        tobeMovedResource = resource;
+        ResourceClicked(tobeMovedResource);
+
     }
 
     public void OnDeselection(Resource resource)

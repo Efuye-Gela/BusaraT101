@@ -287,7 +287,7 @@ public class TurnManager : Manager<TurnManager>
         EndTurn(activePlayer);
 
         // Resume normal play to the player who would have gone next
-        Player nextNormalPlayer = PlayerManager.Instance.GetNextPlayer(lastSequentialPlayer);
+        Player nextNormalPlayer = lastSequentialPlayer;
         BeginTurn(nextNormalPlayer);
     }
 

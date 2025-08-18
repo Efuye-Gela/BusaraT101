@@ -197,7 +197,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         VirtueImages[0].NumberOfVirtues.text = "X" + ThePlayer.Kingdom.virtuesForWin[0].NumberofVirtues.ToString();
         VirtueImages[0].resourceOne.sprite = ThePlayer.Kingdom.virtuesForWin[0].virtues.ResourceOne.resourceIcon;
         VirtueImages[0].resourceTwo.sprite = ThePlayer.Kingdom.virtuesForWin[0].virtues.ResourceTwo.resourceIcon;
-        VirtueImages[0].VirtueName.text = ThePlayer.Kingdom.virtuesForWin[1].virtues.name;
+        VirtueImages[0].VirtueName.text = ThePlayer.Kingdom.virtuesForWin[0].virtues.name;
 
         VirtueImages[1].virtues.sprite = ThePlayer.Kingdom.virtuesForWin[1].virtues.virtueIcon;
         VirtueImages[1].NumberOfVirtues.text = "X" + ThePlayer.Kingdom.virtuesForWin[1].NumberofVirtues.ToString();

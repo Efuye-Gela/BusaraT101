@@ -244,7 +244,7 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
         // Reset external managers
         ActionManager.Instance.ResetActionState();// Resets to default state
         TurnManager.Instance.CancelSpecialTurn(); // Optional if you're mid-special-turn
-
+        TurnManager.Instance.ActivePlayer.selectedResources.Clear(); // clear the selected resources for trading 
         // Provide feedback if needed
         DisplayManager.Instance.DeliverError("Trade has been canceled.");
 

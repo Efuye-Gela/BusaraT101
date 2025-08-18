@@ -68,6 +68,8 @@ public class GameManager : Manager<GameManager>, TurnManager.TurnBeginListener, 
     }
     public bool PlayerHasResources()
     {
+        if (TurnManager.Instance.isSpecialCardDrawn)
+            return true;
         if (TurnManager.Instance.ActivePlayer != null && TurnManager.Instance.ActivePlayer.hasFinishedSettingUp)
         {
             return TurnManager.Instance.ActivePlayer.Board.GetOccupiedSlots().Count > 0;
