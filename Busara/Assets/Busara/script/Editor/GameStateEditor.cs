@@ -40,7 +40,7 @@ public class GameStateEditor : EditorWindow
     {
         GUILayout.Space(10);
         GUILayout.Label("Save Current State", EditorStyles.boldLabel);
-        saveName = EditorGUILayout.TextField("Save Name", saveName);
+        saveName = EditorGUILayout.TextField("Save PlayerNameInputField", saveName);
 
         if (GUILayout.Button("Save State"))
         {

@@ -1,7 +1,4 @@
-using NUnit.Framework;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -237,7 +234,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
 
 
 }
-
+[System.Serializable]
 public class VirtueImages
 {
     public Image virtues;

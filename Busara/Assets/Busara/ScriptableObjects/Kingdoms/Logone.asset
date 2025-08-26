@@ -17,7 +17,7 @@ MonoBehaviour:
     the great king Dzitri and his council of wise men. The wealth of this kingdom
     comes mainly from fishing, agriculture and iron work. This kingdom is covered
     in many lagoons.
-  power: {fileID: 0}
+  power: {fileID: 11400000, guid: bc588d7c3b440f746b25b1a6fdf0c81d, type: 2}
   virtuesForWin:
   - NumberofVirtues: 3
     virtues: {fileID: 11400000, guid: 8d6c9227e23c7bd4f9c4d0685973d479, type: 2}

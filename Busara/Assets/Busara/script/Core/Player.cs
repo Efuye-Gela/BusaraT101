@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public bool hasDrawnResource = false;
     public bool hasFinishedSettingUp = false;
     public SetupCard setUpCard;
+    public GameObject VirtueCard;
 
     [Space]
     public Board Board;
