@@ -24,12 +24,10 @@ public class PlayerManager : Manager<PlayerManager>
             }
         }
     }
-
     public Player GetNextPlayer(Player currentPlayer)
     { 
         int currentPlayerIndex = Players.IndexOf(currentPlayer);
         int nextPlayerIndex = (currentPlayerIndex + 1) % Players.Count;
         return Players[nextPlayerIndex];
     }
-
 }

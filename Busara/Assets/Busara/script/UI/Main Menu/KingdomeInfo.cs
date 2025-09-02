@@ -8,15 +8,11 @@ public class KingdomeInfo : MonoBehaviour
 {
     public TMP_Text KingdomeName;
     public TMP_Text KingdomeDescriptions;
-
     public TMP_Text powerName;
     public TMP_Text powerDescription;
-
     public List<KingdomeVirtue> kingdomeVirtues;
     public Kingdom chosenKingdom;
-
     public static Action<Kingdom> OnKingdomeSelect;
-
     public void OnKingdomeTap()
     {
         OnKingdomeSelect?.Invoke(chosenKingdom);

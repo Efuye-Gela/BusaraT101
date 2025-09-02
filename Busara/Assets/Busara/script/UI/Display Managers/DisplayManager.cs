@@ -24,11 +24,9 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     /* Player information area */
     public TMP_Text[] playerName;
     public List<GameObject> UIComponentList;
-
     /*Error massage*/
     public Transform SideBarPanel;
     public TMP_Text sideBarMassage;
-
     /*Instruction Information*/
     public Transform TopPanel;
     public TMP_Text TopMassages;
@@ -37,7 +35,6 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
        // TurnManager.Instance.AddTurnEndListeners(this);
         TurnManager.Instance.AddTurnBeginListeners(this);
     }
-
     /* Display  info */
     public void DeliverMassage(string info)
     {
@@ -133,7 +130,6 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         sideBarMassage.gameObject.SetActive(false);
         SideBarPanel.gameObject.SetActive(false);
     }
-
     /*Instruction*/
     public void DeliverInstructions(string info)
     {
@@ -225,7 +221,6 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
             }
         }
     }
-
     public void OnTurnBegin()
     {
         KingdomInfoDisplay();

@@ -29,22 +29,18 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         SelectionManager.Instance.AddSlotSelectionListener(this);
         SelectionManager.Instance.AddResourceSelectionListener(this);
     }
-
     public void Display()
     {
         CollectionDisplay.SetActive(true);
         DisplayCount();
         ActionManager.Instance.SetAction(ActionManager.ActionState.ResourceSetup);
     }
-
     public void Hide()
     {
         CollectionDisplay.SetActive(false);
         setupCard = null;
         collectionResources.Clear();
     }
-
-
     private void DisplayCount()
     {
         int waterResourcesCount = collectionResources.FindAll(r => r == ResourceType.Water).Count;
@@ -56,7 +52,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         int earthResourcesCount = collectionResources.FindAll(r => r == ResourceType.Earth).Count;
         earthResourceCountText.text = earthResourcesCount.ToString();
     }
-
     public void Onselection(Slot slot)
     {
         if (TurnManager.Instance.ActivePlayer.setUpCard == null || TurnManager.Instance.ActivePlayer.hasFinishedSettingUp == true)
@@ -80,12 +75,10 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             PlaceResource(slot);
         }
     }
-
     public void OnDeselection(Slot slot)
     {
         destinationSlot = null;
     }
-
     public void Onselection(Resource resource)
     {
         // Only allow moving resources that are on the active player's board
@@ -96,7 +89,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             HighlightValidMoveSlots();
         }
     }
-
     public void OnDeselection(Resource resource)
     {
         if (resource == resourceToMove)
@@ -104,7 +96,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             ResetMoveState();
         }
     }
-
     private void HighlightValidMoveSlots()
     {
         UnhighlightAllSlots();
@@ -131,7 +122,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             }
         }
     }
-
     private void UnhighlightAllSlots()
     {
         foreach (Slot slot in TurnManager.Instance.ActivePlayer.Board.Slots)
@@ -139,7 +129,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             slot.UnHighlight();
         }
     }
-
     private void ResetMoveState()
     {
         isMovingResource = false;
@@ -147,7 +136,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         UnhighlightAllSlots();
         availableMoveSlots.Clear();
     }
-
     private bool CanBePlaced(Slot slot)
     {
         Board playerBoard = TurnManager.Instance.ActivePlayer.Board;
@@ -175,7 +163,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         }
         return true;
     }
-
     private void PlaceResource(Slot slot)
     {
         if (collectionResources.Count > 0)
@@ -205,7 +192,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
         }
     }
-
     private void CheckForCompletion()
     {
         if (PlayerManager.Instance.Players.All(p => p.hasFinishedSettingUp))
@@ -219,7 +205,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
             ActionManager.Instance.SetAction(ActionManager.ActionState.ResourceSetup);
         }
     }
-
     public void SetResourceTypeWater()
     {
         selectedResourceType.resourceType = ResourceType.Water;
@@ -236,7 +221,6 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
     {
         selectedResourceType.resourceType = ResourceType.Earth;
     }
-
     public void OnTurnBegin()
     {
         if (TurnManager.Instance.ActivePlayer.setUpCard != null && !TurnManager.Instance.ActivePlayer.hasFinishedSettingUp)
