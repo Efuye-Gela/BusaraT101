@@ -85,6 +85,17 @@ public class MainMenu : Manager<MainMenu>
             Debug.Log("Need at least 2 players to start the game");
             return;
         }
+        if(Info.Count > 4)
+        {
+            Debug.Log("Can not have more than 4 players");
+            return;
+        }
+        if (Info.Count == 3)
+        {
+            Debug.Log("Can not have more than Only Even numbers");
+            return;
+        }
+
         foreach (Infoforplayer info in Info)
         {
             if (info.kingdomChosen == null)
@@ -97,6 +108,7 @@ public class MainMenu : Manager<MainMenu>
         {
            playerInfoSB.Players.Add(new PlayerData(Info[i].PlayerID, Info[i].PlayerName.text, Info[i].kingdomChosen));   
         }
+        BusaraSceneManager.Instance.LoadScene(1);
     }
 
     public void SpawnPlayerRepresentation()
@@ -109,6 +121,9 @@ public class MainMenu : Manager<MainMenu>
         Infoforplayer representation = Instantiate(PlayerRepresentationEntry, SpawnRepresentation);
         representation.PlayerID = Info.Count;
         Info.Add(representation);
+        Infoforplayer representation1 = Instantiate(PlayerRepresentationEntry, SpawnRepresentation);
+        representation1.PlayerID = Info.Count;
+        Info.Add(representation1);
     }
     public void SpawnKingdome()
     {

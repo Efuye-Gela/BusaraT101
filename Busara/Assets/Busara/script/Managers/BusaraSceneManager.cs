@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BusaraSceneManager : MonoBehaviour
+public class BusaraSceneManager : Manager<BusaraSceneManager>
 {
     public void LoadScene(int index)
     {
