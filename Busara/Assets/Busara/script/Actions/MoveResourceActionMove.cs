@@ -20,6 +20,8 @@ public class MoveResourceActionMove : MonoBehaviour,SelectionManager.SlotSelecti
 
     private void SlotClicked()
     {
+        if (!ActionManager.Instance.CanPerformAction() || tobeMovedResource == null)
+            return;
         if (targetSlot != null) 
         {
 

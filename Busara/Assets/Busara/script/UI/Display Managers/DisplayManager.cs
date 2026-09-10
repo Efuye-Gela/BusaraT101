@@ -27,6 +27,7 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     /* Player information area */
     public TMP_Text[] playerName;
     public List<GameObject> UIComponentList;
+    public GameObject PlayerInfoPanel;
 
     /*Error massage*/
     public Transform SideBarPanel;
@@ -39,6 +40,15 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     {
        // TurnManager.Instance.AddTurnEndListeners(this);
         TurnManager.Instance.AddTurnBeginListeners(this);
+        if (PowerManager.Instance != null)
+            PowerManager.Instance.OnStateChanged += KingdomInfoDisplay;
+    }
+    private void OnDestroy()
+    {
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.RemoveTurnBeginListener(this);
+        if (PowerManager.Instance != null)
+            PowerManager.Instance.OnStateChanged -= KingdomInfoDisplay;
     }
 
     /* Display  info */
@@ -185,6 +195,29 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
     public void KingdomInfoDisplay()
     {
         Player ThePlayer = TurnManager.Instance.ActivePlayer;
+        if (ThePlayer == null || ThePlayer.Kingdom == null)
+            return;
+        Player viewer = PowerManager.Instance != null ? PowerManager.Instance.Viewer : ThePlayer;
+        bool visible = ThePlayer.CanSeeKingdom(viewer);
+        if (PowerName != null)
+            PowerName.text = visible ? ThePlayer.Kingdom.power.powerName : "Hidden power";
+        if (PowerDescription != null)
+            PowerDescription.text = visible ? ThePlayer.Kingdom.power.powerDescription : "";
+        if (VirtueImages != null)
+            foreach (VirtueImages image in VirtueImages)
+            {
+                if (image.virtues != null) image.virtues.gameObject.SetActive(visible);
+                if (image.NumberOfVirtues != null) image.NumberOfVirtues.gameObject.SetActive(visible);
+                if (image.VirtueName != null) image.VirtueName.gameObject.SetActive(visible);
+                if (image.resourceOne != null) image.resourceOne.gameObject.SetActive(visible);
+                if (image.resourceTwo != null) image.resourceTwo.gameObject.SetActive(visible);
+            }
+        if (!visible)
+        {
+            kingdomName.text = "Hidden kingdom";
+            kingdomDescription.text = "";
+            return;
+        }
         kingdomName.text = ThePlayer.Kingdom.kingdomName;
         kingdomDescription.text = ThePlayer.Kingdom.kingdomStory;
         virtueAssigner();
@@ -214,6 +247,41 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
 
     }
     /*UI component Display*/
+    public bool ShowPlayerInfo()
+    {
+        if (PlayerInfoPanel == null || PlayerInfoPanel.GetComponentInChildren<PlayerInfoCard>(true) == null)
+        {
+            Debug.LogError("Assign the popup containing PlayerInfoCards to DisplayManager.PlayerInfoPanel.");
+            return false;
+        }
+        Canvas canvas = PlayerInfoPanel.GetComponentInParent<Canvas>();
+        if (canvas != null && PlayerInfoPanel.transform != canvas.transform)
+        {
+            Transform layer = PlayerInfoPanel.transform;
+            while (layer.parent != canvas.transform)
+                layer = layer.parent;
+            layer.SetAsLastSibling();
+        }
+        PlayerInfoPanel.transform.SetAsLastSibling();
+        PlayerInfoPanel.SetActive(true);
+        return true;
+    }
+
+    public void ClosePlayerInfo()
+    {
+        if (HardWinterDisaster.Active != null)
+        {
+            DeliverError("Finish choosing each player's lost virtue before leaving player info.");
+            return;
+        }
+        if (PlayerInfoPanel == null)
+        {
+            Debug.LogError("Assign DisplayManager.PlayerInfoPanel before closing player info.");
+            return;
+        }
+        PlayerInfoPanel.SetActive(false);
+    }
+
     public void UIToggleDisplayer(GameObject gameObject)
     {
         foreach(GameObject UI in UIComponentList)

@@ -206,7 +206,7 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         }
     }
 
-    private void CheckForCompletion()
+    public void CheckForCompletion()
     {
         if (PlayerManager.Instance.Players.All(p => p.hasFinishedSettingUp))
         {

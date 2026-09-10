@@ -45,6 +45,11 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
             ResourceDisaster.OnResourceDisaster -= ResourceDisaster_OnResourceDisaster;
             CorruptionDisaster.OnCorruptionDisaster -= CorruptionDisaster_OnCorruptionDisaster;
     }
+    private void OnDestroy()
+    {
+        if (SelectionManager.Instance != null)
+            SelectionManager.Instance.RemoveResourceSelectionListener(this);
+    }
     private void Start()
     {
         SelectionManager.Instance.AddResourceSelectionListener(this);
@@ -59,6 +64,16 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
     }
     public void OnclickDestroy()
     {
+        if (HardWinterDisaster.Active != null)
+        {
+            Debug.LogWarning("Choose a virtue, not a resource, for the hard winter disaster.");
+            return;
+        }
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+        {
+            Debug.LogWarning("Finish the pending choice before discarding a resource.");
+            return;
+        }
         if (!TurnManager.Instance.ActivePlayer.Board.Slots.Contains(slot)) return;
 
 
@@ -101,7 +116,7 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
 
     public void Onselection(Resource resource)
     {
-        if (TurnManager.Instance.ActivePlayer.selectedResources.Contains(resource))
+        if (resource == this && TurnManager.Instance.ActivePlayer.selectedResources.Contains(resource))
             resource.Highlight();
     }
 

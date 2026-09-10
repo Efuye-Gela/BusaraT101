@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="360" viewBox="0 0 1120 360" role="img" aria-labelledby="title desc">
+  <title id="title">A power's preparation, payment and resolution pipeline</title>
+  <desc id="desc">Prepare choices, validate ownership, commit payment and reveal, resolve reactions, then execute and complete. Cancelling before commit costs nothing. King's Necklace can cancel the effect after commit, but does not refund the payment. Both outcome paths complete the existing action lifecycle.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#475569"/></marker>
+  </defs>
+  <rect width="1120" height="360" rx="16" fill="#f8fafc"/>
+  <g font-family="Segoe UI, Arial, sans-serif" fill="#0f172a">
+    <text x="30" y="40" font-size="24" font-weight="700">One transaction, two cancellation boundaries</text>
+    <text x="30" y="67" font-size="15">The bot and the human UI submit the same choices to PowerManager.</text>
+    <g stroke="#475569" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M212 143 H238"/><path d="M427 143 H453"/><path d="M642 143 H668"/><path d="M857 143 H883"/>
+    </g>
+    <g stroke-width="2">
+      <rect x="30" y="100" width="182" height="88" rx="10" fill="#dbeafe" stroke="#1d4ed8"/>
+      <rect x="245" y="100" width="182" height="88" rx="10" fill="#dbeafe" stroke="#1d4ed8"/>
+      <rect x="460" y="100" width="182" height="88" rx="10" fill="#fef3c7" stroke="#b45309"/>
+      <rect x="675" y="100" width="182" height="88" rx="10" fill="#ede9fe" stroke="#6d28d9"/>
+      <rect x="890" y="100" width="200" height="88" rx="10" fill="#dcfce7" stroke="#15803d"/>
+    </g>
+    <g text-anchor="middle">
+      <g font-size="18" font-weight="700">
+        <text x="121" y="132">1. Prepare</text><text x="336" y="132">2. Validate</text>
+        <text x="551" y="132">3. Commit</text><text x="766" y="132">4. Reactions</text>
+        <text x="990" y="132">5. Resolve</text>
+      </g>
+      <g font-size="14">
+        <text x="121" y="157">Payment, target, effect</text><text x="121" y="176">choices are tentative</text>
+        <text x="336" y="157">Exact owned tokens</text><text x="336" y="176">and legal configuration</text>
+        <text x="551" y="157">Remove payment</text><text x="551" y="176">Reveal the kingdom</text>
+        <text x="766" y="157">Offer legal reactors</text><text x="766" y="176">including Necklace</text>
+        <text x="990" y="157">Execute effect if allowed</text><text x="990" y="176">Then call completion</text>
+      </g>
+    </g>
+    <path d="M336 190 V230 H121" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="30" y="246" width="397" height="66" rx="10" fill="#eff6ff" stroke="#1d4ed8"/>
+    <text x="48" y="272" font-size="17" font-weight="700">Cancel preparation: no payment or reveal</text>
+    <text x="48" y="296" font-size="14">Return to the existing cancellation callback.</text>
+    <path d="M766 190 V232" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="460" y="246" width="630" height="66" rx="10" fill="#fff7ed" stroke="#b45309"/>
+    <text x="478" y="272" font-size="17" font-weight="700">Cancel a committed effect: keep its activation cost</text>
+    <text x="478" y="296" font-size="14">Skip Execute, but still invoke completion; do not end the turn twice.</text>
+    <text x="30" y="341" font-size="13" fill="#475569">Workflow graphic, not UML. Reaction ordering and modal guards are enforced by the managers.</text>
+  </g>
+</svg>

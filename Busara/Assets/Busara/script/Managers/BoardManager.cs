@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ public class BoardManager : Manager<BoardManager>
 
     private void Start()
     {
+        slots.Clear();
         foreach (var board in gameBoards)
         {
             foreach (var slot in board.Slots)
@@ -152,7 +154,7 @@ public class BoardManager : Manager<BoardManager>
         }
 
         string state = PlayerPrefs.GetString(saveKey);
-        if (state.Length != 64)  // Validate state length
+        if (state.Length != gameBoards.Sum(board => board.Slots.Count))
         {
             Debug.LogError("Invalid save state length!");
             return;
@@ -236,7 +238,7 @@ public class BoardManager : Manager<BoardManager>
         }
 
         string state = PlayerPrefs.GetString("BoardState");
-        if (state.Length != 64)  // Validate state length
+        if (state.Length != gameBoards.Sum(board => board.Slots.Count))
         {
             Debug.LogError("Invalid save state length!");
             return;

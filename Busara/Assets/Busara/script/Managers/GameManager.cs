@@ -28,11 +28,25 @@ public class GameManager : Manager<GameManager>, TurnManager.TurnBeginListener, 
     {
         if (TurnManager.Instance != null)
             ActivePlayer = TurnManager.Instance.ActivePlayer;
-        if (ActivePlayer.Kingdom == null || ActivePlayer.Virtues == null)
+        var candidates = new List<Player>(PlayerManager.Instance.Players);
+        candidates.Remove(ActivePlayer);
+        candidates.Insert(0, ActivePlayer);
+        foreach (Player player in candidates)
         {
-            Debug.Log("No Kingdom assigned or Virtues list is empty.");
+            if (!HasWon(player))
+                continue;
+            ActivePlayer = player;
+            Debug.Log(player.Name + " has met the win conditions!");
+            WinScreen.SetActive(true);
             return;
         }
+    }
+
+    private bool HasWon(Player player)
+    {
+        if (player == null || player.Kingdom == null || player.Virtues == null ||
+            player.Kingdom.virtuesForWin == null || player.Kingdom.virtuesForWin.Length == 0)
+            return false;
 
         Dictionary<VirtueType, int> playerVirtueCounts = new Dictionary<VirtueType, int>();
 
@@ -41,7 +55,7 @@ public class GameManager : Manager<GameManager>, TurnManager.TurnBeginListener, 
         {
             playerVirtueCounts[type] = 0;
         }
-        foreach (Virtue virtue in ActivePlayer.Virtues)
+        foreach (Virtue virtue in player.Virtues)
         {
             if (virtue != null)
             {
@@ -49,22 +63,21 @@ public class GameManager : Manager<GameManager>, TurnManager.TurnBeginListener, 
             }
         }
 
-        foreach (Kingdom.VirtuesForCost requirement in ActivePlayer.Kingdom.virtuesForWin)
+        foreach (Kingdom.VirtuesForCost requirement in player.Kingdom.virtuesForWin)
         {
             if (requirement == null || requirement.virtues == null)
-                continue;
+                return false;
 
             VirtueType requiredType = requirement.virtues.type;
             int requiredCount = requirement.NumberofVirtues;
 
             if (!playerVirtueCounts.ContainsKey(requiredType) || playerVirtueCounts[requiredType] < requiredCount)
             {
-                return;
+                return false;
             }
         }
 
-        Debug.Log(ActivePlayer.Name + " has met the win conditions!");
-        WinScreen.SetActive(true);
+        return true;
     }
     public bool PlayerHasResources()
     {

@@ -29,7 +29,8 @@ public class ResourceDisaster : DisasterEffect
     {
         DisplayManager.Instance.DeliverInstructions("Resource shortage! Players must discard one resource!");
         yield return new WaitForSeconds(0.95f);
-        TurnManager.Instance.OnSpecialTurn(false, affectedPlayers);
+        TurnManager.Instance.OnSpecialTurn(false, affectedPlayers, onDisasterComplete);
+        discardsRequired.Clear();
         foreach (Player p in affectedPlayers)
         {
             discardsRequired[p] = 1;

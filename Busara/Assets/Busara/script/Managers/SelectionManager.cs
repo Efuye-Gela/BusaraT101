@@ -181,6 +181,8 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
         {
             DeselectVirtue(virtue);
         }
+        currentPlayer.selectedPlayer = null;
+        OnDeselectAll?.Invoke();
         UnhighlightAllPlayerBoards();
     }
 
@@ -216,6 +218,8 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
     // Observer pattern using interface from below 
     public void ToggleSelect(Resource resource)
     {
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+            return;
         //need a check if the what action is the player taking 
         if (!currentPlayer.selectedResources.Contains(resource))
         {
@@ -240,6 +244,8 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
 
     public void ToggleSelect(Slot slot)
     {
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+            return;
 
         if (!currentPlayer.selectedSlots.Contains(slot))
         {
@@ -254,4 +260,3 @@ public class SelectionManager : Manager<SelectionManager>, TurnManager.TurnEndLi
     }
 
 }
-

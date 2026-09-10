@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1460eebbc7ea6e849afc721be54781b9, type: 3}
+  m_Name: Kavango Keendobe
+  m_EditorClassIdentifier:
+  kingdomName: Kavango Keendobe
+  kingdomStory: This northern Namibian monarchy in the Omusati Region unites
+    seven tribes under the elder Mukwanangobe. It values authority and business
+    management, and uses Amarula trees to make cosmetics.
+  power: {fileID: 11400000, guid: bc020000000000000000000000000005, type: 2}
+  virtuesForWin:
+  - NumberofVirtues: 2
+    virtues: {fileID: 11400000, guid: 275b91d0a3e6ed64ab870dcc566413d9, type: 2}
+  - NumberofVirtues: 3
+    virtues: {fileID: 11400000, guid: 8d6c9227e23c7bd4f9c4d0685973d479, type: 2}
+  - NumberofVirtues: 4
+    virtues: {fileID: 11400000, guid: 31e463a29862684408b2ffb798e00760, type: 2}

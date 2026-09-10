@@ -11,6 +11,7 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
 
     private Resource toBePlacedResource;
     private Resource drawnResource;
+    public Resource PendingResource => drawnResource;
     private Slot destinationSlot;
     
 
@@ -60,15 +61,17 @@ public class DrawResourceActionMove : MonoBehaviour,SelectionManager.ResourceSel
     }
     private void ResourcePlaced()
     {
-        if (toBePlacedResource != null)
+        if (toBePlacedResource != null && destinationSlot != null && !destinationSlot.isOccupied)
         {
             if (TurnManager.Instance.ActivePlayer == destinationSlot.board.player)
             {
                 Debug.Log("Resource Placed");
                 Board.PlaceResource(toBePlacedResource, destinationSlot);
+                toBePlacedResource = null;
+                drawnResource = null;
+                destinationSlot = null;
                 TurnManager.Instance.ActivePlayer.hasDrawnResource = false;
                 TurnManager.Instance.CompleteTurn(TurnManager.Instance.ActivePlayer);
-                drawnResource = null;
             }
             
         }

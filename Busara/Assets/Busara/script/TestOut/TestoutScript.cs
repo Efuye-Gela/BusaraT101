@@ -8,6 +8,8 @@ public class TestOutScript : MonoBehaviour
 
     void Update()
     {
+        if (PlayerManager.Instance != null && PlayerManager.Instance.IsAwaitingSetup)
+            return;
         if (Input.GetKeyDown(KeyCode.K))
         {
             TestManager.Instance.TestSkipSetup();

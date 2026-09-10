@@ -20,7 +20,16 @@ public class DisasterManager : Manager<DisasterManager>
         disasterPlayer = TurnManager.Instance.ActivePlayer;
 
         Debug.Log($"Disaster Triggered: {currentDisaster.name}");
+        disasterPlayer.hasDrawnResource = false;
+        if (PowerManager.Instance != null)
+            PowerManager.Instance.OfferProtection(disasterPlayer, $"{disasterPlayer.Name} drew a disaster card.",
+                EndDisaster, ExecuteDisaster, isAttack: false);
+        else
+            ExecuteDisaster();
+    }
 
+    private void ExecuteDisaster()
+    {
         List<Player> affectedPlayers = currentDisaster.GetAffectedPlayers();
 
         OnDisasterStart?.Invoke(affectedPlayers);
@@ -33,10 +42,9 @@ public class DisasterManager : Manager<DisasterManager>
         // Fire the end event to signal that the disaster is over
         OnDisasterEnd?.Invoke();
         // Complete the turn for the player who drew the disaster card
-        TurnManager.Instance.CompleteTurn(disasterPlayer);
-
+        Player player = disasterPlayer;
         currentDisaster = null;
         disasterPlayer = null;
-
+        TurnManager.Instance.CompleteTurn(player);
     }
 }

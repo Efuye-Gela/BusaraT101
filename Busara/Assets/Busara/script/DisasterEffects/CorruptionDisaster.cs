@@ -40,7 +40,7 @@ public class CorruptionDisaster : DisasterEffect
             discardsRequired[p] = Mathf.FloorToInt(resourceCount / 2f);
         }
         OnCorruptionDisaster?.Invoke(discardsRequired);
-        TurnManager.Instance.OnSpecialTurn(false, affectedPlayers);
+        TurnManager.Instance.OnSpecialTurn(false, affectedPlayers, onDisasterComplete);
     }
 
 }

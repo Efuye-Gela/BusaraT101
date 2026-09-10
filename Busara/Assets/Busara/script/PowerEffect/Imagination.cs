@@ -4,13 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Power/Imagination")]
 public class Imagination : Power
 {
-    public Imagination(string powerName, string powerDescription) : base(powerName, powerDescription)
+    public override void Execute(PowerUse use)
     {
-
-    }
-    public override void Execute()
-    {
-        Debug.Log("Imagination power is valid.");
+        use.Target.Virtues.Remove(use.ChosenVirtue);
+        use.Caster.Virtues.Add(use.ChosenVirtue);
+        use.Complete();
     }
 }
     

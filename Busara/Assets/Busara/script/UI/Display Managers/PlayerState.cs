@@ -24,6 +24,8 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
             ForgeManager.Instance.RegisterForgeListener(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.AddTurnBeginListeners(this);
+        if (PowerManager.Instance != null)
+            PowerManager.Instance.OnStateChanged += GetPlayerVirtueCount;
     }
     private void OnDisable()
     {
@@ -31,6 +33,8 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
             ForgeManager.Instance.UnregisterForgeListener(this);
         if (TurnManager.Instance != null)
             TurnManager.Instance.RemoveTurnBeginListener(this);
+        if (PowerManager.Instance != null)
+            PowerManager.Instance.OnStateChanged -= GetPlayerVirtueCount;
     }
 
     private void Start()
@@ -83,7 +87,8 @@ public class PlayerState : SerializedMonoBehaviour, ForgeManager.IForgeListener,
             if (virtueUI != null && virtueUI.virtueType != null)
             {
                 VirtueType virtueType = virtueUI.virtueType.type;
-                virtueUI.NumberOfvirtues.text = virtueCounts[virtueType].ToString();    
+                Player viewer = PowerManager.Instance != null ? PowerManager.Instance.Viewer : TurnManager.Instance.ActivePlayer;
+                virtueUI.NumberOfvirtues.text = player.CanSeeVirtues(viewer) ? virtueCounts[virtueType].ToString() : "?";
             }
         }
     }

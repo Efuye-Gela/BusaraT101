@@ -15,4 +15,6 @@ MonoBehaviour:
   powerName: Imagination
   powerDescription: "COST:\r\n- Discard 3 Virtues. \r\nTake one Virtue of your choice
     from \r\nanother player of your choice."
-  virtueCost: 2
+  virtueCost: 3
+  timing: 0
+  onlyWhileHidden: 0

@@ -3,16 +3,16 @@ using System.Security.Principal;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Power/TransformPower")]//how should I use this 
+[CreateAssetMenu(menuName = "Power/TransformPower")]
 public class TransformPower : Power
 {
 
-    public TransformPower(string powerName, string powerDescription) : base(powerName, powerDescription)
+    public override void Execute(PowerUse use)
     {
-        
-    }
-    public override void Execute()
-    {
-        //Implement 
+        foreach (Virtue virtue in use.Exchange)
+            use.Caster.Virtues.Remove(virtue);
+        for (int i = 0; i < use.Exchange.Count; i++)
+            use.Caster.Virtues.Add(use.ChosenVirtue);
+        use.Complete();
     }
 }

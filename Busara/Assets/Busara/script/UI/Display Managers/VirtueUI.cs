@@ -15,6 +15,57 @@ public class VirtueUI : MonoBehaviour
     public TMP_Text VirtueName;
     public TMP_Text NumberOfvirtues;
     public GameObject IncDecButtons;
+    public Button DisasterDiscardButton { get; private set; }
+
+    public void SetDisasterDiscard(bool visible)
+    {
+        if (visible && DisasterDiscardButton == null)
+        {
+            var buttonObject = new GameObject("Discard Virtue", typeof(RectTransform), typeof(Image), typeof(Button),
+                typeof(LayoutElement));
+            buttonObject.transform.SetParent(transform, false);
+            buttonObject.GetComponent<LayoutElement>().ignoreLayout = true;
+            var rect = buttonObject.GetComponent<RectTransform>();
+            rect.anchorMin = rect.anchorMax = new Vector2(1f, 0.5f);
+            rect.pivot = new Vector2(1f, 0.5f);
+            rect.anchoredPosition = Vector2.zero;
+            rect.sizeDelta = new Vector2(30f, 30f);
+            Image background = buttonObject.GetComponent<Image>();
+            background.color = new Color(0.65f, 0.12f, 0.12f);
+            DisasterDiscardButton = buttonObject.GetComponent<Button>();
+            DisasterDiscardButton.targetGraphic = background;
+
+            var labelObject = new GameObject("X", typeof(RectTransform), typeof(TextMeshProUGUI));
+            labelObject.transform.SetParent(buttonObject.transform, false);
+            var label = labelObject.GetComponent<TextMeshProUGUI>();
+            label.font = NumberOfvirtues.font;
+            label.text = "X";
+            label.fontSize = 22;
+            label.alignment = TextAlignmentOptions.Center;
+            label.color = Color.white;
+            label.raycastTarget = false;
+            label.rectTransform.anchorMin = Vector2.zero;
+            label.rectTransform.anchorMax = Vector2.one;
+            label.rectTransform.offsetMin = label.rectTransform.offsetMax = Vector2.zero;
+            DisasterDiscardButton.onClick.AddListener(DiscardForDisaster);
+        }
+        if (DisasterDiscardButton != null)
+        {
+            DisasterDiscardButton.interactable = visible;
+            DisasterDiscardButton.gameObject.SetActive(visible);
+        }
+    }
+
+    public void DiscardForDisaster()
+    {
+        if (HardWinterDisaster.Active == null)
+        {
+            Debug.LogWarning("There is no virtue-loss disaster awaiting a discard.");
+            return;
+        }
+        HardWinterDisaster.Active.TryDiscard(currentPlayer, virtueType);
+    }
+
     public void SetResourceCombo()
     {
         if(ResourcePanel != null && ResourceOneImage != null && ResourceTwoImage != null)

@@ -14,6 +14,7 @@ public class ActionManager : Manager<ActionManager>, TurnManager.TurnEndListener
         ResourceSetup
     }
     [SerializeField]private ActionState _currentActionState = ActionState.None;
+    public ActionState CurrentState => _currentActionState;
     private void OnEnable()
     {
         if (TurnManager.Instance != null)
@@ -26,6 +27,10 @@ public class ActionManager : Manager<ActionManager>, TurnManager.TurnEndListener
     }
     public bool CanPerformAction()
     {
+        if (HardWinterDisaster.Active != null)
+            return false;
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+            return false;
         if(_currentActionState == ActionState.None)
         {
             return true;

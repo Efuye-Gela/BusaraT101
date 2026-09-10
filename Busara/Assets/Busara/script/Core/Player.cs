@@ -6,7 +6,8 @@ using System;
 public class Player : MonoBehaviour
 {
     public string Name;
-    public List<Virtue> Virtues;
+    public bool IsBotControlled;
+    public List<Virtue> Virtues = new List<Virtue>();
     public int PlayerNumber;
 
     [Space]
@@ -24,4 +25,18 @@ public class Player : MonoBehaviour
     public Board Board;
     public Kingdom Kingdom;
     public PlayerState state;
+    public bool kingdomRevealed;
+    public bool virtuesHidden;
+    public readonly HashSet<Kingdom> knownKingdoms = new HashSet<Kingdom>();
+
+    public bool CanSeeVirtues(Player viewer)
+    {
+        return !virtuesHidden || viewer == this;
+    }
+
+    public bool CanSeeKingdom(Player viewer)
+    {
+        return kingdomRevealed || viewer == this ||
+            (viewer != null && viewer.knownKingdoms.Contains(Kingdom));
+    }
 }

@@ -15,3 +15,6 @@ MonoBehaviour:
   powerName: Identity Surfing
   powerDescription: "COST:\r\n- Discard 3 Virtues. \r\nExchange your Kingdom Card
     with \r\nanother player."
+  virtueCost: 3
+  timing: 0
+  onlyWhileHidden: 0

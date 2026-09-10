@@ -17,3 +17,5 @@ MonoBehaviour:
 
     your kingdom.'
   virtueCost: 3
+  timing: 0
+  onlyWhileHidden: 0

@@ -100,25 +100,45 @@ public class TurnManager : Manager<TurnManager>
     public bool returnToFirstPlayer = false;
     private List<Player> specialActionList;
     Player lastSequentialPlayer = null;
+    private Action specialCompletion;
+    public bool TurnsStarted { get; private set; }
 
     
 
     void Start()
     {
-        StartTurns();
+        if (PlayerManager.Instance == null || !PlayerManager.Instance.IsAwaitingSetup)
+            StartTurns();
     }
 
     public void StartTurns()
     {
+        if (PlayerManager.Instance != null && PlayerManager.Instance.IsAwaitingSetup)
+        {
+            Debug.LogWarning("Finish player setup before starting the game.");
+            return;
+        }
+        if (TurnsStarted)
+            return;
+        if (firstPlayer == null || firstPlayer.Board == null ||
+            PlayerManager.Instance == null || !PlayerManager.Instance.Players.Contains(firstPlayer))
+        {
+            Debug.LogError("Choose a participating first player with a board before starting turns.");
+            return;
+        }
+        TurnsStarted = true;
         BeginTurn(firstPlayer);
     }
 
-    void BeginTurn(Player player)
+    void BeginTurn(Player player, bool newNormalTurn = true)
     {
 
         activePlayer = player;
         Debug.Log("Current Turn : " + player.name + " Board:" + player.Board.name);
         TriggerTurnBeginListeners(); 
+        if (newNormalTurn && activePlayer == player && !isSpecialCardDrawn &&
+            player.hasFinishedSettingUp && PowerManager.Instance != null)
+            PowerManager.Instance.BeginNormalTurn(player);
 
     }
     Player GetNextPlayer()
@@ -139,61 +159,51 @@ public class TurnManager : Manager<TurnManager>
 
 
     // Triggered when a special card is drawn
-    public void OnSpecialTurn(bool _returnToFirstPlayer, List<Player> players)
+    public void OnSpecialTurn(bool _returnToFirstPlayer, List<Player> players, Action onComplete = null)
     {
+        if (players == null || players.Count == 0 || isSpecialCardDrawn)
+        {
+            Debug.LogError("A special turn needs participants and cannot overlap another special turn.");
+            return;
+        }
         lastSequentialPlayer = activePlayer;
         returnToFirstPlayer = _returnToFirstPlayer;
         Debug.Log("Special Action to be Performed.");
         isSpecialCardDrawn = true;
-        specialActionList = players;
+        specialActionList = new List<Player>(players);
+        specialCompletion = onComplete;
         Player nextPlayer = players[0];
         EndTurn(activePlayer);
-        BeginTurn(nextPlayer);
+        BeginTurn(nextPlayer, false);
         Debug.Log("Special Turn for " + nextPlayer.name);
     }
     public void CompleteTurn(Player player)
     {
         if (player != activePlayer)
             return;
-
-/*        if (isSpecialCardDrawn)
+        if (isSpecialCardDrawn)
         {
-            Player nextSpecialPlayer = null;
-            Debug.Log("Special Turn Ended for " + player.name);
-            if (specialActionList.Count > 1)
-            {
-                specialActionList.Remove(player);
-                nextSpecialPlayer = specialActionList[0];
-                EndTurn(activePlayer);
-                BeginTurn(nextSpecialPlayer);
-            }
-            else if (specialActionList.Count == 1)
-            {
-                specialActionList.Remove(player);
-
-                Debug.Log("Last Special Turn Ended");
-                isSpecialCardDrawn = false;
-                EndTurn(player);
-                if (returnToFirstPlayer)
-                {
-                    returnToFirstPlayer = false;
-                    BeginTurn(lastSequentialPlayer);
-                }
-                else
-                {
-                    activePlayer = lastSequentialPlayer;
-                    Player nextNormalPlayer = GetNextPlayer();
-                    BeginTurn(nextNormalPlayer);
-                }
-
-                // Execute the passed action if provided
-                onSpecialActionComplete?.Invoke();
-            }
+            CompleteSpecialTurn(player);
             return;
-        }*/
+        }
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+        {
+            Debug.LogWarning("Finish the pending power or reaction before ending the turn.");
+            return;
+        }
+        if (player.hasFinishedSettingUp && PowerManager.Instance != null)
+            PowerManager.Instance.CompleteAction(player, () => FinishNormalTurn(player));
+        else
+            FinishNormalTurn(player);
+    }
 
+    private void FinishNormalTurn(Player player)
+    {
         Player nextPlayer = GetNextPlayer();
+        if (PowerManager.Instance != null)
+            nextPlayer = PowerManager.Instance.NextPlayer(nextPlayer);
         TriggerTurnEndListeners();
+        player.hasDrawnResource = false;
         EndTurn(activePlayer);
         Debug.Log("Turn Ended");
         BeginTurn(nextPlayer);
@@ -203,41 +213,40 @@ public class TurnManager : Manager<TurnManager>
     {
         if (player != activePlayer)
             return;
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+        {
+            Debug.LogWarning("Finish the pending choice before completing a special turn.");
+            return;
+        }
 
         if (isSpecialCardDrawn)
         {
-            Player nextSpecialPlayer = null;
-            Debug.Log("Special Turn Ended for " + player.name);
-            if (specialActionList.Count > 1)
+            if (HardWinterDisaster.Active != null && HardWinterDisaster.Active.RequiresDiscard(player))
             {
-                specialActionList.Remove(player);
-                nextSpecialPlayer = specialActionList[0];
-                EndTurn(activePlayer);
-                BeginTurn(nextSpecialPlayer);
+                Debug.LogWarning("Choose a virtue to discard before completing this special turn.");
+                return;
             }
-            else if (specialActionList.Count == 1)
+            SelectionManager.Instance.OnTurnEnd();
+            specialActionList.Remove(player);
+            EndTurn(player);
+            if (specialActionList.Count > 0)
             {
-                specialActionList.Remove(player);
-                Debug.Log("Last Special Turn Ended");
-
-                isSpecialCardDrawn = false;
-                TriggerTurnEndListeners();
-                EndTurn(player);
-
-                if (returnToFirstPlayer)
-                {
-                    returnToFirstPlayer = false;
-                    BeginTurn(lastSequentialPlayer);
-                }
-                else
-                {
-                    Player nextNormalPlayer = PlayerManager.Instance.GetNextPlayer(lastSequentialPlayer);
-                    BeginTurn(nextNormalPlayer);
-                }
-
-                TriggerSpecialTurnEndListeners();
-                onSpecialActionComplete?.Invoke();
+                BeginTurn(specialActionList[0], false);
+                return;
             }
+            bool resume = returnToFirstPlayer;
+            Action callback = onSpecialActionComplete ?? specialCompletion;
+            isSpecialCardDrawn = false;
+            returnToFirstPlayer = false;
+            specialCompletion = null;
+            activePlayer = lastSequentialPlayer;
+            TriggerSpecialTurnEndListeners();
+            if (resume)
+                BeginTurn(lastSequentialPlayer, false);
+            if (callback != null)
+                callback();
+            else if (!resume)
+                CompleteTurn(lastSequentialPlayer);
             return;
         }
 
@@ -261,6 +270,7 @@ public class TurnManager : Manager<TurnManager>
         Debug.Log($"{count} turn(s) skipped. Next turn: {playerToStartAfterSkip.name}");
 
         // End current turn
+        TriggerTurnEndListeners();
         EndTurn(activePlayer);
 
         // Start new turn after skipping
@@ -288,7 +298,7 @@ public class TurnManager : Manager<TurnManager>
 
         // Resume normal play to the player who would have gone next
         Player nextNormalPlayer = lastSequentialPlayer;
-        BeginTurn(nextNormalPlayer);
+        BeginTurn(nextNormalPlayer, false);
     }
 
 

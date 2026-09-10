@@ -18,3 +18,5 @@ MonoBehaviour:
     \r\nchoosing an action for them. You \r\nmay not use this power to force \r\nthem
     to trade."
   virtueCost: 3
+  timing: 1
+  onlyWhileHidden: 0

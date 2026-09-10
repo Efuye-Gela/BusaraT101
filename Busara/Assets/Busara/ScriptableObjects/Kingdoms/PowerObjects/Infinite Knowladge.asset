@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f66296c0c9cd2e144bb5307301a06fae, type: 3}
-  m_Name: Infinite Knowladge
+  m_Name: Infinite Knowledge
   m_EditorClassIdentifier: 
-  powerName: INFINITE KNOWLEDGE
+  powerName: Infinite Knowledge
   powerDescription: "COST:\r\n- Discard 1 Virtue.\r\nAnother player of your choice
     must \r\nshow you their Kingdom Card."
   virtueCost: 1
+  timing: 0
+  onlyWhileHidden: 0

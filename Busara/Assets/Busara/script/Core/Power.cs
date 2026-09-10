@@ -1,5 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum PowerTiming
+{
+    OwnTurn,
+    TurnStart,
+    OtherTurn,
+    PowerReaction,
+    ThreatReaction
+}
 
 public abstract class Power : ScriptableObject
 {
@@ -7,30 +15,20 @@ public abstract class Power : ScriptableObject
     [TextArea]
     public string powerDescription;
     public int virtueCost;
+    public PowerTiming timing;
+    public bool onlyWhileHidden;
 
-    public Power(string powerName, string powerDescription)
-    {
-        this.powerName = powerName;
-        this.powerDescription = powerDescription;
-    }
     public static bool PowerVerification(Player player)
     {
-        if (player.selectedVirtue.Count >= player.Kingdom.power.virtueCost)
-        {
-            if (!player.selectedPlayer)
-            {
-                return false;
-            }
-            return true;
-        }
-        else
-        {
-            player.selectedVirtue.Clear();
-            return false;
-        }
-
+        return player != null && player.Kingdom != null && player.Kingdom.power != null
+            && PowerRules.CanPay(player.Virtues, player.selectedVirtue, player.Kingdom.power.virtueCost);
     }
-    public abstract void Execute();
 
+    public abstract void Execute(PowerUse use);
 
+    // Kept for existing UnityEvents; validation and payment always go through the manager.
+    public void Execute()
+    {
+        PowerManager.Instance.ActivatePower(this);
+    }
 }

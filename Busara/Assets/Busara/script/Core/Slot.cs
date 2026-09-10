@@ -22,6 +22,11 @@ public class Slot : MonoBehaviour, SelectionManager.SlotSelectionListener
     {
         SelectionManager.Instance.AddSlotSelectionListener(this);
     }
+    private void OnDestroy()
+    {
+        if (SelectionManager.Instance != null)
+            SelectionManager.Instance.RemoveSlotSelectionListener(this);
+    }
 
     public Resource EmptySlot()
     {
@@ -68,7 +73,8 @@ public class Slot : MonoBehaviour, SelectionManager.SlotSelectionListener
 
     public void UnHighlight()
     {
-        this.highlight.gameObject.SetActive(false);
+        if (highlight != null)
+            this.highlight.gameObject.SetActive(false);
     }
 
     public Player GetPlayer()

@@ -17,4 +17,6 @@ MonoBehaviour:
     \r\nplayers for the remainder of the \r\ngame by placing them under your \r\nKingdom
     Card, and steal one \r\nResource from any player of your \r\nchoice. (Your Kingdom
     Card remains \r\nface up)"
-  virtueCost: 1
+  virtueCost: 2
+  timing: 0
+  onlyWhileHidden: 0

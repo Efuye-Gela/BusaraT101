@@ -167,6 +167,8 @@ public class ForgeManager : Manager<ForgeManager>
         {
             Slot removerSlot = resource.slot;
             removerSlot.EmptySlot();
+            resource.gameObject.SetActive(false);
+            Destroy(resource.gameObject);
         }
     }
 

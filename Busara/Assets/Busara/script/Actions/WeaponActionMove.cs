@@ -44,6 +44,11 @@ public class WeaponActionMove : MonoBehaviour
     }
     public void OnTapUseWeapon()
     {
+        if (TurnManager.Instance.ActivePlayer.selectedResources.Count == 0)
+        {
+            DisplayManager.Instance.DeliverError("Select three resources to use a weapon.");
+            return;
+        }
         if (TurnManager.Instance.ActivePlayer.selectedResources[0].slot.GetPlayer() != TurnManager.Instance.ActivePlayer)
         {
             DisplayManager.Instance.DeliverError("You must start with your resource first");
@@ -110,6 +115,8 @@ public class WeaponActionMove : MonoBehaviour
         {
             Slot removerSlot = resource.slot;
             removerSlot.EmptySlot();
+            resource.gameObject.SetActive(false);
+            Destroy(resource.gameObject);
         }
 
         Player player = TurnManager.Instance.ActivePlayer;
@@ -123,22 +130,39 @@ public class WeaponActionMove : MonoBehaviour
         List<Player> targetPlayers = otherPlayers.Where(p => p.Board.GetOccupiedSlots().Count > 0).ToList();
 
         ActionManager.Instance.SetAction(ActionManager.ActionState.UsedWeapon);
+        OfferProtection(player, targetPlayers, 0);
+    }
+
+    private void OfferProtection(Player attacker, List<Player> targets, int index)
+    {
+        if (index < targets.Count && PowerManager.Instance != null)
+        {
+            Player defender = targets[index];
+            PowerManager.Instance.OfferProtection(defender, $"{defender.Name} is targeted by an attack.",
+                () =>
+                {
+                    targets.RemoveAt(index);
+                    OfferProtection(attacker, targets, index);
+                },
+                () => OfferProtection(attacker, targets, index + 1), isAttack: true, target: attacker);
+            return;
+        }
+
         Dictionary<Player, int> discardsRequired = new Dictionary<Player, int>();
         // Only start a special turn if there are players to target
-        if (targetPlayers.Count > 0)
+        if (targets.Count > 0)
         {
-            foreach (Player p in targetPlayers)
+            foreach (Player p in targets)
             {
                 discardsRequired[p] = 1;
             }
-            TurnManager.Instance.OnSpecialTurn(false, targetPlayers);
+            TurnManager.Instance.OnSpecialTurn(false, targets);
             NotifyWeaponUsed(discardsRequired);
         }
         else
         {
             // If no players have resources, just end the current player's turn
-            DisplayManager.Instance.DeliverError("No other players have resources to target!");
-            TurnManager.Instance.CompleteTurn(player);
+            TurnManager.Instance.CompleteTurn(attacker);
         }
     }
 }

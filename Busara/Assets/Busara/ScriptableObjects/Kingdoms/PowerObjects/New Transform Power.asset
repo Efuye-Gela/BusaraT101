@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2234522414be50241bc1a32e231fe7eb, type: 3}
-  m_Name: New Transform Power
+  m_Name: Transform
   m_EditorClassIdentifier: 
-  powerName: TransformPower
+  powerName: Transform
   powerDescription: "COST:\r\n- Discard 4 Virtues.\r\nDiscard any number of Virtues.
     Take \r\nthat many Virtues of a single type \r\nfrom the stockpile."
+  virtueCost: 4
+  timing: 0
+  onlyWhileHidden: 0

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1460eebbc7ea6e849afc721be54781b9, type: 3}
+  m_Name: Egolica
+  m_EditorClassIdentifier:
+  kingdomName: Egolica
+  kingdomStory: Egolica shares its gold wealth equally among citizens through a
+    universal basic income. The kingdom values unity, security, happiness and
+    environmental sustainability.
+  power: {fileID: 11400000, guid: bc020000000000000000000000000001, type: 2}
+  virtuesForWin:
+  - NumberofVirtues: 2
+    virtues: {fileID: 11400000, guid: 275b91d0a3e6ed64ab870dcc566413d9, type: 2}
+  - NumberofVirtues: 3
+    virtues: {fileID: 11400000, guid: 74d3f1677f21caa49a85fe7ed00d50df, type: 2}
+  - NumberofVirtues: 4
+    virtues: {fileID: 11400000, guid: 31e463a29862684408b2ffb798e00760, type: 2}

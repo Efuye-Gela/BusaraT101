@@ -26,6 +26,11 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
 
     public void OfferTrade()
     {
+        if (PowerManager.Instance != null && (PowerManager.Instance.IsBusy || PowerManager.Instance.Controller != null))
+        {
+            DisplayManager.Instance.DeliverError("Trading is unavailable during a power or a manipulated turn.");
+            return;
+        }
         Resource selectedResource = tobeTradedOutResources[0];
         sourceSlot = selectedResource.slot;
 
@@ -62,6 +67,11 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
 
     public void PlayerAcceptsTradeOffer()
     {
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+        {
+            Debug.LogWarning("Finish the pending choice before responding to a trade.");
+            return;
+        }
         acceptedPlayers.Add(TurnManager.Instance.ActivePlayer);
         int totalPlayersCount = acceptedPlayers.Distinct().Count() + rejectedPlayers.Distinct().Count();
         if (totalPlayersCount == PlayerManager.Instance.Players.Count - 1)
@@ -81,6 +91,11 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
 
     public void PlayerRejectsTradeOffer()
     {
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+        {
+            Debug.LogWarning("Finish the pending choice before responding to a trade.");
+            return;
+        }
         rejectedPlayers.Add(TurnManager.Instance.ActivePlayer);
         int totalPlayersCount = acceptedPlayers.Distinct().Count() + rejectedPlayers.Distinct().Count();
         if (totalPlayersCount == PlayerManager.Instance.Players.Count - 1)
@@ -100,6 +115,11 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
 
     public void TradeResources()
     {
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+        {
+            Debug.LogWarning("Finish the pending choice before completing a trade.");
+            return;
+        }
         if (tradePartner != null)
         {
             List<Slot> matchingSlots = tradePartner.Board.GetOccupiedSlotByResourceType(_offerTuple.Item2);
@@ -161,6 +181,8 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
         GameObject tradedInResourceClone = UnityEngine.Object.Instantiate(tradedInResource.gameObject);
 
         targetSlot.EmptySlot();
+        tradedInResource.gameObject.SetActive(false);
+        Destroy(tradedInResource.gameObject);
         Resource resourceOut = tradedOutResourceClone.GetComponent<Resource>();
         Slot.OccupySlot(targetSlot, resourceOut);
         tradedOutResourceClone.transform.SetParent(targetSlot.gameObject.transform, true);
@@ -168,6 +190,8 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
         tradedOutResourceClone.transform.localScale = Vector3.one;
 
         sourceSlot.EmptySlot();
+        tradedOutResource.gameObject.SetActive(false);
+        Destroy(tradedOutResource.gameObject);
         Resource resourceIn = tradedInResourceClone.GetComponent<Resource>();
         Slot.OccupySlot(sourceSlot, resourceIn);
         tradedInResourceClone.transform.SetParent(sourceSlot.gameObject.transform, true);
@@ -222,6 +246,11 @@ public class TradeManager : Manager<TradeManager>, SelectionManager.ResourceSele
     }
     public void CancelTrade()
     {
+        if (PowerManager.Instance != null && PowerManager.Instance.IsBusy)
+        {
+            Debug.LogWarning("Finish the pending choice before cancelling a trade.");
+            return;
+        }
         Debug.Log("Trade canceled by player.");
 
         // Remove selection listener if active

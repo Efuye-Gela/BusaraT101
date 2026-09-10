@@ -1,0 +1,22 @@
+{
+  "name": "busara-unity-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Custom local MCP server for the Busara Unity Editor bridge",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "smoke": "npm run build && node test/live-smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.26.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.3"
+  }
+}
