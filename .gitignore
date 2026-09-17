@@ -33,8 +33,10 @@
 ExportedObj/
 .consulo/
 *.csproj
+!online/**/*.csproj
 *.unityproj
 *.sln
+!online/**/*.sln
 *.suo
 *.tmp
 *.user
@@ -70,3 +72,14 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Local online tools, credentials, database and test output
+online/.local/
+online/.env
+online/web/
+online/**/bin/
+online/**/obj/
+online/**/TestResults/
+online/**/playwright-report/
+online/**/test-results/
+online/src/Busara.Server/wwwroot/play/

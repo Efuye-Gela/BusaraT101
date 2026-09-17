@@ -1,0 +1,6 @@
+{
+  "name": "Busara.Online.Shared",
+  "rootNamespace": "Busara.Online",
+  "noEngineReferences": true,
+  "autoReferenced": true
+}

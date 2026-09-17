@@ -121,16 +121,9 @@ public class ForgeManager : Manager<ForgeManager>
     {
         foreach (Virtue virtue in AllVirtues)
         {
-            if (resourceA.resourceType == virtue.componentOne)
-            {
-                if (resourceB.resourceType == virtue.componentTwo)
-                    return virtue;
-            }
-            else if (resourceB.resourceType == virtue.componentOne)
-            {
-                if (resourceA.resourceType == virtue.componentTwo)
-                    return virtue;
-            }
+            if (Busara.Online.SharedRules.RecipeMatches(resourceA.resourceType, resourceB.resourceType,
+                virtue.componentOne, virtue.componentTwo))
+                return virtue;
         }
         return null;
     }

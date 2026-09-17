@@ -12,13 +12,3 @@ public class Virtue : ScriptableObject
    public ResourceType componentOne;
    public ResourceType componentTwo;
 }
-
-public enum VirtueType
-{ 
-    Art,
-    Security,
-    Wisdom,
-    Energy,
-    Economy,
-    Nature
-}
