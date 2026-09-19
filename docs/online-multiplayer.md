@@ -4,6 +4,12 @@ Online MVP is an explicit, reduced Busara rules variant: `busara-online-mvp-v1`.
 The existing offline game remains separate. This is not support for all fifteen
 kingdom powers, a public matchmaking service, or a production deployment.
 
+**Default hosting: Unity Gaming Services.** Follow
+[UGS setup and a simple two-browser test](ugs-setup.md) to deploy Cloud Code,
+initialize private Cloud Save and build the player. The ASP.NET/PostgreSQL
+backend remains an explicit legacy option; its dated verification below does
+not establish UGS cloud or browser acceptance.
+
 ## Supported play
 
 Two invited humans receive different kingdoms randomly from **Egolica
@@ -70,7 +76,13 @@ The server owns match state. The Unity Web client sends commands and renders
 its authorized projection; it does not run the offline managers as a second
 authority. Hiding a Unity panel is not an information-security boundary.
 
-Guest credentials are 256-bit opaque tokens in Secure, HttpOnly, SameSite
+**UGS:** Unity Authentication session tokens identify the player; Cloud Code
+checks that player against persisted membership and fixed Busara guest expiry.
+Refresh tokens live in browser local storage, not HttpOnly cookies. The client
+polls authorized Cloud Code projections over HTTPS. See the
+[UGS privacy and storage limits](ugs-setup.md#persistence-privacy-and-operational-limits).
+
+**Legacy backend:** guest credentials are 256-bit opaque tokens in Secure, HttpOnly, SameSite
 cookies. PostgreSQL stores their hashes and a durable guest-to-seat mapping,
 not a trusted player ID supplied in a command. A guest has a **fixed 30-day
 expiry**. Browser reload and backend restart preserve a valid identity; they do
@@ -93,7 +105,7 @@ automatically answering.
 Room creation and joining also retain immutable request IDs across reload.
 Creation resumes automatically. An unfinished join requires reopening the
 original invitation to retry: the browser stores only its fingerprint, not
-the invitation secret. Once joined, the guest cookie and durable seat mapping
+the invitation secret. Once joined, the backend's saved identity and durable seat mapping
 restore access without the invitation.
 
 Each seat receives only currently observable information. Public board
@@ -108,7 +120,10 @@ can still permit deductions; this is not a traffic-analysis secrecy guarantee.
 `OnlineCommand` carries a unique `commandId`, string `expectedVersion`, command
 kind and arguments, and a `decisionId` for responses to a pending choice.
 
-PostgreSQL serializes transitions with a match-row lock. After authorizing
+UGS saves state, receipts and append-only events in one private Cloud Save
+document using a write-lock compare-and-swap; room publication is separately
+coordinated by the administrator-initialized directory. PostgreSQL's legacy
+backend serializes transitions with a match-row lock. After authorizing
 membership, the server checks for an existing receipt before checking
 staleness. Repeating the same authenticated command returns its recorded
 receipt; reusing its ID with different contents is rejected. State, receipt,
@@ -135,6 +150,9 @@ the original event or rewinds the version counter.
 - `online/src/Busara.Domain`: .NET Standard 2.1 project compiling those same
   source files.
 - `online/src/Busara.Server`: ASP.NET Core and PostgreSQL protocol/persistence.
+- `online/src/Busara.Ugs`: default Cloud Code adapter using the same domain.
+- `online/tests/Busara.Ugs.Tests`: simulated CAS/worker tests, not live UGS evidence.
+- `online/scripts/smoke-ugs.cjs`: explicit real UGS API smoke; see [setup](ugs-setup.md).
 - `Busara/Assets/Busara/Online/Client`: the Unity online client.
 - `online/tests/Busara.Domain.Tests`: rule, payment, serialization, privacy and
   normal-command progression tests.
@@ -146,6 +164,9 @@ the original event or rewinds the version counter.
 - `Busara/Assets/Busara/script/Editor/BusaraOnlineParityTests.cs`: checks the
   shared definitions and geometry against the actual Unity assets, recipes,
   setup cards and deck.
+
+The following setup/commands are for the **legacy backend**. UGS deployment,
+auth, polling and checks are in the [UGS guide](ugs-setup.md).
 
 Use the deliberately pinned Unity **6000.3.6f1** with its matching WebGL module,
 .NET SDK **10.0.401**, and PostgreSQL **17.11**. Do not open a different checkout
@@ -174,7 +195,7 @@ configuration loaded privately:
 ```powershell
 dotnet test .\online\tests\Busara.Domain.Tests\Busara.Domain.Tests.csproj
 .\online\scripts\test-server.ps1 -ConnectionFile C:\private\connection.json
-.\Busara\Assets\Busara\Online\Editor\Invoke-BusaraOnlineBuild.ps1
+.\Busara\Assets\Busara\Online\Editor\Invoke-BusaraOnlineBuild.ps1 -Backend legacy
 .\online\scripts\migrate-server.ps1
 .\online\scripts\start-server.ps1
 ```
@@ -206,7 +227,7 @@ exception. This does not install system trust or disable production TLS
 verification. Public deployment, public listeners, tunnels, paid services, and
 production security/operations hardening are outside this local milestone.
 
-## Verified local milestone
+## Verified local milestone (legacy backend)
 
 The following gates were executed on Windows on **2026-09-17**, using the
 versions above:

@@ -3,7 +3,7 @@ mergeInto(LibraryManager.library, {
     receiver: null, guest: null, match: null, csrf: null, socket: null,
     timer: null, generation: 0, key: null, invite: null, requests: null,
     ownsOutbox: false, releaseOutbox: null,
-    roomKey: null, ownsRoomOutbox: false, releaseRoomOutbox: null, inviteHash: null,
+    roomKey: null, ownsRoomOutbox: false, releaseRoomOutbox: null, inviteHash: null, ugs: null,
     emit: function(kind, body, id, status) {
       if (BusaraOnline.receiver)
         SendMessage(BusaraOnline.receiver, 'OnBrowserEvent',
@@ -34,16 +34,32 @@ mergeInto(LibraryManager.library, {
   Busara_Init: function(receiver) {
     BusaraOnline.receiver = UTF8ToString(receiver);
     BusaraOnline.requests = new Set();
+    BusaraOnline.ugs = null;
+    var config = window.busaraConfig;
+    if (config && config.backend === 'ugs') {
+      try {
+        BusaraOnline.ugs = new window.BusaraUgs(config, window);
+        BusaraOnline.ugs.validate();
+      } catch (_) {
+        BusaraOnline.emit('unsupported', 'UGS is not configured. Set projectId and environmentName in busara-config.js and deploy the BusaraUgs module. No local-server fallback was started.');
+        return;
+      }
+    } else if (!config || config.backend !== 'legacy') {
+      BusaraOnline.emit('unsupported', 'Unknown online backend. Choose ugs or legacy explicitly.');
+      return;
+    }
     var route = new URLSearchParams(location.hash.slice(1));
     BusaraOnline.invite = window.__busaraInvite || route.get('invite');
     delete window.__busaraInvite;
     if (route.has('invite')) history.replaceState(null, '', location.pathname + location.search);
     if (location.protocol !== 'https:') {
-      BusaraOnline.emit('unsupported', 'Online play requires the same-origin HTTPS server. No guest or match request was sent.');
+      BusaraOnline.emit('unsupported', 'Online play requires an HTTPS-hosted Unity Web build. No guest or match request was sent.');
       return;
     }
     var ready = function() {
-      BusaraOnline.emit('route', JSON.stringify({matchId: route.get('match'), hasInvite: !!BusaraOnline.invite}));
+      BusaraOnline.emit('route', JSON.stringify({matchId: route.get('match'), hasInvite: !!BusaraOnline.invite,
+        backend: BusaraOnline.ugs ? 'ugs' : 'legacy',
+        pollSeconds: BusaraOnline.ugs ? Math.max(5, Math.min(60, Number(config.pollSeconds) || 10)) : 4}));
     };
     if (!BusaraOnline.invite) ready();
     else crypto.subtle.digest('SHA-256', new TextEncoder().encode(BusaraOnline.invite)).then(function(bytes) {
@@ -75,6 +91,13 @@ mergeInto(LibraryManager.library, {
     var controller = new AbortController();
     BusaraOnline.requests.add(controller);
     var timer = setTimeout(function() { controller.abort(); }, 15000);
+    if (BusaraOnline.ugs) {
+      BusaraOnline.ugs.request(method, path, body, controller.signal)
+        .then(function(response) { BusaraOnline.emit('response', response.body, id, response.status); })
+        .catch(function() { BusaraOnline.emit('response', '', id, 0); })
+        .finally(function() { clearTimeout(timer); BusaraOnline.requests.delete(controller); });
+      return;
+    }
     var headers = {'Accept': 'application/json'};
     if (method !== 'GET') {
       headers['Content-Type'] = 'application/json';
@@ -93,7 +116,8 @@ mergeInto(LibraryManager.library, {
   Busara_RestoreRoomOutbox__deps: ['$BusaraOnline'],
   Busara_RestoreRoomOutbox: function(guestPtr) {
     var guest = UTF8ToString(guestPtr);
-    BusaraOnline.roomKey = 'busara.room.pending.v1:' + guest;
+    BusaraOnline.roomKey = 'busara.room.pending.v1:' +
+      (BusaraOnline.ugs ? BusaraOnline.ugs.scope + ':' : '') + guest;
     if (BusaraOnline.releaseRoomOutbox) BusaraOnline.releaseRoomOutbox();
     BusaraOnline.ownsRoomOutbox = false;
     if (!navigator.locks) { BusaraOnline.emit('storageError'); return; }
@@ -148,7 +172,8 @@ mergeInto(LibraryManager.library, {
     BusaraOnline.guest = UTF8ToString(guestPtr);
     BusaraOnline.match = UTF8ToString(matchPtr);
     BusaraOnline.csrf = UTF8ToString(csrfPtr);
-    BusaraOnline.key = 'busara.pending.v1:' + BusaraOnline.guest + ':' + BusaraOnline.match;
+    BusaraOnline.key = 'busara.pending.v1:' + (BusaraOnline.ugs ? BusaraOnline.ugs.scope + ':' : '') +
+      BusaraOnline.guest + ':' + BusaraOnline.match;
     history.replaceState(null, '', location.pathname + location.search + '#match=' + encodeURIComponent(BusaraOnline.match));
     BusaraOnline.generation++;
     clearTimeout(BusaraOnline.timer);
@@ -165,7 +190,8 @@ mergeInto(LibraryManager.library, {
       catch (_) { BusaraOnline.emit('storageError'); }
       return new Promise(function(resolve) { BusaraOnline.releaseOutbox = resolve; });
     }).catch(function() { BusaraOnline.emit('storageError'); });
-    BusaraOnline.connect(BusaraOnline.generation);
+    if (BusaraOnline.ugs) BusaraOnline.emit('polling');
+    else BusaraOnline.connect(BusaraOnline.generation);
   },
   Busara_StoreOutbox__deps: ['$BusaraOnline'],
   Busara_StoreOutbox: function(bodyPtr) {
@@ -219,6 +245,7 @@ mergeInto(LibraryManager.library, {
     BusaraOnline.invite = null;
     BusaraOnline.inviteHash = null;
     BusaraOnline.csrf = null;
+    BusaraOnline.ugs = null;
     BusaraOnline.ownsOutbox = false;
     if (BusaraOnline.releaseOutbox) BusaraOnline.releaseOutbox();
     BusaraOnline.releaseOutbox = null;

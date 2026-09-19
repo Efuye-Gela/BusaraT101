@@ -7,7 +7,7 @@ const {createHash} = require('node:crypto');
 const source = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '..', 'Plugins', 'WebGL', 'BusaraOnline.jslib'), 'utf8');
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
-async function browser(href, stored = new Map()) {
+async function browser(href, stored = new Map(), config = {backend: 'legacy'}) {
   const messages = [], requests = [], library = {};
   const location = new URL(href);
   const context = {
@@ -17,7 +17,14 @@ async function browser(href, stored = new Map()) {
     SendMessage: (_, __, json) => messages.push(JSON.parse(json)),
     URL, URLSearchParams, Set, Promise, Object, JSON, Error, TextEncoder, Uint8Array,
     crypto: {subtle: {digest: async (_, bytes) => Uint8Array.from(createHash('sha256').update(bytes).digest()).buffer}},
-    location, window: {}, history: {replaceState: (_, __, value) => { href = value; }},
+    location, window: {busaraConfig: config, BusaraUgs: class {
+      constructor() { this.scope = 'project:development'; }
+      validate() {}
+      async request(method, path, body) {
+        requests.push({ugs: true, method, path, body});
+        return {status: 200, body: '{"version":"1"}'};
+      }
+    }}, history: {replaceState: (_, __, value) => { href = value; }},
     navigator: {
       locks: {request: async (_, __, callback) => callback({name: 'exclusive-test-lock'})},
       clipboard: {writeText: async () => {}}
@@ -128,6 +135,22 @@ async function main() {
   assert.equal(join.library.Busara_ClearRoomOutbox('persisted-join'), 1);
   assert.equal(stored.size, 0);
   join.library.Busara_Dispose();
+  const ugs = await browser('https://localhost:7443/', new Map(), {backend: 'ugs', pollSeconds: 10});
+  ugs.library.Busara_Bind('guest', 'room', 'unused-by-ugs');
+  await settle();
+  assert(ugs.messages.some(message => message.kind === 'polling'));
+  assert.equal(JSON.parse(ugs.messages.find(message => message.kind === 'route').body).pollSeconds, 10);
+  assert.equal(ugs.context.BusaraOnline.socket, null, 'UGS does not start the legacy WebSocket');
+  assert.equal(ugs.library.Busara_StoreOutbox(body), 1);
+  assert.equal(ugs.stored.get('busara.pending.v1:project:development:guest:room'), body);
+  ugs.library.Busara_Request('ugs-command', 'POST', '/api/rooms/room/commands', body, 'unused-by-ugs');
+  await settle();
+  assert.equal(ugs.requests[0].ugs, true);
+  assert.equal(ugs.requests[0].body, body);
+  ugs.library.Busara_Dispose();
+  const noConfig = await browser('https://localhost:7443/', new Map(), null);
+  assert(noConfig.messages.some(message => message.kind === 'unsupported'), 'Missing config never falls back to legacy');
+  assert.equal(noConfig.requests.length, 0);
   console.log('PASS: credentialed fetch, game outbox, room reload/lost-ACK recovery, invitation binding, safe descriptors');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

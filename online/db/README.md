@@ -1,5 +1,10 @@
 # Local PostgreSQL and authoritative server
 
+**Optional legacy backend.** The default online build now uses UGS; see
+[UGS setup and a simple test](../../docs/ugs-setup.md). To use this server, build
+the Web player with `Invoke-BusaraOnlineBuild.ps1 -Backend legacy`. There is no
+automatic fallback or migration between PostgreSQL matches and UGS matches.
+
 Requires .NET SDK **10.0.401** and an actual local PostgreSQL instance. No in-memory fallback exists. The service binds **IPv4 loopback HTTPS only** and refuses missing/unmigrated databases or a changed persistent secret. Do not expose it publicly.
 
 Configure these environment variables in your local terminal; never put their values in tracked files:

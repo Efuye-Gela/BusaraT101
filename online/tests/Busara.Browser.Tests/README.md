@@ -1,5 +1,9 @@
 # Real two-browser Unity acceptance
 
+**Legacy ASP.NET/PostgreSQL backend only.** For the default UGS backend, use
+[UGS setup and cloud/browser smoke](../../../docs/ugs-setup.md). This suite's
+owned backend restart and positive WSS assertions do not apply to UGS polling.
+
 These NUnit tests drive the **actual Unity Web canvas**, not an HTML board or a
 command API surrogate. Each human seat has a separate Chromium browser context,
 guest cookie and outbox. The only JavaScript UI observation is the development
@@ -11,10 +15,12 @@ the browser clipboard. The normal-play strategy reads only authorized network
 
 ## Prerequisites
 
-- .NET 10 SDK and the project's pinned Playwright Chromium installation.
+- .NET SDK **10.0.401** and Chromium installed by the project's pinned
+  **Microsoft.Playwright 1.62.0** installer.
 - A real development Unity Web build (`index.html`, `Build/*.wasm*`) containing
   the online scene and visible-control descriptors.
-- PostgreSQL on `127.0.0.1`, with the explicitly migrated `busara_test` database.
+- PostgreSQL on `127.0.0.1`, with an existing `busara_test` database and a role
+  permitted to create/drop schemas. The fixture migrates its own isolated schema.
 - A file-only HTTPS certificate for `127.0.0.1`.
 - An unused unprivileged loopback HTTPS port.
 
@@ -37,15 +43,39 @@ Supply these process-local environment variables before `dotnet test`:
 | `BUSARA_BROWSER_WEB_ROOT` | Absolute real Unity Web build directory |
 | `BUSARA_BROWSER_ARTIFACTS` | Existing private evidence directory |
 | `BUSARA_BROWSER_ORIGIN` | `https://127.0.0.1:54443` or another unused port |
-| `BUSARA_BROWSER_CONNECTION_FILE` | Private JSON: `host`, `port`, `username`, `password`, `testDatabase` |
+| `BUSARA_BROWSER_CONNECTION_FILE` | Private JSON: `host` must be `127.0.0.1`, `port`, `username`, `password`, `testDatabase` must be `busara_test` |
 | `BUSARA_BROWSER_CERTIFICATE_FILE` | Private JSON: certificate `path` and `password` |
 | `PLAYWRIGHT_BROWSERS_PATH` | Directory containing the pinned Chromium installation |
 | `BUSARA_BROWSER_HEADED` | Optional `1` for headed execution |
 
+The certificate JSON's `path` is an absolute PFX path and `password` its password.
+Keep both configuration files and the evidence directory private and outside
+tracked source. Certificate/database provisioning is a prerequisite; there is
+no checked-in all-in-one provisioning or browser-runner script.
+
+First build the player from the repository root using
+`.\Busara\Assets\Busara\Online\Editor\Invoke-BusaraOnlineBuild.ps1 -Development -Backend legacy`
+(pass `-UnityPath` for a non-default installation). Then configure the variables
+above. Set `DOTNET_ROOT` and the process `PATH` for a portable SDK.
+
+Run the following steps **one at a time**, stopping on nonzero exit. From the
+repository root, change into `online` so its `global.json` selects the SDK:
+
 ```powershell
-dotnet test .\online\tests\Busara.Browser.Tests\Busara.Browser.Tests.csproj `
+Set-Location .\online
+& $env:BUSARA_BROWSER_DOTNET build .\tests\Busara.Browser.Tests\Busara.Browser.Tests.csproj
+.\tests\Busara.Browser.Tests\bin\Debug\net10.0\playwright.ps1 install chromium
+& $env:BUSARA_BROWSER_DOTNET build .\src\Busara.Server\Busara.Server.csproj
+& $env:BUSARA_BROWSER_DOTNET test .\tests\Busara.Browser.Tests\Busara.Browser.Tests.csproj `
+  --no-build --results-directory $env:BUSARA_BROWSER_ARTIFACTS `
   --logger 'trx;LogFileName=browser-tests.trx'
 ```
+
+For these default Debug builds, `BUSARA_BROWSER_SERVER_DLL` must point to
+`online\src\Busara.Server\bin\Debug\net10.0\Busara.Server.dll` in your checkout;
+the Web root is `online\web`. Install Chromium once initially or after changing
+the Playwright version, not on every run. No separate running game server is
+required: the fixture owns its backend and refuses an occupied test port.
 
 Missing prerequisites **fail** the tests. They are never ignored or reported as
 passing skips. Certificate-error acceptance exists only in these isolated test

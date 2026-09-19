@@ -12,7 +12,7 @@
     #loading { position: absolute; padding: 1.5rem; background: #121923; max-width: 36rem; text-align: center; }
   </style>
   <script>
-    // Capture/remove the invitation before downloading Unity. Authentication remains HttpOnly.
+    // Capture/remove the invitation before downloading Unity or calling services.
     const route = new URLSearchParams(location.hash.slice(1));
     if (route.has('invite')) {
       window.__busaraInvite = route.get('invite');
@@ -23,6 +23,8 @@
 <body>
   <canvas id="unity-canvas" width="1600" height="1000" tabindex="0" aria-label="Busara Online MVP game"></canvas>
   <div id="loading" role="status">Loading the Unity board…</div>
+  <script src="busara-config.js"></script>
+  <script src="busara-ugs.js"></script>
   <script src="Build/{{{ LOADER_FILENAME }}}"></script>
   <script>
     const canvas = document.querySelector('#unity-canvas');

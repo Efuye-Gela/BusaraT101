@@ -41,6 +41,8 @@ namespace Busara.Online.Client
         private bool projectionHealthy;
         private string confirmedVersion;
         private float nextPoll;
+        private float pollSeconds = 4;
+        private bool usesUgs;
         private string roomRequestBody;
         private string roomRequestPath;
         private string roomCommandId;
@@ -66,6 +68,8 @@ namespace Busara.Online.Client
                     }
                     matchId = route.matchId;
                     HasInvite = route.hasInvite;
+                    usesUgs = route.backend == "ugs";
+                    pollSeconds = route.pollSeconds > 0 ? route.pollSeconds : 4;
                     RefreshGuest();
                     break;
                 case "outbox":
@@ -120,6 +124,7 @@ namespace Busara.Online.Client
                     break;
                 case "invalidate": FetchView(); break;
                 case "connected": Connection = "Live"; FetchView(); break;
+                case "polling": Connection = "UGS - HTTPS polling"; FetchView(); break;
                 case "reconnecting": Connection = "Reconnecting — HTTPS polling active"; break;
                 case "storageError": Status = "Browser storage is unavailable. Pending actions cannot be protected; enable site storage before playing."; break;
                 case "outboxLocked":
@@ -342,7 +347,7 @@ namespace Busara.Online.Client
         {
             if (Guest == null || string.IsNullOrEmpty(matchId) || fetching || expired) return;
             fetching = true;
-            nextPoll = Time.unscaledTime + 4;
+            nextPoll = Time.unscaledTime + pollSeconds;
             transport.Request("GET", RoomPath, "", "", response =>
             {
                 fetching = false;
@@ -360,6 +365,7 @@ namespace Busara.Online.Client
                     {
                         if (confirmedVersion == null || CompareVersions(fresh.version, confirmedVersion) >= 0)
                         {
+                            if (usesUgs) Connection = "UGS - HTTPS polling";
                             confirmedVersion = fresh.version;
                             projectionHealthy = true;
                             if (View == null || CompareVersions(fresh.version, View.version) > 0) View = fresh;
@@ -402,6 +408,12 @@ namespace Busara.Online.Client
             if (response.status == 409) return "The action conflicts with the current room revision.";
             if (response.status == 429) return "Too many requests. Wait, then retry.";
             ApiError error = Parse<ApiError>(response.body);
+            if (error != null && error.code == "guest_unregistered")
+                return "This UGS identity is not registered for Busara. Create the guest explicitly before joining.";
+            if (error != null && error.code == "directory_not_initialized")
+                return "UGS setup incomplete: initialize the private directory using the UGS setup guide.";
+            if (error != null && error.code == "storage_capacity_reached")
+                return "UGS storage capacity reached. The request was not saved; ask the project administrator. Pending actions are retained.";
             if (error != null && !string.IsNullOrEmpty(error.code))
                 return "Server rejected the request (" + error.code + ", HTTP " + response.status + ").";
             return "Server request failed (HTTP " + response.status + ").";

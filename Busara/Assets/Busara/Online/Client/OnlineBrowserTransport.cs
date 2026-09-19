@@ -14,7 +14,13 @@ namespace Busara.Online.Client
             public int status;
             public string body;
         }
-        [Serializable] public sealed class Route { public string matchId; public bool hasInvite; }
+        [Serializable] public sealed class Route
+        {
+            public string matchId;
+            public bool hasInvite;
+            public string backend;
+            public float pollSeconds;
+        }
 
         private readonly Dictionary<string, Action<Envelope>> requests = new Dictionary<string, Action<Envelope>>();
         public event Action<Envelope> Event;

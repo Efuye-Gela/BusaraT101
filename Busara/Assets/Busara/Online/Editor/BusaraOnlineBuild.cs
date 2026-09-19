@@ -12,6 +12,14 @@ using UnityEngine.SceneManagement;
 
 public static class BusaraOnlineBuild
 {
+    [Serializable] private sealed class WebConfiguration
+    {
+        public string backend = "ugs";
+        public string projectId = "";
+        public string environmentName = "development";
+        public string moduleName = "BusaraUgs";
+        public int pollSeconds = 10;
+    }
     public const string ScenePath = "Assets/Busara/Online/Scenes/OnlineMVP.unity";
     private const string ArtRoot = "Assets/Busara/Sprites/";
 
@@ -62,9 +70,20 @@ public static class BusaraOnlineBuild
             throw new BuildFailedException("This worktree's approved online build requires Unity 6000.3.6f1.");
         if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.WebGL, BuildTarget.WebGL))
             throw new BuildFailedException("Install the matching Unity 6000.3.6f1 WebGL module first.");
-        GenerateScene();
         var projectRoot = Directory.GetParent(Application.dataPath).Parent.FullName;
         string output = Path.Combine(projectRoot, "online", "web");
+        var webConfig = new WebConfiguration
+        {
+            backend = Environment.GetEnvironmentVariable("BUSARA_ONLINE_BACKEND") ?? "ugs",
+            projectId = Environment.GetEnvironmentVariable("BUSARA_UGS_PROJECT_ID") ?? "",
+            environmentName = Environment.GetEnvironmentVariable("BUSARA_UGS_ENVIRONMENT") ?? "development"
+        };
+        if (webConfig.backend != "ugs" && webConfig.backend != "legacy")
+            throw new BuildFailedException("BUSARA_ONLINE_BACKEND must be ugs or legacy.");
+        if (webConfig.backend == "ugs" &&
+            (!Guid.TryParse(webConfig.projectId, out _) || string.IsNullOrWhiteSpace(webConfig.environmentName)))
+            throw new BuildFailedException("Set BUSARA_UGS_PROJECT_ID and BUSARA_UGS_ENVIRONMENT before building UGS. Use the PowerShell build script parameters; legacy must be chosen explicitly.");
+        GenerateScene();
         string template = PlayerSettings.WebGL.template;
         var compression = PlayerSettings.WebGL.compressionFormat;
         bool fallback = PlayerSettings.WebGL.decompressionFallback;
@@ -83,6 +102,8 @@ public static class BusaraOnlineBuild
             });
             if (report.summary.result != BuildResult.Succeeded)
                 throw new BuildFailedException("Unity OnlineMVP Web build failed: " + report.summary.result);
+            File.WriteAllText(Path.Combine(output, "busara-config.js"),
+                "window.busaraConfig = " + JsonUtility.ToJson(webConfig, true) + ";\n");
             Debug.Log("OnlineMVP Unity Web build succeeded: " + output);
         }
         finally

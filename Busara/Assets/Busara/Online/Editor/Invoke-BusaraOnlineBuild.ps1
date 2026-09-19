@@ -1,6 +1,9 @@
 param(
     [string]$UnityPath = 'C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Unity.exe',
-    [switch]$Development
+    [switch]$Development,
+    [ValidateSet('ugs', 'legacy')][string]$Backend = 'ugs',
+    [string]$ProjectId = '',
+    [string]$EnvironmentName = 'development'
 )
 $ErrorActionPreference = 'Stop'
 $repository = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..\..')).Path
@@ -24,9 +27,15 @@ $logs = Join-Path $repository 'online\.local\logs'
 New-Item -ItemType Directory -Path $logs -Force | Out-Null
 $log = Join-Path $logs ('unity-web-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
 $oldDevelopment = $env:BUSARA_ONLINE_DEVELOPMENT
+$oldBackend = $env:BUSARA_ONLINE_BACKEND
+$oldProject = $env:BUSARA_UGS_PROJECT_ID
+$oldEnvironment = $env:BUSARA_UGS_ENVIRONMENT
 try {
     if ($Development) { $env:BUSARA_ONLINE_DEVELOPMENT = '1' }
     else { $env:BUSARA_ONLINE_DEVELOPMENT = '0' }
+    $env:BUSARA_ONLINE_BACKEND = $Backend
+    $env:BUSARA_UGS_PROJECT_ID = $ProjectId
+    $env:BUSARA_UGS_ENVIRONMENT = $EnvironmentName
     Write-Output "Unity: $UnityPath"
     Write-Output "Project: $project"
     Write-Output "Log: $log"
@@ -42,4 +51,7 @@ try {
 }
 finally {
     $env:BUSARA_ONLINE_DEVELOPMENT = $oldDevelopment
+    $env:BUSARA_ONLINE_BACKEND = $oldBackend
+    $env:BUSARA_UGS_PROJECT_ID = $oldProject
+    $env:BUSARA_UGS_ENVIRONMENT = $oldEnvironment
 }

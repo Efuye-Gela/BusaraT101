@@ -13,6 +13,26 @@ using UnityEngine.SceneManagement;
 public sealed class OnlineClientTests
 {
     [Test]
+    public void UgsRouteAndPollingDoNotClaimLegacyLiveSocket()
+    {
+        var route = JsonUtility.FromJson<OnlineBrowserTransport.Route>(
+            "{\"backend\":\"ugs\",\"pollSeconds\":10,\"hasInvite\":false}");
+        Assert.AreEqual("ugs", route.backend);
+        Assert.AreEqual(10, route.pollSeconds);
+        var host = new GameObject("UGS protocol test");
+        try
+        {
+            var transport = host.AddComponent<OnlineBrowserTransport>();
+            var session = host.AddComponent<OnlineSession>();
+            session.Initialize(transport);
+            transport.OnBrowserEvent("{\"kind\":\"polling\"}");
+            Assert.AreEqual("UGS - HTTPS polling", session.Connection);
+            Assert.IsNull(session.View);
+        }
+        finally { UnityEngine.Object.DestroyImmediate(host); }
+    }
+
+    [Test]
     public void EmptyBatchSceneSetupKeepsCurrentSceneLoaded()
     {
         Scene current = SceneManager.GetActiveScene();
