@@ -114,6 +114,12 @@ LiveOps. Save the role assignments. These are deployment permissions, not
 permissions to give players. Reassess least privilege for future workflows
 rather than granting unrelated administrator roles.
 
+The registration-shard provisioning step also needs project-scoped Cloud Save
+permissions covering Private Game Data read/write. The original deployment
+roles above are insufficient: the CLI returned HTTP 403 until this permission
+was added to the existing service account. Keep player access policies denied;
+never give these administrative permissions to browser players.
+
 Run:
 
 ```powershell
@@ -184,33 +190,32 @@ inspect the entire policy, especially in a shared project.
 Default Game Data read discrepancy that remains unresolved; see section 11.
 Do not weaken the rule or redefine a successful read as denial to get a pass.
 
-For Busara only, initialize the following **once** in the selected environment:
+For Busara, provision private registration shards administratively before
+activating the module, following the [current setup guide](ugs-setup.md).
+These shards publish fixed guest expiry and immutable pointers to each
+player's own guest ledger. There is no global writable directory on the game
+command path.
 
-| Dashboard location/field | Value |
-| --- | --- |
-| Cloud Save > Game Data > Custom Item ID | `busara_directory_v1` |
-| Access class | **Private** |
-| Key | `document` |
-| Value type | **String**, or JSON Object with the updated adapter |
-| Initial contents | `{"schemaVersion":1,"guests":{},"creates":{},"joins":{}}` |
+Our first module expected a String and failed on a Dashboard-created Object
+for the legacy `busara_directory_v1` record; the adapter now accepts both formats. That
+compatibility remains relevant for Custom Items and legacy migration. Preserve
+`busara_directory_v1` and old per-player documents as migration sources; do not
+reset or delete them as part of an upgrade.
 
-If the Dashboard presents a raw JSON value editor and you want a String, use
-outer quotes and escaped inner quotes:
+Cloud Save's ordinary upsert is **not create-if-absent**. Even two tabs belonging
+to the same player can overwrite a newly populated ledger when both initially
+read a missing key. Busara writes fresh random candidates, then publishes one
+winner through a pre-existing shard's real write lock. Losing workers use that
+winner. Missing shards fail explicitly rather than allowing public bootstrap.
+Do not invent an empty/fabricated write-lock sentinel or assume HTTP
+`If-None-Match` is supported. See Unity's
+[write-lock contract](https://docs.unity.com/en-us/cloud-save/concepts/write-locks).
 
-```json
-"{\"schemaVersion\":1,\"guests\":{},\"creates\":{},\"joins\":{}}"
-```
-
-**Never reset an existing directory.** It contains guest expiry records and
-published-room references. Our first module expected a String and failed on
-a Dashboard-created Object. We fixed the adapter to accept both without
-destroying data; the current implementation preserves the write lock and
-schema validation.
-
-The manual initialization addresses a Cloud Save concurrency detail:
-an unlocked write is not a safe create-if-absent operation. New games must
-design their own safe initialization/publication scheme, not blindly reuse
-Busara's directory name or schema.
+Upgrading an older writer requires a maintenance cutover: stop mutations,
+drain old invocations, initialize only missing shards, then activate the new
+runtime. Otherwise an old worker can still make an unsafe write after the new
+code has migrated a record. Never clear browser identities or pending outboxes
+to make deployment errors disappear.
 
 ## 7. Package and deploy the authoritative module
 
@@ -433,7 +438,9 @@ offline powers are not available online.
 - [ ] Pin compatible tools and review current quotas/pricing.
 - [ ] Configure project-scoped deployment credentials; keep them out of clients.
 - [ ] Deploy and verify access policy with real player requests.
-- [ ] Initialize storage safely without overwriting existing records.
+- [ ] If your storage design needs a shared, concurrently-written document,
+      give it a safe create-if-absent/publication scheme — or better, avoid a
+      shared document altogether and key records per caller, as Busara now does.
 - [ ] Package/deploy the module, then run the real-cloud API test.
 - [ ] Build the actual Unity client and serve it over appropriate HTTPS.
 - [ ] Use independent browser identities and test play, reload and recovery.
@@ -443,5 +450,6 @@ offline powers are not available online.
 
 For returning to an existing development setup, first confirm its target and
 unresolved checks. Rebuild/redeploy only the components you changed; **do not**
-reinitialize the directory, recreate credentials or reset matches each time.
-Keep all tests local/private until public exposure is deliberately approved.
+recreate credentials or reset matches each time. Never reinitialize populated
+registration shards or legacy migration sources. Keep all tests local/private until public exposure is
+deliberately approved.

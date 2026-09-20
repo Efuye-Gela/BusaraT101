@@ -9,7 +9,7 @@ namespace Busara.Ugs.Tests;
 public sealed class CloudSaveStorageTests
 {
     private const string WriteLock = "0123456789abcdef0123456789abcdef";
-    private const string Document = "{\"schemaVersion\":1,\"guests\":{\"existing-player\":\"2026-10-01T00:00:00+00:00\"}," +
+    private const string Document = "{\"schemaVersion\":1,\"expiresAt\":\"2026-10-01T00:00:00+00:00\"," +
         "\"creates\":{\"existing-request\":{\"actor\":\"existing-player\",\"commandId\":\"original-command\"," +
         "\"matchId\":\"existing-match\",\"inviteToken\":\"private-test-value\"}},\"joins\":{\"prior-join\":\"fingerprint\"}}";
 
@@ -33,10 +33,10 @@ public sealed class CloudSaveStorageTests
         var stored = CloudSaveStore.DecodeDocument(item);
         Assert.That(stored.WriteLock, Is.EqualTo(WriteLock));
         Assert.That(JToken.DeepEquals(JObject.Parse(stored.Json), JObject.Parse(Document)), Is.True);
-        var directory = Json.Decode<DirectoryDocument>(stored.Json);
-        Assert.That(directory.guests, Has.Count.EqualTo(1));
-        Assert.That(directory.creates["existing-request"].matchId, Is.EqualTo("existing-match"));
-        Assert.That(directory.joins["prior-join"], Is.EqualTo("fingerprint"));
+        var guest = Json.Decode<GuestDocument>(stored.Json);
+        Assert.That(guest.expiresAt, Is.EqualTo(DateTimeOffset.Parse("2026-10-01T00:00:00+00:00")));
+        Assert.That(guest.creates["existing-request"].matchId, Is.EqualTo("existing-match"));
+        Assert.That(guest.joins["prior-join"], Is.EqualTo("fingerprint"));
     }
 
     [TestCase(false)]
@@ -82,6 +82,6 @@ public sealed class CloudSaveStorageTests
     public void ObjectSupportDoesNotRelaxDocumentSchemaValidation()
     {
         var stored = CloudSaveStore.DecodeDocument(ResponseItem(JObject.Parse("{\"schemaVersion\":1,\"unexpected\":true}")));
-        Assert.Throws<System.Text.Json.JsonException>(() => Json.Decode<DirectoryDocument>(stored.Json));
+        Assert.Throws<System.Text.Json.JsonException>(() => Json.Decode<GuestDocument>(stored.Json));
     }
 }

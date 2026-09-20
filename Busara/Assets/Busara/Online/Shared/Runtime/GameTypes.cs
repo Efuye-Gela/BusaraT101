@@ -49,6 +49,13 @@ namespace Busara.Online
     }
 
     [Serializable]
+    public sealed class CommandResult
+    {
+        public CommandReceipt receipt;
+        public ClientView view;
+    }
+
+    [Serializable]
     public sealed class TokenState
     {
         public string id;

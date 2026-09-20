@@ -53,8 +53,11 @@ After completing that setup, from the repository root:
   -ProjectId '<your-Unity-project-UUID>' -EnvironmentName 'development'
 ```
 
-Serve the generated `online\web` on HTTPS. The guide includes a loopback-only
-static server for local testing; it does **not** run game logic. Open two
+For normal play across different PCs/networks, follow
+[Vercel HTTPS hosting](docs/vercel-hosting.md): publish the Web build once,
+then both players open the website with no local server or Node installation.
+For development-only local testing, the UGS guide also includes a loopback-only
+static server; it does **not** run game logic. Open two
 separate browser profiles, create a guest/room in the first, and accept its
 private invitation in the second. Ready both seats, then start. Two ordinary
 tabs share an identity and are not two players.
@@ -85,6 +88,8 @@ has separate identities and durable storage.
 | [Online multiplayer](docs/online-multiplayer.md) | Supported rules, privacy, durability and dated verification evidence |
 | [UGS setup and test](docs/ugs-setup.md) | Cloud Code deployment, private Cloud Save, API smoke and two-browser play |
 | [Reusable UGS playbook](docs/ugs-multiplayer-playbook.md) | Setup-session lessons, copyable commands, troubleshooting and a checklist for future games |
+| [Vercel HTTPS hosting](docs/vercel-hosting.md) | One hosted Unity website for players on different PCs, with UGS as the backend |
+| [Two-PC testing](docs/two-pc-testing.md) | Portable Windows Web bundle for private UGS play across different networks |
 | [Legacy server/database setup](online/db/README.md) | Environment variables, migrations and PostgreSQL integration tests |
 | [Legacy two-browser acceptance](online/tests/Busara.Browser.Tests/README.md) | PostgreSQL/WSS Unity Web tests and historical evidence |
 | [Unity MCP](tools/unity-mcp/README.md) | Optional local Editor automation and its safety boundaries |

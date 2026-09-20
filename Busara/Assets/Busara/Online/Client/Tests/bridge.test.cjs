@@ -7,8 +7,8 @@ const {createHash} = require('node:crypto');
 const source = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '..', 'Plugins', 'WebGL', 'BusaraOnline.jslib'), 'utf8');
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
-async function browser(href, stored = new Map(), config = {backend: 'legacy'}) {
-  const messages = [], requests = [], library = {};
+async function browser(href, stored = new Map(), config = {backend: 'legacy'}, visibilityState = 'visible') {
+  const messages = [], requests = [], library = {}, listeners = new Map();
   const location = new URL(href);
   const context = {
     LibraryManager: {library},
@@ -25,6 +25,16 @@ async function browser(href, stored = new Map(), config = {backend: 'legacy'}) {
         return {status: 200, body: '{"version":"1"}'};
       }
     }}, history: {replaceState: (_, __, value) => { href = value; }},
+    document: {
+      visibilityState,
+      addEventListener: (name, callback) => {
+        assert(!listeners.has(name), 'Reinitialization must remove the previous visibility listener.');
+        listeners.set(name, callback);
+      },
+      removeEventListener: (name, callback) => {
+        if (listeners.get(name) === callback) listeners.delete(name);
+      }
+    },
     navigator: {
       locks: {request: async (_, __, callback) => callback({name: 'exclusive-test-lock'})},
       clipboard: {writeText: async () => {}}
@@ -47,11 +57,12 @@ async function browser(href, stored = new Map(), config = {backend: 'legacy'}) {
   library.Busara_Init('BusaraOnline');
   assert(!href.includes('invite'), 'Invite fragment removed before asynchronous work');
   await settle();
-  return {context, library, messages, requests, stored};
+  return {context, library, messages, requests, stored, listeners};
 }
 
 async function main() {
   const b = await browser('https://localhost:7443/');
+  assert.equal(b.listeners.size, 0, 'Legacy polling does not change with browser visibility.');
   b.library.Busara_Bind('guest', 'room', 'csrf-only-in-memory');
   await settle();
   const body = '{"commandId":"same-id","expectedVersion":"11","kind":"use","paymentIds":["art","security"]}';
@@ -140,6 +151,14 @@ async function main() {
   await settle();
   assert(ugs.messages.some(message => message.kind === 'polling'));
   assert.equal(JSON.parse(ugs.messages.find(message => message.kind === 'route').body).pollSeconds, 10);
+  assert.equal(JSON.parse(ugs.messages.find(message => message.kind === 'route').body).hidden, false);
+  ugs.context.document.visibilityState = 'hidden';
+  ugs.listeners.get('visibilitychange')();
+  assert.equal(JSON.parse(ugs.messages.at(-1).body).hidden, true);
+  assert.equal(ugs.messages.at(-1).kind, 'visibility');
+  ugs.context.document.visibilityState = 'visible';
+  ugs.listeners.get('visibilitychange')();
+  assert.equal(JSON.parse(ugs.messages.at(-1).body).hidden, false);
   assert.equal(ugs.context.BusaraOnline.socket, null, 'UGS does not start the legacy WebSocket');
   assert.equal(ugs.library.Busara_StoreOutbox(body), 1);
   assert.equal(ugs.stored.get('busara.pending.v1:project:development:guest:room'), body);
@@ -148,9 +167,16 @@ async function main() {
   assert.equal(ugs.requests[0].ugs, true);
   assert.equal(ugs.requests[0].body, body);
   ugs.library.Busara_Dispose();
+  assert.equal(ugs.listeners.size, 0, 'Disposal removes the visibility listener.');
+  const hidden = await browser('https://localhost:7443/', new Map(), {backend: 'ugs'}, 'hidden');
+  assert.equal(JSON.parse(hidden.messages.find(message => message.kind === 'route').body).hidden, true);
+  hidden.library.Busara_Init('BusaraOnline');
+  assert.equal(hidden.listeners.size, 1);
+  hidden.library.Busara_Dispose();
+  assert.equal(hidden.listeners.size, 0);
   const noConfig = await browser('https://localhost:7443/', new Map(), null);
   assert(noConfig.messages.some(message => message.kind === 'unsupported'), 'Missing config never falls back to legacy');
   assert.equal(noConfig.requests.length, 0);
-  console.log('PASS: credentialed fetch, game outbox, room reload/lost-ACK recovery, invitation binding, safe descriptors');
+  console.log('PASS: credentialed fetch, immutable outboxes, room recovery, invitation binding, safe descriptors, visibility lifecycle');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

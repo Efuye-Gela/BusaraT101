@@ -23,6 +23,10 @@ public sealed class Module(ILogger<Module> logger)
     public async Task<Reply> Execute(IExecutionContext context, IGameApiClient api,
         string operation, string payload, string matchId)
     {
+#if BUSARA_MAINTENANCE
+        _ = logger;
+        return await Task.FromResult(Reply.Error(503, "storage_upgrade_in_progress"));
+#else
         try
         {
             return await new MatchService(new CloudSaveStore(api, context), new SecureRandom(), TimeProvider.System)
@@ -36,5 +40,6 @@ public sealed class Module(ILogger<Module> logger)
             logger.LogError("UGS request failed ({ErrorType}).", error.GetType().Name);
             return Reply.Error(503, "storage_unavailable");
         }
+#endif
     }
 }

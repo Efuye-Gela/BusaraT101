@@ -52,6 +52,13 @@ async function main() {
   await client.request('POST', '/api/rooms/' + match + '/commands', command);
   assert.equal(p.calls.at(-1).options.body, p.calls.at(-2).options.body, 'Exact command string survives retry');
   assert.equal(JSON.parse(p.calls.at(-1).options.body).params.payload, command);
+  assert.equal(JSON.parse(p.calls.at(-1).options.body).params.operation, 'command', 'Old clients keep bare receipt operation');
+  await client.request('POST', '/api/rooms/' + match + '/commands-with-view', command);
+  const embeddedRequest = JSON.parse(p.calls.at(-1).options.body).params;
+  assert.equal(embeddedRequest.operation, 'commandWithView');
+  assert.equal(embeddedRequest.payload, command, 'Changing reply format never changes the saved command');
+  assert.equal(embeddedRequest.matchId, match);
+  assert.equal((await client.request('GET', '/api/rooms/' + match + '/commands-with-view', '')).status, 400);
   assert.equal(p.calls.at(-1).options.headers.Authorization, 'Bearer private-access');
   p.setBehavior(async () => json({details: [{message: 'PRIVATE STATE'}]}, 422));
   const failure = await client.request('GET', '/api/rooms/' + match, '');

@@ -45,8 +45,16 @@ Do not imply full offline feature parity online.
   never silently Pass, forfeit, replace a human with a bot or start offline play.
   See [online rules and protocol](docs/online-multiplayer.md).
 - UGS is the default, legacy is opt-in. Never expose raw Cloud Save data to
-  players, reset the private directory or initialize existing room keys without
-  CAS. Preserve state/receipt/history together and never evict receipts silently.
+  players or initialize existing room/guest keys without CAS. Guest, create and
+  join ledgers live in each player's published guest document. Preprovisioned
+  registration shards publish immutable actor-to-document mappings using CAS;
+  missing shards fail closed. Never initialize deterministic mutable guest keys
+  with an unlocked write, or reintroduce a global writable directory. Old writers
+  must be drained in maintenance before migration. Preserve state/receipt/history together atomically.
+  Keep compact receipts for every command and join; never evict a pending
+  client's receipt because another seat submitted more commands. Build private
+  projections for replies, not for durable receipt storage. Capacity exhaustion
+  is explicit; neither receipts nor append-only event history are evicted.
   See [UGS setup and limits](docs/ugs-setup.md). No automatic cloud deployment.
 
 ## Editing safeguards

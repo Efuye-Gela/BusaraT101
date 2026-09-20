@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('node:assert/strict');
-const {checkStorageDenial, tokenRouting, diagnosePolicy} = require('../scripts/smoke-ugs.cjs');
+const {checkStorageDenial, tokenRouting, diagnosePolicy, registrationKey} = require('../scripts/smoke-ugs.cjs');
 
 for (const probe of ['privateRead', 'defaultRead', 'playerRead', 'playerWrite']) {
   assert.doesNotThrow(() => checkStorageDenial(403, probe));
@@ -47,6 +47,8 @@ async function checkDiagnostic(statuses) {
   else await run;
   assert.equal(calls.length, 4);
   assert.equal(cancelled, 4);
+  assert(calls[0].includes('/custom/' + registrationKey(client.player) + '/private/items'));
+  assert.match(registrationKey(client.player), /^busara_registration_v1_\d{2}$/);
   assert.ok(calls[1].endsWith('/items?keys=document'));
   assert.ok(calls[2].endsWith('/items'));
   assert.ok(calls[3].includes('/players/private-player/items'));

@@ -43,7 +43,8 @@ try {
         '-batchmode', '-nographics', '-quit', '-buildTarget', 'WebGL',
         '-projectPath', "`"$project`"", '-executeMethod', 'BusaraOnlineBuild.BuildWeb',
         '-logFile', "`"$log`""
-    ) -Wait -PassThru
+    ) -PassThru
+    $process.WaitForExit()
     if ($process.ExitCode -ne 0) { throw "Unity failed with exit code $($process.ExitCode). Inspect $log." }
     $index = Join-Path $repository 'online\web\index.html'
     if (-not (Test-Path -LiteralPath $index -PathType Leaf)) { throw 'Unity exited without the expected Web player.' }

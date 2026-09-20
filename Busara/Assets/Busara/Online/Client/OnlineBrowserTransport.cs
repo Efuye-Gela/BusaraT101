@@ -20,7 +20,9 @@ namespace Busara.Online.Client
             public bool hasInvite;
             public string backend;
             public float pollSeconds;
+            public bool hidden;
         }
+        [Serializable] public sealed class Visibility { public bool hidden; }
 
         private readonly Dictionary<string, Action<Envelope>> requests = new Dictionary<string, Action<Envelope>>();
         public event Action<Envelope> Event;

@@ -84,41 +84,20 @@ player-accessible reads and writes to return 403; the server-only Private
 read may return 401 or 403. Do not weaken the policy to make a
 failing smoke test pass.
 
-## 4. Initialize the private directory ONCE
+## 4. Build and deploy the module
 
-In this environment's **Cloud Save > Game Data**, create a Custom Item with
-ID **`busara_directory_v1`**. Select its **Private** access class, then add:
+The runtime requires 64 preprovisioned **Private** registration shards:
+`busara_registration_v1_00` through `busara_registration_v1_63` (decimal
+suffixes), each with key `document` and value
+`{"schemaVersion":1,"registrations":{}}`. The public layout is in
+`online/ugs/registration-layout.json`. The deployment service account needs
+project-scoped Private Game Data read/write permission; Cloud Code Editor
+alone is insufficient.
 
-| Setting | Value |
-| --- | --- |
-| Key | `document` |
-| Value type | **String** (a JSON Object is also accepted by the updated module) |
-| String contents | `{"schemaVersion":1,"guests":{},"creates":{},"joins":{}}` |
-
-The contents are also in [directory-value.json](../online/ugs/directory-value.json).
-If the Dashboard uses a raw JSON value editor instead of a String selector,
-use a JSON string literal (including its outer quotes):
-
-```json
-"{\"schemaVersion\":1,\"guests\":{},\"creates\":{},\"joins\":{}}"
-```
-
-If you already created `document` as a **JSON Object**, leave its contents
-intact. The updated module accepts both formats, validates the same schema,
-and preserves the write lock. Its next successful update stores a JSON String
-without dropping existing guests, room references or join reservations.
-
-**Never reset or overwrite an existing directory.** Check the project,
-environment and Private tab first. Replacing it destroys published-room
-lookup and guest expiry records. It is not a routine migration or test reset.
-No player-callable bootstrap function exists.
-
-Why the manual step: Cloud Save write locks protect updates, but an unlocked
-create can overwrite an existing key. Starting from a known existing record
-lets concurrent Cloud Code workers publish room creation with compare-and-swap
-instead of risking a match reset.
-
-## 5. Build and deploy the module
+Each shard CAS-publishes immutable guest-document pointers and fixed expiry.
+Guest ledgers live at fresh random candidate IDs, initialized before
+publication. Missing shards return `registration_not_initialized`; there is
+no public bootstrap or unsafe deterministic-key initialization.
 
 From the repository root:
 
@@ -138,18 +117,63 @@ ugs deploy .\online\.local\ugs-package\BusaraUgs.ccm
 ugs cloud-code modules get BusaraUgs
 ```
 
+### Upgrading existing guests safely
+
+Prepare and validate both module packages and the new Unity build before
+interrupting service. Save the currently deployed module for rollback before
+activation; never automatically roll back to an old writer after new guest
+registrations have been published.
+
+1. Build the maintenance module with
+   `.\online\scripts\package-ugs.ps1 -Maintenance`. Its archive is
+   `online\.local\ugs-package\maintenance\BusaraUgs.ccm`.
+2. Deploy that archive to the explicit project/development environment. It
+   returns `503 storage_upgrade_in_progress` before authentication/storage
+   access. Browser outboxes remain intact.
+3. Confirm maintenance is visible, then wait at least 60 seconds to drain old
+   invocations. Unity documents a 15-second execution limit, after which the
+   worker is killed. Use one deployment operator for provisioning.
+4. Inspect the shards without changing them:
+
+   ```powershell
+   node .\online\scripts\provision-ugs-registration.cjs --project-id '<project-UUID>' --environment development --layout .\online\ugs\registration-layout.json
+   ```
+
+5. During the confirmed maintenance window, run the same command with
+   `--apply --maintenance-confirmed`. It creates only missing private shard
+   documents, verifies them, and never overwrites an existing shard. It waits
+   for all initializers to finish before returning. Keep maintenance enabled
+   if provisioning fails. On Windows it uses the npm-installed native
+   `ugs.exe`; use `--cli '<native-CLI-path>'` for another installation.
+6. Deploy the normal, non-maintenance `BusaraUgs.ccm`, then publish the freshly
+   built Unity player using the [Vercel guide](vercel-hosting.md).
+   Confirm old/new client receipts and identity/outbox recovery.
+
+For a new environment, provision before making the runtime available to
+players. The maintenance confirmation is an operator safety requirement,
+not a claim that a read-then-upsert is an atomic create primitive.
+
+Old `busara_directory_v1` and deterministic per-player guest documents are
+read-only migration sources. Migration copies both ledgers into a fresh
+candidate and preserves the earliest existing expiry; conflicting reservations
+fail explicitly rather than choosing a new identity. Old join hashes do not
+encode recoverable actor ownership, so legacy reservations are conservatively
+copied, with the same explicit capacity limit. Published schema-1 rooms keep
+their state, pending decisions, receipts and history; orphan candidates remain
+inaccessible. Do not delete or reset legacy records during this process.
+
 The module exposes **`Execute`**, with string parameters `operation`, `payload`
 and `matchId`. Calls originate from authenticated players; running it as an
 administrator without a player context is deliberately rejected.
 
-## 6. Run the small real-UGS API smoke test
+## 5. Run the small real-UGS API smoke test
 
 This creates **two real anonymous test players and a private match** in the
 selected environment. It refuses `production`, never logs player tokens or
 invitations, and does not delete shared data. Its credentials live only in
 process memory, so this test room cannot be resumed after the process exits.
 If access control is misconfigured, its write-denial probe can create a `probe`
-key on that test player's own data; it never writes an existing match/directory.
+key on that test player's own data; it never writes an existing match record.
 
 ```powershell
 $env:BUSARA_UGS_PROJECT_ID = '<your-Unity-project-UUID>'
@@ -162,11 +186,11 @@ Expected: `PASS: real UGS registration, ...` and exit code 0. It checks direct
 Cloud Save denial, concurrent duplicate room creation/commands, invitation
 acceptance/retry, unauthorized access, readiness/start, hidden projections and
 session-token refresh. Stop on any failure; check the selected environment,
-policy, module and private directory rather than bypassing checks.
+policy and module rather than bypassing checks.
 
 This is a real cloud **API** test, not a Unity/browser/CORS or Retraction test.
 
-## 7. Build and open the Unity game
+## 6. Build and open the Unity game
 
 Close the Unity Editor before the isolated batch build. From the repository root:
 
@@ -178,7 +202,9 @@ Close the Unity Editor before the isolated batch build. From the repository root
 ```
 
 The generated `online\web\busara-config.js` contains public project/environment
-routing, the module name and `pollSeconds` (default 10). No service-account
+routing, the module name and `pollSeconds` (default 10 for your own turn or
+decision). Visible waiting/lobby views poll every 2 seconds; hidden tabs and
+finished matches use at least 30 seconds. No service-account
 secret belongs there. Missing UGS configuration blocks the build/client; it
 never starts the legacy backend as a fallback.
 
@@ -204,7 +230,13 @@ For isolated automated browser tests, any certificate exception must be
 restricted to the local test origin; never disable TLS verification for UGS
 or modify global trust as a workaround.
 
-## 8. Simple two-browser play test
+## 7. Simple two-browser play test
+
+For the normal player experience across different PCs/networks, use
+[Vercel HTTPS hosting](vercel-hosting.md). Both players open one hosted
+website; neither needs Node or a local server. The
+[portable two-PC setup](two-pc-testing.md) is only an alternative developer
+test when you do not want to publish a website.
 
 1. Open the URL in **two separate browser profiles**. Ordinary tabs share
    local storage and an identity; two private windows may also share a profile.
@@ -212,8 +244,10 @@ or modify global trust as a workaround.
 3. Open that invitation in browser B, explicitly create its guest and join.
 4. Give both seats different names and mark both ready. The host starts.
 5. Place the five setup resources on your own non-adjacent spaces. Take a
-   normal draw/place or move turn. The other browser should update within the
-   configured polling interval; the connection label says **UGS - HTTPS polling**.
+   normal draw/place or move turn. A visible waiting browser polls every
+   2 seconds, plus Cloud Code/network time to receive the projection; this is
+   not a guaranteed two-second delivery time. The connection label says
+   **UGS - HTTPS polling**.
 6. Reload either browser. Its identity, seat and match should return without
    reopening the invitation. No replacement guest should be created.
 
@@ -246,25 +280,54 @@ CORS behavior from your actual static origin must be verified separately.
 - Each published room has its own private Custom Item. One CAS saves match,
   receipts and append-only event history together. Conflicts retry against
   the new stored revision; duplicates are checked before staleness.
-- Room creation initializes a fresh random candidate, then CAS-publishes its
-  receipt in the existing directory. Losing or interrupted creators can leave
-  **inaccessible orphan candidates**; they cannot overwrite a published room.
-  The private directory retains the invitation secret for identical create
+- Room creation initializes a fresh random candidate, then CAS-publishes it by
+  recording the win in the creating player's published guest ledger,
+  then flipping the room's `published` flag. Losing
+  or interrupted creators can leave **inaccessible orphan candidates**; they
+  cannot overwrite a published room, and an unpublished room is never returned
+  by `view`/`command` regardless of how its ID was obtained. That same
+  per-actor document retains the invitation secret for identical create
   retries; individual room records retain its hash. Neither is player-readable.
   Treat populated Dashboard records as private, not shareable diagnostics.
-  Join request identities are reserved in that directory before room mutation,
-  preventing cross-room ID reuse. An interrupted/rejected reservation remains
-  bound to its original request; retry it identically or use a new request ID.
-  There is no automatic garbage collector. Do not delete/reset the directory
-  to reclaim storage, or delete records based solely on creation age.
+  Join request identities are reserved in that same per-actor document before
+  room mutation, preventing cross-room ID reuse. An interrupted/rejected
+  reservation remains bound to its original request; retry it identically or
+  use a new request ID. There is no automatic garbage collector for a player's
+  own create/join history — it stays for that player's account lifetime — but
+  unlike the old single shared directory, its size and any contention scale
+  with how many rooms *that one player* has made, not with the whole game's
+  player count.
 - Cloud Save permits 5 MiB per Custom Item/access class. Busara stops writes
   at 2 MiB of inner JSON per document, leaving string-encoding headroom.
-  `storage_capacity_reached` is explicit; history/receipts are never silently
-  evicted. The shared directory is also finite and can become a contention
-  point. This is a bounded private milestone, not a production storage design.
+  `storage_capacity_reached` is explicit; append-only event history is never
+  silently evicted. Compact command/join receipts are retained for the room's
+  lifetime. Another seat can submit commands while an acknowledgement is lost,
+  so a shared 16-receipt window is not safe even with one outbox per browser.
+  Projections are generated for replies instead of saved with every receipt.
+  Receipts already evicted by a previously deployed version cannot be recovered
+  from event history; the server never invents an acknowledgement for them.
+  This is a bounded private milestone, not a production storage design.
 - Polling is intentional; no custom WSS endpoint, Relay or Netcode server is
-  used. At 10-second polling, two idle open seats make about 12 Cloud Code
-  calls and 24 Cloud Save reads per minute, before actions/auth/retries.
+  used. A provider-neutral client scheduler uses the authorized `awaitingOther`
+  projection, including off-turn decisions, not just the active seat:
+  visible waiting/lobby views use 2 seconds; your own turn/decision uses
+  `pollSeconds` (default 10, bounded to 5-60); hidden/finished views use
+  `max(30, pollSeconds)`. Returning to a visible tab requests a fresh view.
+  Requests never overlap; slow responses and browser suspension can delay
+  updates. Failures back off to 10/20/40/60 seconds, or the current interval
+  when longer, capped at 60. Visibility changes do not bypass failure backoff.
+  Ordinary scheduled reads pause during a command. New clients request
+  `commandWithView`, applying the actor-only view with the receipt and switching
+  the polling interval immediately when ownership changes. Missing or stale
+  embedded views trigger a normal read. Old clients keep the bare-receipt
+  `command` operation and their follow-up read. Older-than-confirmed projections
+  retry after 0.5 seconds.
+- With default settings and fast responses, one waiting and one active seat
+  make roughly 36 Cloud Code calls / 72 Cloud Save reads per minute, compared
+  with 12 / 24 under the old fixed 10-second schedule. Both visible lobby seats
+  can approach 60 calls / 120 reads. These estimates exclude commands, auth,
+  foreground refreshes and retries. Monitor UGS usage; faster polling is not
+  push delivery and does not reduce the backend's execution time.
 - UGS matches do not import the legacy PostgreSQL database or browser cookies.
   The [legacy backend](../online/db/README.md) remains explicit `-Backend legacy`.
 - Anonymous signup and Cloud Code endpoints are Internet-accessible once you
@@ -276,13 +339,12 @@ CORS behavior from your actual static origin must be verified separately.
 
 ### Host registration reports storage_unavailable
 
-The original module accepted only a JSON String for the private `document`
-value. A Dashboard-created JSON Object caused `InvalidOperationException`
-and a safe `503 storage_unavailable` response. If you used Object, **do not
-reset the directory**: rebuild and redeploy the updated `BusaraUgs` module
-using Step 5, then rerun Step 6. The storage adapter now accepts both formats.
-If the error persists, inspect the Cloud Code error type and configuration;
-do not publish document contents, tokens or invitations.
+Check the private registration-shard preflight first. A missing shard returns
+`registration_not_initialized`; provision it only through the maintenance
+procedure above. Existing malformed records, incompatible schemas or conflicting
+migration ledgers require investigation, not resetting records. Inspect safe
+Cloud Code error types and configuration; do not publish document contents,
+tokens or invitations.
 
 ### Direct Cloud Save access check fails
 
@@ -308,7 +370,7 @@ target explicitly (replace the project UUID):
 ugs access get-project-policy --project-id '<your-Unity-project-UUID>' --environment-name development
 ```
 
-With the three Step 6 environment variables still set, run:
+With the three Step 5 environment variables still set, run:
 
 ```powershell
 node .\online\scripts\smoke-ugs.cjs --policy-check

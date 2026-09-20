@@ -78,8 +78,15 @@ authority. Hiding a Unity panel is not an information-security boundary.
 
 **UGS:** Unity Authentication session tokens identify the player; Cloud Code
 checks that player against persisted membership and fixed Busara guest expiry.
-Refresh tokens live in browser local storage, not HttpOnly cookies. The client
-polls authorized Cloud Code projections over HTTPS. See the
+Refresh tokens live in browser local storage, not HttpOnly cookies. A
+`command` response carries the acting player's own updated projection
+alongside its receipt, so submitting your own move never costs a second
+round trip. The client separately polls authorized Cloud Code projections
+over HTTPS to discover the *other* player's moves: every 2 seconds while
+visibly waiting or in the lobby, normally 10 seconds on your own turn, and
+at least 30 seconds while hidden or finished. Failed reads back off rather
+than continuously retrying. The interval excludes backend/network latency.
+Legacy WebSocket delivery and its fixed polling fallback remain separate. See the
 [UGS privacy and storage limits](ugs-setup.md#persistence-privacy-and-operational-limits).
 
 **Legacy backend:** guest credentials are 256-bit opaque tokens in Secure, HttpOnly, SameSite
@@ -120,15 +127,29 @@ can still permit deductions; this is not a traffic-analysis secrecy guarantee.
 `OnlineCommand` carries a unique `commandId`, string `expectedVersion`, command
 kind and arguments, and a `decisionId` for responses to a pending choice.
 
-UGS saves state, receipts and append-only events in one private Cloud Save
-document using a write-lock compare-and-swap; room publication is separately
-coordinated by the administrator-initialized directory. PostgreSQL's legacy
-backend serializes transitions with a match-row lock. After authorizing
-membership, the server checks for an existing receipt before checking
-staleness. Repeating the same authenticated command returns its recorded
-receipt; reusing its ID with different contents is rejected. State, receipt,
-and append-only history are committed atomically before acknowledgement.
-Different workers cannot independently spend the same payment.
+UGS saves state, compact durable receipts and append-only events in one
+private Cloud Save document per room using a write-lock compare-and-swap.
+Room publication is recorded in the creating player's own guest document.
+Preprovisioned registration shards CAS-publish immutable actor-to-document
+mappings and fixed expiry. Fresh random guest candidates are written before
+publication; losing registrations use the winning mapping and never overwrite
+its ledger. Only registration contends for a shard lock. Ordinary commands read
+registration/expiry alongside the room, without loading a guest's create/join
+ledger. PostgreSQL's legacy backend serializes
+transitions with a match-row lock. After authorizing membership, the server
+checks for an existing receipt before checking staleness. Repeating the same
+authenticated command returns its recorded receipt; reusing its ID with
+different contents is rejected. State, receipt, and append-only history are
+committed atomically before acknowledgement. Different workers cannot
+independently spend the same payment.
+
+UGS keeps `command` replies as bare receipts for already-open older clients.
+New clients explicitly request `commandWithView`, receiving
+`{"receipt": {...}, "view": {...}}`. Both operations use the same command identity
+and exact body fingerprint. Retries return the original receipt alongside the
+current authorized actor view, not a stored copy of an old projection. The
+legacy backend remains bare-receipt only. An embedded view updates the polling
+activity without falsely completing an outstanding view request.
 
 The saved match contains the current phase, active seat, setup/draw/power
 continuation, pending decision owner and ID, server deck, action snapshot, and

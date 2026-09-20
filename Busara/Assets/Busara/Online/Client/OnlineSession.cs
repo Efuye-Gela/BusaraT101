@@ -36,12 +36,10 @@ namespace Busara.Online.Client
         private string pendingBody;
         private OnlineCommand pending;
         private bool expired;
-        private bool fetching;
         private bool outboxReady;
         private bool projectionHealthy;
         private string confirmedVersion;
-        private float nextPoll;
-        private float pollSeconds = 4;
+        private AdaptivePollSchedule polling = new AdaptivePollSchedule(4, 4, 4, false);
         private bool usesUgs;
         private string roomRequestBody;
         private string roomRequestPath;
@@ -69,8 +67,16 @@ namespace Busara.Online.Client
                     matchId = route.matchId;
                     HasInvite = route.hasInvite;
                     usesUgs = route.backend == "ugs";
-                    pollSeconds = route.pollSeconds > 0 ? route.pollSeconds : 4;
+                    float normalPoll = route.pollSeconds > 0 ? route.pollSeconds : 4;
+                    polling = usesUgs ? new AdaptivePollSchedule(normalPoll, 2, Math.Max(30, normalPoll)) :
+                        new AdaptivePollSchedule(normalPoll, normalPoll, normalPoll, false);
+                    polling.SetBackground(usesUgs && route.hidden, Time.unscaledTime);
                     RefreshGuest();
+                    break;
+                case "visibility":
+                    var visibility = Parse<OnlineBrowserTransport.Visibility>(e.body);
+                    if (visibility == null) Status = "Protocol error: browser visibility data is unreadable.";
+                    else if (usesUgs) polling.SetBackground(visibility.hidden, Time.unscaledTime);
                     break;
                 case "outbox":
                     outboxReady = true;
@@ -118,7 +124,6 @@ namespace Busara.Online.Client
                     break;
                 case "protocolError":
                     Busy = false;
-                    fetching = false;
                     projectionHealthy = false;
                     Status = "Protocol error: malformed browser response. Saved actions are retained. Retry safely.";
                     break;
@@ -289,10 +294,13 @@ namespace Busara.Online.Client
             if (Guest == null || pending == null || Busy || expired) return;
             Busy = true;
             Status = "Submitting saved action… No further actions are allowed until its receipt is known.";
-            transport.Request("POST", RoomPath + "/commands", pendingBody, Guest.csrfToken, response =>
+            transport.Request("POST", RoomPath + (usesUgs ? "/commands-with-view" : "/commands"), pendingBody, Guest.csrfToken, response =>
             {
                 Busy = false;
-                CommandReceipt receipt = Parse<CommandReceipt>(response.body);
+                // Only UGS's Cloud Code module embeds the actor's own updated view alongside
+                // the receipt; the legacy backend still returns a bare CommandReceipt.
+                CommandResult result = ParseCommandResult(response.body, usesUgs);
+                CommandReceipt receipt = result.receipt;
                 bool verified = receipt != null && receipt.commandId == pending.commandId && receipt.matchId == matchId &&
                     ValidVersion(receipt.version) &&
                     (receipt.status == "accepted" || receipt.status == "applied" || receipt.status == "rejected" ||
@@ -315,7 +323,12 @@ namespace Busara.Online.Client
                         Status = receipt.status == "accepted" || receipt.status == "applied" || receipt.status == "ok"
                             ? "Action confirmed." : "Action rejected: " + receipt.code + ". Refresh and choose again.";
                     }
-                    FetchView();
+                    // UGS already returned our own updated projection alongside the receipt;
+                    // apply it directly instead of spending a second round trip just to see
+                    // the move we already know we made. Fall back to a real fetch if that
+                    // embedded view is missing/stale, or unconditionally on the legacy backend
+                    // (which has no embedded view to apply).
+                    if (result?.view == null || ApplyFreshView(result.view) != ViewOutcome.Applied) FetchView();
                 }
                 else
                 {
@@ -333,7 +346,7 @@ namespace Busara.Online.Client
 
         public void ResolveConflict()
         {
-            if (!CanResolveConflict || Busy || pending == null || fetching) return;
+            if (!CanResolveConflict || Busy || pending == null || polling.InFlight) return;
             if (!transport.ClearOutbox(pending.commandId)) return;
             pending = null;
             pendingBody = null;
@@ -345,34 +358,17 @@ namespace Busara.Online.Client
 
         public void FetchView()
         {
-            if (Guest == null || string.IsNullOrEmpty(matchId) || fetching || expired) return;
-            fetching = true;
-            nextPoll = Time.unscaledTime + pollSeconds;
+            if (Guest == null || string.IsNullOrEmpty(matchId) || polling.InFlight || expired) return;
+            polling.Started(Time.unscaledTime);
             transport.Request("GET", RoomPath, "", "", response =>
             {
-                fetching = false;
+                bool validProjection = false;
+                bool stale = false;
                 if (response.status >= 200 && response.status < 300)
                 {
-                    ClientView fresh = Parse<ClientView>(response.body);
-                    if (fresh == null || fresh.matchId != matchId || fresh.ruleset != "busara-online-mvp-v1" ||
-                        !ValidVersion(fresh.version))
-                    {
-                        projectionHealthy = false;
-                        Status = "Unsupported or malformed match projection. No actions will be inferred.";
-                        Changed?.Invoke();
-                    }
-                    else
-                    {
-                        if (confirmedVersion == null || CompareVersions(fresh.version, confirmedVersion) >= 0)
-                        {
-                            if (usesUgs) Connection = "UGS - HTTPS polling";
-                            confirmedVersion = fresh.version;
-                            projectionHealthy = true;
-                            if (View == null || CompareVersions(fresh.version, View.version) > 0) View = fresh;
-                        }
-                        else nextPoll = Time.unscaledTime + .5f;
-                        Changed?.Invoke();
-                    }
+                    ViewOutcome outcome = ApplyFreshView(Parse<ClientView>(response.body));
+                    validProjection = outcome != ViewOutcome.Invalid;
+                    stale = outcome == ViewOutcome.Stale;
                 }
                 else
                 {
@@ -380,13 +376,37 @@ namespace Busara.Online.Client
                     if (response.status == 401 || response.status == 410) expired = true;
                     Connection = "Reconnecting — HTTPS polling active";
                     Status = Failure(response);
-                    Changed?.Invoke();
                 }
+                polling.Completed(Time.unscaledTime, validProjection, CurrentPollActivity);
+                if (stale) polling.RetryStaleProjection(Time.unscaledTime);
+                Changed?.Invoke();
             });
         }
 
+        private enum ViewOutcome { Invalid, Stale, Applied }
+
+        private ViewOutcome ApplyFreshView(ClientView fresh)
+        {
+            if (fresh == null || fresh.matchId != matchId || fresh.ruleset != "busara-online-mvp-v1" ||
+                !ValidVersion(fresh.version))
+            {
+                projectionHealthy = false;
+                Status = "Unsupported or malformed match projection. No actions will be inferred.";
+                return ViewOutcome.Invalid;
+            }
+            if (confirmedVersion != null && CompareVersions(fresh.version, confirmedVersion) < 0) return ViewOutcome.Stale;
+            if (usesUgs) Connection = "UGS - HTTPS polling";
+            confirmedVersion = fresh.version;
+            projectionHealthy = true;
+            if (View == null || CompareVersions(fresh.version, View.version) > 0) View = fresh;
+            polling.SetActivity(CurrentPollActivity, Time.unscaledTime);
+            return ViewOutcome.Applied;
+        }
+
+        private PollActivity CurrentPollActivity => View != null && View.phase == "Finished" ? PollActivity.Finished :
+            View == null || View.phase == "Lobby" || View.awaitingOther ? PollActivity.Waiting : PollActivity.LocalTurn;
         private string RoomPath => "/api/rooms/" + Uri.EscapeDataString(matchId);
-        private void Update() { if (Time.unscaledTime >= nextPoll) FetchView(); }
+        private void Update() { if (!Busy && polling.IsDue(Time.unscaledTime)) FetchView(); }
         private static bool ValidVersion(string value)
         {
             if (string.IsNullOrEmpty(value)) return false;
@@ -410,8 +430,6 @@ namespace Busara.Online.Client
             ApiError error = Parse<ApiError>(response.body);
             if (error != null && error.code == "guest_unregistered")
                 return "This UGS identity is not registered for Busara. Create the guest explicitly before joining.";
-            if (error != null && error.code == "directory_not_initialized")
-                return "UGS setup incomplete: initialize the private directory using the UGS setup guide.";
             if (error != null && error.code == "storage_capacity_reached")
                 return "UGS storage capacity reached. The request was not saved; ask the project administrator. Pending actions are retained.";
             if (error != null && !string.IsNullOrEmpty(error.code))
@@ -422,6 +440,16 @@ namespace Busara.Online.Client
         {
             try { return JsonUtility.FromJson<T>(json); }
             catch (ArgumentException) { return null; }
+        }
+        private static CommandResult ParseCommandResult(string json, bool withView)
+        {
+            var result = (withView ? Parse<CommandResult>(json) : null) ?? new CommandResult();
+            if (string.IsNullOrEmpty(result.receipt?.commandId))
+            {
+                result.receipt = Parse<CommandReceipt>(json);
+                result.view = null;
+            }
+            return result;
         }
         private void OnDestroy() { if (transport != null) transport.Event -= OnEvent; }
     }

@@ -102,11 +102,11 @@
         else if (method === 'POST' && path === '/api/rooms') operation = 'create';
         else if (method === 'POST' && path === '/api/rooms/join') operation = 'join';
         else {
-          const route = /^\/api\/rooms\/([a-fA-F0-9-]{36})(\/commands)?$/.exec(path);
+          const route = /^\/api\/rooms\/([a-fA-F0-9-]{36})(\/commands(?:-with-view)?)?$/.exec(path);
           if (!route || (route[2] ? method !== 'POST' : method !== 'GET'))
             throw new UgsFailure(400, 'invalid_route');
           matchId = route[1];
-          operation = route[2] ? 'command' : 'view';
+          operation = route[2] === '/commands-with-view' ? 'commandWithView' : route[2] ? 'command' : 'view';
         }
         const reply = await this.invoke(operation, body || '{}', matchId, signal);
         if (operation === 'create' && reply.status === 200) {

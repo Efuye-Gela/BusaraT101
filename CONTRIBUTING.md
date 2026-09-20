@@ -50,6 +50,10 @@ affected fixtures. The milestone regression selection was
 `OnlineClientTests;BusaraOnlineParityTests;KingdomPowerTests;PlayerSetupTests;PlayerSetupSceneTests`.
 Other bot/playtest/MCP edits need their own relevant fixtures; this selection
 does not cover everything in the project.
+For client polling changes, select `AdaptivePollScheduleTests;OnlineClientTests;CommandReplyTests`
+and run the browser bridge tests. The scheduler tests check exact waiting,
+own-turn, hidden-tab and failure intervals, non-overlap and per-minute request
+budgets with a deterministic clock; they do not measure real UGS latency.
 
 For the same selection in an isolated batch Editor, close the interactive
 Editor first and use an absolute executable path:
@@ -73,10 +77,16 @@ lockfile and project-setting diffs after any import/test/build.
 
 ### UGS backend and Web integration
 
-UGS is the default backend; follow [UGS setup](docs/ugs-setup.md) for deployment,
-one-time private directory initialization and real-cloud/browser smoke checks.
-No player-facing bootstrap or direct Cloud Save access may be added. Never
-replace CAS with an unconditional update, or evict receipts to fit quota.
+UGS is the default backend; follow [UGS setup](docs/ugs-setup.md) for deployment
+and real-cloud/browser smoke checks. Provision the private registration shards
+administratively before activating the runtime. Guest/create/join ledgers are
+initialized at fresh candidate IDs and CAS-published through these shards,
+not unconditionally initialized at a mutable player key. No player-facing
+bootstrap or direct Cloud Save access may be added. Never
+replace CAS with an unconditional update. Preserve compact command/join receipts
+and append-only history for the room's lifetime. One client's pending outbox
+does not prevent another seat from submitting commands, so a shared receipt
+window is not a safe recovery boundary. Do not persist a projection per receipt.
 
 ```powershell
 Push-Location .\online
@@ -85,6 +95,7 @@ try {
   if ($LASTEXITCODE -ne 0) { throw 'UGS adapter tests failed.' }
 } finally { Pop-Location }
 node .\online\tests\ugs-transport.test.cjs
+node .\online\tests\ugs-registration-provision.test.cjs
 .\online\scripts\package-ugs.ps1 -Dotnet 'C:\path\to\dotnet.exe'
 ```
 
@@ -92,6 +103,24 @@ Build Unity with `-Backend ugs -ProjectId '<project-UUID>' -EnvironmentName
 'development'` using the existing build script. Local adapter tests use
 simulated CAS; the real `smoke-ugs.cjs` and two-browser steps are separate,
 explicit cloud operations. Do not count the legacy WSS suite as UGS coverage.
+
+For the Windows two-PC packaging/launcher tools:
+
+```powershell
+.\online\tests\ugs-web-test-tools.test.ps1
+.\online\tests\static-hosting.test.ps1
+```
+
+This checks a synthetic portable bundle and starts an isolated loopback HTTPS
+server. It temporarily creates a per-user test certificate, removes its
+Personal-store entry, and never installs trust or contacts UGS. The public
+test certificate is trusted only by the individual local test requests.
+Temporary files and the owned server process are cleaned up afterward. This
+is not evidence of gameplay between two physical PCs.
+The static-hosting suite checks provider-neutral export, Vercel configuration,
+upload limits and safe file selection without publishing. See the
+[Vercel hosting guide](docs/vercel-hosting.md) for the separate live deployment
+and browser acceptance steps.
 
 ### Legacy backend and real browser integration
 

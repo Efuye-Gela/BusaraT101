@@ -1,8 +1,11 @@
 'use strict';
 const {BusaraUgs} = require('../../Busara/Assets/WebGLTemplates/BusaraOnline/busara-ugs.js');
-const {randomUUID} = require('node:crypto');
+const {randomUUID, createHash} = require('node:crypto');
+const registrationLayout = require('../ugs/registration-layout.json');
 const projectId = process.env.BUSARA_UGS_PROJECT_ID;
 const environmentName = process.env.BUSARA_UGS_ENVIRONMENT;
+const registrationKey = player => registrationLayout.prefix +
+  String(createHash('sha256').update(player, 'utf8').digest()[0] % registrationLayout.count).padStart(2, '0');
 
 function seat() {
   const memory = new Map();
@@ -18,7 +21,7 @@ function expect(reply, status, step) {
   if (reply.status !== status) {
     const code = (() => { try { return JSON.parse(reply.body).code; } catch (_) { return ''; } })();
     throw new Error(step + ' failed (HTTP ' + reply.status + ', ' +
-      (/^[a-z_]+$/.test(code) ? code : 'unexpected_response') + '). Check UGS deployment, private directory, policy and environment.');
+      (/^[a-z_]+$/.test(code) ? code : 'unexpected_response') + '). Check UGS deployment, Cloud Save policy and environment.');
   }
   return JSON.parse(reply.body);
 }
@@ -54,9 +57,10 @@ async function diagnosePolicy(client, fetcher = fetch, log = console.log) {
   log('Policy diagnostic UTC: ' + new Date().toISOString());
   log('Configured project: ' + client.config.projectId + '; environment: ' + client.config.environmentName);
   log('Token routing (decoded, not independently verified): ' + JSON.stringify(tokenRouting(client.token)));
+  // Provisioning is an administrator prerequisite; this diagnostic never writes Game Data.
   const base = 'https://cloud-save.services.api.unity.com/v1/data/projects/' +
     encodeURIComponent(client.config.projectId);
-  const custom = base + '/custom/busara_directory_v1';
+  const custom = base + '/custom/' + encodeURIComponent(registrationKey(client.player));
   const probes = [
     ['privateRead', 'Private read', custom + '/private/items?keys=document'],
     ['defaultRead', 'Default read with query', custom + '/items?keys=document'],
@@ -88,7 +92,7 @@ async function main() {
   expect(await call(guest, 'POST', '/api/guest'), 200, 'Guest registration');
   check(host.player !== guest.player, 'Expected independent player identities.');
   const direct = 'https://cloud-save.services.api.unity.com/v1/data/projects/' +
-    encodeURIComponent(projectId) + '/custom/busara_directory_v1/private/items';
+    encodeURIComponent(projectId) + '/custom/' + encodeURIComponent(registrationKey(host.player)) + '/private/items';
   const headers = {'Authorization': 'Bearer ' + host.token, 'Content-Type': 'application/json'};
   const read = await fetch(direct + '?keys=document', {headers, signal: AbortSignal.timeout(20000)});
   checkStorageDenial(read.status, 'privateRead');
@@ -119,8 +123,13 @@ async function main() {
       kind: 'configure', name, ready: true, paymentIds: []};
     const replies = await Promise.all([call(client, 'POST', route + '/commands', command),
       call(client, 'POST', route + '/commands', command)]);
-    expect(replies[0], 200, 'Configure seat');
+    const receipt = expect(replies[0], 200, 'Configure seat');
+    check(receipt.commandId === command.commandId && !receipt.receipt, 'Old command route must return a bare receipt.');
     check(replies[0].body === replies[1].body, 'Concurrent duplicate was not idempotent.');
+    const wrapped = expect(await call(client, 'POST', route + '/commands-with-view', command), 200, 'New reply format retry');
+    check(JSON.stringify(wrapped.receipt) === JSON.stringify(receipt), 'Reply format changed the original receipt.');
+    check(wrapped.view.seat === view.seat && wrapped.view.version === receipt.version,
+      'Command reply must carry the updated actor-only view.');
   }
   const lobby = expect(await call(host, 'GET', route), 200, 'Ready lobby');
   const start = {commandId: randomUUID(), expectedVersion: lobby.version, kind: 'start', paymentIds: []};
@@ -136,6 +145,6 @@ async function main() {
   console.log('PASS: real UGS registration, direct-access denial, concurrent create/commands, join retry, ownership, start, privacy and token refresh.');
   console.log('This API smoke does not verify browser CORS, Unity rendering, or Retraction recovery. Test players/room remain in the selected development environment; credentials were not saved.');
 }
-module.exports = {checkStorageDenial, tokenRouting, diagnosePolicy};
+module.exports = {checkStorageDenial, tokenRouting, diagnosePolicy, registrationKey};
 if (require.main === module)
   main().catch(error => { console.error(error.message); process.exitCode = 1; });

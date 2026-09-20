@@ -2,10 +2,25 @@ using Busara.Online;
 
 namespace Busara.Ugs;
 
-public sealed class DirectoryDocument
+public sealed class RegistrationShard
 {
     public int schemaVersion = 1;
-    public Dictionary<string, DateTimeOffset> guests = new();
+    // Administrator-provisioned container; runtime only appends immutable registrations with CAS.
+    public Dictionary<string, GuestRegistration> registrations = new();
+}
+
+public sealed class GuestRegistration
+{
+    public string guestDocumentId = "";
+    public DateTimeOffset expiresAt;
+}
+
+public sealed class GuestDocument
+{
+    public int schemaVersion = 1;
+    public DateTimeOffset expiresAt;
+    // Per-actor create/join idempotency ledgers. Scoped to one player instead of the whole
+    // game. Entries and room receipts are retained for the full room lifetime.
     public Dictionary<string, Creation> creates = new();
     public Dictionary<string, string> joins = new();
 }
@@ -34,13 +49,19 @@ public sealed class HistoryEvent
 
 public sealed class RoomDocument
 {
-    public int schemaVersion = 1;
+    public int schemaVersion = 2;
     public string creationKey = "";
+    // False until Create()'s winning candidate confirms it (MatchService.EnsurePublished).
+    // Guards against a crashed/losing concurrent creator's room ever being read: matchId and
+    // invite secrets are never disclosed to any client until this flips true.
+    public bool published;
     public string[] members = new[] { "", "" };
     public string inviteHash = "";
     public DateTimeOffset inviteExpiresAt;
     public MatchState state = new();
     public Dictionary<string, Receipt> receipts = new();
+    // Retained for compatibility with existing schema-2 documents; never used for eviction.
+    public List<string> receiptOrder = new();
     public List<HistoryEvent> events = new();
 }
 

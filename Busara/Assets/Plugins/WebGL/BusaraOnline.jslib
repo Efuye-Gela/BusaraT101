@@ -3,7 +3,7 @@ mergeInto(LibraryManager.library, {
     receiver: null, guest: null, match: null, csrf: null, socket: null,
     timer: null, generation: 0, key: null, invite: null, requests: null,
     ownsOutbox: false, releaseOutbox: null,
-    roomKey: null, ownsRoomOutbox: false, releaseRoomOutbox: null, inviteHash: null, ugs: null,
+    roomKey: null, ownsRoomOutbox: false, releaseRoomOutbox: null, inviteHash: null, ugs: null, visibilityHandler: null,
     emit: function(kind, body, id, status) {
       if (BusaraOnline.receiver)
         SendMessage(BusaraOnline.receiver, 'OnBrowserEvent',
@@ -32,6 +32,8 @@ mergeInto(LibraryManager.library, {
   },
   Busara_Init__deps: ['$BusaraOnline'],
   Busara_Init: function(receiver) {
+    if (BusaraOnline.visibilityHandler) document.removeEventListener('visibilitychange', BusaraOnline.visibilityHandler);
+    BusaraOnline.visibilityHandler = null;
     BusaraOnline.receiver = UTF8ToString(receiver);
     BusaraOnline.requests = new Set();
     BusaraOnline.ugs = null;
@@ -56,9 +58,15 @@ mergeInto(LibraryManager.library, {
       BusaraOnline.emit('unsupported', 'Online play requires an HTTPS-hosted Unity Web build. No guest or match request was sent.');
       return;
     }
+    if (BusaraOnline.ugs) {
+      BusaraOnline.visibilityHandler = function() {
+        BusaraOnline.emit('visibility', JSON.stringify({hidden: document.visibilityState === 'hidden'}));
+      };
+      document.addEventListener('visibilitychange', BusaraOnline.visibilityHandler);
+    }
     var ready = function() {
       BusaraOnline.emit('route', JSON.stringify({matchId: route.get('match'), hasInvite: !!BusaraOnline.invite,
-        backend: BusaraOnline.ugs ? 'ugs' : 'legacy',
+        backend: BusaraOnline.ugs ? 'ugs' : 'legacy', hidden: document.visibilityState === 'hidden',
         pollSeconds: BusaraOnline.ugs ? Math.max(5, Math.min(60, Number(config.pollSeconds) || 10)) : 4}));
     };
     if (!BusaraOnline.invite) ready();
@@ -236,6 +244,8 @@ mergeInto(LibraryManager.library, {
   },
   Busara_Dispose__deps: ['$BusaraOnline'],
   Busara_Dispose: function() {
+    if (BusaraOnline.visibilityHandler) document.removeEventListener('visibilitychange', BusaraOnline.visibilityHandler);
+    BusaraOnline.visibilityHandler = null;
     BusaraOnline.generation++;
     clearTimeout(BusaraOnline.timer);
     if (BusaraOnline.socket) BusaraOnline.socket.close();
