@@ -46,8 +46,7 @@ public sealed class Rooms(Database database, ServerSettings settings, IGameRando
         await using var reader = await command.ExecuteReaderAsync(ct);
         if (!await reader.ReadAsync(ct)) throw new ApiException(404, "room_unavailable", "Room unavailable.");
         var state = Wire.Decode<MatchState>(reader.GetString(0));
-        if (state.schemaVersion != 1 || state.ruleset != "busara-online-mvp-v1" ||
-            state.id != matchId.ToString("D") || state.version != reader.GetInt64(1))
+        if (state.id != matchId.ToString("D") || state.version != reader.GetInt64(1))
             throw new InvalidOperationException("Stored state schema, identity or revision is invalid.");
         DomainRules.ValidateState(state);
         return state;
@@ -194,9 +193,12 @@ public sealed class Rooms(Database database, ServerSettings settings, IGameRando
             request.decisionId?.Length > 100 || request.expectedVersion?.Length > 20 ||
             request.resourceType is < -1 or > 3 || request.from is < -1 or > 31 || request.to is < -1 or > 31 ||
             request.paymentIds is null || request.paymentIds.Length > 12 ||
-            request.paymentIds.Any(id => id is null || id.Length > 100))
+            request.paymentIds.Any(id => id is null || id.Length > 100) ||
+            request.slots is null || request.slots.Length > 32 || request.slots.Any(slot => slot is < 0 or > 31) ||
+            request.count is < -3 or > 3 || request.virtueType is < -1 or > 5 ||
+            request.exchangeIds?.Length > 12 || request.exchangeIds?.Any(id => id is null || id.Length > 100) == true)
             throw new ApiException(400, "invalid_command", "The command payload is invalid.");
-        var fingerprint = ServerSettings.Hash(Wire.Encode(request));
+        var fingerprint = CommandFingerprint.For(request);
         await using var connection = await database.Source.OpenConnectionAsync(ct);
         await using var tx = await connection.BeginTransactionAsync(ct);
         var seat = await Seat(connection, tx, matchId, guest, ct);

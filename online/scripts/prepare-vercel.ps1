@@ -6,6 +6,7 @@ $web = Join-Path $online 'web'
 $config = & (Join-Path $PSScriptRoot 'Get-UgsWebTestConfiguration.ps1') -WebRoot $web
 $files = & (Join-Path $PSScriptRoot 'Get-UnityWebBuildFiles.ps1') -WebRoot $web -RequireHashedNames
 $files['busara-ugs.js'] = Join-Path $web 'busara-ugs.js'
+$files['busara-latency.js'] = Join-Path $web 'busara-latency.js'
 $generated = @{'busara-config.js' = 'window.busaraConfig = ' + ($config | ConvertTo-Json) + ';'}
 $provider = [VercelHostingProvider]::new((Join-Path $online 'hosting\vercel.json'))
 $name = 'site-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [Guid]::NewGuid().ToString('N').Substring(0, 8)

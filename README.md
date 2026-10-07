@@ -11,10 +11,12 @@ using kingdom powers to meet a kingdom's victory requirements.
 Online is an explicit reduced variant, not a production multiplayer service.
 Players receive distinct random kingdoms from Egolica/Abundance, Mask of
 Light/Retraction and N'evulandis/Infinite Knowledge. It supports native setup,
-resource drawing/placement, adjacent movement, exactly two-resource forging
-(including across boards), reactions and victory. It excludes the other
-12 powers, disasters, trading, weapons, longer forge chains, bots, spectators
-and public matchmaking. Offline play remains separate.
+resource drawing/placement, adjacent movement, ordered forge chains, consensual
+one-resource trades, three-resource weapons, reactions and kingdom-goal victory.
+New matches use `busara-online-mvp-v2`; existing v1 matches keep their original
+pair-only forging and do not gain trades or weapons. It excludes the other
+12 powers, disasters, bots, spectators and public matchmaking. Offline play
+remains separate.
 
 ## Open and play offline
 
@@ -30,6 +32,9 @@ Offline play does not require PostgreSQL or the .NET server. Bots have their
 own documented [capabilities and limits](docs/heuristic-bot.md).
 
 ## Run multiplayer with Unity Gaming Services
+
+For an end-to-end explanation to reuse in another game, read
+**[Multiplayer architecture and hosting](docs/multiplayer-architecture-and-hosting.md)**.
 
 Start with **[UGS setup and a simple two-player test](docs/ugs-setup.md)**.
 UGS is the default online backend. You deploy the `BusaraUgs` C# module to
@@ -73,6 +78,10 @@ forfeit. See the [online rules](docs/online-multiplayer.md), including the
 The ASP.NET Core/PostgreSQL implementation remains available for regression
 testing with **`-Backend legacy`** on the Web build command and the
 [legacy server guide](online/db/README.md). It is not started as a fallback.
+
+For opt-in, local browser-console timing, see [move latency diagnostics](docs/move-latency.md).
+`busaraLatency.enable()` starts measurement; `busaraLatency.report()` separates
+provider round-trip, verified receipt, applied view and frame-boundary timings.
 Existing PostgreSQL matches/cookies are not imported into UGS; each backend
 has separate identities and durable storage.
 
@@ -86,6 +95,7 @@ has separate identities and durable storage.
 | [Playtest Runner](docs/playtest-window.md) | Editor setup, scenario tools and fast startup |
 | [Heuristic bots](docs/heuristic-bot.md) | Offline bot behavior, scoring and limits |
 | [Online multiplayer](docs/online-multiplayer.md) | Supported rules, privacy, durability and dated verification evidence |
+| [Multiplayer architecture and hosting](docs/multiplayer-architecture-and-hosting.md) | Reusable architecture, provider boundaries, UGS setup and static website deployment |
 | [UGS setup and test](docs/ugs-setup.md) | Cloud Code deployment, private Cloud Save, API smoke and two-browser play |
 | [Reusable UGS playbook](docs/ugs-multiplayer-playbook.md) | Setup-session lessons, copyable commands, troubleshooting and a checklist for future games |
 | [Vercel HTTPS hosting](docs/vercel-hosting.md) | One hosted Unity website for players on different PCs, with UGS as the backend |

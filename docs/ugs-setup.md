@@ -1,5 +1,8 @@
 # UGS multiplayer: setup and a simple test
 
+For the end-to-end design and adaptation to another project, start with
+[Multiplayer architecture and hosting](multiplayer-architecture-and-hosting.md).
+
 For the guided setup recap, troubleshooting lessons and a checklist for future
 games, see the [reusable UGS multiplayer playbook](ugs-multiplayer-playbook.md).
 
@@ -379,14 +382,32 @@ node .\online\scripts\smoke-ugs.cjs --policy-check
 This creates **one anonymous test identity**, but does not register a Busara
 guest, create a room or write Cloud Save. It prints only the configured target,
 allowlisted project/environment UUID claims, a UTC timestamp and four read
-statuses. Tokens, player IDs and response bodies are never printed. It compares
-Default reads with/without query parameters and an own-player read; all must
+statuses, with redacted method/route labels. Tokens, player IDs and response
+bodies are never printed. It compares Default **Game Data/Custom Items** reads
+with/without a `keys=document` filter and an own-player **Player Data Default**
+read; all must
 return 403, while the Private read may return 401 or 403. The decoded token
 claims are diagnostic routing information, not independent token verification.
 Compare the environment UUID with **Project Settings > Environments** in the
 Dashboard. If routing and the deployed policy match but reads still succeed,
 retain these diagnostics for Unity support; do not bypass the failing gate.
 This diagnostic does not replace the full smoke, and needs no module deployment.
+
+When comparing results with support, distinguish the API families:
+[Default Game Data](https://docs.unity.com/en-us/cloud-save/concepts/game-data)
+is normally readable by any player; [Default Player Data](https://docs.unity.com/en-us/cloud-save/concepts/player-data)
+is normally readable only by its owning player. The project's deny policy is
+an additional restriction being tested, not a replacement for that distinction.
+`GET /custom/{customId}/items?keys=document` uses a key filter, **not the Query
+API**. A Player Data Query API result therefore does not reproduce this probe.
+The September 19 diagnostic used `customId=busara_directory_v1`; the current
+script uses a preprovisioned registration shard. Neither targets player-owned
+items for the unexpected Default Game Data results. The diagnostic discards
+response bodies, so HTTP 200 alone does not establish that any Private-class
+document was returned. Unity Support reported the service-side issue fixed
+on September 28, 2026 (ticket 3524761), with both Default reads now returning
+403. This has not yet been independently reverified in Busara. Rerun the
+existing diagnostic to establish local evidence; do not relax the gate.
 
 ### Local validation
 

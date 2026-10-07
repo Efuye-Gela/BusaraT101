@@ -51,6 +51,7 @@ try {
         [IO.File]::WriteAllText((Join-Path $web ('Build\' + $name)), 'fixture', $utf8)
     }
     [IO.File]::WriteAllText((Join-Path $web 'busara-ugs.js'), '// fixture', $utf8)
+    [IO.File]::WriteAllText((Join-Path $web 'busara-latency.js'), '// timing fixture', $utf8)
     [IO.File]::WriteAllText((Join-Path $web 'certificate.json'), 'must-not-be-packaged', $utf8)
     [IO.File]::WriteAllText((Join-Path $root 'docs\two-pc-testing.md'), 'fixture guide', $utf8)
     & (Join-Path $copiedScripts 'package-ugs-web-test.ps1') | Out-Null
@@ -58,7 +59,8 @@ try {
     Assert-True ($archive.Count -eq 1) 'Expected one completed test archive.'
     $zip = [IO.Compression.ZipFile]::OpenRead($archive[0].FullName)
     try {
-        Assert-True ($zip.Entries.Count -eq 12) 'Unexpected files in bundle.'
+        Assert-True ($zip.Entries.Count -eq 13) 'Unexpected files in bundle.'
+        Assert-True ($null -ne $zip.GetEntry('web/busara-latency.js')) 'Optional timing script missing from bundle.'
         foreach ($entry in $zip.Entries) {
             Assert-True ($entry.FullName -notmatch '(private\.pfx|certificate\.json|\.partial|\.ccm)$') 'Private file was bundled.'
         }

@@ -5,36 +5,46 @@ using System.Linq;
 
 namespace Busara.Online
 {
-    public static class Projection
+    public static partial class Projection
     {
         public static ClientView ForSeat(MatchState state, int viewer)
         {
             DomainRules.ValidateState(state);
             if (viewer < 0 || viewer > 1 || !state.seats[viewer].joined)
                 throw new RuleException("forbidden", "You do not own a seat in this match.");
+            bool full = Definitions.IsFull(state.ruleset);
+            int actor = full ? DomainRules.DecisionActor(state) : state.pending?.owner ?? -1;
+            int acting = full ? DomainRules.ActingSeat(state) : state.activeSeat;
             var view = new ClientView
             {
                 matchId = state.id, ruleset = state.ruleset, version = state.version.ToString(CultureInfo.InvariantCulture),
-                phase = state.pending != null && state.pending.owner != viewer ? "Waiting" : state.phase,
+                phase = state.pending != null && actor != viewer ? "Waiting" : state.phase,
                 seat = viewer, activeSeat = state.activeSeat, winner = state.winner, draw = state.draw,
-                awaitingOther = state.pending != null ? state.pending.owner != viewer :
-                    state.phase != "Lobby" && state.phase != "Finished" && state.activeSeat != viewer,
+                awaitingOther = state.pending != null ? actor != viewer :
+                    state.phase != "Lobby" && state.phase != "Finished" && acting != viewer,
                 board = state.board.Select(DomainRules.Copy).ToList()
             };
+            if (full)
+                FullStatus(state, view);
             foreach (SeatState player in state.seats)
             {
                 bool kingdomVisible = state.phase != "Lobby" && (player.seat == viewer || player.revealed ||
                     state.seats[viewer].knownKingdoms.Contains(player.kingdom));
                 bool virtuesVisible = player.seat == viewer || !player.virtuesHidden;
+                bool spendable = player.seat == viewer || (full && viewer == state.controller &&
+                    player.seat == state.activeSeat && DomainRules.ControllerSees(state));
+                KingdomDefinition kingdom = kingdomVisible ? KingdomCatalog.Find(player.kingdom) : null;
                 view.players.Add(new PlayerView
                 {
                     seat = player.seat, name = player.name, joined = player.joined, ready = player.ready,
                     kingdom = kingdomVisible ? Definitions.KingdomName(player.kingdom) : null,
                     goal = kingdomVisible ? Definitions.GoalText(player.kingdom) : null,
+                    kingdomId = full ? kingdom?.Id : null, powerName = full ? kingdom?.PowerName : null,
+                    powerCost = full && kingdom != null ? kingdom.Cost : 0,
                     revealed = player.revealed, virtuesVisible = virtuesVisible,
                     virtues = virtuesVisible ? player.virtues.Select(token => new TokenState
                     {
-                        id = player.seat == viewer ? token.id : null, type = token.type
+                        id = spendable ? token.id : null, type = token.type
                     }).ToList() : new List<TokenState>(),
                     setupRemaining = player.seat == viewer ? new List<ResourceType>(player.setupRemaining) : new List<ResourceType>()
                 });
@@ -47,10 +57,15 @@ namespace Busara.Online
             }
             else if (state.phase == "Setup" && state.activeSeat == viewer)
                 SetupChoices(state, view, viewer);
-            else if (state.phase == "Action" && state.activeSeat == viewer)
-                ActionChoices(state, view, viewer);
-            else if (state.pending != null && state.pending.owner == viewer)
-                DecisionChoices(state, view, viewer);
+            else if (state.phase == "Action" && acting == viewer)
+                ActionChoices(state, view, state.activeSeat);
+            else if (state.pending != null && actor == viewer)
+            {
+                if (full)
+                    FullDecisionChoices(state, view, viewer);
+                else
+                    DecisionChoices(state, view, viewer);
+            }
             return view;
         }
 
@@ -80,10 +95,17 @@ namespace Busara.Online
                     else if (source.type != target.type)
                         Add(view, "forge", "Forge #" + source.id + " + #" + target.id + " -> " +
                             Definitions.Forge(source.type, target.type), source.id, target.id);
-            if (state.seats[viewer].kingdom == Definitions.Egolica && !state.seats[viewer].revealed)
-                Add(view, "abundance", "Use Abundance (reveal kingdom, add up to 2 resources)");
-            if (state.seats[viewer].kingdom == Definitions.Knowledge && state.seats[viewer].virtues.Count >= 1)
-                Add(view, "knowledge", "Use Infinite Knowledge (pay 1 virtue)", payment: 1);
+            if (Definitions.IsFull(state.ruleset))
+                FullPowerChoices(state, view, viewer);
+            else
+            {
+                if (state.seats[viewer].kingdom == Definitions.Egolica && !state.seats[viewer].revealed)
+                    Add(view, "abundance", "Use Abundance (reveal kingdom, add up to 2 resources)");
+                if (state.seats[viewer].kingdom == Definitions.Knowledge && state.seats[viewer].virtues.Count >= 1)
+                    Add(view, "knowledge", "Use Infinite Knowledge (pay 1 virtue)", payment: 1);
+            }
+            if (Definitions.IsExpanded(state.ruleset))
+                ExpandedActionChoices(state, view, viewer);
         }
 
         private static void DecisionChoices(MatchState state, ClientView view, int viewer)
@@ -139,16 +161,18 @@ namespace Busara.Online
                     Add(view, "ack", "Continue");
                     break;
                 default:
-                    throw new RuleException("invalid_state", "The saved decision is unsupported.");
+                    ExpandedDecisionChoices(state, view, viewer);
+                    break;
             }
         }
 
         private static void Add(ClientView view, string kind, string label, int from = -1, int to = -1,
-            int type = -1, int payment = 0)
+            int type = -1, int payment = 0, int count = 0, int virtue = -1)
         {
             view.choices.Add(new LegalChoice
             {
-                kind = kind, label = label, from = from, to = to, resourceType = type, paymentCost = payment
+                kind = kind, label = label, from = from, to = to, resourceType = type, paymentCost = payment,
+                count = count, virtueType = virtue
             });
         }
     }

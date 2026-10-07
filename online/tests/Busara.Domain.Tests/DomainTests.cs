@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Busara.Online;
 using NUnit.Framework;
+using static Busara.Domain.Tests.RulesetPins;
 
 namespace Busara.Domain.Tests;
 
@@ -328,7 +329,7 @@ public sealed class DomainTests
 
     private static MatchState Started()
     {
-        var state = DomainRules.Join(DomainRules.Create(Guid.NewGuid().ToString()), 1, "Guest");
+        var state = DomainRules.Join(Ordinary(DomainRules.Create(Guid.NewGuid().ToString())), 1, "Guest");
         foreach (int seat in new[] { 0, 1 })
             state = DomainRules.Apply(state, seat, new OnlineCommand
             {

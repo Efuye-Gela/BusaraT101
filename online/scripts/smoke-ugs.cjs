@@ -28,8 +28,8 @@ function expect(reply, status, step) {
 function check(condition, step) { if (!condition) throw new Error(step); }
 
 function checkStorageDenial(status, probe) {
-  const labels = {privateRead: 'Private Cloud Save read', defaultRead: 'Default-class Cloud Save read',
-    playerRead: 'Player Cloud Save read', playerWrite: 'Player Cloud Save write'};
+  const labels = {privateRead: 'Private Game Data read', defaultRead: 'Default Game Data read',
+    playerRead: 'Own Player Data Default read', playerWrite: 'Own Player Data Default write'};
   if (!Object.hasOwn(labels, probe)) throw new Error('Unknown storage denial probe.');
   // Private Game Data is server-only and can reject a player token before
   // policy evaluation. Player-accessible endpoints must still prove policy denial.
@@ -57,15 +57,19 @@ async function diagnosePolicy(client, fetcher = fetch, log = console.log) {
   log('Policy diagnostic UTC: ' + new Date().toISOString());
   log('Configured project: ' + client.config.projectId + '; environment: ' + client.config.environmentName);
   log('Token routing (decoded, not independently verified): ' + JSON.stringify(tokenRouting(client.token)));
+  log('Routes below are relative to /v1/data/projects/{projectId}; item/player IDs are redacted.');
+  log('The keys parameter is a key filter on GET Items; no Query API is called.');
   // Provisioning is an administrator prerequisite; this diagnostic never writes Game Data.
   const base = 'https://cloud-save.services.api.unity.com/v1/data/projects/' +
     encodeURIComponent(client.config.projectId);
   const custom = base + '/custom/' + encodeURIComponent(registrationKey(client.player));
   const probes = [
-    ['privateRead', 'Private read', custom + '/private/items?keys=document'],
-    ['defaultRead', 'Default read with query', custom + '/items?keys=document'],
-    ['defaultRead', 'Default read without query', custom + '/items'],
-    ['playerRead', 'Own-player read', base + '/players/' + encodeURIComponent(client.player) + '/items']
+    ['privateRead', 'Private Game Data GET /custom/{customId}/private/items?keys=document',
+      custom + '/private/items?keys=document'],
+    ['defaultRead', 'Default Game Data GET /custom/{customId}/items?keys=document', custom + '/items?keys=document'],
+    ['defaultRead', 'Default Game Data GET /custom/{customId}/items', custom + '/items'],
+    ['playerRead', 'Own Player Data Default GET /players/{playerId}/items',
+      base + '/players/' + encodeURIComponent(client.player) + '/items']
   ];
   const results = [];
   for (const [probe, label, url] of probes) {

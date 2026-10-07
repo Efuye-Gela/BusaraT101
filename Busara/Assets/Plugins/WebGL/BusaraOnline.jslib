@@ -4,6 +4,11 @@ mergeInto(LibraryManager.library, {
     timer: null, generation: 0, key: null, invite: null, requests: null,
     ownsOutbox: false, releaseOutbox: null,
     roomKey: null, ownsRoomOutbox: false, releaseRoomOutbox: null, inviteHash: null, ugs: null, visibilityHandler: null,
+    latency: function(stage, sample, value) {
+      try {
+        return window.__busaraLatency ? window.__busaraLatency.observe(stage, sample, value) : 0;
+      } catch (_) { return 0; }
+    },
     emit: function(kind, body, id, status) {
       if (BusaraOnline.receiver)
         SendMessage(BusaraOnline.receiver, 'OnBrowserEvent',
@@ -77,7 +82,7 @@ mergeInto(LibraryManager.library, {
     }).catch(function() { BusaraOnline.emit('protocolError'); });
   },
   Busara_Request__deps: ['$BusaraOnline'],
-  Busara_Request: function(idPtr, methodPtr, pathPtr, bodyPtr, csrfPtr) {
+  Busara_Request: function(idPtr, methodPtr, pathPtr, bodyPtr, csrfPtr, diagnosticSample) {
     var id = UTF8ToString(idPtr), method = UTF8ToString(methodPtr);
     var path = UTF8ToString(pathPtr), body = UTF8ToString(bodyPtr), csrf = UTF8ToString(csrfPtr);
     if (!path.startsWith('/api/') || path.startsWith('//')) {
@@ -99,10 +104,18 @@ mergeInto(LibraryManager.library, {
     var controller = new AbortController();
     BusaraOnline.requests.add(controller);
     var timer = setTimeout(function() { controller.abort(); }, 15000);
+    var failure = function() {
+      BusaraOnline.latency('failed', diagnosticSample, controller.signal.aborted ? 'aborted' : 'delivery_uncertain');
+      BusaraOnline.emit('response', '', id, 0);
+    };
+    BusaraOnline.latency('dispatch', diagnosticSample);
     if (BusaraOnline.ugs) {
       BusaraOnline.ugs.request(method, path, body, controller.signal)
-        .then(function(response) { BusaraOnline.emit('response', response.body, id, response.status); })
-        .catch(function() { BusaraOnline.emit('response', '', id, 0); })
+        .then(function(response) {
+          BusaraOnline.latency('reply', diagnosticSample);
+          BusaraOnline.emit('response', response.body, id, response.status);
+        })
+        .catch(failure)
         .finally(function() { clearTimeout(timer); BusaraOnline.requests.delete(controller); });
       return;
     }
@@ -116,9 +129,10 @@ mergeInto(LibraryManager.library, {
       .then(async function(response) {
         var text = await response.text();
         if (text.length > 1048576) throw new Error('Response too large');
+        BusaraOnline.latency('reply', diagnosticSample);
         BusaraOnline.emit('response', text, id, response.status);
       })
-      .catch(function() { BusaraOnline.emit('response', '', id, 0); })
+      .catch(failure)
       .finally(function() { clearTimeout(timer); BusaraOnline.requests.delete(controller); });
   },
   Busara_RestoreRoomOutbox__deps: ['$BusaraOnline'],
@@ -242,8 +256,14 @@ mergeInto(LibraryManager.library, {
     // Read-only, visible UI only. No state snapshots, secrets or action functions.
     Object.defineProperty(window, 'busaraVisibleUi', {value: value, configurable: true, writable: false});
   },
+  Busara_Latency__deps: ['$BusaraOnline'],
+  Busara_Latency: function(stagePtr, sample, valuePtr) {
+    try { return BusaraOnline.latency(UTF8ToString(stagePtr), sample, UTF8ToString(valuePtr)); }
+    catch (_) { return 0; }
+  },
   Busara_Dispose__deps: ['$BusaraOnline'],
   Busara_Dispose: function() {
+    try { if (window.__busaraLatency) window.__busaraLatency.dispose(); } catch (_) {}
     if (BusaraOnline.visibilityHandler) document.removeEventListener('visibilitychange', BusaraOnline.visibilityHandler);
     BusaraOnline.visibilityHandler = null;
     BusaraOnline.generation++;

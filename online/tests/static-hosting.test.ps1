@@ -40,6 +40,8 @@ try {
     Assert-True ($wasm.headers.value -contains 'application/wasm') 'Wasm MIME is missing.'
     $rootHeaders = $config.headers | Where-Object { $_.source -eq '/' }
     Assert-True ($rootHeaders.headers.value -contains 'no-store') 'Entry page can become stale.'
+    $timingHeaders = $config.headers | Where-Object { $_.source.Contains('busara-latency.js') }
+    Assert-True ($timingHeaders.headers.value -contains 'no-store') 'Timing script can become stale.'
     $global = $config.headers | Where-Object { $_.source -eq '/(.*)' }
     Assert-True ($global.headers.value -contains 'no-referrer') 'Invitation referrer protection is missing.'
 

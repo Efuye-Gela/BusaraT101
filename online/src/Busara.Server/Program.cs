@@ -114,7 +114,8 @@ app.MapPost("/api/rooms/{matchId:guid}/commands", async (Guid matchId, HttpConte
     var result = await rooms.ApplyAsync(await auth.RequireAsync(context, true), matchId, request, context.RequestAborted);
     return Results.Json(result.Receipt, Wire.Json, statusCode: result.HttpStatus);
 });
-app.MapGet("/api/rooms/{matchId:guid}/events", async (Guid matchId, HttpContext context, Authentication auth, Rooms rooms) =>
+// HTTP/2 browsers establish WebSockets with CONNECT rather than GET.
+app.MapMethods("/api/rooms/{matchId:guid}/events", ["GET", "CONNECT"], async (Guid matchId, HttpContext context, Authentication auth, Rooms rooms) =>
 {
     if (!context.WebSockets.IsWebSocketRequest)
         throw new ApiException(400, "websocket_required", "Use a secure WebSocket connection.");

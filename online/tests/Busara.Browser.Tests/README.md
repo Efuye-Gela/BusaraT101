@@ -112,3 +112,22 @@ These tests do not replace the server suite's concurrency, wrong-seat, stale,
 forged-payment, hidden-virtue fixture or multiple-worker tests. A passing compile
 or API suite is **not** passing two-browser evidence: report the actual NUnit
 result and screenshots from an executed Unity Web run separately.
+
+The bounded `TradeWeaponAndChainUseRealControlsAndRestorePendingDecisions`
+case exercises a new v2 match through actual Unity controls: trade rejection
+without losing the turn, an accepted exact-resource swap after responder
+reload, a cross-board weapon with a defender discard restored after backend
+restart, and an ordered three-resource forge that earns two authored virtues.
+It uses only native setup resources and legal moves, not inventory seeding.
+Run it with `--filter TradeWeaponAndChainUseRealControlsAndRestorePendingDecisions`
+for the ordinary-action smoke; it does not replace the longer victory flow.
+
+`LegacyBrowserReceivesAuthenticatedWebSocketInvalidation` is a short handshake
+regression. Browser HTTP/2 WebSockets use `CONNECT`, while HTTP/1.1 uses `GET`;
+both routes retain the same origin, guest, membership and CSRF checks. Safe
+handshake failure categories are recorded without URLs, tokens or headers.
+The observer associates requests with their document generation: intentional
+navigation/disposal or an observed failed transport can cancel body inspection.
+Those responses are explicitly marked incomplete, not reported as valid JSON
+or schema violations. Complete responses still pass the strict projection and
+receipt checks, including responses from an older document.

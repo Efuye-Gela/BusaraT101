@@ -43,6 +43,10 @@ namespace Busara.Online
 
     public static class Definitions
     {
+        public const string LegacyRuleset = "busara-online-mvp-v1";
+        public const string OrdinaryRuleset = "busara-online-mvp-v2";
+        public const string FullRuleset = "busara-online-v3";
+        public const string CurrentRuleset = FullRuleset;
         public const string Egolica = "egolica";
         public const string Mask = "mask-of-light";
         public const string Knowledge = "nevulandis";
@@ -51,27 +55,19 @@ namespace Busara.Online
         public static readonly ResourceType[] RecipeSecond =
             { ResourceType.Water, ResourceType.Earth, ResourceType.Air, ResourceType.Earth, ResourceType.Water, ResourceType.Earth };
 
+        public static bool IsExpanded(string ruleset) => ruleset == OrdinaryRuleset || ruleset == FullRuleset;
+
+        public static bool IsFull(string ruleset) => ruleset == FullRuleset;
+
+        public static bool IsKnown(string ruleset) => ruleset == LegacyRuleset || IsExpanded(ruleset);
+
         public static string KingdomName(string id)
         {
-            switch (id)
-            {
-                case Egolica: return "Egolica - Abundance";
-                case Mask: return "Mask of Light - Retraction";
-                case Knowledge: return "N'evulandis - Infinite Knowledge";
-                default: throw new RuleException("invalid_definition", "The saved kingdom definition is unsupported.");
-            }
+            KingdomDefinition kingdom = KingdomCatalog.Find(id);
+            return kingdom.Name + " - " + kingdom.PowerName;
         }
 
-        public static KeyValuePair<VirtueType, int>[] Goals(string kingdom)
-        {
-            switch (kingdom)
-            {
-                case Egolica: return new[] { Goal(VirtueType.Security, 2), Goal(VirtueType.Nature, 3), Goal(VirtueType.Economy, 4) };
-                case Mask: return new[] { Goal(VirtueType.Art, 3), Goal(VirtueType.Security, 4), Goal(VirtueType.Economy, 2) };
-                case Knowledge: return new[] { Goal(VirtueType.Energy, 4), Goal(VirtueType.Wisdom, 2), Goal(VirtueType.Economy, 3) };
-                default: throw new RuleException("invalid_definition", "The saved kingdom definition is unsupported.");
-            }
-        }
+        public static KeyValuePair<VirtueType, int>[] Goals(string kingdom) => KingdomCatalog.Find(kingdom).Goals.ToArray();
 
         public static string GoalText(string kingdom) =>
             string.Join(", ", Goals(kingdom).Select(goal => goal.Value + " " + goal.Key));
@@ -87,8 +83,5 @@ namespace Busara.Online
                     return (VirtueType)i;
             throw new RuleException("invalid_forge", "Choose two adjacent resources of different types.");
         }
-
-        private static KeyValuePair<VirtueType, int> Goal(VirtueType type, int count) =>
-            new KeyValuePair<VirtueType, int>(type, count);
     }
 }

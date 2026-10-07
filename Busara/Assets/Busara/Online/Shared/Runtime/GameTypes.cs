@@ -19,6 +19,10 @@ namespace Busara.Online
         public int to = -1;
         public int resourceType = -1;
         public string[] paymentIds = Array.Empty<string>();
+        public int[] slots = Array.Empty<int>();
+        public int count;
+        public int virtueType = -1;
+        public string[] exchangeIds = Array.Empty<string>();
     }
 
     [Serializable]
@@ -119,13 +123,17 @@ namespace Busara.Online
         public string continuation;
         public int remaining;
         public CardState drawnCard;
+        public int offerFrom = -1;
+        public int offerResourceType = -1;
+        public string power;
+        public string window;
     }
 
     [Serializable]
     public sealed class MatchState
     {
         public int schemaVersion = 1;
-        public string ruleset = "busara-online-mvp-v1";
+        public string ruleset = Definitions.CurrentRuleset;
         public string id;
         public long version;
         public string phase = "Lobby";
@@ -140,61 +148,13 @@ namespace Busara.Online
         public PendingDecision pending;
         public ActionSnapshot snapshot;
         public List<ReactionPayment> reactionPayments = new List<ReactionPayment>();
-    }
-
-    [Serializable]
-    public sealed class LegalChoice
-    {
-        public string kind;
-        public string label;
-        public int from = -1;
-        public int to = -1;
-        public int resourceType = -1;
-        public int paymentCost;
-    }
-
-    [Serializable]
-    public sealed class PlayerView
-    {
-        public int seat;
-        public string name;
-        public bool joined;
-        public bool ready;
-        public string kingdom;
-        public bool revealed;
-        public bool virtuesVisible;
-        public List<TokenState> virtues = new List<TokenState>();
-        public List<ResourceType> setupRemaining = new List<ResourceType>();
-        public string goal;
-    }
-
-    [Serializable]
-    public sealed class DecisionView
-    {
-        public string id;
-        public string kind;
-        public int owner;
-        public string prompt;
-        public int paymentCost;
-        public List<TokenState> paymentOptions = new List<TokenState>();
-    }
-
-    [Serializable]
-    public sealed class ClientView
-    {
-        public string matchId;
-        public string ruleset;
-        public string version;
-        public string phase;
-        public int seat;
-        public int activeSeat;
-        public int winner = -1;
-        public bool draw;
-        public bool awaitingOther;
-        public List<PlayerView> players = new List<PlayerView>();
-        public List<SlotState> board = new List<SlotState>();
-        public DecisionView decision;
-        public List<LegalChoice> choices = new List<LegalChoice>();
+        public PowerUseState power;
+        public int controller = -1;
+        public int extraActions;
+        public List<int> extraTurns = new List<int>();
+        public int resumeSeat = -1;
+        public bool retracted;
+        public string notice;
     }
 
     public sealed class RuleException : Exception

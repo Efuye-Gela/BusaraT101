@@ -1,5 +1,44 @@
 {
   "dependencies": {
+    "com.egprojectcomponents.core": {
+      "version": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.core#v0.1.4",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d4c063f1f416b6194f75b9f3b754a6edeb7a3223"
+    },
+    "com.egprojectcomponents.motion": {
+      "version": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.motion#v0.1.4",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.egprojectcomponents.core": "0.1.4",
+        "com.unity.ugui": "2.0.0"
+      },
+      "hash": "d4c063f1f416b6194f75b9f3b754a6edeb7a3223"
+    },
+    "com.egprojectcomponents.testing": {
+      "version": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.testing#v0.1.4",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.egprojectcomponents.core": "0.1.4",
+        "com.egprojectcomponents.ui": "0.1.4",
+        "com.unity.ugui": "2.0.0"
+      },
+      "hash": "d4c063f1f416b6194f75b9f3b754a6edeb7a3223"
+    },
+    "com.egprojectcomponents.ui": {
+      "version": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.ui#v0.1.4",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.egprojectcomponents.core": "0.1.4",
+        "com.egprojectcomponents.motion": "0.1.4",
+        "com.unity.ugui": "2.0.0"
+      },
+      "hash": "d4c063f1f416b6194f75b9f3b754a6edeb7a3223"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.2",
       "depth": 1,

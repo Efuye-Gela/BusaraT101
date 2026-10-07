@@ -55,6 +55,12 @@ and run the browser bridge tests. The scheduler tests check exact waiting,
 own-turn, hidden-tab and failure intervals, non-overlap and per-minute request
 budgets with a deterministic clock; they do not measure real UGS latency.
 
+For ordinary v2 actions, also select `BusaraOnlineOrdinaryParityTests;OnlineResourceSelectionTests`.
+For timing diagnostics, select `OnlineDiagnosticsTests` and run
+`node .\Busara\Assets\Busara\Online\Client\Tests\latency.test.cjs`.
+The focused [real two-browser ordinary-action case](online/tests/Busara.Browser.Tests/README.md)
+is separate from these unit/parity checks.
+
 For the same selection in an isolated batch Editor, close the interactive
 Editor first and use an absolute executable path:
 

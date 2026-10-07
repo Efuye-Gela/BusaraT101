@@ -47,12 +47,13 @@ namespace Busara.Online.Client
 #endif
         }
 
-        public void Request(string method, string path, string body, string csrf, Action<Envelope> callback)
+        public void Request(string method, string path, string body, string csrf, Action<Envelope> callback,
+            int diagnosticSample = 0)
         {
             string id = Guid.NewGuid().ToString("N");
             requests.Add(id, callback);
 #if UNITY_WEBGL && !UNITY_EDITOR
-            Busara_Request(id, method, path, body ?? "", csrf ?? "");
+            Busara_Request(id, method, path, body ?? "", csrf ?? "", diagnosticSample);
 #else
             OnBrowserEvent(JsonUtility.ToJson(new Envelope { kind = "response", requestId = id, status = 0,
                 body = "Use the Unity Web build on the local HTTPS server." }));
@@ -162,7 +163,7 @@ namespace Busara.Online.Client
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         [DllImport("__Internal")] private static extern void Busara_Init(string receiver);
-        [DllImport("__Internal")] private static extern void Busara_Request(string id, string method, string path, string body, string csrf);
+        [DllImport("__Internal")] private static extern void Busara_Request(string id, string method, string path, string body, string csrf, int diagnosticSample);
         [DllImport("__Internal")] private static extern void Busara_Bind(string guestId, string matchId, string csrf);
         [DllImport("__Internal")] private static extern int Busara_StoreOutbox(string body);
         [DllImport("__Internal")] private static extern int Busara_ClearOutbox(string id);

@@ -5,8 +5,9 @@ server. Vercel serves the Unity Web files. Unity Authentication, Cloud Code
 and private Cloud Save still handle identity, rooms, rules and persistence.
 
 This guide publishes a **development game**, not a production-ready service.
-The Default Cloud Save access-policy discrepancy documented in the UGS setup
-guide remains unresolved. Private invitations protect seats, not anonymous
+Unity reported the Default Cloud Save access-policy issue fixed on September
+28, 2026; Busara re-verification remains outstanding in the UGS setup guide.
+Private invitations protect seats, not anonymous
 signup or service usage quotas. Review that risk before publishing.
 
 ## Current development website
@@ -21,8 +22,7 @@ points to the intended UGS environment; tested private file paths returned
 404. Authentication and Cloud Code preflights allowed this origin.
 Those checks did not create players or execute Unity gameplay. Two-player
 hosted play, browser runtime behavior and decision recovery still require
-the checks below. The known Cloud Save policy discrepancy is not resolved
-by hosting the client.
+the checks below. The Cloud Save policy gate is not verified by hosting the client.
 
 The coordinated recovery release keeps bare command replies for older players
 and adds explicit receipt-plus-view replies for the rebuilt client. The UGS

@@ -54,6 +54,13 @@ async function checkDiagnostic(statuses) {
   assert.ok(calls[3].includes('/players/private-player/items'));
   const output = logs.join('\n');
   assert.ok(output.includes(environment));
+  assert.ok(output.includes('Private Game Data GET /custom/{customId}/private/items?keys=document'));
+  assert.ok(output.includes('Default Game Data GET /custom/{customId}/items?keys=document'));
+  assert.ok(output.includes('Default Game Data GET /custom/{customId}/items: HTTP'));
+  assert.ok(output.includes('Own Player Data Default GET /players/{playerId}/items'));
+  assert.ok(output.includes('no Query API is called'));
+  assert.ok(!output.includes('Default read with query'));
+  assert.ok(!output.includes(registrationKey(client.player)));
   for (const secret of [client.token, client.player, 'signature']) assert.ok(!output.includes(secret));
   assert.equal(output.includes('PASS:'), statuses.slice(1).every(status => status === 403));
 }

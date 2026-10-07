@@ -179,4 +179,5 @@ async function main() {
   assert.equal(noConfig.requests.length, 0);
   console.log('PASS: credentialed fetch, immutable outboxes, room recovery, invitation binding, safe descriptors, visibility lifecycle');
 }
-main().catch(error => { console.error(error); process.exitCode = 1; });
+module.exports = {browser};
+if (require.main === module) main().catch(error => { console.error(error); process.exitCode = 1; });

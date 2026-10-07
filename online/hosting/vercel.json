@@ -18,7 +18,7 @@
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     },
     {
-      "source": "/(index.html|busara-config.js|busara-ugs.js)",
+      "source": "/(index.html|busara-config.js|busara-ugs.js|busara-latency.js)",
       "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     },
     {

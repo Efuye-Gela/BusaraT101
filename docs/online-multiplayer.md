@@ -1,8 +1,11 @@
-# Private online multiplayer: first playable milestone
+# Private online multiplayer
 
-Online MVP is an explicit, reduced Busara rules variant: `busara-online-mvp-v1`.
-The existing offline game remains separate. This is not support for all fifteen
-kingdom powers, a public matchmaking service, or a production deployment.
+Online play is a private two-player Busara variant whose rules run on the
+server. **New matches use `busara-online-v3`, which offers all fifteen kingdom
+powers.** Existing `busara-online-mvp-v1` and `busara-online-mvp-v2` matches
+keep their original three-kingdom rules; saved matches are never silently
+upgraded. The offline game remains separate. Disasters, bots, public
+matchmaking and spectators are still offline-only or unavailable.
 
 **Default hosting: Unity Gaming Services.** Follow
 [UGS setup and a simple two-browser test](ugs-setup.md) to deploy Cloud Code,
@@ -12,7 +15,30 @@ not establish UGS cloud or browser acceptance.
 
 ## Supported play
 
-Two invited humans receive different kingdoms randomly from **Egolica
+**v3 (new matches):** two invited humans each receive a different random
+kingdom from all fifteen authored kingdoms. Every kingdom power can be used
+online, following the offline rules in the
+[kingdom powers guide](kingdom-powers-guide.md), with these online specifics:
+
+- Using a power is the turn's action.
+- Reactions are durable decisions owned by the reacting seat:
+  King's Necklace can cancel any committed power; Celestial Dome protects
+  against weapons only; Retraction is offered after the other player's
+  completed action, and its payment stays spent.
+- Time grants its extra turn through a durable turn queue. Manipulation lets
+  its owner act at the start of the other player's turn, on that player's
+  board and paying from that player's virtues; trading is not offered
+  during a manipulated turn.
+- If the target's virtues are hidden, Imagination offers all six virtue types.
+  This is an online deviation: the server does not reveal hidden virtues
+  through the choice list.
+- Disasters are not part of the online deck.
+
+The sections below describe the three-kingdom v1/v2 rules, which are
+still the rules for those saved matches. v3 keeps the same board, setup,
+deck, forging, trading and weapon rules.
+
+**v1/v2 (saved matches):** two invited humans receive different kingdoms randomly from **Egolica
 (Abundance)**, **Mask of Light (Retraction)**, and **N'evulandis (Infinite
 Knowledge)**. Neither player chooses the other's kingdom; lobby readiness does
 not disclose the deal.
@@ -23,12 +49,36 @@ your own empty spaces, not orthogonally adjacent to another resource on your
 board. The deck contains the scene's 24 resource cards, six of each resource
 type, without its four disaster cards.
 
-Ordinary actions are drawing and placing a resource, moving an owned resource
-to an adjacent empty participating space, and forging **exactly two** adjacent
-resources of different types. A forge must start with your resource. It consumes
-the pair and gives the corresponding virtue to each distinct board owner
-represented by that pair. Moves and forges can cross the boundary between the
-two participating boards.
+Ordinary actions include drawing and placing a resource and moving an owned
+resource to an adjacent empty participating space. Both rulesets support
+two-resource forging: start with your resource, choose an adjacent resource of
+a different type, consume both, and award the recipe's virtue to each distinct
+board owner represented. Moves and forges can cross the two boards' boundary.
+
+New v2 matches also support:
+
+- **Chain forging:** select two or more distinct resources in order, starting
+  on your board. Consecutive resources must be adjacent and different types.
+  Each successive pair produces its authored virtue for **every board owner
+  encountered so far**, matching offline forging. All selected resources are
+  consumed once. The complete chain is validated before any rewards apply.
+- **Trading:** offer one owned resource for a different resource type. The
+  opponent explicitly accepts or rejects; acceptance requires owning that type.
+  After acceptance, the offerer chooses the exact matching opponent resource
+  and confirms the swap. The resources exchange slots; neither player gains a
+  free resource. The offerer can cancel at that selection step or dismiss a
+  rejection to return to the same ordinary turn without consuming it.
+- **Weapons:** select exactly three connected resources of the same type,
+  starting with your own. They may span the boards. All three are consumed,
+  then the opponent chooses one of their remaining resources to discard. If
+  none remain, there is no discard choice. This is one action, including its
+  defender discard, for Retraction.
+
+Trade responses, accepted-offer selections and weapon discards are durable
+owner-specific decisions. Browser reload and backend restart do not choose
+for either player. Only the decision owner can respond using its current ID
+and revision. Chain/weapon selection is a local draft until confirmed; reload
+can discard that unsubmitted draft, but never a submitted command's outbox.
 
 | Kingdom | Power | Victory requirements |
 | --- | --- | --- |
@@ -48,9 +98,19 @@ a replacement action. The existing empty-board skip/stalemate rule is retained.
 This is distinct from disconnection: no timeout chooses Pass, forfeits a player,
 or substitutes a bot.
 
-**Unavailable online:** the other twelve powers, disasters, trading, weapons,
-longer forge chains, bots, tournaments, more than two players, spectators, and
-public matchmaking. Use offline play for the full local rules.
+**Unavailable online:** disasters, bots, tournaments, more than two players,
+spectators and public matchmaking. Saved v1/v2 matches are limited to their
+three kingdoms; v1 also excludes trades, weapons and longer forge chains. Use
+offline play for disasters and bots.
+
+## Coordinated release
+
+Publish the updated authoritative module and rebuilt Unity Web client together.
+The new client understands both rulesets; a previous client may reject a v2
+projection and needs a refresh after the new Web build is published. Keeping an
+old match's v1 rules is not a binary rollback guarantee: the new writer can
+persist added decision fields even in v1 rooms. Do not roll back to an older
+writer without a compatible migration of states and durable receipts.
 
 ## Earning a Retraction payment through play
 
@@ -174,7 +234,13 @@ the original event or rewinds the version counter.
 - `online/src/Busara.Ugs`: default Cloud Code adapter using the same domain.
 - `online/tests/Busara.Ugs.Tests`: simulated CAS/worker tests, not live UGS evidence.
 - `online/scripts/smoke-ugs.cjs`: explicit real UGS API smoke; see [setup](ugs-setup.md).
-- `Busara/Assets/Busara/Online/Client`: the Unity online client.
+- `Busara/Assets/Busara/Online/Client`: the Unity online client. Its scene
+  `Scenes/OnlineMVP.unity` is authored by `BusaraOnlineSceneBuilder`
+  (`BusaraOnlineBuild.GenerateScene`) using EgComponents **v0.1.4** UI pages
+  (`Entry`, `Lobby`, `Match`), saved button/label prefabs under `Prefabs/` and
+  baked shape sprites under `Art/`. `OnlineTheme` holds the shared palette and
+  layout, taken from the authored board and panel art. Regenerate the scene
+  after builder changes; do not hand-edit it.
 - `online/tests/Busara.Domain.Tests`: rule, payment, serialization, privacy and
   normal-command progression tests.
 - `online/tests/Busara.Server.Tests`: actual PostgreSQL, multi-worker and restart

@@ -21,7 +21,6 @@ public static class BusaraOnlineBuild
         public int pollSeconds = 10;
     }
     public const string ScenePath = "Assets/Busara/Online/Scenes/OnlineMVP.unity";
-    private const string ArtRoot = "Assets/Busara/Sprites/";
 
     [MenuItem("Busara/Online MVP/Generate presentation scene")]
     public static void GenerateScene()
@@ -35,17 +34,7 @@ public static class BusaraOnlineBuild
         {
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
             Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            var root = new GameObject("BusaraOnline");
-            var screen = root.AddComponent<OnlineMvpScreen>();
-            screen.font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/Busara/Font/Poppins_500_SDF.asset");
-            screen.boardArt = Sprite(ArtRoot + "New/UI/Board.png");
-            screen.resourceIcons = new[]
-            {
-                Sprite(ArtRoot + "WaterIcon.png"), Sprite(ArtRoot + "EarthIcon.png"),
-                Sprite(ArtRoot + "FireIcon.png"), Sprite(ArtRoot + "AirIcon.png")
-            };
-            if (screen.font == null || screen.boardArt == null || screen.resourceIcons.Any(s => s == null))
-                throw new BuildFailedException("Online presentation is missing an authored font, board or resource sprite.");
+            BusaraOnlineSceneBuilder.Populate();
             if (!EditorSceneManager.SaveScene(scene, ScenePath)) throw new BuildFailedException("Could not persist OnlineMVP scene.");
             AssetDatabase.SaveAssets();
             // Append only: existing Offline Play scene indices and default startup remain intact.
@@ -60,8 +49,6 @@ public static class BusaraOnlineBuild
         // Batch startup can have no scene setup; keep the newly saved scene loaded in that case.
         if (setup.Length > 0) EditorSceneManager.RestoreSceneManagerSetup(setup);
     }
-
-    private static Sprite Sprite(string path) => AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>().FirstOrDefault();
 
     [MenuItem("Busara/Online MVP/Build Web player")]
     public static void BuildWeb()

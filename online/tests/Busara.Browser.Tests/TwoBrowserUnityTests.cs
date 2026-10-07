@@ -7,7 +7,7 @@ namespace Busara.Browser.Tests;
 
 [TestFixture]
 [NonParallelizable]
-public sealed class TwoBrowserUnityTests
+public sealed partial class TwoBrowserUnityTests
 {
     private OwnedServer server = null!;
     private IPlaywright playwright = null!;
@@ -190,7 +190,7 @@ public sealed class TwoBrowserUnityTests
         foreach (var seat in seats) await seat.AssertNetworkAsync();
     }
 
-    private async Task CreateJoinReadyAndSetUpAsync()
+    private async Task CreateJoinReadyAndSetUpAsync(bool capture = true)
     {
         await seats[0].NavigateAsync();
         await seats[0].ClickAsync("create-room");
@@ -232,7 +232,7 @@ public sealed class TwoBrowserUnityTests
         Assert.That(Self(0).virtues, Is.Empty);
         Assert.That(Self(1).virtues, Is.Empty);
         Assert.That(Self(0).setupRemaining, Is.EqualTo(Definitions.Setup(0)));
-        await CaptureAsync("distinct-private-kingdoms");
+        if (capture) await CaptureAsync("distinct-private-kingdoms");
         foreach (var (slot, type) in new[] { (0, ResourceType.Earth), (2, ResourceType.Water),
             (9, ResourceType.Water), (11, ResourceType.Air), (24, ResourceType.Air) })
             await ExecuteAsync(0, "setupPlace", to: slot, resource: (int)type);

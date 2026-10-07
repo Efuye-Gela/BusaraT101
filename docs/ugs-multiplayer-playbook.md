@@ -1,5 +1,9 @@
 # Reusable UGS multiplayer setup playbook
 
+For the architecture, provider boundaries and public HTTPS hosting workflow,
+start with [Multiplayer architecture and hosting](multiplayer-architecture-and-hosting.md).
+This playbook retains the detailed setup-session history and troubleshooting.
+
 Based on the Busara setup and troubleshooting session, September 19, 2026.
 Use this as a reference for future games, not as a claim that every acceptance
 check passed. [Busara's detailed setup guide](ugs-setup.md) remains the
@@ -187,7 +191,8 @@ access Private Game Data. A more-specific Allow can override a broad Deny;
 inspect the entire policy, especially in a shared project.
 
 **Deployment/readback is not proof of enforcement.** Our real test found a
-Default Game Data read discrepancy that remains unresolved; see section 11.
+Default Game Data read discrepancy; Unity subsequently reported a fix, but
+Busara re-verification remains outstanding. See section 11.
 Do not weaken the rule or redefine a successful read as denial to get a pass.
 
 For Busara, provision private registration shards administratively before
@@ -380,13 +385,13 @@ Plan account linking/recovery deliberately for future production games.
 | Node printed `DEP0190` | The CLI wrapper warning was separate from the observed authorization error; it did not explain the 403. |
 | Registration returned `503 storage_unavailable` | Safe Cloud Code logs identified `InvalidOperationException`; the stored document was an Object instead of the original expected String. Adapter compatibility fixed this without resetting the directory. |
 | Private storage probe returned 401 rather than 403 | Private Game Data is server-only. The probe now accepts 401/403 only there; normally player-accessible probes still require 403. |
-| Default Game Data reads returned 200 despite policy readback | Still unresolved. Reads with and without query parameters returned 200; own-player reads returned 403. Do not mark the full smoke passed. |
+| Default Game Data reads returned 200 despite policy readback | Unity reported a service-side fix on September 28; not yet independently reverified. Keep requiring 403. The GET key filter was not a Query API call. |
 | `-Development` was "not recognized" | The multiline command was reversed when pasted. Run the complete single-line build command. |
 | Embedded browser said "guest session expired or unavailable" after reload | The existing identity could not be restored. Missing local identity and rejected authentication are possible causes; we did not establish which. Do not describe this as proven token expiry or deleted server state. |
 | External browser profiles reloaded successfully | Continue testing there; this does not resolve the embedded-browser failure. |
-| Forge selected only two resources and submitted immediately | Current online-MVP scope/UI behavior, not a UGS limitation. |
+| Forge selected only two resources and submitted immediately | September 19 client behavior, not a UGS limitation. The newer local v2 implementation adds ordered chains; existing v1 matches retain pair-only forging. |
 
-### The outstanding access-policy discrepancy
+### Historical access-policy discrepancy and reported fix
 
 Policy readback was checked against the exact project and `development`
 environment. Diagnostic results were:
@@ -394,8 +399,8 @@ environment. Diagnostic results were:
 | Probe | Observed HTTP status |
 | --- | --- |
 | Private custom data read | 401 |
-| Default custom data read with query | 200 |
-| Default custom data read without query | 200 |
+| Default custom data GET with `keys=document` filter | 200 |
+| Default custom data GET without key filter | 200 |
 | Own-player data read | 403 |
 
 The diagnostic's selected environment UUID claims were absent or not UUIDs;
@@ -403,11 +408,12 @@ that alone does not prove incorrect environment routing. Default and Private
 are separate access classes, so Default HTTP 200 is not by itself proof that
 the private directory was disclosed.
 
-The cause remains unknown. Preserve the policy, timestamp and safe status
-output for Unity support. Ask whether policy evaluation covers Default
-custom-item reads, including an item existing only in Private storage.
-Do not send credentials, invitations, raw stored data or authentication
-tokens. Manual gameplay continued, but did not clear this gate.
+Unity Support reported the service-side issue fixed on September 28, 2026
+(ticket 3524761), with both Default reads returning 403. Busara has not yet
+independently rerun the diagnostic after that report. Keep the strict gate
+and capture fresh safe statuses before marking it verified. No permissions
+need relaxing. Do not send credentials, invitations, raw stored data or
+authentication tokens. The historical gameplay reports did not clear this gate.
 
 ## 12. What was actually established by September 19, 2026
 

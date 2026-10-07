@@ -13,7 +13,10 @@ public sealed partial class MatchService
             request.decisionId?.Length > 100 || request.expectedVersion?.Length > 20 ||
             request.resourceType is < -1 or > 3 || request.from is < -1 or > 31 || request.to is < -1 or > 31 ||
             request.paymentIds is null || request.paymentIds.Length > 12 ||
-            request.paymentIds.Any(id => id is null || id.Length > 100))
+            request.paymentIds.Any(id => id is null || id.Length > 100) ||
+            request.slots is null || request.slots.Length > 32 || request.slots.Any(slot => slot is < 0 or > 31) ||
+            request.count is < -3 or > 3 || request.virtueType is < -1 or > 5 ||
+            request.exchangeIds?.Length > 12 || request.exchangeIds?.Any(id => id is null || id.Length > 100) == true)
             throw new RequestError(400, "invalid_command");
         // Both wire formats address the same durable command, including legacy fingerprints.
         string fingerprint = Hash("command\n" + payload);

@@ -10,6 +10,7 @@ foreach ($entry in $buildFiles.GetEnumerator()) {
     $files["web/$($entry.Key)"] = $entry.Value
 }
 $files['web/busara-ugs.js'] = Join-Path $web 'busara-ugs.js'
+$files['web/busara-latency.js'] = Join-Path $web 'busara-latency.js'
 foreach ($name in @('serve-ugs.cjs', 'start-ugs-web-test.ps1', 'New-WebTestCertificate.ps1',
     'Get-UgsWebTestConfiguration.ps1')) {
     $files["scripts/$name"] = Join-Path $PSScriptRoot $name

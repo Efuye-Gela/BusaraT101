@@ -1,6 +1,6 @@
 {
   "name": "Busara.Online.Client",
   "rootNamespace": "Busara.Online.Client",
-  "references": ["Busara.Online.Shared", "Unity.TextMeshPro", "Unity.ugui", "Unity.InputSystem"],
+  "references": ["Busara.Online.Shared", "Unity.TextMeshPro", "Unity.ugui", "Unity.InputSystem", "Eg.Core", "Eg.Core.Unity", "Eg.UI"],
   "autoReferenced": true
 }

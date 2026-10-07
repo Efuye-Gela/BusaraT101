@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,6 +46,9 @@ namespace Busara.Online.Client
         private string roomRequestPath;
         private string roomCommandId;
         private bool roomOutboxReady;
+        private IOnlineDiagnostics diagnostics = new BrowserOnlineDiagnostics();
+        private int pendingSample;
+        private bool recoveringPending;
 
         public void Initialize(OnlineBrowserTransport browser)
         {
@@ -86,6 +90,7 @@ namespace Busara.Online.Client
                         if (pending != null && Guid.TryParse(pending.commandId, out _) && ValidVersion(pending.expectedVersion))
                         {
                             pendingBody = e.body;
+                            recoveringPending = true;
                             RetryPending();
                         }
                         else
@@ -265,9 +270,11 @@ namespace Busara.Online.Client
 
         public void CopyInvite() { if (!string.IsNullOrEmpty(InviteUrl)) transport.CopyInvite(InviteUrl); }
 
-        public void Submit(LegalChoice choice, IList<string> paymentIds, string name = null, bool ready = false)
+        public void Submit(LegalChoice choice, IList<string> paymentIds, string name = null, bool ready = false,
+            IList<int> slots = null, IList<string> exchangeIds = null)
         {
             if (!CanAct || !outboxReady || choice == null || !View.choices.Contains(choice)) return;
+            int sample = diagnostics.Begin("submit");
             var command = new OnlineCommand
             {
                 commandId = Guid.NewGuid().ToString(),
@@ -275,23 +282,31 @@ namespace Busara.Online.Client
                 decisionId = View.decision == null ? null : View.decision.id,
                 kind = choice.kind, from = choice.from, to = choice.to, resourceType = choice.resourceType,
                 name = name, ready = ready,
-                paymentIds = paymentIds == null ? Array.Empty<string>() : new List<string>(paymentIds).ToArray()
+                paymentIds = paymentIds == null ? Array.Empty<string>() : new List<string>(paymentIds).ToArray(),
+                slots = slots == null ? Array.Empty<int>() : new List<int>(slots).ToArray(),
+                count = choice.count, virtueType = choice.virtueType,
+                exchangeIds = exchangeIds == null ? Array.Empty<string>() : new List<string>(exchangeIds).ToArray()
             };
             string body = JsonUtility.ToJson(command);
             if (!transport.StoreOutbox(body))
             {
+                diagnostics.Failed(sample, "not_dispatched");
                 Status = "Action NOT sent: durable outbox unavailable or occupied. Enable storage, then refresh to reconcile.";
                 Changed?.Invoke();
                 return;
             }
             pending = command;
             pendingBody = body;
+            pendingSample = sample;
             RetryPending();
         }
 
         public void RetryPending()
         {
             if (Guest == null || pending == null || Busy || expired) return;
+            int sample = pendingSample != 0 ? pendingSample : diagnostics.Begin(recoveringPending ? "recovery" : "retry");
+            pendingSample = 0;
+            recoveringPending = false;
             Busy = true;
             Status = "Submitting saved action… No further actions are allowed until its receipt is known.";
             transport.Request("POST", RoomPath + (usesUgs ? "/commands-with-view" : "/commands"), pendingBody, Guest.csrfToken, response =>
@@ -307,6 +322,8 @@ namespace Busara.Online.Client
                      receipt.status == "conflict" || receipt.status == "ok");
                 if (verified)
                 {
+                    diagnostics.Receipt(sample, receipt.version,
+                        receipt.status == "accepted" || receipt.status == "applied" || receipt.status == "ok");
                     projectionHealthy = false;
                     if (confirmedVersion == null || CompareVersions(receipt.version, confirmedVersion) > 0)
                         confirmedVersion = receipt.version;
@@ -332,6 +349,9 @@ namespace Busara.Online.Client
                 }
                 else
                 {
+                    diagnostics.Failed(sample, response.kind == "protocolError" ||
+                        (response.status >= 200 && response.status < 300) ? "unverified_receipt" :
+                        response.status == 0 ? "delivery_uncertain" : "http_rejected");
                     CanResolveConflict = response.status == 409 || response.status == 422 || response.status == 400;
                     if (response.status == 401 || response.status == 410) expired = true;
                     Status = (response.status >= 200 && response.status < 300
@@ -340,7 +360,7 @@ namespace Busara.Online.Client
                     if (CanResolveConflict) FetchView();
                 }
                 Changed?.Invoke();
-            });
+            }, sample);
             Changed?.Invoke();
         }
 
@@ -387,7 +407,8 @@ namespace Busara.Online.Client
 
         private ViewOutcome ApplyFreshView(ClientView fresh)
         {
-            if (fresh == null || fresh.matchId != matchId || fresh.ruleset != "busara-online-mvp-v1" ||
+            if (fresh == null || fresh.matchId != matchId ||
+                !Definitions.IsKnown(fresh.ruleset) ||
                 !ValidVersion(fresh.version))
             {
                 projectionHealthy = false;
@@ -399,6 +420,7 @@ namespace Busara.Online.Client
             confirmedVersion = fresh.version;
             projectionHealthy = true;
             if (View == null || CompareVersions(fresh.version, View.version) > 0) View = fresh;
+            diagnostics.ViewApplied(View.version);
             polling.SetActivity(CurrentPollActivity, Time.unscaledTime);
             return ViewOutcome.Applied;
         }
@@ -406,6 +428,19 @@ namespace Busara.Online.Client
         private PollActivity CurrentPollActivity => View != null && View.phase == "Finished" ? PollActivity.Finished :
             View == null || View.phase == "Lobby" || View.awaitingOther ? PollActivity.Waiting : PollActivity.LocalTurn;
         private string RoomPath => "/api/rooms/" + Uri.EscapeDataString(matchId);
+        public void NotifyViewRendered(string version)
+        {
+            if (View == null || version != View.version) return;
+            int ticket = diagnostics.PrepareFrame(version);
+            if (ticket != 0) StartCoroutine(ObserveFrameBoundary(ticket));
+        }
+
+        private IEnumerator ObserveFrameBoundary(int ticket)
+        {
+            yield return new WaitForEndOfFrame();
+            diagnostics.FrameBoundary(ticket);
+        }
+
         private void Update() { if (!Busy && polling.IsDue(Time.unscaledTime)) FetchView(); }
         private static bool ValidVersion(string value)
         {

@@ -124,8 +124,21 @@ public sealed class OnlineClientTests
             Assert.IsNotNull(screen.boardArt);
             Assert.AreEqual(4, screen.resourceIcons.Length);
             Assert.IsTrue(screen.resourceIcons.All(sprite => sprite != null));
-            Assert.IsTrue(components.All(component => component is OnlineMvpScreen));
+            Assert.IsTrue(components.All(component => IsOnlinePresentation(component.GetType().Namespace)),
+                string.Join(", ", components.Select(c => c.GetType().FullName).Distinct()));
+            CollectionAssert.AreEquivalent(new[] { "Entry", "Lobby", "Match" },
+                components.OfType<OnlinePage>().Select(page => page.Id).ToArray());
+            Assert.AreEqual(1, components.OfType<Eg.UI.UIRoot>().Count());
+            Assert.AreEqual("BusaraOnline", screen.gameObject.name, "The browser bridge sends events to this object name.");
+            Assert.IsNotNull(screen.GetComponent<OnlineSession>());
+            Assert.IsNotNull(screen.GetComponent<OnlineBrowserTransport>());
+            var audit = Eg.Testing.Editor.SceneAudit.Audit(scene);
+            Assert.IsEmpty(audit, string.Join("\n", audit));
         }
         finally { EditorSceneManager.CloseScene(scene, true); }
     }
+
+    // No offline managers, bots or gameplay MonoBehaviours may enter the online scene.
+    private static bool IsOnlinePresentation(string ns) => ns != null &&
+        (ns.StartsWith("Busara.Online") || ns.StartsWith("Eg.") || ns.StartsWith("UnityEngine") || ns == "TMPro");
 }

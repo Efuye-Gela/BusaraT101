@@ -21,6 +21,8 @@ internal sealed class UnitySeat : IAsyncDisposable
     private readonly ConcurrentQueue<string> violations = [];
     private readonly ConcurrentQueue<string> networkEvidence = [];
     private readonly ConcurrentQueue<OnlineCommand> commands = [];
+    private readonly ConcurrentDictionary<IRequest, int> requestGenerations = new();
+    private int documentGeneration;
     private ClientView? latest;
     public IBrowserContext Context { get; }
     public IPage Page { get; }
@@ -32,9 +34,14 @@ internal sealed class UnitySeat : IAsyncDisposable
     private UnitySeat(IBrowserContext context, IPage page, Uri origin, int seat)
     {
         Context = context; Page = page; this.origin = origin; Seat = seat;
-        page.Response += (_, response) => observations.Add(ObserveAsync(response));
+        page.Response += (_, response) => observations.Add(ObserveAsync(response,
+            requestGenerations.TryGetValue(response.Request, out int generation)
+                ? generation : Volatile.Read(ref documentGeneration)));
+        page.RequestFailed += (_, request) => requestGenerations.TryRemove(request, out int ignored);
         page.Request += (_, request) =>
         {
+            if (new Uri(request.Url).AbsolutePath.StartsWith("/api/"))
+                requestGenerations[request] = Volatile.Read(ref documentGeneration);
             if (!SameOrigin(request.Url)) violations.Enqueue("An HTTP request escaped the one allowed test origin.");
             if (!request.Url.EndsWith("/commands", StringComparison.Ordinal) || request.Method != "POST") return;
             try
@@ -51,6 +58,13 @@ internal sealed class UnitySeat : IAsyncDisposable
             if (address.Scheme != "wss" || address.Authority != origin.Authority ||
                 !address.AbsolutePath.EndsWith("/events") || address.Query != "")
                 violations.Enqueue("A WebSocket escaped the authenticated loopback event endpoint.");
+            socket.SocketError += (_, error) =>
+            {
+                var category = System.Text.RegularExpressions.Regex.Match(error,
+                    @"response code: \d{3}|net::[A-Z_]+");
+                networkEvidence.Enqueue("websocket error: " +
+                    (category.Success ? category.Value : "handshake_or_transport_failure"));
+            };
             socket.FrameReceived += (_, frame) =>
             {
                 try
@@ -94,6 +108,7 @@ internal sealed class UnitySeat : IAsyncDisposable
     {
         var address = invite == null ? origin.ToString() : invite;
         if (!SameOrigin(address)) throw new AssertionException("Invitation did not target the owned loopback origin.");
+        Interlocked.Increment(ref documentGeneration);
         // Suppress the Playwright navigation call log: the invitation fragment is a bearer secret.
         try { await Page.GotoAsync(address, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded }); }
         catch { throw new AssertionException("The owned Unity Web entry did not load (URL withheld)."); }
@@ -124,6 +139,7 @@ internal sealed class UnitySeat : IAsyncDisposable
     {
         var expectedSeat = View.seat;
         var match = View.matchId;
+        Interlocked.Increment(ref documentGeneration);
         Volatile.Write(ref latest, null);
         await Page.ReloadAsync(new PageReloadOptions { WaitUntil = WaitUntilState.DOMContentLoaded });
         await WaitUiAsync();
@@ -170,7 +186,8 @@ internal sealed class UnitySeat : IAsyncDisposable
                 (choice.kind is "setupPlace" or "abundancePlace" ? choice.resourceType : -1);
             await ClickAsync("mode-" + group);
             if (choice.from >= 0) await ClickAsync("slot-" + choice.from);
-            await ClickAsync("slot-" + choice.to);
+            if (choice.to >= 0) await ClickAsync("slot-" + choice.to);
+            else await ClickAsync(ChoiceId(choice));
         }
         else await ClickAsync(ChoiceId(choice));
         if (waitForRevision) await WaitVersionAsync(before + 1);
@@ -217,9 +234,10 @@ internal sealed class UnitySeat : IAsyncDisposable
         Assert.That(violations.ToArray(), Is.Empty, "Network information-boundary assertions failed.");
         Assert.That(new Uri(Page.Url).Fragment.Contains("invite", StringComparison.OrdinalIgnoreCase), Is.False);
         // Only the canvas is captured. No address bar, clipboard, headers, cookies, token IDs or raw payload files.
+        await Page.BringToFrontAsync();
         await Page.Locator("#unity-canvas").ScreenshotAsync(new LocatorScreenshotOptions
         {
-            Path = Path.Combine(directory, $"{stage}-seat-{Seat}.png")
+            Path = Path.Combine(directory, $"{stage}-seat-{Seat}.png"), Timeout = 10_000
         });
         await File.WriteAllLinesAsync(Path.Combine(directory, $"{stage}-seat-{Seat}-network.txt"),
             networkEvidence.ToArray());
@@ -234,7 +252,8 @@ internal sealed class UnitySeat : IAsyncDisposable
         Assert.That(networkEvidence.Any(line => line.StartsWith("projection:")), Is.True,
             "No real authenticated projection response was inspected.");
         Assert.That(networkEvidence.Any(line => line.StartsWith("wss")), Is.True,
-            "No real WSS invalidation payload was inspected.");
+            "No real WSS invalidation payload was inspected. " +
+            string.Join("; ", networkEvidence.Where(line => line.StartsWith("websocket error:")).TakeLast(3)));
     }
 
     public async Task SaveFailureDiagnosticsAsync(string directory)
@@ -256,8 +275,9 @@ internal sealed class UnitySeat : IAsyncDisposable
                 $"from={command.from}; to={command.to}; resource={command.resourceType}; payment-count={command.paymentIds?.Length ?? 0}"));
     }
 
-    private async Task ObserveAsync(IResponse response)
+    private async Task ObserveAsync(IResponse response, int generation)
     {
+        string stage = "route";
         try
         {
             var address = new Uri(response.Url);
@@ -270,6 +290,7 @@ internal sealed class UnitySeat : IAsyncDisposable
             if (!address.AbsolutePath.StartsWith("/api/rooms/")) return;
             if (!response.Ok)
             {
+                stage = "rejection";
                 using var error = JsonDocument.Parse(await response.TextAsync());
                 if (error.RootElement.TryGetProperty("code", out var code))
                     networkEvidence.Enqueue("http rejection code: " + code.GetString());
@@ -277,6 +298,7 @@ internal sealed class UnitySeat : IAsyncDisposable
             }
             if (response.Request.Method == "GET" && Guid.TryParse(address.Segments.Last(), out _))
             {
+                stage = "projection";
                 string payload = await response.TextAsync();
                 ValidateNoInternalFields(payload);
                 var view = JsonSerializer.Deserialize<ClientView>(payload, Json)!;
@@ -295,13 +317,15 @@ internal sealed class UnitySeat : IAsyncDisposable
                 if (view.awaitingOther && (view.decision != null || view.choices.Count != 0))
                     violations.Enqueue("An awaiting-other browser received private legal choices.");
                 var previous = Volatile.Read(ref latest);
-                if (previous == null || Number(view.version) >= Number(previous.version))
+                if (generation == Volatile.Read(ref documentGeneration) &&
+                    (previous == null || Number(view.version) >= Number(previous.version)))
                     Volatile.Write(ref latest, view);
                 networkEvidence.Enqueue($"projection: seat={Seat}; revision={view.version}; phase={view.phase}; " +
                     "allowlist/hidden-kingdom/payment-identities/decision-owner verified; body omitted");
             }
             else if (response.Request.Method == "POST" && address.AbsolutePath.EndsWith("/commands"))
             {
+                stage = "receipt";
                 var payload = await response.TextAsync();
                 ValidateNoInternalFields(payload);
                 _ = JsonSerializer.Deserialize<CommandReceipt>(payload, Json) ??
@@ -309,7 +333,17 @@ internal sealed class UnitySeat : IAsyncDisposable
                 networkEvidence.Enqueue("receipt: public command receipt schema verified; body omitted");
             }
         }
-        catch { violations.Enqueue("A server payload failed the strict public DTO/information-boundary schema."); }
+        catch (PlaywrightException) when (generation != Volatile.Read(ref documentGeneration) ||
+            response.Request.Failure != null)
+        {
+            networkEvidence.Enqueue("incomplete response: navigation/disposal or observed transport cancellation; body not inspected");
+        }
+        catch (Exception error)
+        {
+            violations.Enqueue("A server payload failed the strict public DTO/information-boundary schema (" +
+                stage + ", " + error.GetType().Name + ").");
+        }
+        finally { requestGenerations.TryRemove(response.Request, out _); }
     }
 
     private static void ValidateNoInternalFields(string payload)
@@ -369,6 +403,7 @@ internal sealed class UnitySeat : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
+        Interlocked.Increment(ref documentGeneration);
         await Context.CloseAsync();
         await DrainAsync();
     }
