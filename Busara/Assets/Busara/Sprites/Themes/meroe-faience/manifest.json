@@ -1,0 +1,116 @@
+{
+  "id": "meroe-faience",
+  "name": "Meroë Faience",
+  "era": "past",
+  "origin": "Kingdom of Kush, Nubia, 800 BCE – 350 CE",
+  "kingdoms": [
+    "Logone",
+    "Milu"
+  ],
+  "colors": {
+    "accent": "#E2B23A",
+    "danger": "#B23A20",
+    "light": "#FFF3D6",
+    "palette": {
+      "Sandstone": "#C08A57",
+      "Faience": "#2C9C9A",
+      "Carnelian": "#B0401E",
+      "Kush gold": "#C9962E",
+      "Black granite": "#2D2B2A"
+    }
+  },
+  "board": {
+    "frame": "sandstone",
+    "field": "sandstone",
+    "frieze": "lotus",
+    "slot": "inlay"
+  },
+  "pieces": {
+    "water": {
+      "material": "Faience",
+      "glyph": "ornate/carved"
+    },
+    "earth": {
+      "material": "Aksum granite",
+      "glyph": "ornate/carved"
+    },
+    "fire": {
+      "material": "Carnelian",
+      "glyph": "ornate/carved"
+    },
+    "air": {
+      "material": "Gold",
+      "glyph": "ornate/carved"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

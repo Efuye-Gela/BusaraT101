@@ -1,0 +1,115 @@
+{
+  "id": "agadez-silver",
+  "name": "Agadez Silver",
+  "era": "past",
+  "origin": "Tuareg (Kel Tamasheq) of Aïr and the Sahel",
+  "kingdoms": [
+    "Mask of Light"
+  ],
+  "colors": {
+    "accent": "#E8C27A",
+    "danger": "#C5462F",
+    "light": "#F3F4F6",
+    "palette": {
+      "Indigo": "#25335A",
+      "Silver": "#B9BCC0",
+      "Henna": "#B07A2A",
+      "Carnelian": "#B0401E",
+      "Ebony": "#2B201C"
+    }
+  },
+  "board": {
+    "frame": "leather_indigo",
+    "field": "leather_indigo",
+    "frieze": "triangles",
+    "slot": "beaded"
+  },
+  "pieces": {
+    "water": {
+      "material": "Indigo leather",
+      "glyph": "ornate/carved"
+    },
+    "earth": {
+      "material": "Ebony",
+      "glyph": "ornate/carved"
+    },
+    "fire": {
+      "material": "Carnelian",
+      "glyph": "ornate/carved"
+    },
+    "air": {
+      "material": "Sahel silver",
+      "glyph": "ornate/carved"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

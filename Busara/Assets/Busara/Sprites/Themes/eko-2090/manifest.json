@@ -1,0 +1,115 @@
+{
+  "id": "eko-2090",
+  "name": "Eko 2090",
+  "era": "future",
+  "origin": "Lagos lagoon megacity, 2090",
+  "kingdoms": [
+    "Eko Akete"
+  ],
+  "colors": {
+    "accent": "#F2C200",
+    "danger": "#FF5A3C",
+    "light": "#FFF6CC",
+    "palette": {
+      "Danfo yellow": "#F2C200",
+      "Asphalt": "#1C1F21",
+      "Reclaimed alloy": "#6E7376",
+      "Solar blue": "#1E4E9A",
+      "Heat red": "#B53A26"
+    }
+  },
+  "board": {
+    "frame": "ewaste_alloy",
+    "field": "graphene",
+    "frieze": "stripes",
+    "slot": "dock"
+  },
+  "pieces": {
+    "water": {
+      "material": "Solar glass",
+      "glyph": "minimal/emissive"
+    },
+    "earth": {
+      "material": "Reclaimed alloy",
+      "glyph": "minimal/emissive"
+    },
+    "fire": {
+      "material": "Anodised titanium",
+      "glyph": "minimal/emissive"
+    },
+    "air": {
+      "material": "Liquid chrome",
+      "glyph": "minimal/emissive"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "nevulandis-data",
+  "name": "N'evulandis Data Court",
+  "era": "future",
+  "origin": "House of IO's, 30th century",
+  "kingdoms": [
+    "N'evulandis"
+  ],
+  "colors": {
+    "accent": "#2BB6E0",
+    "danger": "#E0533A",
+    "light": "#E6FAFF",
+    "palette": {
+      "Ceramic": "#ECEEEE",
+      "Hairline": "#C9CFD1",
+      "IO cyan": "#2BB6E0",
+      "Data blue": "#1E62A8",
+      "Graphite": "#2E3438"
+    }
+  },
+  "board": {
+    "frame": "nano_ceramic",
+    "field": "nano_ceramic",
+    "frieze": "grid",
+    "slot": "socket"
+  },
+  "pieces": {
+    "water": {
+      "material": "Data glass",
+      "glyph": "minimal/emissive"
+    },
+    "earth": {
+      "material": "Data glass",
+      "glyph": "minimal/emissive"
+    },
+    "fire": {
+      "material": "Data glass",
+      "glyph": "minimal/emissive"
+    },
+    "air": {
+      "material": "Data glass",
+      "glyph": "minimal/emissive"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

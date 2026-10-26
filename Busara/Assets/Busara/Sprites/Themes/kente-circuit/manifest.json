@@ -1,0 +1,116 @@
+{
+  "id": "kente-circuit",
+  "name": "Kente Circuit",
+  "era": "fusion",
+  "origin": "Asante weaving meets Accra hardware labs",
+  "kingdoms": [
+    "Konga",
+    "Eko Akete"
+  ],
+  "colors": {
+    "accent": "#E2B23A",
+    "danger": "#FF5A3C",
+    "light": "#FFF1C6",
+    "palette": {
+      "PCB green": "#142019",
+      "Trace copper": "#C9963A",
+      "Kente green": "#1B6B45",
+      "Kente red": "#B5372A",
+      "Gold": "#C9962E"
+    }
+  },
+  "board": {
+    "frame": "graphene",
+    "field": "graphene",
+    "frieze": "circuit",
+    "slot": "inlay"
+  },
+  "pieces": {
+    "water": {
+      "material": "Goldweight brass",
+      "glyph": "ornate/emissive"
+    },
+    "earth": {
+      "material": "Edo bronze",
+      "glyph": "ornate/emissive"
+    },
+    "fire": {
+      "material": "Katanga copper",
+      "glyph": "ornate/emissive"
+    },
+    "air": {
+      "material": "Gold",
+      "glyph": "ornate/emissive"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

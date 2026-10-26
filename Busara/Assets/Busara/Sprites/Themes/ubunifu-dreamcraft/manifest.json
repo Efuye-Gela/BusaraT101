@@ -1,0 +1,114 @@
+{
+  "id": "ubunifu-dreamcraft",
+  "name": "Ubunifu Dreamcraft",
+  "era": "future",
+  "origin": "Elite council of Ubunifu, 22nd century",
+  "kingdoms": [
+    "Ubunifu"
+  ],
+  "colors": {
+    "accent": "#9C8CFF",
+    "danger": "#FF6B57",
+    "light": "#EDE8FF",
+    "palette": {
+      "Graphene": "#26292C",
+      "Neural violet": "#7B6CF0",
+      "Synapse mint": "#62F2C7",
+      "Ndoto pink": "#F06BA8"
+    }
+  },
+  "board": {
+    "frame": "graphene",
+    "field": "graphene",
+    "frieze": "filaments",
+    "slot": "portal"
+  },
+  "pieces": {
+    "water": {
+      "material": "Ndoto glass",
+      "glyph": "minimal/emissive"
+    },
+    "earth": {
+      "material": "Ndoto glass",
+      "glyph": "minimal/emissive"
+    },
+    "fire": {
+      "material": "Ndoto glass",
+      "glyph": "minimal/emissive"
+    },
+    "air": {
+      "material": "Ndoto glass",
+      "glyph": "minimal/emissive"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

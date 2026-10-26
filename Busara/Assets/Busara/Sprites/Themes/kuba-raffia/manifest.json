@@ -1,0 +1,115 @@
+{
+  "id": "kuba-raffia",
+  "name": "Kuba Raffia",
+  "era": "past",
+  "origin": "Kuba Kingdom, Kasai, DR Congo, 17th century onward",
+  "kingdoms": [
+    "Royaume Kongo"
+  ],
+  "colors": {
+    "accent": "#E9C46A",
+    "danger": "#B23A2B",
+    "light": "#FFF4D9",
+    "palette": {
+      "Raffia": "#C9A56B",
+      "Camwood": "#8F2F22",
+      "Malachite": "#1E7A55",
+      "Indigo": "#25335A",
+      "Cowrie": "#EFE6D2"
+    }
+  },
+  "board": {
+    "frame": "camwood",
+    "field": "raffia",
+    "frieze": "meander",
+    "slot": "beaded"
+  },
+  "pieces": {
+    "water": {
+      "material": "Indigo leather",
+      "glyph": "ornate/carved"
+    },
+    "earth": {
+      "material": "Malachite",
+      "glyph": "ornate/carved"
+    },
+    "fire": {
+      "material": "Camwood (tukula)",
+      "glyph": "ornate/carved"
+    },
+    "air": {
+      "material": "Cowrie shell",
+      "glyph": "ornate/carved"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

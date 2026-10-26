@@ -1,0 +1,116 @@
+{
+  "id": "aksum-stele",
+  "name": "Aksum Stele",
+  "era": "past",
+  "origin": "Aksumite Empire and Lalibela, Ethiopia, 1st–13th century",
+  "kingdoms": [
+    "Telalila",
+    "Aradas"
+  ],
+  "colors": {
+    "accent": "#C9CED4",
+    "danger": "#B5452E",
+    "light": "#F4F4F2",
+    "palette": {
+      "Granite": "#6E625E",
+      "Basalt": "#2F3134",
+      "Silver": "#B9BCC0",
+      "Red tuff": "#A2492E",
+      "Marble": "#E6E1D8"
+    }
+  },
+  "board": {
+    "frame": "granite",
+    "field": "granite",
+    "frieze": "stele",
+    "slot": "stepped"
+  },
+  "pieces": {
+    "water": {
+      "material": "River stone",
+      "glyph": "ornate/carved"
+    },
+    "earth": {
+      "material": "River stone",
+      "glyph": "ornate/carved"
+    },
+    "fire": {
+      "material": "Nubian sandstone",
+      "glyph": "ornate/carved"
+    },
+    "air": {
+      "material": "Karibib marble",
+      "glyph": "ornate/carved"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "id": "akan-goldweight",
+  "name": "Akan Goldweight",
+  "era": "past",
+  "origin": "Asante and Baoulé courts, 17th–19th century",
+  "kingdoms": [
+    "Konga"
+  ],
+  "colors": {
+    "accent": "#E2B23A",
+    "danger": "#C2412D",
+    "light": "#FFF1C6",
+    "palette": {
+      "Wengé": "#3D2C22",
+      "Brass": "#B08A3E",
+      "Kente gold": "#E2B23A",
+      "Kente green": "#1B4D2E",
+      "Kente red": "#9C2A1E"
+    }
+  },
+  "board": {
+    "frame": "wenge",
+    "field": "wenge",
+    "frieze": "kente",
+    "slot": "inlay"
+  },
+  "pieces": {
+    "water": {
+      "material": "Goldweight brass",
+      "glyph": "ornate/carved"
+    },
+    "earth": {
+      "material": "Goldweight brass",
+      "glyph": "ornate/carved"
+    },
+    "fire": {
+      "material": "Goldweight brass",
+      "glyph": "ornate/carved"
+    },
+    "air": {
+      "material": "Gold",
+      "glyph": "ornate/carved"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

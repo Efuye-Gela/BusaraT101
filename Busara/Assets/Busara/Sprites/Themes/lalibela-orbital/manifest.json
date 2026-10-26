@@ -1,0 +1,116 @@
+{
+  "id": "lalibela-orbital",
+  "name": "Lalibela Orbital",
+  "era": "fusion",
+  "origin": "Rock-hewn Lalibela reimagined as a station in orbit",
+  "kingdoms": [
+    "Telalila",
+    "N'evulandis"
+  ],
+  "colors": {
+    "accent": "#5FD0E8",
+    "danger": "#FF6A4D",
+    "light": "#E0F8FF",
+    "palette": {
+      "Basalt": "#3E4447",
+      "Station cyan": "#5FD0E8",
+      "Cross grey": "#A8B2B8",
+      "Ember": "#FF9A7A",
+      "Marble": "#E6E1D8"
+    }
+  },
+  "board": {
+    "frame": "river_stone",
+    "field": "river_stone",
+    "frieze": "crosses",
+    "slot": "stepped"
+  },
+  "pieces": {
+    "water": {
+      "material": "River stone",
+      "glyph": "ornate/emissive"
+    },
+    "earth": {
+      "material": "River stone",
+      "glyph": "ornate/emissive"
+    },
+    "fire": {
+      "material": "River stone",
+      "glyph": "ornate/emissive"
+    },
+    "air": {
+      "material": "Karibib marble",
+      "glyph": "ornate/emissive"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}

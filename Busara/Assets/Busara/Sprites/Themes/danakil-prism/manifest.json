@@ -1,0 +1,115 @@
+{
+  "id": "danakil-prism",
+  "name": "Danakil Prism",
+  "era": "fusion",
+  "origin": "Afar and the Danakil Depression, cradle of humanity",
+  "kingdoms": [
+    "Aradas"
+  ],
+  "colors": {
+    "accent": "#B8C94A",
+    "danger": "#D9482F",
+    "light": "#FBFFE0",
+    "palette": {
+      "Salt crust": "#E9E2CF",
+      "Sulphur": "#D8E36A",
+      "Acid green": "#4FBF8E",
+      "Brine": "#C7B98E",
+      "Prism": "#8A7BD1"
+    }
+  },
+  "board": {
+    "frame": "marble",
+    "field": "nano_ceramic",
+    "frieze": "salthex",
+    "slot": "socket"
+  },
+  "pieces": {
+    "water": {
+      "material": "Shift prism",
+      "glyph": "minimal/carved"
+    },
+    "earth": {
+      "material": "Shift prism",
+      "glyph": "minimal/carved"
+    },
+    "fire": {
+      "material": "Shift prism",
+      "glyph": "minimal/carved"
+    },
+    "air": {
+      "material": "Shift prism",
+      "glyph": "minimal/carved"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "size": 1024
+    },
+    {
+      "file": "board_turn_glow.png",
+      "size": 1024
+    },
+    {
+      "file": "piece_water.png",
+      "size": 256
+    },
+    {
+      "file": "piece_earth.png",
+      "size": 256
+    },
+    {
+      "file": "piece_fire.png",
+      "size": 256
+    },
+    {
+      "file": "piece_air.png",
+      "size": 256
+    },
+    {
+      "file": "piece_hidden.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "size": 256
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_hover.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_legal.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_selected.png",
+      "size": 256
+    },
+    {
+      "file": "slot_state_target.png",
+      "size": 256
+    }
+  ]
+}
