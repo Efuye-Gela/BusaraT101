@@ -11,6 +11,8 @@ public class ThemeManager : Manager<ThemeManager>
 {
     /// <summary>Piece diameter as a fraction of one slot, matching the art lab's composition.</summary>
     public const float PieceScale = 0.75f;
+    /// <summary>Selected-piece halo size relative to the piece.</summary>
+    public const float SelectedHaloScale = 1.25f;
 
     public ThemeCatalog catalog;
 
@@ -93,7 +95,12 @@ public class ThemeManager : Manager<ThemeManager>
             // Board.FadeHighlight animates the alpha, so keep it.
             board.Highlight.sprite = theme.turnGlow;
             board.Highlight.color = new Color(1f, 1f, 1f, board.Highlight.color.a);
-            Stretch(board.Highlight.rectTransform);
+            RectTransform glow = board.Highlight.rectTransform;
+            Stretch(glow);
+            // The scene scales the background up; scale the glow the same so it traces the board's edge.
+            glow.localScale = background != null && background.transform.parent == glow.parent
+                ? background.transform.localScale
+                : Vector3.one;
         }
 
         if (board.Slots == null)
@@ -140,6 +147,10 @@ public class ThemeManager : Manager<ThemeManager>
         {
             glow.sprite = theme.pieceSelected;
             glow.color = Color.white;
+            // The prefab doubles the old soft glow; theme halos already include their spread,
+            // so only enlarge enough for the ring to sit clear of the piece, still inside the hole.
+            Stretch(glow.rectTransform);
+            glow.rectTransform.localScale = Vector3.one * SelectedHaloScale;
         }
         SizePiece(resource);
     }
