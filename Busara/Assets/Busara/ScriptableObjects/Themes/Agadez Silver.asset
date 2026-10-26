@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Agadez Silver"
+  m_EditorClassIdentifier:
+  id: agadez-silver
+  displayName: "Agadez Silver"
+  era: past
+  origin: "Tuareg (Kel Tamasheq) of A\u00efr and the Sahel"
+  board: {fileID: 21300000, guid: 41ed408c09b8eee66a99e76a8f4cbf4f, type: 3}
+  turnGlow: {fileID: 21300000, guid: c592adf16ebaf1640fc1341a8354ff38, type: 3}
+  water: {fileID: 21300000, guid: 3ae6af4c4fada24c3252431dd13c54a7, type: 3}
+  earth: {fileID: 21300000, guid: 723a3e441d085b34f1e211701383caf6, type: 3}
+  fire: {fileID: 21300000, guid: 40182abfd15316e2edbbcc60502b985c, type: 3}
+  air: {fileID: 21300000, guid: 4a95527ea17344da49f0fb36439f44ee, type: 3}
+  hidden: {fileID: 21300000, guid: 65bcb9bf082637f3399ecbbe67dc5b25, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 4d508c27fdce2f38728b9ba88a0afe4b, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 4b515b6f9374565bff56e19dc27b8a72, type: 3}
+  pieceShielded: {fileID: 21300000, guid: fae91ebfbfac39514d549307bfa9b04a, type: 3}
+  slotHover: {fileID: 21300000, guid: b6e147b42ea75dc1751136ea75f80045, type: 3}
+  slotLegal: {fileID: 21300000, guid: 75116c9f12f7faebe55fe1d212f50b3b, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 09eab405e44c10c6606313c11862bc27, type: 3}
+  slotSelected: {fileID: 21300000, guid: f4e12dd4fd10670327afddb8ed72ef4d, type: 3}
+  slotTarget: {fileID: 21300000, guid: eb087a0df3aa4f537cca8607f2d84aff, type: 3}
+  accent: {r: 0.909804, g: 0.760784, b: 0.478431, a: 1}
+  danger: {r: 0.772549, g: 0.27451, b: 0.184314, a: 1}
+  light: {r: 0.952941, g: 0.956863, b: 0.964706, a: 1}

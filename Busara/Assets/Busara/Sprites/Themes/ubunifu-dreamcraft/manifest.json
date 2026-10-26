@@ -52,63 +52,78 @@
   "files": [
     {
       "file": "board.png",
-      "size": 1024
+      "size": 1024,
+      "guid": "b793624ea45dcf2991e85d16088b755c"
     },
     {
       "file": "board_turn_glow.png",
-      "size": 1024
+      "size": 1024,
+      "guid": "7328a95adecf48b15708609eb0c02735"
     },
     {
       "file": "piece_water.png",
-      "size": 256
+      "size": 256,
+      "guid": "75bba81c284e5112f5057d4ef5fa1a15"
     },
     {
       "file": "piece_earth.png",
-      "size": 256
+      "size": 256,
+      "guid": "f807750484bf1e0f0102e6fd732d4248"
     },
     {
       "file": "piece_fire.png",
-      "size": 256
+      "size": 256,
+      "guid": "ce12b2921277263aae0a7f2c167b8ff9"
     },
     {
       "file": "piece_air.png",
-      "size": 256
+      "size": 256,
+      "guid": "939b7b140f1319771cfc45af44951221"
     },
     {
       "file": "piece_hidden.png",
-      "size": 256
+      "size": 256,
+      "guid": "2297843a26bfe1b083c69d9c4bd4b327"
     },
     {
       "file": "piece_state_selected.png",
-      "size": 256
+      "size": 256,
+      "guid": "0c4b490850c4c1fe94763d3d8d21752c"
     },
     {
       "file": "piece_state_threatened.png",
-      "size": 256
+      "size": 256,
+      "guid": "88fd368b674b300a690ff938d27270ca"
     },
     {
       "file": "piece_state_shielded.png",
-      "size": 256
+      "size": 256,
+      "guid": "aaeed128936b020c3729ccf968fc8843"
     },
     {
       "file": "slot_state_hover.png",
-      "size": 256
+      "size": 256,
+      "guid": "98846cc54220fbe0b287544556d9538c"
     },
     {
       "file": "slot_state_legal.png",
-      "size": 256
+      "size": 256,
+      "guid": "ee36cf12fee3eaff5ec12f61d029f554"
     },
     {
       "file": "slot_state_blocked.png",
-      "size": 256
+      "size": 256,
+      "guid": "58c6ed24ba62eeefc5de8af780d279b1"
     },
     {
       "file": "slot_state_selected.png",
-      "size": 256
+      "size": 256,
+      "guid": "0014f6cb4425716eec27274513e09ad4"
     },
     {
       "file": "slot_state_target.png",
-      "size": 256
+      "size": 256,
+      "guid": "825ede800af3b9ea750b014e2be822a5"
     }
   ]
 }

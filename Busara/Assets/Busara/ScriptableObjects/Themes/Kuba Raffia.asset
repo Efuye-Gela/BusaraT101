@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Kuba Raffia"
+  m_EditorClassIdentifier:
+  id: kuba-raffia
+  displayName: "Kuba Raffia"
+  era: past
+  origin: "Kuba Kingdom, Kasai, DR Congo, 17th century onward"
+  board: {fileID: 21300000, guid: f661888f934082bd42ef78de5b580c0c, type: 3}
+  turnGlow: {fileID: 21300000, guid: 15513c2ee5ba2421d18af0b55037ae07, type: 3}
+  water: {fileID: 21300000, guid: faa33d9117806ae756dd95ae0aaab3a0, type: 3}
+  earth: {fileID: 21300000, guid: 8fb272efe044bd620c5a9af807b555fa, type: 3}
+  fire: {fileID: 21300000, guid: 64c6a7569da9c2ebfbcdb63da4e02cc7, type: 3}
+  air: {fileID: 21300000, guid: c253a80dd06cbb11f3b7115154bf431f, type: 3}
+  hidden: {fileID: 21300000, guid: 3e6802c643593335b80a756e4a819ebd, type: 3}
+  pieceSelected: {fileID: 21300000, guid: d55535141baedf7c764ecb48dfcdf8fd, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 1a12241a58b0df768853d0cf2ade9b41, type: 3}
+  pieceShielded: {fileID: 21300000, guid: 27585810001eb0e2d471fcf56694c45f, type: 3}
+  slotHover: {fileID: 21300000, guid: e24ef3b6e58d058229d21c13667ede7d, type: 3}
+  slotLegal: {fileID: 21300000, guid: a9853fdd19a8c492d82f2a33c8419e94, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 78b427c4bc72e146cabe430f409fc67d, type: 3}
+  slotSelected: {fileID: 21300000, guid: aa4af3cf0eaed35c8ba273c2a0915927, type: 3}
+  slotTarget: {fileID: 21300000, guid: db53d68d5343bfb3468a8defd9022c60, type: 3}
+  accent: {r: 0.913725, g: 0.768627, b: 0.415686, a: 1}
+  danger: {r: 0.698039, g: 0.227451, b: 0.168627, a: 1}
+  light: {r: 1, g: 0.956863, b: 0.85098, a: 1}

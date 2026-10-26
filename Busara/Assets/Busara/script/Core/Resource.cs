@@ -11,7 +11,23 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
     public Color pieceColor;
     public Slot slot;
     [SerializeField] Image highlightImage;
+    [SerializeField] Image pieceImage;
     public Transform DeleteBtn;
+
+    public Image HighlightImage => highlightImage;
+    public Image PieceImage
+    {
+        get
+        {
+            if (pieceImage == null)
+            {
+                Transform child = transform.Find("PieceImage");
+                if (child != null)
+                    pieceImage = child.GetComponent<Image>();
+            }
+            return pieceImage;
+        }
+    }
 
     private void OnEnable()
     {
@@ -53,6 +69,7 @@ public class Resource : MonoBehaviour,SelectionManager.ResourceSelectionListener
     private void Start()
     {
         SelectionManager.Instance.AddResourceSelectionListener(this);
+        ThemeManager.Skin(this);
     }
     public void TurnOnDeleteBtn()
     {

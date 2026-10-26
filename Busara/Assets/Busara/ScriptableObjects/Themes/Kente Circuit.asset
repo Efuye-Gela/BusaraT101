@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Kente Circuit"
+  m_EditorClassIdentifier:
+  id: kente-circuit
+  displayName: "Kente Circuit"
+  era: fusion
+  origin: "Asante weaving meets Accra hardware labs"
+  board: {fileID: 21300000, guid: 5711c60ecd0b240c34b495cdba64f0ff, type: 3}
+  turnGlow: {fileID: 21300000, guid: 9bd989c1678a8ecc140fd196bf280b95, type: 3}
+  water: {fileID: 21300000, guid: 1c95df66d9cdcadb97bbb32dc2f1f378, type: 3}
+  earth: {fileID: 21300000, guid: a7cb8a70870df9c5e61e85a3db87f524, type: 3}
+  fire: {fileID: 21300000, guid: cf49a650bdf98ff14d5aca304505f383, type: 3}
+  air: {fileID: 21300000, guid: 07937248776d75341ad2febe0fc1dffe, type: 3}
+  hidden: {fileID: 21300000, guid: 25938d807b4451849006897c9d10dbc3, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 5986084cb4b4bd2e6cbd8f3de0f81120, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: c1b6fa5a754a20612554d7fc8fc3ee82, type: 3}
+  pieceShielded: {fileID: 21300000, guid: 8cd9fb96718ca589309d46fafcf948a4, type: 3}
+  slotHover: {fileID: 21300000, guid: c03f2a03afbeedc6e300f7d4dd242a64, type: 3}
+  slotLegal: {fileID: 21300000, guid: da30aa40175e90807fc758e8471ac0de, type: 3}
+  slotBlocked: {fileID: 21300000, guid: cfd7445a2b134dc29a509dac9ef4ea11, type: 3}
+  slotSelected: {fileID: 21300000, guid: a9e5e22be2b8fb1b9a566f1e39376352, type: 3}
+  slotTarget: {fileID: 21300000, guid: 56d639196bd9e155fd356f437ac5f386, type: 3}
+  accent: {r: 0.886275, g: 0.698039, b: 0.227451, a: 1}
+  danger: {r: 1, g: 0.352941, b: 0.235294, a: 1}
+  light: {r: 1, g: 0.945098, b: 0.776471, a: 1}

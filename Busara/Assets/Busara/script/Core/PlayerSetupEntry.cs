@@ -7,12 +7,14 @@ public class PlayerSetupEntry
     public string Name;
     public Kingdom Kingdom;
     public bool IsBotControlled;
+    public BoardTheme Theme;
 
-    public PlayerSetupEntry(string name, Kingdom kingdom = null, bool isBotControlled = false)
+    public PlayerSetupEntry(string name, Kingdom kingdom = null, bool isBotControlled = false, BoardTheme theme = null)
     {
         Name = name;
         Kingdom = kingdom;
         IsBotControlled = isBotControlled;
+        Theme = theme;
     }
 }
 

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Volta Resonance"
+  m_EditorClassIdentifier:
+  id: volta-resonance
+  displayName: "Volta Resonance"
+  era: future
+  origin: "Empire Volta, Nakomean warrior council"
+  board: {fileID: 21300000, guid: 091be20821e150d57b035fc7a581d54a, type: 3}
+  turnGlow: {fileID: 21300000, guid: 175f5e3237e293e33115d7d1a698c02b, type: 3}
+  water: {fileID: 21300000, guid: 4a2f371f83eb95eb22f6b402eeb2a2c5, type: 3}
+  earth: {fileID: 21300000, guid: de6c5bbd092cc2d520f05a005d34e32c, type: 3}
+  fire: {fileID: 21300000, guid: 1253e678b082d4eab5de11aed4a21a92, type: 3}
+  air: {fileID: 21300000, guid: e663c1e4a3d1ece0142628bebcb16b69, type: 3}
+  hidden: {fileID: 21300000, guid: f9b2aa5ef42792c70b1a04fd05845e2b, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 51dc995c41c38e5d8abbe77f7b08271f, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: c456916ae7d78de7a02df5b57c608256, type: 3}
+  pieceShielded: {fileID: 21300000, guid: 5cbaa0556c76c1b8d774d7b85efebd28, type: 3}
+  slotHover: {fileID: 21300000, guid: 2fb1c742d64b5387c799d100a858e861, type: 3}
+  slotLegal: {fileID: 21300000, guid: b94ee13abce75812cfca9738207841a7, type: 3}
+  slotBlocked: {fileID: 21300000, guid: ca48ab09f1a230d93ff489f2b9b6d42a, type: 3}
+  slotSelected: {fileID: 21300000, guid: a1e083a3af8e04bc65b92c415eec6615, type: 3}
+  slotTarget: {fileID: 21300000, guid: 930825f622da37dd785628520fc6673b, type: 3}
+  accent: {r: 0.909804, g: 0.639216, b: 0.227451, a: 1}
+  danger: {r: 1, g: 0.301961, b: 0.227451, a: 1}
+  light: {r: 1, g: 0.941176, b: 0.823529, a: 1}

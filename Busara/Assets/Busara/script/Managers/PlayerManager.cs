@@ -56,6 +56,8 @@ public class PlayerManager : Manager<PlayerManager>
             player.knownKingdoms.Clear();
             if (player.Board.BoardOwnerName != null)
                 player.Board.BoardOwnerName.text = player.Name;
+            if (entries[i].Theme != null && ThemeManager.Instance != null)
+                ThemeManager.Instance.Apply(player.Board, entries[i].Theme);
         }
         foreach (Player player in Players)
         {

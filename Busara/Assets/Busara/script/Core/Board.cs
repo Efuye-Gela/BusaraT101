@@ -13,6 +13,7 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
     public int boardId;
     public List<Slot> Slots;
     public Image Highlight;
+    public Image Background;
     public TMP_Text BoardOwnerName;
     private Coroutine highlightCoroutine;
     private void Start()
@@ -70,6 +71,7 @@ public class Board : MonoBehaviour, TurnManager.TurnBeginListener, TurnManager.T
         destinationSlot.isOccupied = true;
         destinationSlot.resource = tobePlacedResource;
         tobePlacedResource.slot = destinationSlot;
+        ThemeManager.Skin(tobePlacedResource);
         tobePlacedResource = null;
         destinationSlot = null;
     }

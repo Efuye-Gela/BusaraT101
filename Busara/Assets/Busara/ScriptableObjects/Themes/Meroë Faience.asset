@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Mero\u00eb Faience"
+  m_EditorClassIdentifier:
+  id: meroe-faience
+  displayName: "Mero\u00eb Faience"
+  era: past
+  origin: "Kingdom of Kush, Nubia, 800 BCE \u2013 350 CE"
+  board: {fileID: 21300000, guid: 6658a05bcc40cee026e61c2955288ae2, type: 3}
+  turnGlow: {fileID: 21300000, guid: 06c7f3acfb7aab7bb6955650e9f42279, type: 3}
+  water: {fileID: 21300000, guid: 21ab7e9ac70cf28488b84d61446736c0, type: 3}
+  earth: {fileID: 21300000, guid: 1ed32b5566ab36b56058c6b2215fa892, type: 3}
+  fire: {fileID: 21300000, guid: 1ebc4cfcc8dc84399c94a49e8ea2b13f, type: 3}
+  air: {fileID: 21300000, guid: 998f74b2e67b5a4f2cdaf712eec28cc2, type: 3}
+  hidden: {fileID: 21300000, guid: 063c4689c05ce44ae5ad659e1104308f, type: 3}
+  pieceSelected: {fileID: 21300000, guid: fa49adb6c6e0d0cbf64bccfa2007dcf2, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 32818ba58b837e2c0d9c9eb1697eaf95, type: 3}
+  pieceShielded: {fileID: 21300000, guid: c6e5185e62cc5a3355a736e61a86a1b3, type: 3}
+  slotHover: {fileID: 21300000, guid: 27cc669c36d7d28419aa3daf678fd1a9, type: 3}
+  slotLegal: {fileID: 21300000, guid: 1d7de0d0e27cf6e31bb4d78a093dc035, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 6fc0ee2990e5bf41b7f31c76dda636a2, type: 3}
+  slotSelected: {fileID: 21300000, guid: 255bba62cbc82904778d96f42f80b4b7, type: 3}
+  slotTarget: {fileID: 21300000, guid: 3e1e88ab032469fca9429b329a1ab8aa, type: 3}
+  accent: {r: 0.886275, g: 0.698039, b: 0.227451, a: 1}
+  danger: {r: 0.698039, g: 0.227451, b: 0.12549, a: 1}
+  light: {r: 1, g: 0.952941, b: 0.839216, a: 1}

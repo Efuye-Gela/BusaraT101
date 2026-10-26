@@ -175,6 +175,7 @@
     volta_stone: { name: 'Volta stone', era: 'future', family: 'veined', base: '#1D1B22', dark: '#0B0A0E', light: '#3A3644', shine: 0.4, origin: 'Fictional. Resonant meteoric ore of the Nakomean warriors; glows under will.' },
     dream_glass: { name: 'Ndoto glass', era: 'future', family: 'iridescent', base: '#3B2B6E', dark: '#160F2E', light: '#C9B8FF', shine: 0.9, origin: 'Fictional. Ubunifu glass that colours itself with the holder\'s thought.' },
     bio_lumen: { name: 'Biolume resin', era: 'future', family: 'lumen', base: '#0E2A26', dark: '#06120F', light: '#62F2C7', shine: 0.6, origin: 'Fictional. Resin seeded with glowing mycelium.' },
+    slate: { name: 'Slate lacquer', era: 'future', family: 'gradient', base: '#4C514B', dark: '#353935', light: '#5E645C', shine: 0.2, origin: 'The original Busara board finish: matte slate with amber hairlines.' },
     shift_prism: { name: 'Shift prism', era: 'future', family: 'prism', base: '#8A7BD1', dark: '#2E2752', light: '#F0E9FF', shine: 0.95, origin: 'Fictional. Aradas crystal that never shows the same colour twice.' },
   };
 
@@ -339,6 +340,12 @@
         }
         break;
       }
+      case 'gradient': {
+        const gid = uid(u + 'v');
+        defs.push(`<linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${light}"/><stop offset="1" stop-color="${dark}"/></linearGradient>`);
+        els.push(`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" fill="url(#${gid})"/>`);
+        break;
+      }
       case 'ceramic': {
         N({ freq: f(0.9 * scale), oct: 1, seed, table: '0 0 0 0.5', color: dark, op: 0.12 });
         break;
@@ -479,6 +486,7 @@
       `<rect width="60" height="104" fill="${c[0]}"/>` +
       `<path d="M30 0L60 17V52L30 69L0 52V17ZM0 69V104M60 69V104M30 69V104" fill="${c[1]}" fill-opacity="0.35" stroke="${c[2]}" stroke-width="3"/>` +
       `<circle cx="30" cy="35" r="4" fill="${c[3]}" opacity="0.8"/>` }),
+    plain: (c) => ({ w: 40, h: 40, body: `<rect width="40" height="40" fill="${c[0]}" opacity="0"/>` }),
     chevron: (c) => ({ w: 40, h: 40, body:
       `<rect width="40" height="40" fill="${c[0]}"/>` +
       `<path d="M0 30L20 10L40 30" fill="none" stroke="${c[1]}" stroke-width="7"/><path d="M0 30L20 10L40 30" fill="none" stroke="${c[2]}" stroke-width="1.5" transform="translate(0 6)"/>` }),
@@ -663,7 +671,23 @@
       notes: ['Aradas surf identities; pieces drift through colour while keeping their element tint.', 'Ancient and future at once: Lucy was found a few hundred kilometres away.', 'Light board with minimal carved glyphs: test against the N\'evulandis board for distinction.'],
     },
   ];
-  const themeById = (id) => THEMES.find((t) => t.id === id) || THEMES[0];
+  // The original Busara look, converted to the same sprite format and board geometry as the
+  // other themes. Pieces are the existing resource icons (raster), resampled by the exporter.
+  const CLASSIC = {
+    id: 'classic', name: 'Busara Classic', era: 'classic',
+    origin: 'The original Busara board and resource icons', kingdoms: [],
+    thesis: 'The first Busara look: slate board, amber hairlines, round enamel resources.',
+    motif: 'Slate field, amber outline and hairlines, darkened corner triangles, diamond marks at each edge.',
+    board: { frame: 'slate', field: 'slate', frieze: 'plain', fc: ['#4C514B', '#4C514B', '#F0A500', '#F0A500'], radius: 40, slot: 'inlay', ring: '#F0A500', corner: 'triangle', edgeMarks: true, hairlines: true, plainField: true, outline: '#F0A500', holeColor: '#353535', ringWidth: 3.5 },
+    glyphs: 'minimal', glyphMode: 'carved',
+    pieces: { water: { mat: 'slate', inlay: '#F0A500' }, earth: { mat: 'slate', inlay: '#F0A500' }, fire: { mat: 'slate', inlay: '#F0A500' }, air: { mat: 'slate', inlay: '#F0A500' } },
+    raster: { water: 'Elements/element_water.png', earth: 'Elements/element_earth.png', fire: 'Elements/element_fire.png', air: 'Elements/element_air.png' },
+    accent: '#F0A500', danger: '#E5484D', light: '#FFE7A8',
+    palette: [['Slate', '#4C514B'], ['Amber', '#F0A500'], ['Hole', '#353535'], ['Fire', '#B8321F'], ['Water', '#2F6DB5']],
+    notes: ['Default for players who keep the original look.'],
+  };
+  const ALL_THEMES = THEMES.concat([CLASSIC]);
+  const themeById = (id) => ALL_THEMES.find((t) => t.id === id) || THEMES[0];
 
   // ------------------------------------------------------------ slots / holes
   const SLOT_STYLES = {
@@ -692,9 +716,9 @@
       }
       case 'inlay': {
         defs.push(`<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${lighten(ring, 0.5)}"/><stop offset="0.5" stop-color="${ring}"/><stop offset="1" stop-color="${darken(ring, 0.45)}"/></linearGradient>`);
-        out.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${darken(surface, 0.62)}"/>`);
+        out.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${t.board.holeColor || darken(surface, 0.62)}"/>`);
         out.push(`<circle cx="${cx}" cy="${cy}" r="${r - 6}" fill="none" stroke="#000" stroke-width="6" opacity="0.25"/>`);
-        out.push(`<circle cx="${cx}" cy="${cy}" r="${r + 2}" fill="none" stroke="url(#${id})" stroke-width="7"/>`);
+        out.push(`<circle cx="${cx}" cy="${cy}" r="${r + 2}" fill="none" stroke="url(#${id})" stroke-width="${t.board.ringWidth || 7}"/>`);
         if (t.board.glowRing || t.era === 'fusion') out.push(`<circle cx="${cx}" cy="${cy}" r="${r + 2}" fill="none" stroke="${ring}" stroke-width="14" opacity="0.18"/>`);
         break;
       }
@@ -766,6 +790,7 @@
       case 'diamond': return g(`<rect x="-26" y="-26" width="52" height="52" transform="rotate(45)" fill="${darken(t.board.fc[0], 0.2)}" stroke="${c}" stroke-width="3"/><rect x="-11" y="-11" width="22" height="22" transform="rotate(45)" fill="${c}"/>`);
       case 'cross': return g(`<circle r="30" fill="${darken(t.board.fc[0], 0.25)}"/><path d="M0 -22V22M-22 0H22" stroke="${c}" stroke-width="5"/><circle cy="-22" r="5" fill="none" stroke="${c}" stroke-width="3"/><circle cy="22" r="5" fill="none" stroke="${c}" stroke-width="3"/><circle cx="-22" r="5" fill="none" stroke="${c}" stroke-width="3"/><circle cx="22" r="5" fill="none" stroke="${c}" stroke-width="3"/>`);
       case 'stud': return g(`<circle r="22" fill="${darken(c, 0.5)}"/><circle r="18" fill="${c}"/><circle cx="-6" cy="-6" r="6" fill="#fff" opacity="0.55"/>`);
+      case 'triangle': return g(`<path d="M-30 -30H22L-30 22Z" fill="#000" opacity="0.22" stroke-linejoin="round"/>`);
       case 'bracket': return g(`<path d="M-20 22V-20H22" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="square"/><circle cx="2" cy="2" r="3.5" fill="${c}"/>`);
       default: return '';
     }
@@ -791,11 +816,18 @@
     defs.push(frame.defs);
     els.push(`<g clip-path="url(#${clipO})">${frame.els}`);
     els.push(`<rect x="${b1}" y="${b1}" width="${S - 2 * b1}" height="${S - 2 * b1}" fill="url(#${pat})" clip-path="url(#${clipB})" opacity="0.95"/>`);
-    els.push(`<rect x="${b1}" y="${b1}" width="${S - 2 * b1}" height="${S - 2 * b1}" fill="none" stroke="${t.accent}" stroke-width="2.5" opacity="0.8"/>`);
-    els.push(`<rect x="${b2}" y="${b2}" width="${S - 2 * b2}" height="${S - 2 * b2}" fill="none" stroke="${t.accent}" stroke-width="2.5" opacity="0.8"/>`);
+    if (t.board.hairlines) {
+      // classic: broken hairlines along each edge, leaving room for the centre marks
+      const m = B / 2, a = 150, g = S / 2 - 70;
+      els.push(`<path d="M${a} ${m}H${g}M${S - g} ${m}H${S - a}M${a} ${S - m}H${g}M${S - g} ${S - m}H${S - a}M${m} ${a}V${g}M${m} ${S - g}V${S - a}M${S - m} ${a}V${g}M${S - m} ${S - g}V${S - a}" stroke="${t.accent}" stroke-width="2.5"/>`);
+    } else {
+      els.push(`<rect x="${b1}" y="${b1}" width="${S - 2 * b1}" height="${S - 2 * b1}" fill="none" stroke="${t.accent}" stroke-width="2.5" opacity="0.8"/>`);
+      els.push(`<rect x="${b2}" y="${b2}" width="${S - 2 * b2}" height="${S - 2 * b2}" fill="none" stroke="${t.accent}" stroke-width="2.5" opacity="0.8"/>`);
+    }
     els.push(`</g>`);
 
     // field
+    const plain = !!t.board.plainField;
     const field = paintMaterial(u, t.board.field, { shape: 'rect', x: B, y: B, w: S - 2 * B, h: S - 2 * B }, t.board.fieldTint, { seed: 17, glow: t.board.glow });
     defs.push(field.defs);
     els.push(`<g clip-path="url(#${clipF})">${field.els}`);
@@ -815,19 +847,26 @@
     // soft vignette so holes read against the field
     const vg = uid(u + 'vg');
     defs.push(`<radialGradient id="${vg}" cx="0.5" cy="0.5" r="0.7"><stop offset="0.6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.35"/></radialGradient>`);
-    els.push(`<rect x="${B}" y="${B}" width="${S - 2 * B}" height="${S - 2 * B}" fill="url(#${vg})"/></g>`);
-    // field edge bevel
-    els.push(`<rect x="${B}" y="${B}" width="${S - 2 * B}" height="${S - 2 * B}" rx="${fieldR}" fill="none" stroke="#000" stroke-width="5" opacity="0.35"/>`);
-    els.push(`<rect x="${B + 3}" y="${B + 3}" width="${S - 2 * B - 6}" height="${S - 2 * B - 6}" rx="${Math.max(2, fieldR - 3)}" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.18"/>`);
+    els.push(`<rect x="${B}" y="${B}" width="${S - 2 * B}" height="${S - 2 * B}" fill="url(#${vg})" opacity="${plain ? 0 : 1}"/></g>`);
+    if (!plain) {
+      // field edge bevel
+      els.push(`<rect x="${B}" y="${B}" width="${S - 2 * B}" height="${S - 2 * B}" rx="${fieldR}" fill="none" stroke="#000" stroke-width="5" opacity="0.35"/>`);
+      els.push(`<rect x="${B + 3}" y="${B + 3}" width="${S - 2 * B - 6}" height="${S - 2 * B - 6}" rx="${Math.max(2, fieldR - 3)}" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.18"/>`);
+    }
     if (t.board.stitch) {
       els.push(`<rect x="${I + 12}" y="${I + 12}" width="${S - 2 * I - 24}" height="${S - 2 * I - 24}" rx="${Math.max(4, R - 10)}" fill="none" stroke="${t.board.ring}" stroke-width="3" stroke-dasharray="12 9" opacity="0.8"/>`);
     }
     // outer edge
     els.push(`<rect x="${I}" y="${I}" width="${S - 2 * I}" height="${S - 2 * I}" rx="${R}" fill="none" stroke="#000" stroke-width="4" opacity="0.5"/>`);
+    if (t.board.outline) els.push(`<rect x="${I + 2}" y="${I + 2}" width="${S - 2 * I - 4}" height="${S - 2 * I - 4}" rx="${R - 2}" fill="none" stroke="${t.board.outline}" stroke-width="4"/>`);
     els.push(`<rect x="${I + 3}" y="${I + 3}" width="${S - 2 * I - 6}" height="${S - 2 * I - 6}" rx="${Math.max(2, R - 3)}" fill="none" stroke="#fff" stroke-width="2" opacity="0.2"/>`);
     // corners
     const cc = [[B / 2 + 4, B / 2 + 4, 0], [S - B / 2 - 4, B / 2 + 4, 90], [S - B / 2 - 4, S - B / 2 - 4, 180], [B / 2 + 4, S - B / 2 - 4, 270]];
     cc.forEach(([x, y, r]) => els.push(cornerMarkup(t.board.corner, x, y, t, r)));
+    if (t.board.edgeMarks) {
+      const mark = (x, y, rot) => `<g transform="translate(${x} ${y}) rotate(${rot})" fill="#000" opacity="0.4"><rect x="-26" y="-7" width="14" height="14" transform="rotate(45 -19 0)"/><circle r="4"/><rect x="12" y="-7" width="14" height="14" transform="rotate(45 19 0)"/></g>`;
+      els.push(mark(S / 2, B / 2, 0) + mark(S / 2, S - B / 2, 0) + mark(B / 2, S / 2, 90) + mark(S - B / 2, S / 2, 90));
+    }
 
     // holes
     const surface = t.board.fieldTint || MATERIALS[t.board.field].base;
@@ -1068,7 +1107,9 @@
       { file: 'board.png', size: 1024, svg: () => boardSVG(t) },
       { file: 'board_turn_glow.png', size: 1024, svg: () => boardGlowSVG(t) },
     ];
-    ELEMENTS.forEach((el) => list.push({ file: `piece_${el}.png`, size: 256, svg: () => pieceSVG(t, el) }));
+    ELEMENTS.forEach((el) => list.push(t.raster
+      ? { file: `piece_${el}.png`, size: 256, raster: t.raster[el] }
+      : { file: `piece_${el}.png`, size: 256, svg: () => pieceSVG(t, el) }));
     list.push({ file: 'piece_hidden.png', size: 256, svg: () => pieceSVG(t, 'earth', { back: true }) });
     Object.keys(PIECE_STATES).forEach((s) => list.push({ file: `piece_state_${s}.png`, size: 256, svg: () => pieceStateSVG(t, s) }));
     Object.keys(SLOT_STATES).forEach((s) => list.push({ file: `slot_state_${s}.png`, size: 256, svg: () => slotStateSVG(t, s) }));
@@ -1077,7 +1118,7 @@
 
   const api = {
     ELEMENTS, ELEMENT_INFO, GLYPHS, MATERIALS, THEMES, SLOT_STYLES, SLOT_STATES, PIECE_STATES, BOARD, FRIEZES,
-    themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
+    CLASSIC, ALL_THEMES, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
     color: { mix, lighten, darken, luminance },
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

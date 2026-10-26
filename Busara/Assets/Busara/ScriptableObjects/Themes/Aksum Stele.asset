@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Aksum Stele"
+  m_EditorClassIdentifier:
+  id: aksum-stele
+  displayName: "Aksum Stele"
+  era: past
+  origin: "Aksumite Empire and Lalibela, Ethiopia, 1st\u201313th century"
+  board: {fileID: 21300000, guid: 19d391d4418d107d6521bcd5eab7344b, type: 3}
+  turnGlow: {fileID: 21300000, guid: 18c50d9e2fe65d7618e78d09b9f14fb5, type: 3}
+  water: {fileID: 21300000, guid: de004d5341e82fb65b73164615c064fc, type: 3}
+  earth: {fileID: 21300000, guid: 5fa42ab303984bbed828704d51ebd5c0, type: 3}
+  fire: {fileID: 21300000, guid: 5b6c00f8add3da06006f10b33c20397b, type: 3}
+  air: {fileID: 21300000, guid: 670b05b069f38a310364c12912f95808, type: 3}
+  hidden: {fileID: 21300000, guid: 6ae3c4d912d0c36fdc8577e2253781c7, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 35ba07b27c0bc1ab0b528d3410db290f, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 7783d2e5d96c2077941964a2ef46715a, type: 3}
+  pieceShielded: {fileID: 21300000, guid: fa682eadfe5e86be051d05da83b33297, type: 3}
+  slotHover: {fileID: 21300000, guid: d0b620dfdbb18f7c3c78dc0b22682ad1, type: 3}
+  slotLegal: {fileID: 21300000, guid: 9deff4c297ed81c93ac5d6ce34741a40, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 726113eff2bd3516e4b059a8458c6e6e, type: 3}
+  slotSelected: {fileID: 21300000, guid: 55f6122458e6be30cb0d578eb39c97fc, type: 3}
+  slotTarget: {fileID: 21300000, guid: fba1b8eefa54cd5d8959316da5c23399, type: 3}
+  accent: {r: 0.788235, g: 0.807843, b: 0.831373, a: 1}
+  danger: {r: 0.709804, g: 0.270588, b: 0.180392, a: 1}
+  light: {r: 0.956863, g: 0.956863, b: 0.94902, a: 1}

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "N'evulandis Data Court"
+  m_EditorClassIdentifier:
+  id: nevulandis-data
+  displayName: "N'evulandis Data Court"
+  era: future
+  origin: "House of IO's, 30th century"
+  board: {fileID: 21300000, guid: 112cef79c17f688620243313664fcfe3, type: 3}
+  turnGlow: {fileID: 21300000, guid: 79b67ba5fa12079041e1a8ee569ccf36, type: 3}
+  water: {fileID: 21300000, guid: fc6d815de8f419269d0d262019e1ee80, type: 3}
+  earth: {fileID: 21300000, guid: 6102f6d826c67acf1f531b70d49c73ae, type: 3}
+  fire: {fileID: 21300000, guid: 6b90300a519c0e2c40d9592e20cda33a, type: 3}
+  air: {fileID: 21300000, guid: fa3b8add86f61a3ad6acc61b718a180b, type: 3}
+  hidden: {fileID: 21300000, guid: d315f91e56722ff29b9d0385ccfab424, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 85dff1a09ed1d6a665bded5cd6f276db, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 5c0ed8ffe635b091ec034083f8a6f26a, type: 3}
+  pieceShielded: {fileID: 21300000, guid: 4cb50be442747f94f80569b708039ab3, type: 3}
+  slotHover: {fileID: 21300000, guid: 7204197993e97b5c526927e223514578, type: 3}
+  slotLegal: {fileID: 21300000, guid: ee6fd862e0fd1fe75aeff5a9a3940f13, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 13de36a92b058979d689066e5608b282, type: 3}
+  slotSelected: {fileID: 21300000, guid: 09a89103534a5f3348b1019cabf75875, type: 3}
+  slotTarget: {fileID: 21300000, guid: 1d4f6233c20393a2aa355e1bd81bf236, type: 3}
+  accent: {r: 0.168627, g: 0.713725, b: 0.878431, a: 1}
+  danger: {r: 0.878431, g: 0.32549, b: 0.227451, a: 1}
+  light: {r: 0.901961, g: 0.980392, b: 1, a: 1}

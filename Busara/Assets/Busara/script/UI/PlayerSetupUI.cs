@@ -163,6 +163,13 @@ public class PlayerSetupUI : MonoBehaviour
                 entry.Kingdom = index == 0 ? null : manager.kingdomCatalog.kingdoms[index - 1];
                 Validate();
             });
+            ThemeCatalog themes = ThemeManager.Instance != null ? ThemeManager.Instance.catalog : null;
+            if (themes != null && themes.themes.Count > 0)
+            {
+                if (entry.Theme == null)
+                    entry.Theme = themes.SeatDefault(i);
+                ThemePicker(row, entry, themes);
+            }
             Button remove = Button("Remove Player", row, () => RemovePlayer(entry));
             remove.interactable = entries.Count > PlayerSetupRules.MinimumPlayers;
             remove.GetComponent<LayoutElement>().flexibleWidth = 0;
@@ -200,6 +207,66 @@ public class PlayerSetupUI : MonoBehaviour
         input.richText = false;
         input.text = value;
         return input;
+    }
+
+    private static void ThemePicker(Transform parent, PlayerSetupEntry entry, ThemeCatalog themes)
+    {
+        RectTransform picker = Rect("Board Theme", parent);
+        LayoutElement size = picker.gameObject.AddComponent<LayoutElement>();
+        size.minWidth = 440;
+        size.flexibleWidth = 1;
+        HorizontalLayoutGroup layout = picker.gameObject.AddComponent<HorizontalLayoutGroup>();
+        layout.spacing = 10;
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = false;
+        layout.childForceExpandHeight = true;
+        layout.childAlignment = TextAnchor.MiddleLeft;
+
+        Image preview = null;
+        TMP_Text label = null;
+        void Refresh()
+        {
+            preview.sprite = entry.Theme != null ? entry.Theme.board : null;
+            preview.color = entry.Theme != null ? Color.white : Color.clear;
+            label.text = entry.Theme != null ? entry.Theme.DisplayName : "No theme";
+        }
+        void Step(int direction)
+        {
+            entry.Theme = themes.Next(entry.Theme, direction);
+            Refresh();
+        }
+
+        ArrowButton("Previous Board Theme", "<", picker, () => Step(-1));
+        RectTransform thumb = Rect("Theme Preview", picker);
+        preview = thumb.gameObject.AddComponent<Image>();
+        preview.preserveAspect = true;
+        preview.raycastTarget = false;
+        LayoutElement thumbSize = thumb.gameObject.AddComponent<LayoutElement>();
+        thumbSize.minWidth = 84;
+        thumbSize.preferredWidth = 84;
+        label = Text("Theme Name", picker, "", 24);
+        LayoutElement labelSize = label.gameObject.AddComponent<LayoutElement>();
+        labelSize.minWidth = 160;
+        labelSize.flexibleWidth = 1;
+        ArrowButton("Next Board Theme", ">", picker, () => Step(1));
+        Refresh();
+    }
+
+    private static void ArrowButton(string objectName, string glyph, Transform parent, UnityEngine.Events.UnityAction action)
+    {
+        RectTransform rect = Rect(objectName, parent);
+        Image image = rect.gameObject.AddComponent<Image>();
+        image.color = new Color(0.2f, 0.35f, 0.47f);
+        Button button = rect.gameObject.AddComponent<Button>();
+        button.targetGraphic = image;
+        button.onClick.AddListener(action);
+        LayoutElement size = rect.gameObject.AddComponent<LayoutElement>();
+        size.minWidth = 56;
+        size.preferredWidth = 56;
+        TMP_Text text = Text("Label", rect, glyph, 30);
+        Stretch(text.rectTransform);
+        text.alignment = TextAlignmentOptions.Center;
     }
 
     private static TMP_Dropdown KingdomDropdown(Transform parent)

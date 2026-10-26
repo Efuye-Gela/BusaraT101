@@ -450,9 +450,9 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
           <div class="sprite-strip" id="sprite-strip" aria-label="Sprites for the loaded theme"></div>
           <ol class="steps">
             <li><div><b>Generate</b><br><span class="muted">Run <code>node tools/theme-lab/export-sprites.mjs</code>, or pass theme ids to render a subset. It rasterises with Chromium, so the PNGs match this page.</span></div></li>
-            <li><div><b>Wire the board</b><br><span class="muted"><code>board.png</code> replaces <code>Sprites/New/UI/Board.png</code> on each <code>Board</code>; <code>board_turn_glow.png</code> goes on <code>Board.Highlight</code>, which already pulses on turn start.</span></div></li>
-            <li><div><b>Wire slots and pieces</b><br><span class="muted"><code>slot_state_legal.png</code> fits the existing <code>Slot.highlight</code> image. <code>piece_*.png</code> replace the resource icons on the four resource prefabs.</span></div></li>
-            <li><div><b>Let players choose</b><br><span class="muted"><code>manifest.json</code> in each folder lists colours and files, ready to back a theme <code>ScriptableObject</code> and a cosmetics picker.</span></div></li>
+            <li><div><b>Import</b><br><span class="muted">In Unity, run <code>Tools &gt; Busara &gt; Board Themes &gt; Import Themes From Sprites</code>. It builds a <code>BoardTheme</code> asset per folder and updates <code>ThemeCatalog</code>.</span></div></li>
+            <li><div><b>Play</b><br><span class="muted"><code>ThemeManager</code> in GameScene skins each board, its slots and every piece placed, moved or traded onto it.</span></div></li>
+            <li><div><b>Let players choose</b><br><span class="muted">Player setup shows a theme picker on every row; Busara Classic keeps the original look.</span></div></li>
           </ol>
         </div>
       </div>
@@ -990,7 +990,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
   function renderSprites() {
     const t = S.theme;
     const use = {
-      'board.png': 'Board image, replaces Sprites/New/UI/Board.png',
+      'board.png': 'Board background (Board.Background)',
       'board_turn_glow.png': 'Board.Highlight, pulses on turn start',
       'piece_water.png': 'Water resource prefab', 'piece_earth.png': 'Earth resource prefab', 'piece_fire.png': 'Fire resource prefab', 'piece_air.png': 'Air resource prefab',
       'piece_hidden.png': 'Back face for hidden information',

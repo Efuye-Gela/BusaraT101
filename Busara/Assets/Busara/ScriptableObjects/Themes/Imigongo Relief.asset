@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Imigongo Relief"
+  m_EditorClassIdentifier:
+  id: imigongo-relief
+  displayName: "Imigongo Relief"
+  era: past
+  origin: "Kingdom of Rwanda, Gisaka, 18th century onward"
+  board: {fileID: 21300000, guid: 1fe3dd8a2c2de5f63b2496ebb69302bf, type: 3}
+  turnGlow: {fileID: 21300000, guid: 87c0c890ef1c144a2396dc512691d052, type: 3}
+  water: {fileID: 21300000, guid: 1da28e331f1da7f8f2107e756b597c0e, type: 3}
+  earth: {fileID: 21300000, guid: 1083006b9ab8d61cf52dff56ad7c8052, type: 3}
+  fire: {fileID: 21300000, guid: 103e344fed6c57f6d841d867cf77eba2, type: 3}
+  air: {fileID: 21300000, guid: 4b5dc49031d71a5542a44584837965df, type: 3}
+  hidden: {fileID: 21300000, guid: 4a6c9ba7f78bb7c513f154da91184391, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 1d063f70e53fb32a10874bffad4c1fa2, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: e81e26e9d174b2f903e6473ef3a3cf0f, type: 3}
+  pieceShielded: {fileID: 21300000, guid: a6cdfc236369fe40e14de876a13f8f13, type: 3}
+  slotHover: {fileID: 21300000, guid: 4f9c9ba29319585fe212e2182d4b817a, type: 3}
+  slotLegal: {fileID: 21300000, guid: eed20f80130094e3fee912feaef3f7d1, type: 3}
+  slotBlocked: {fileID: 21300000, guid: d331f3cf3b22290e03784c41a191eaa8, type: 3}
+  slotSelected: {fileID: 21300000, guid: ca89d27542f53e481ba752a27408139c, type: 3}
+  slotTarget: {fileID: 21300000, guid: a3007570b60605e2ef3f240ab449ab5e, type: 3}
+  accent: {r: 0.913725, g: 0.890196, b: 0.843137, a: 1}
+  danger: {r: 0.768627, g: 0.32549, b: 0.184314, a: 1}
+  light: {r: 1, g: 1, b: 1, a: 1}

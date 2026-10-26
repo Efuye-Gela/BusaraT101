@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Akan Goldweight"
+  m_EditorClassIdentifier:
+  id: akan-goldweight
+  displayName: "Akan Goldweight"
+  era: past
+  origin: "Asante and Baoul\u00e9 courts, 17th\u201319th century"
+  board: {fileID: 21300000, guid: 1da462742daef53af85bb83c5a47bc26, type: 3}
+  turnGlow: {fileID: 21300000, guid: 343855d5a1e55e5bd5c11110c4120b1b, type: 3}
+  water: {fileID: 21300000, guid: a2480144ef60c1d59be3ed6c580dc0ed, type: 3}
+  earth: {fileID: 21300000, guid: eef8bcbed4ae930b5f94d56b614da9ba, type: 3}
+  fire: {fileID: 21300000, guid: 00a145662344d8f149e281ad4d8a6a45, type: 3}
+  air: {fileID: 21300000, guid: 8a1207ca49440c72c53742bdca552194, type: 3}
+  hidden: {fileID: 21300000, guid: c480cad9fe0d0e2cacfa93b4ad762a7a, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 106deb7bb14a58f5fcc4806d4606dcfe, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 1332bff0589a924a8cedd910fc969b61, type: 3}
+  pieceShielded: {fileID: 21300000, guid: 071f4f79bdc82cec925b6eb940513a8f, type: 3}
+  slotHover: {fileID: 21300000, guid: b7a315b6a34bdb0fff7cc702b0bb2130, type: 3}
+  slotLegal: {fileID: 21300000, guid: ad7258e877fe81d58b3e23bc644a2bb4, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 7b104bd05ba5bd9004a0f160ba805936, type: 3}
+  slotSelected: {fileID: 21300000, guid: 4815fb02a346d136ff26c0a50cf7a9e9, type: 3}
+  slotTarget: {fileID: 21300000, guid: 64f1661705121df9b27158b2bb48ff6f, type: 3}
+  accent: {r: 0.886275, g: 0.698039, b: 0.227451, a: 1}
+  danger: {r: 0.760784, g: 0.254902, b: 0.176471, a: 1}
+  light: {r: 1, g: 0.945098, b: 0.776471, a: 1}

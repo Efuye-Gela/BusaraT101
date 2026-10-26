@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Eko 2090"
+  m_EditorClassIdentifier:
+  id: eko-2090
+  displayName: "Eko 2090"
+  era: future
+  origin: "Lagos lagoon megacity, 2090"
+  board: {fileID: 21300000, guid: 7664c276d837b6db9c9bf6d601d18a90, type: 3}
+  turnGlow: {fileID: 21300000, guid: cc39d5fcddf500f93ccbf10a1827e57a, type: 3}
+  water: {fileID: 21300000, guid: a3150998ee765517090110a5213ee149, type: 3}
+  earth: {fileID: 21300000, guid: 674b2b2a86b010604fde611401dc517b, type: 3}
+  fire: {fileID: 21300000, guid: 067665c6dc53bf577ca913a7ec80daf0, type: 3}
+  air: {fileID: 21300000, guid: dde6662e4f1e2d44c2593f339a9d8b74, type: 3}
+  hidden: {fileID: 21300000, guid: 829238324a0b114b820464b712fd08e7, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 9014f842761a5a96762804005d124d4c, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 4817fd9eb46e53adb95fa918a528a988, type: 3}
+  pieceShielded: {fileID: 21300000, guid: 3ce07a95bf2f574b6ed86efc1b86cbb6, type: 3}
+  slotHover: {fileID: 21300000, guid: 855d9bbf760f89b1b9fc16cdb2c38bb1, type: 3}
+  slotLegal: {fileID: 21300000, guid: 66e28fb5c398162c1bee3f869c89e9e2, type: 3}
+  slotBlocked: {fileID: 21300000, guid: c97312eb1b65a9857c2ae46cd58619aa, type: 3}
+  slotSelected: {fileID: 21300000, guid: cac140f29b25347ff8e4ad28e3dc6bb4, type: 3}
+  slotTarget: {fileID: 21300000, guid: e338e96609f44a5a5643de3bd1eba529, type: 3}
+  accent: {r: 0.94902, g: 0.760784, b: 0, a: 1}
+  danger: {r: 1, g: 0.352941, b: 0.235294, a: 1}
+  light: {r: 1, g: 0.964706, b: 0.8, a: 1}

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Ubunifu Dreamcraft"
+  m_EditorClassIdentifier:
+  id: ubunifu-dreamcraft
+  displayName: "Ubunifu Dreamcraft"
+  era: future
+  origin: "Elite council of Ubunifu, 22nd century"
+  board: {fileID: 21300000, guid: b793624ea45dcf2991e85d16088b755c, type: 3}
+  turnGlow: {fileID: 21300000, guid: 7328a95adecf48b15708609eb0c02735, type: 3}
+  water: {fileID: 21300000, guid: 75bba81c284e5112f5057d4ef5fa1a15, type: 3}
+  earth: {fileID: 21300000, guid: f807750484bf1e0f0102e6fd732d4248, type: 3}
+  fire: {fileID: 21300000, guid: ce12b2921277263aae0a7f2c167b8ff9, type: 3}
+  air: {fileID: 21300000, guid: 939b7b140f1319771cfc45af44951221, type: 3}
+  hidden: {fileID: 21300000, guid: 2297843a26bfe1b083c69d9c4bd4b327, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 0c4b490850c4c1fe94763d3d8d21752c, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 88fd368b674b300a690ff938d27270ca, type: 3}
+  pieceShielded: {fileID: 21300000, guid: aaeed128936b020c3729ccf968fc8843, type: 3}
+  slotHover: {fileID: 21300000, guid: 98846cc54220fbe0b287544556d9538c, type: 3}
+  slotLegal: {fileID: 21300000, guid: ee36cf12fee3eaff5ec12f61d029f554, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 58c6ed24ba62eeefc5de8af780d279b1, type: 3}
+  slotSelected: {fileID: 21300000, guid: 0014f6cb4425716eec27274513e09ad4, type: 3}
+  slotTarget: {fileID: 21300000, guid: 825ede800af3b9ea750b014e2be822a5, type: 3}
+  accent: {r: 0.611765, g: 0.54902, b: 1, a: 1}
+  danger: {r: 1, g: 0.419608, b: 0.341176, a: 1}
+  light: {r: 0.929412, g: 0.909804, b: 1, a: 1}

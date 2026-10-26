@@ -12,6 +12,7 @@ public class Slot : MonoBehaviour, SelectionManager.SlotSelectionListener
     public Resource resource;
 
     [SerializeField] Image highlight;
+    public Image HighlightImage => highlight;
 
     public static Action<Slot> OnSlotFilled;
     public static Action<Slot> OnSlotEmptied;
@@ -52,6 +53,7 @@ public class Slot : MonoBehaviour, SelectionManager.SlotSelectionListener
         slot.resource = resource;
         slot.isOccupied = true;
         resource.slot = slot;
+        ThemeManager.Skin(resource);
     }
 
 
