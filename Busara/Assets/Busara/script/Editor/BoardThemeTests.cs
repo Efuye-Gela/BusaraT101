@@ -67,9 +67,14 @@ public class BoardThemeTests
         root.GetComponent<UnityEngine.UI.GridLayoutGroup>().cellSize = new Vector2(1400, 1400);
         var boardObject = new GameObject("Board", typeof(RectTransform));
         boardObject.transform.SetParent(root.transform, false);
+        ((RectTransform)boardObject.transform).sizeDelta = new Vector2(1400, 1400);
         Board board = boardObject.AddComponent<Board>();
         var background = new GameObject("Board Background", typeof(RectTransform), typeof(UnityEngine.UI.Image));
         background.transform.SetParent(boardObject.transform, false);
+        var art = (RectTransform)background.transform;
+        art.anchorMin = Vector2.zero;
+        art.anchorMax = Vector2.one;
+        art.sizeDelta = Vector2.zero;
         var slots = new GameObject("Board Slots", typeof(RectTransform), typeof(UnityEngine.UI.GridLayoutGroup));
         slots.transform.SetParent(boardObject.transform, false);
         var slotObject = new GameObject("slot 0", typeof(RectTransform), typeof(UnityEngine.UI.Image));
@@ -85,6 +90,7 @@ public class BoardThemeTests
             Assert.That(slots.GetComponent<UnityEngine.UI.GridLayoutGroup>().cellSize.x,
                 Is.EqualTo(1400f * BoardTheme.SlotPitch).Within(0.01f));
             Assert.That(slotObject.GetComponent<UnityEngine.UI.Image>().color.a, Is.EqualTo(0f));
+            Assert.That(((RectTransform)slots.transform).position, Is.EqualTo(art.position));
             Assert.That(manager.ThemeOf(board), Is.SameAs(theme));
         }
         finally

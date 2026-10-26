@@ -9,9 +9,14 @@ using UnityEngine.UI;
 /// </summary>
 public class ThemeManager : Manager<ThemeManager>
 {
+    /// <summary>Piece diameter as a fraction of one slot, matching the art lab's composition.</summary>
+    public const float PieceScale = 0.75f;
+
     public ThemeCatalog catalog;
 
     private readonly Dictionary<Board, BoardTheme> applied = new Dictionary<Board, BoardTheme>();
+    // Size of each board's drawn art at the last layout, so slots follow resolution or layout changes.
+    private readonly Dictionary<Board, Vector2> fittedSize = new Dictionary<Board, Vector2>();
 
     private void Awake()
     {
@@ -21,6 +26,19 @@ public class ThemeManager : Manager<ThemeManager>
     private void Start()
     {
         ApplySeatDefaults(false);
+    }
+
+    private void LateUpdate()
+    {
+        // Layout groups size the boards after Start and again on resolution changes; refit when the art moves.
+        foreach (Board board in applied.Keys)
+        {
+            if (board == null || !board.isActiveAndEnabled)
+                continue;
+            Vector2 size = DrawnArtSize(board);
+            if (size.x > 0f && (!fittedSize.TryGetValue(board, out Vector2 last) || (last - size).sqrMagnitude > 0.01f))
+                FitBoard(board);
+        }
     }
 
     /// <summary>Gives every seat its default theme. With <paramref name="overwrite"/> false, boards
@@ -78,17 +96,23 @@ public class ThemeManager : Manager<ThemeManager>
             Stretch(board.Highlight.rectTransform);
         }
 
-        LayoutSlots(board);
         if (board.Slots == null)
             return;
         foreach (Slot slot in board.Slots)
-        {
-            if (slot == null)
-                continue;
-            SkinSlot(slot, theme);
-            if (slot.resource != null)
+            if (slot != null)
+                SkinSlot(slot, theme);
+        FitBoard(board);
+    }
+
+    /// <summary>Lines the slot grid up with the holes in the board art and sizes every piece to its hole.</summary>
+    public void FitBoard(Board board)
+    {
+        if (board == null || !LayoutSlots(board))
+            return;
+        fittedSize[board] = DrawnArtSize(board);
+        foreach (Slot slot in board.Slots)
+            if (slot != null && slot.resource != null)
                 SkinResource(slot.resource);
-        }
     }
 
     /// <summary>Re-skins a piece for whichever board it now sits on.</summary>
@@ -117,6 +141,23 @@ public class ThemeManager : Manager<ThemeManager>
             glow.sprite = theme.pieceSelected;
             glow.color = Color.white;
         }
+        SizePiece(resource);
+    }
+
+    private static void SizePiece(Resource resource)
+    {
+        if (resource.slot == null || !(resource.transform is RectTransform rect))
+            return;
+        GridLayoutGroup grid = resource.slot.transform.parent != null
+            ? resource.slot.transform.parent.GetComponent<GridLayoutGroup>()
+            : null;
+        if (grid == null || grid.cellSize.x <= 0f)
+            return;
+        // Centre on the slot whatever the prefab's anchors are, at a size relative to the hole.
+        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 0.5f);
+        rect.anchoredPosition = Vector2.zero;
+        rect.localScale = Vector3.one;
+        rect.sizeDelta = grid.cellSize * PieceScale;
     }
 
     private BoardTheme ThemeFor(Resource resource)
@@ -130,30 +171,44 @@ public class ThemeManager : Manager<ThemeManager>
         return theme;
     }
 
-    private static void LayoutSlots(Board board)
+    private static bool LayoutSlots(Board board)
     {
         if (board.Slots == null || board.Slots.Count == 0 || board.Slots[0] == null)
-            return;
-        GridLayoutGroup grid = board.Slots[0].transform.parent != null
-            ? board.Slots[0].transform.parent.GetComponent<GridLayoutGroup>()
-            : null;
-        if (grid == null)
-            return;
-        float width = BoardWidth(board);
-        if (width <= 0f)
-            return;
-        float cell = width * BoardTheme.SlotPitch;
+            return false;
+        Transform container = board.Slots[0].transform.parent;
+        GridLayoutGroup grid = container != null ? container.GetComponent<GridLayoutGroup>() : null;
+        Image background = board.Background != null ? board.Background : FindBackground(board);
+        if (grid == null || background == null)
+            return false;
+        RectTransform art = background.rectTransform;
+        RectTransform gridRect = (RectTransform)grid.transform;
+        Vector2 size = DrawnArtSize(board);
+        if (size.x <= 0f || Mathf.Approximately(gridRect.lossyScale.x, 0f))
+            return false;
+
+        // Measure in the grid's own units: the art and the grid can sit under different scales.
+        float side = size.x * art.lossyScale.x / gridRect.lossyScale.x;
+        float cell = side * BoardTheme.SlotPitch;
         grid.cellSize = new Vector2(cell, cell);
         grid.spacing = Vector2.zero;
+        grid.childAlignment = TextAnchor.MiddleCenter;
+        if (gridRect.anchorMin == gridRect.anchorMax)
+            gridRect.sizeDelta = new Vector2(cell * 4f, cell * 4f);
+        // The holes are centred on the drawn art, so centre the grid there too.
+        Vector3 centre = art.TransformPoint(art.rect.center);
+        gridRect.position = new Vector3(centre.x, centre.y, gridRect.position.z);
+        return true;
     }
 
-    private static float BoardWidth(Board board)
+    /// <summary>Square drawn by the background image (preserve aspect), in the image's local units.</summary>
+    private static Vector2 DrawnArtSize(Board board)
     {
-        // The boards sit in a grid, so its cell size is reliable before the first layout pass.
-        GridLayoutGroup boards = board.transform.parent != null ? board.transform.parent.GetComponent<GridLayoutGroup>() : null;
-        if (boards != null && boards.cellSize.x > 0f)
-            return boards.cellSize.x;
-        return ((RectTransform)board.transform).rect.width;
+        Image background = board.Background != null ? board.Background : FindBackground(board);
+        if (background == null)
+            return Vector2.zero;
+        Rect rect = background.rectTransform.rect;
+        float side = Mathf.Min(rect.width, rect.height);
+        return new Vector2(side, side);
     }
 
     private static void SkinSlot(Slot slot, BoardTheme theme)
