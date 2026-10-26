@@ -235,6 +235,8 @@ public class ThemeManager : Manager<ThemeManager>
             highlight.color = Color.white;
             highlight.preserveAspect = true;
             Stretch(highlight.rectTransform);
+            // The scene enlarges the old 100-unit dot about 3.2x; theme overlays already fill the slot.
+            highlight.rectTransform.localScale = Vector3.one;
         }
     }
 
