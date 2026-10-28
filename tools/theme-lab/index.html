@@ -60,7 +60,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; display: block; object-fit: contain; }
 [hidden] { display: none !important; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 0.95; margin: 0; text-wrap: balance; letter-spacing: 0.005em; }
 h2 { font-size: var(--step-3); }
@@ -94,7 +94,8 @@ button, select, input { font: inherit; color: inherit; }
 .slot:focus-visible { outline-offset: -10%; border-radius: 50%; }
 .slot img { position: absolute; pointer-events: none; }
 .slot .ov { inset: 0; width: 100%; height: 100%; }
-.slot .pc, .slot .ps { left: 12.5%; top: 12.5%; width: 75%; height: 75%; transition: transform .18s ease, filter .18s; }
+.slot .pc, .slot .ps { left: 12.5%; top: 13.67%; width: 75%; height: 75%; transition: transform .18s ease, filter .18s; }
+.slot .pc { top: var(--pc-top, 13.67%); height: var(--pc-h, 75%); object-fit: fill; }
 .slot.has.sel .pc { transform: translateY(-6%) scale(1.06); filter: drop-shadow(0 10px 8px rgba(0,0,0,.4)); }
 .slot.has.sel .ps { transform: translateY(-6%) scale(1.06); }
 .prism .pc { animation: prism 6s linear infinite; }
@@ -105,6 +106,7 @@ button, select, input { font: inherit; color: inherit; }
 .palette-pick { display: flex; gap: 6px; }
 .pick { width: 52px; height: 52px; border-radius: 50%; border: 2px solid transparent; padding: 2px; background: none; cursor: pointer; }
 .pick[aria-pressed="true"] { border-color: var(--accent); }
+.pick img { width: 100%; height: 100%; }
 .toggles { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px; font-size: var(--step--1); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
 .chip[aria-pressed="true"] { background: var(--accent); color: #17130A; border-color: var(--accent); }
@@ -331,6 +333,22 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
 .pc-knob { position: absolute; left: 50%; translate: -50% 0; bottom: 1%; width: 8.6cqw; aspect-ratio: 1; background: var(--k-knob_power) center / contain no-repeat; }
 @media (max-width: 760px) { .pc-grid { grid-template-columns: minmax(0, 1fr); } }
 
+
+.shape-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+.shape-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 10px; align-content: start; }
+.shape-card .row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; align-items: end; min-height: 86px; }
+.shape-card .row img { width: 100%; height: auto; }
+.shape-card h3 { font-size: 1.5rem; }
+.shape-card p { font-size: var(--step--1); color: var(--ink-2); }
+.shape-card small { font-size: .72rem; color: var(--accent-ink); }
+.shape-extra { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; margin-top: 32px; align-items: start; }
+.shape-extra figure { margin: 0; }
+.shape-extra figcaption { margin-top: 10px; font-size: var(--step--1); color: var(--ink-2); }
+.shape-extra figcaption b { color: var(--ink); }
+.finish-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.finish-row figure { margin: 0; text-align: center; font-size: var(--step--1); color: var(--ink-2); }
+@media (max-width: 760px) { .shape-extra { grid-template-columns: minmax(0, 1fr); } }
+
 @media (max-width: 960px) {
   .hero-grid, .sec-head, .ws, .sprite-grid, .contract, .ui-stage { grid-template-columns: minmax(0, 1fr); }
   .eras { grid-template-columns: minmax(0, 1fr); }
@@ -358,6 +376,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
       <a href="#directions">Directions</a>
       <a href="#panther">Panther Court</a>
       <a href="#eras">Past, future, fusion</a>
+      <a href="#shapes">Piece shapes</a>
       <a href="#materials">Materials</a>
       <a href="#holes">Holes &amp; states</a>
       <a href="#interface">Interface</a>
@@ -393,7 +412,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
 
       <div class="rail">
         <div class="rail-head">
-          <h2 style="font-size: var(--step-2)">Fourteen directions</h2>
+          <h2 style="font-size: var(--step-2)">Fifteen directions</h2>
           <div class="seg" role="group" aria-label="Filter by era" id="rail-filter">
             <button aria-pressed="true" data-era="all">All</button>
             <button aria-pressed="false" data-era="past">Past kingdoms</button>
@@ -444,6 +463,20 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     </div>
   </section>
 
+  <section class="block" id="shapes">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Piece shapes</h2>
+        <p>Pieces are drawn in projection: the base sits in the hole and the top rises up the board, so height reads as height. Tall pieces overlap the hole behind them, and every theme now has its own default shape. Any shape can take any material and glyph finish in the workshop.</p>
+      </div>
+      <div class="shape-grid" id="shape-grid"></div>
+      <div class="shape-extra">
+        <figure><img id="layer-demo" alt="Agadez Silver board with tall banded pieces overlapping the row behind"><figcaption><b>Layering.</b> Tall towers rise over the hole behind them and hide part of that piece; rows nearer the player draw on top.</figcaption></figure>
+        <figure><div class="finish-row" id="finish-row"></div><figcaption><b>Glyph finishes.</b> Carved, gold leaf, hand-painted and glowing, all on the same Fire hexagon.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="materials">
     <div class="wrap">
       <div class="sec-head">
@@ -490,12 +523,18 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
           <div class="field"><span class="lbl">Try a combination</span><div class="presets" id="presets"></div></div>
           <div class="field"><label for="ws-board">Board</label><select id="ws-board"></select></div>
           <div class="field"><label for="ws-slot">Hole profile</label><select id="ws-slot"></select></div>
+          <div class="field"><label for="ws-shape">Piece shape</label><select id="ws-shape"></select></div>
           <div class="field"><label for="ws-glyph">Glyphs</label>
             <select id="ws-glyph">
               <option value="ornate|carved">Ornate, carved</option>
+              <option value="ornate|gilded">Ornate, gold leaf</option>
+              <option value="ornate|painted">Ornate, hand-painted</option>
               <option value="ornate|emissive">Ornate, glowing</option>
               <option value="minimal|carved">Minimal, carved</option>
+              <option value="minimal|painted">Minimal, hand-painted</option>
               <option value="minimal|emissive">Minimal, glowing</option>
+              <option value="angular|gilded">Angular, gold leaf</option>
+              <option value="angular|emissive">Angular, glowing</option>
             </select>
           </div>
           <div class="field"><span class="lbl">Pieces: material, tint, glyph colour</span><div id="ws-els" style="display:grid;gap:8px"></div></div>
@@ -660,6 +699,10 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     $('#board-glow').src = uri('g:' + t.id, () => B.boardGlowSVG(t));
     boardEl.classList.toggle('turn', S.turn);
     boardEl.classList.toggle('prism', t.id === 'danakil-prism');
+    // Piece sprites grow upward with height; keep each base on its hole and let it overlap the row behind.
+    const ratio = B.pieceAspect(t), h = (ratio - 1) * 512;
+    boardEl.style.setProperty('--pc-h', (75 * ratio) + '%');
+    boardEl.style.setProperty('--pc-top', (50 - 75 * (248 + h) / 512) + '%');
     for (let i = 0; i < 16; i++) paintSlot(i);
     renderPick();
   }
@@ -964,18 +1007,19 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
   }
 
   // ------------------------------------------------------------ workshop
-  const W = { board: 'eko-2090', slot: 'dock', glyph: 'ornate|carved', pieces: null };
+  const W = { board: 'eko-2090', slot: 'dock', glyph: 'ornate|carved', shape: 'coin', pieces: null };
   const PRESETS = [
-    ['Eko board, Kuba pieces', 'eko-2090', 'kuba-raffia', 'dock', 'ornate|carved'],
-    ['Aksum stone, data glass', 'aksum-stele', 'nevulandis-data', 'stepped', 'minimal|emissive'],
-    ['Akan board, Volta stones', 'akan-goldweight', 'volta-resonance', 'inlay', 'ornate|emissive'],
-    ['N\'evula court, Swahili bao', 'nevulandis-data', 'swahili-bao', 'bowl', 'ornate|carved'],
+    ['Eko board, Kuba coins', 'eko-2090', 'kuba-raffia', 'dock', 'ornate|carved', 'coin'],
+    ['Aksum stone, data vials', 'aksum-stele', 'nevulandis-data', 'stepped', 'minimal|emissive', 'vial'],
+    ['Akan board, Volta towers', 'akan-goldweight', 'volta-resonance', 'inlay', 'ornate|emissive', 'tall'],
+    ['Meroë carnelian hexes', 'meroe-faience', 'meroe-faience', 'inlay', 'ornate|gilded', 'hex'],
+    ['Painted river stones', 'kuba-raffia', 'aksum-stele', 'beaded', 'minimal|painted', 'pebble'],
   ];
   function wsTheme() {
     const b = B.themeById(W.board);
     const [glyphs, glyphMode] = W.glyph.split('|');
     return Object.assign({}, b, {
-      id: 'custom', name: 'Custom', glyphs, glyphMode,
+      id: 'custom', name: 'Custom', glyphs, glyphMode, pieceStyle: null, pieceShape: W.shape,
       board: Object.assign({}, b.board, { slot: W.slot }),
       pieces: W.pieces,
     });
@@ -993,11 +1037,14 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     B.THEMES.forEach((t) => bs.appendChild(el('option', { value: t.id }, `${t.name} (${ERA[t.era]})`)));
     Object.entries(B.SLOT_STYLES).forEach(([id, s]) => ss.appendChild(el('option', { value: id }, `${s.name} (${s.era === 'past' ? 'past' : 'future'})`)));
     const pr = $('#presets');
-    PRESETS.forEach(([name, board, pieces, slot, glyph]) => {
+    PRESETS.forEach(([name, board, pieces, slot, glyph, shape]) => {
       const b = el('button', { class: 'chip', type: 'button' }, name);
-      b.addEventListener('click', () => { W.board = board; W.slot = slot; W.glyph = glyph; setWsPieces(pieces); syncWs(); });
+      b.addEventListener('click', () => { W.board = board; W.slot = slot; W.glyph = glyph; W.shape = shape; setWsPieces(pieces); syncWs(); });
       pr.appendChild(b);
     });
+    const sh = $('#ws-shape');
+    Object.entries(B.PIECE_SHAPES).forEach(([id, s]) => sh.appendChild(el('option', { value: id }, s.name)));
+    sh.addEventListener('change', () => { W.shape = sh.value; renderWs(); });
     bs.addEventListener('change', () => { W.board = bs.value; W.slot = B.themeById(bs.value).board.slot; syncWs(); });
     ss.addEventListener('change', () => { W.slot = ss.value; renderWs(); });
     $('#ws-glyph').addEventListener('change', (e) => { W.glyph = e.target.value; renderWs(); });
@@ -1005,7 +1052,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     syncWs();
   }
   function syncWs() {
-    $('#ws-board').value = W.board; $('#ws-slot').value = W.slot; $('#ws-glyph').value = W.glyph;
+    $('#ws-board').value = W.board; $('#ws-slot').value = W.slot; $('#ws-glyph').value = W.glyph; $('#ws-shape').value = W.shape;
     const box = $('#ws-els'); box.innerHTML = '';
     B.ELEMENTS.forEach((e) => {
       const p = W.pieces[e];
@@ -1035,7 +1082,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     clearTimeout(wsTimer);
     wsTimer = setTimeout(() => {
       const t = wsTheme();
-      const key = 'ws' + JSON.stringify([W, t.glyphs, t.glyphMode]);
+      const key = 'ws' + JSON.stringify([W, t.glyphs, t.glyphMode, W.shape]);
       $('#ws-board-img').src = uri('wb' + key, () => B.boardSVG(t, { layout: ['fire', null, 'water', null, null, 'earth', null, 'air', 'air', null, null, 'fire', null, 'water', null, null] }));
       const wp = $('#ws-pieces'); wp.innerHTML = '';
       B.ELEMENTS.forEach((e, i) => {
@@ -1047,7 +1094,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
       const spec = {
         id: 'my-theme', name: 'My theme', era: 'fusion',
         board: Object.assign({}, B.themeById(W.board).board, { slot: W.slot }),
-        glyphs: t.glyphs, glyphMode: t.glyphMode, pieces: clean(W.pieces),
+        glyphs: t.glyphs, glyphMode: t.glyphMode, pieceShape: W.shape, pieces: clean(W.pieces),
         accent: t.accent, danger: t.danger, light: t.light,
       };
       $('#spec').textContent = JSON.stringify(spec, null, 2);
@@ -1124,10 +1171,28 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     ];
     grid.innerHTML = screens.map(([name, note, inner]) => `<figure class="pc-cell" style="margin:0"><div class="pc-screen">${inner}</div><figcaption><b>${name}.</b> ${note}</figcaption></figure>`).join('');
   }
+
+  // ------------------------------------------------------------ piece shapes
+  function renderShapes() {
+    const pick = { dome: 'akan-goldweight', coin: 'kuba-raffia', tall: 'agadez-silver', hex: 'meroe-faience', square: 'imigongo-relief', pebble: 'aksum-stele', tumbled: 'swahili-bao', faceted: 'danakil-prism', sphere: 'ubunifu-dreamcraft', vial: 'nevulandis-data' };
+    const users = (id) => B.THEMES.filter((t) => B.themeShape(t) === id).map((t) => t.name);
+    $('#shape-grid').innerHTML = Object.entries(B.PIECE_SHAPES).map(([id, s]) => {
+      const t = B.themeById(pick[id]);
+      const row = B.ELEMENTS.map((e) => `<img alt="${NAMES[e]} ${s.name}" src="${uri('sh:' + id + t.id + e, () => B.pieceSVG(t, e, { shape: id }))}">`).join('');
+      const u = users(id);
+      return `<article class="shape-card"><div class="row">${row}</div><h3>${s.name}</h3><p>${s.note}</p><small>${u.length ? 'Default for ' + u.join(', ') : 'Available in the workshop'}</small></article>`;
+    }).join('');
+    const ag = B.themeById('agadez-silver');
+    $('#layer-demo').src = uri('layer', () => B.boardSVG(ag, { layout: ['fire', 'water', null, 'air', null, 'earth', 'air', null, 'water', 'fire', null, 'earth', null, 'air', 'water', null] }));
+    const me = B.themeById('meroe-faience');
+    $('#finish-row').innerHTML = [['carved', 'Carved'], ['gilded', 'Gold leaf'], ['painted', 'Hand-painted'], ['emissive', 'Glowing']].map(([fm, label]) =>
+      `<figure><img alt="${label} Fire hexagon" src="${uri('fin:' + fm, () => B.pieceSVG(me, 'fire', { shape: 'hex', finish: fm }))}">${label}</figure>`).join('');
+  }
   // ------------------------------------------------------------ boot
   renderDirections();
   renderPanther();
   renderEras();
+  renderShapes();
   renderMaterials();
   buildWorkshop();
   applyTheme(S.theme);

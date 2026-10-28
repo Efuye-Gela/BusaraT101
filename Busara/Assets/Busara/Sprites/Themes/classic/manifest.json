@@ -42,7 +42,10 @@
     "frameBand": 96,
     "slotPitch": 208,
     "slotRadius": 82,
-    "pieceDiscRadiusOf512": 214
+    "pieceDiscRadiusOf512": 214,
+    "pieceShape": "icon",
+    "pieceAspect": 1,
+    "piecePivotY": 0.5
   },
   "files": [
     {

@@ -26,6 +26,8 @@ MonoBehaviour:
   pieceSelected: {fileID: 21300000, guid: 5986084cb4b4bd2e6cbd8f3de0f81120, type: 3}
   pieceThreatened: {fileID: 21300000, guid: c1b6fa5a754a20612554d7fc8fc3ee82, type: 3}
   pieceShielded: {fileID: 21300000, guid: 8cd9fb96718ca589309d46fafcf948a4, type: 3}
+  pieceAspect: 1.1094
+  piecePivotY: 0.4648
   slotHover: {fileID: 21300000, guid: c03f2a03afbeedc6e300f7d4dd242a64, type: 3}
   slotLegal: {fileID: 21300000, guid: da30aa40175e90807fc758e8471ac0de, type: 3}
   slotBlocked: {fileID: 21300000, guid: cfd7445a2b134dc29a509dac9ef4ea11, type: 3}

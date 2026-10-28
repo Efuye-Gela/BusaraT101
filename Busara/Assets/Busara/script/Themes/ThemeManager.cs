@@ -135,12 +135,14 @@ public class ThemeManager : Manager<ThemeManager>
         BoardTheme theme = ThemeFor(resource);
         if (theme == null)
             return;
+        SizePiece(resource);
         Image piece = resource.PieceImage;
         Sprite sprite = theme.PieceFor(resource.resourceType);
         if (piece != null && sprite != null)
         {
             piece.sprite = sprite;
             piece.preserveAspect = true;
+            FitPieceImage(resource, piece, theme);
         }
         Image glow = resource.HighlightImage;
         if (glow != null && theme.pieceSelected != null)
@@ -152,7 +154,20 @@ public class ThemeManager : Manager<ThemeManager>
             Stretch(glow.rectTransform);
             glow.rectTransform.localScale = Vector3.one * SelectedHaloScale;
         }
-        SizePiece(resource);
+    }
+
+    // Tall shapes are drawn rising from their base: pin the base centre to the piece's centre and
+    // let the sprite extend upward. Pieces in lower rows draw later, so they correctly cover the row behind.
+    private static void FitPieceImage(Resource resource, Image piece, BoardTheme theme)
+    {
+        if (!(resource.transform is RectTransform holder))
+            return;
+        RectTransform rect = piece.rectTransform;
+        float width = holder.rect.width > 0f ? holder.rect.width : holder.sizeDelta.x;
+        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, Mathf.Clamp01(theme.piecePivotY));
+        rect.sizeDelta = new Vector2(width, width * Mathf.Max(0.1f, theme.pieceAspect));
+        rect.anchoredPosition = Vector2.zero;
     }
 
     private static void SizePiece(Resource resource)

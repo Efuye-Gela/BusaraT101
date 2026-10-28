@@ -49,7 +49,10 @@
     "frameBand": 96,
     "slotPitch": 208,
     "slotRadius": 82,
-    "pieceDiscRadiusOf512": 214
+    "pieceDiscRadiusOf512": 214,
+    "pieceShape": "hex",
+    "pieceAspect": 1.1094,
+    "piecePivotY": 0.4648
   },
   "files": [
     {
@@ -67,31 +70,31 @@
     {
       "file": "piece_water.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "1c95df66d9cdcadb97bbb32dc2f1f378"
     },
     {
       "file": "piece_earth.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "a7cb8a70870df9c5e61e85a3db87f524"
     },
     {
       "file": "piece_fire.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "cf49a650bdf98ff14d5aca304505f383"
     },
     {
       "file": "piece_air.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "07937248776d75341ad2febe0fc1dffe"
     },
     {
       "file": "piece_hidden.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "25938d807b4451849006897c9d10dbc3"
     },
     {

@@ -24,6 +24,14 @@ public static class BoardThemeImporter
         public string era;
         public string origin;
         public Colors colors;
+        public Geometry geometry;
+    }
+
+    [System.Serializable]
+    private class Geometry
+    {
+        public float pieceAspect = 1f;
+        public float piecePivotY = 0.5f;
     }
 
     [System.Serializable]
@@ -137,6 +145,11 @@ public static class BoardThemeImporter
         theme.slotBlocked = Load("slot_state_blocked.png");
         theme.slotSelected = Load("slot_state_selected.png");
         theme.slotTarget = Load("slot_state_target.png");
+        if (manifest.geometry != null && manifest.geometry.pieceAspect > 0f)
+        {
+            theme.pieceAspect = manifest.geometry.pieceAspect;
+            theme.piecePivotY = manifest.geometry.piecePivotY;
+        }
         if (manifest.colors != null)
         {
             if (ColorUtility.TryParseHtmlString(manifest.colors.accent, out Color accent)) theme.accent = accent;

@@ -225,6 +225,10 @@ async function main() {
         slotPitch: engine.BOARD.pitch,
         slotRadius: engine.BOARD.holeR,
         pieceDiscRadiusOf512: 214,
+        pieceShape: t.raster ? 'icon' : engine.themeShape(t),
+        // sprite height / width, and the base centre's height from the sprite bottom (fraction)
+        pieceAspect: t.raster ? 1 : Number(engine.pieceAspect(t).toFixed(4)),
+        piecePivotY: t.raster ? 0.5 : Number(engine.piecePivotY(t).toFixed(4)),
       },
       files: sprites.map((s) => Object.assign({ file: s.file, width: s.w || s.size, height: s.h || s.size, guid: stableGuid(assetPath(path.join(dir, s.file))) },
         s.border && s.border.some((v) => v > 0) ? { nineSliceBorder: { left: s.border[0], bottom: s.border[1], right: s.border[2], top: s.border[3] } } : {})),

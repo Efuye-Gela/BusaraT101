@@ -28,19 +28,19 @@
   "pieces": {
     "water": {
       "material": "River stone",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/painted"
     },
     "earth": {
       "material": "River stone",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/painted"
     },
     "fire": {
       "material": "Nubian sandstone",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/painted"
     },
     "air": {
       "material": "Karibib marble",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/painted"
     }
   },
   "geometry": {
@@ -49,7 +49,10 @@
     "frameBand": 96,
     "slotPitch": 208,
     "slotRadius": 82,
-    "pieceDiscRadiusOf512": 214
+    "pieceDiscRadiusOf512": 214,
+    "pieceShape": "pebble",
+    "pieceAspect": 1.0977,
+    "piecePivotY": 0.4698
   },
   "files": [
     {
@@ -67,31 +70,31 @@
     {
       "file": "piece_water.png",
       "width": 256,
-      "height": 256,
+      "height": 281,
       "guid": "de004d5341e82fb65b73164615c064fc"
     },
     {
       "file": "piece_earth.png",
       "width": 256,
-      "height": 256,
+      "height": 281,
       "guid": "5fa42ab303984bbed828704d51ebd5c0"
     },
     {
       "file": "piece_fire.png",
       "width": 256,
-      "height": 256,
+      "height": 281,
       "guid": "5b6c00f8add3da06006f10b33c20397b"
     },
     {
       "file": "piece_air.png",
       "width": 256,
-      "height": 256,
+      "height": 281,
       "guid": "670b05b069f38a310364c12912f95808"
     },
     {
       "file": "piece_hidden.png",
       "width": 256,
-      "height": 256,
+      "height": 281,
       "guid": "6ae3c4d912d0c36fdc8577e2253781c7"
     },
     {

@@ -28,19 +28,19 @@
   "pieces": {
     "water": {
       "material": "Faience",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/gilded"
     },
     "earth": {
       "material": "Aksum granite",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/gilded"
     },
     "fire": {
       "material": "Carnelian",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/gilded"
     },
     "air": {
       "material": "Gold",
-      "glyph": "ornate/carved"
+      "glyph": "ornate/gilded"
     }
   },
   "geometry": {
@@ -49,7 +49,10 @@
     "frameBand": 96,
     "slotPitch": 208,
     "slotRadius": 82,
-    "pieceDiscRadiusOf512": 214
+    "pieceDiscRadiusOf512": 214,
+    "pieceShape": "hex",
+    "pieceAspect": 1.1094,
+    "piecePivotY": 0.4648
   },
   "files": [
     {
@@ -67,31 +70,31 @@
     {
       "file": "piece_water.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "21ab7e9ac70cf28488b84d61446736c0"
     },
     {
       "file": "piece_earth.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "1ed32b5566ab36b56058c6b2215fa892"
     },
     {
       "file": "piece_fire.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "1ebc4cfcc8dc84399c94a49e8ea2b13f"
     },
     {
       "file": "piece_air.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "998f74b2e67b5a4f2cdaf712eec28cc2"
     },
     {
       "file": "piece_hidden.png",
       "width": 256,
-      "height": 256,
+      "height": 284,
       "guid": "063c4689c05ce44ae5ad659e1104308f"
     },
     {

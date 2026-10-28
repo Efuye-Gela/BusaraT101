@@ -24,8 +24,8 @@ if neither is installed globally).
 | --- | --- | --- |
 | `board.png` | 1024 | `Board` background, replaces `Sprites/New/UI/Board.png` |
 | `board_turn_glow.png` | 1024 | `Board.Highlight` image (already pulses in `FadeHighlight`) |
-| `piece_water/earth/fire/air.png` | 256 | Resource prefab icons |
-| `piece_hidden.png` | 256 | Back face for hidden information |
+| `piece_water/earth/fire/air.png` | 256 wide | Resource prefab icons (taller for tall shapes) |
+| `piece_hidden.png` | 256 wide | Back face for hidden information |
 | `piece_state_selected/threatened/shielded.png` | 256 | Overlays on a resource: selection, disaster or weapon removal, Celestial Dome |
 | `slot_state_hover/legal/blocked/selected/target.png` | 256 | Overlays on a slot; `legal` fits the existing `Slot.highlight` |
 | `manifest.json` | n/a | Colours, materials, geometry and file list for a theme `ScriptableObject` |
@@ -66,6 +66,18 @@ downscaled to 2048 (Unity's import cap) with sprite-sheet rects scaled to match.
 | `UI/Backgrounds`, `UI/Panels`, `UI/Frames`, `UI/Buttons`, `UI/Icons`, `UI/Effects`, `UI/Shapes` | Interface art, grouped by role |
 | `Branding/` | Busara and publisher logos |
 | `Archive/` | Superseded designs, duplicates, screenshots and reference photos (kept, unused) |
+
+## Piece shapes
+
+Pieces are drawn in projection: the footprint sits in the hole and the top face rises up the
+board by the shape's height, with a shaded side wall between. Shapes: cabochon, short cylinder
+(metal rim + inset), tall banded cylinder, hexagon, square, river pebble, tumbled stone, carved
+gem, bead (sphere) and crystal vial. Glyph finishes: carved, gold leaf, hand-painted, glowing.
+Each theme picks a default (`pieceShape`, optional `pieceRim`); the workshop can apply any shape.
+
+Piece sprites are 256 wide and `256 x pieceAspect` tall. The manifest and `BoardTheme` carry
+`pieceAspect` and `piecePivotY` (base centre height from the bottom); `ThemeManager` pins that
+point to the slot centre so tall pieces rise over the row behind, and lower rows draw in front.
 
 ## Panther Court interface kit
 

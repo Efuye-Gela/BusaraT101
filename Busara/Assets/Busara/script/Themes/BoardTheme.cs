@@ -30,6 +30,12 @@ public class BoardTheme : ScriptableObject
     public Sprite pieceThreatened;
     public Sprite pieceShielded;
 
+    [Header("Piece sprite geometry")]
+    [Tooltip("Piece sprite height / width. Tall shapes rise above their slot and overlap the row behind.")]
+    public float pieceAspect = 1f;
+    [Tooltip("Height of the piece's base centre above the sprite's bottom edge, as a fraction of its height.")]
+    [Range(0f, 1f)] public float piecePivotY = 0.5f;
+
     [Header("Slot overlays")]
     public Sprite slotHover;
     public Sprite slotLegal;
