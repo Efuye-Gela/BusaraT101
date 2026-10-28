@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4abaa8bcb96a434e808b83e499105bbc, type: 3}
+  m_Name: "Panther Court"
+  m_EditorClassIdentifier:
+  id: panther-court
+  displayName: "Panther Court"
+  era: fusion
+  origin: "A hidden Afrofuturist kingdom: royal ritual, nanotech and kinetic ore"
+  board: {fileID: 21300000, guid: 3947cb66e4e1b86e5053952ab8d11156, type: 3}
+  turnGlow: {fileID: 21300000, guid: e840056dfaa521d278631ae47cd88fb8, type: 3}
+  water: {fileID: 21300000, guid: b8747fb961edcd2cd5dac50033e2839a, type: 3}
+  earth: {fileID: 21300000, guid: a4af45c4ae8561639f80c24fa55ee9d5, type: 3}
+  fire: {fileID: 21300000, guid: 62742e2254aa290ecc1d39e7a157d695, type: 3}
+  air: {fileID: 21300000, guid: 71100e26458a4a86c195ff0a979dd184, type: 3}
+  hidden: {fileID: 21300000, guid: 26d55e3a0c4ac9add244735c9d1a95c9, type: 3}
+  pieceSelected: {fileID: 21300000, guid: 22f0e95c1bdfb50a6a2d59e43b43960c, type: 3}
+  pieceThreatened: {fileID: 21300000, guid: 54b1a75edc1d83ff07ec8cae6ab58660, type: 3}
+  pieceShielded: {fileID: 21300000, guid: 6fb62d5af8ef97b2903f55aec40b1307, type: 3}
+  slotHover: {fileID: 21300000, guid: 090b9bde1f04e9eb84f4becf52fed9f1, type: 3}
+  slotLegal: {fileID: 21300000, guid: 68c27964b13cf6b8556bd89b84326dd8, type: 3}
+  slotBlocked: {fileID: 21300000, guid: 66397dfd80bddecb6903c2caa85e6bcd, type: 3}
+  slotSelected: {fileID: 21300000, guid: 86919d3e75211a7100047b1e182aac9c, type: 3}
+  slotTarget: {fileID: 21300000, guid: 9325ae1645bc6586508dc0923e016650, type: 3}
+  accent: {r: 0.65098, g: 0.419608, b: 1, a: 1}
+  danger: {r: 1, g: 0.352941, b: 0.290196, a: 1}
+  light: {r: 0.921569, g: 0.866667, b: 1, a: 1}

@@ -114,6 +114,16 @@
       earth: [{ stroke: 'M27 27H73V73H27Z', w: 6 }, { stroke: 'M27 50H73', w: 6 }],
       air: [{ stroke: 'M68 32A25 25 0 1 0 75 52', w: 6 }, { dot: [50, 50, 6] }, { stroke: 'M75 52H90', w: 6 }],
     },
+    angular: {
+      fire: [{ stroke: 'M50 12L82 80H18Z', w: 6 }, { stroke: 'M50 42L65 72H35Z', w: 6 }, { dot: [50, 88, 3.5] }],
+      water: [
+        { stroke: 'M16 34L30 24L44 34L58 24L72 34L86 24', w: 6 },
+        { stroke: 'M16 54L30 44L44 54L58 44L72 54L86 44', w: 6 },
+        { stroke: 'M16 74L30 64L44 74L58 64L72 74L86 64', w: 6 },
+      ],
+      earth: [{ stroke: 'M10 78L36 30L50 54L62 38L90 78Z', w: 6 }, { stroke: 'M36 30L44 78M62 38L56 78', w: 3.5 }],
+      air: [{ stroke: 'M54 50H62V38H40V62H72V26H28V74H88', w: 6 }, { dot: [54, 50, 3.5] }],
+    },
   };
 
   function glyphMarkup(set, el, x, y, size, color, sw) {
@@ -175,6 +185,8 @@
     volta_stone: { name: 'Volta stone', era: 'future', family: 'veined', base: '#1D1B22', dark: '#0B0A0E', light: '#3A3644', shine: 0.4, origin: 'Fictional. Resonant meteoric ore of the Nakomean warriors; glows under will.' },
     dream_glass: { name: 'Ndoto glass', era: 'future', family: 'iridescent', base: '#3B2B6E', dark: '#160F2E', light: '#C9B8FF', shine: 0.9, origin: 'Fictional. Ubunifu glass that colours itself with the holder\'s thought.' },
     bio_lumen: { name: 'Biolume resin', era: 'future', family: 'lumen', base: '#0E2A26', dark: '#06120F', light: '#62F2C7', shine: 0.6, origin: 'Fictional. Resin seeded with glowing mycelium.' },
+    kinetic_bead: { name: 'Kinetic bead', era: 'future', family: 'kinetic', base: '#121218', dark: '#07070B', light: '#8E92A8', shine: 0.7, origin: 'Fictional. A nanoweave shell over a core that stores every impact and gives it back as light.' },
+    kinetic_ore: { name: 'Kinetic ore', era: 'future', family: 'veined', base: '#1B1824', dark: '#0B0A10', light: '#3C3650', shine: 0.35, origin: 'Fictional. Meteoric ore that drinks impacts and glows violet along its seams.' },
     slate: { name: 'Slate lacquer', era: 'future', family: 'gradient', base: '#4C514B', dark: '#353935', light: '#5E645C', shine: 0.2, origin: 'The original Busara board finish: matte slate with amber hairlines.' },
     shift_prism: { name: 'Shift prism', era: 'future', family: 'prism', base: '#8A7BD1', dark: '#2E2752', light: '#F0E9FF', shine: 0.95, origin: 'Fictional. Aradas crystal that never shows the same colour twice.' },
   };
@@ -338,6 +350,17 @@
           }
           els.push(nodes);
         }
+        break;
+      }
+      case 'kinetic': {
+        // nanoweave: a tessellation of fine triangles, a few filled darker
+        const pid = uid(u + 'k');
+        const s2 = isC ? 26 : 34, h = s2 * 0.866;
+        defs.push(`<pattern id="${pid}" width="${s2}" height="${f(h * 2)}" patternUnits="userSpaceOnUse" x="${f(cx)}" y="${f(cy)}">` +
+          `<path d="M0 ${f(h)}L${s2 / 2} 0L${s2} ${f(h)}ZM${s2 / 2} ${f(h * 2)}L${s2} ${f(h)}L${s2 * 1.5} ${f(h * 2)}M${-s2 / 2} ${f(h * 2)}L0 ${f(h)}L${s2 / 2} ${f(h * 2)}" fill="none" stroke="${light}" stroke-width="1.1" opacity="0.38"/>` +
+          `<path d="M0 ${f(h)}L${s2 / 2} 0L${s2} ${f(h)}Z" fill="#000" opacity="0.35"/></pattern>`);
+        els.push(`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" fill="url(#${pid})"/>`);
+        N({ freq: f(0.012 * scale), oct: 2, seed, table: '0 0.3 0 0.25', color: light, op: 0.25 });
         break;
       }
       case 'gradient': {
@@ -670,6 +693,18 @@
       palette: [['Salt crust', '#E9E2CF'], ['Sulphur', '#D8E36A'], ['Acid green', '#4FBF8E'], ['Brine', '#C7B98E'], ['Prism', '#8A7BD1']],
       notes: ['Aradas surf identities; pieces drift through colour while keeping their element tint.', 'Ancient and future at once: Lucy was found a few hundred kilometres away.', 'Light board with minimal carved glyphs: test against the N\'evulandis board for distinction.'],
     },
+    {
+      id: 'panther-court', name: 'Panther Court', era: 'fusion',
+      origin: 'A hidden Afrofuturist kingdom: royal ritual, nanotech and kinetic ore', kingdoms: ['Empire Volta', 'N\'evulandis'],
+      thesis: 'The war room of a hidden kingdom. Slate boards rimmed in gold, iridescent steel frames, stones that store every blow.',
+      motif: 'Folder-tab slate boards with gold hairlines and corner triangles; glowing orange-to-purple triangle friezes; carved dark wood; kinetic beads etched with script.',
+      board: { layout: 'tabbed', frame: 'graphene', field: 'graphene', frieze: 'triangles', fc: ['#2B2B40', '#E9A340', '#9B5CFF', '#E9A340'], radius: 34, slot: 'rim', ring: '#B98543', corner: 'triangle', glowColor: '#F2A33A' },
+      glyphs: 'angular', glyphMode: 'emissive', pieceStyle: 'kinetic', uiKit: true,
+      pieces: { water: { mat: 'kinetic_bead', glow: '#3E8BFF', inlay: '#CFE2FF' }, earth: { mat: 'kinetic_ore', glow: '#B07CFF', inlay: '#EFE4FF' }, fire: { mat: 'kinetic_bead', glow: '#FF5A2E', inlay: '#FFD9CC' }, air: { mat: 'kinetic_bead', glow: '#FFB830', inlay: '#FFF0C8' } },
+      accent: '#A66BFF', danger: '#FF5A4A', light: '#EBDDFF',
+      palette: [['Slate', '#2E2E44'], ['Royal gold', '#E9A340'], ['Kinetic purple', '#9B5CFF'], ['Iridescent steel', '#5B5F86'], ['Ember', '#FF8A1F']],
+      notes: ['Board, holes and interface follow the reference mockups: slate, gold hairlines, iridescent steel and neon triangle friezes.', 'Stones are kinetic beads: a black triangle-weave shell, a gunmetal bezel etched with script, and a charge ring that glows in the element colour.', 'Earth is raw kinetic ore with violet seams, so it stays dark while reading clearly against blue Water.'],
+    },
   ];
   // The original Busara look, converted to the same sprite format and board geometry as the
   // other themes. Pieces are the existing resource icons (raster), resampled by the exporter.
@@ -698,6 +733,7 @@
     relief: { name: 'Raised ridge', era: 'past', note: 'A sculpted ridge that stands up from the surface.' },
     socket: { name: 'Light socket', era: 'future', note: 'Flush glass with four index ticks and a hairline of light.' },
     dock: { name: 'Mag dock', era: 'future', note: 'Segmented ring that clicks a piece into place.' },
+    rim: { name: 'Gold rim', era: 'future', note: 'A deep slate recess ringed by a thin bronze-gold rim.' },
     portal: { name: 'Portal', era: 'future', note: 'Light pools at the edge; the hole looks deeper than the board.' },
   };
 
@@ -769,6 +805,15 @@
         out.push(`<path d="M${cx - 12} ${cy}H${cx - 26}M${cx + 12} ${cy}H${cx + 26}" stroke="${ring}" stroke-width="2" opacity="0.5"/>`);
         break;
       }
+      case 'rim': {
+        defs.push(`<radialGradient id="${id}" cx="0.42" cy="0.38" r="0.7"><stop offset="0" stop-color="#21202E"/><stop offset="1" stop-color="#111018"/></radialGradient>`);
+        out.push(`<circle cx="${cx}" cy="${cy + 3}" r="${r + 6}" fill="#000" opacity="0.35"/>`);
+        out.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${id})"/>`);
+        out.push(`<circle cx="${cx}" cy="${cy}" r="${r - 5}" fill="none" stroke="#000" stroke-width="8" opacity="0.45"/>`);
+        out.push(`<circle cx="${cx}" cy="${cy}" r="${r + 1}" fill="none" stroke="${ring}" stroke-width="4.5"/>`);
+        out.push(`<path d="M${f(cx + (r + 1) * 0.94)} ${f(cy - (r + 1) * 0.34)}A${r + 1} ${r + 1} 0 0 1 ${f(cx - (r + 1) * 0.34)} ${f(cy + (r + 1) * 0.94)}" fill="none" stroke="${lighten(ring, 0.45)}" stroke-width="2" opacity="0.6"/>`);
+        break;
+      }
       case 'portal': {
         defs.push(`<radialGradient id="${id}"><stop offset="0" stop-color="#000" stop-opacity="0.95"/><stop offset="0.7" stop-color="${darken(ring, 0.8)}"/><stop offset="0.93" stop-color="${darken(ring, 0.15)}"/><stop offset="1" stop-color="${lighten(ring, 0.3)}"/></radialGradient>`);
         out.push(`<circle cx="${cx}" cy="${cy}" r="${r + 10}" fill="${ring}" opacity="0.14"/>`);
@@ -799,6 +844,7 @@
   function boardSVG(theme, opts) {
     const t = typeof theme === 'string' ? themeById(theme) : theme;
     const o = opts || {};
+    if (t.board.layout === 'tabbed') return tabbedBoardSVG(t, o);
     const u = uid('bd');
     const S = BOARD.size, I = BOARD.inset, B = BOARD.band, R = t.board.radius;
     const defs = [], els = [];
@@ -890,6 +936,7 @@
   }
 
   function boardGlowInner(t) {
+    if (t.board.layout === 'tabbed') return tabbedGlowInner(t);
     const S = BOARD.size, I = BOARD.inset, R = t.board.radius, c = t.accent;
     const u = uid('gl');
     return `<defs><filter id="${u}" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9"/></filter></defs>` +
@@ -901,6 +948,7 @@
   // ------------------------------------------------------------ pieces
   // 512 sprite, disc r=214 centred, room for a soft contact shadow.
   function pieceInner(t, el, o) {
+    if (t.pieceStyle === 'kinetic') return kineticPieceInner(t, el, o);
     o = o || {};
     const spec = Object.assign({}, t.pieces[el], o.override || {});
     const m = MATERIALS[spec.mat];
@@ -1099,6 +1147,319 @@
     return svgWrap(208, 208, body);
   }
 
+  // ------------------------------------------------------------ Panther Court renderers
+  // Tabbed slate board: body with folder tabs top and bottom, gold border, corner triangles,
+  // broken gold hairlines with dark pill marks. Hole geometry is the shared BOARD grid.
+  const TAB = { x0: 44, y0: 60, x1: 980, y1: 964, rx: 34, tabX0: 330, tabX1: 694, tabH: 42 };
+  const tabPath = (top) => {
+    const { tabX0: a, tabX1: b, tabH: h, y0, y1 } = TAB, r = 14;
+    return top
+      ? `M${a} ${y0 + 4}V${y0 - h + r}Q${a} ${y0 - h} ${a + r} ${y0 - h}H${b - r}Q${b} ${y0 - h} ${b} ${y0 - h + r}V${y0 + 4}Z`
+      : `M${a} ${y1 - 4}V${y1 + h - r}Q${a} ${y1 + h} ${a + r} ${y1 + h}H${b - r}Q${b} ${y1 + h} ${b} ${y1 + h - r}V${y1 - 4}Z`;
+  };
+  function tabbedBoardSVG(t, o) {
+    const u = uid('tb'), S = BOARD.size;
+    const { x0, y0, x1, y1, rx } = TAB, w = x1 - x0, h = y1 - y0;
+    const gold = t.board.fc[1], defs = [], els = [];
+    const body = uid(u + 'b'), clip = uid(u + 'c'), rim = uid(u + 'g'), sheen = uid(u + 's');
+    defs.push(`<linearGradient id="${body}" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#3D3D58"/><stop offset="0.55" stop-color="#31314A"/><stop offset="1" stop-color="#26263A"/></linearGradient>`);
+    defs.push(`<linearGradient id="${rim}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${lighten(gold, 0.25)}"/><stop offset="0.5" stop-color="${gold}"/><stop offset="1" stop-color="${darken(gold, 0.25)}"/></linearGradient>`);
+    defs.push(`<radialGradient id="${sheen}" cx="0.3" cy="0.2" r="0.9"><stop offset="0" stop-color="#8C86C8" stop-opacity="0.16"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>`);
+    defs.push(`<clipPath id="${clip}"><rect x="${x0}" y="${y0}" width="${w}" height="${h}" rx="${rx}"/></clipPath>`);
+    // tabs sit behind the body so they read as part of one folder shape
+    [true, false].forEach((top) => els.push(`<path d="${tabPath(top)}" fill="#2A2A3F" stroke="url(#${rim})" stroke-width="4"/>`));
+    els.push(`<rect x="${x0}" y="${y0 + 8}" width="${w}" height="${h}" rx="${rx}" fill="#000" opacity="0.4"/>`);
+    els.push(`<rect x="${x0}" y="${y0}" width="${w}" height="${h}" rx="${rx}" fill="url(#${body})"/>`);
+    const grain = noiseLayer(u, { x: x0, y: y0, w, h, freq: '0.9', oct: 2, seed: 7, table: '0 0 0 0 0.55', color: '#000', op: 0.35 });
+    const flecks = noiseLayer(u, { x: x0, y: y0, w, h, freq: '0.7', oct: 2, seed: 11, table: '0 0 0 0 0 0.6', color: '#9C97D6', op: 0.18 });
+    defs.push(grain.def, flecks.def);
+    els.push(`<g clip-path="url(#${clip})">${grain.el}${flecks.el}<rect x="${x0}" y="${y0}" width="${w}" height="${h}" fill="url(#${sheen})"/></g>`);
+    els.push(`<rect x="${x0 + 2}" y="${y0 + 2}" width="${w - 4}" height="${h - 4}" rx="${rx - 2}" fill="none" stroke="url(#${rim})" stroke-width="4.5"/>`);
+    els.push(`<rect x="${x0 + 8}" y="${y0 + 8}" width="${w - 16}" height="${h - 16}" rx="${rx - 8}" fill="none" stroke="#14141F" stroke-width="2.5" opacity="0.8"/>`);
+    // corner triangles
+    const c = 24, L = 66;
+    [[x0 + c, y0 + c, 1, 1], [x1 - c, y0 + c, -1, 1], [x1 - c, y1 - c, -1, -1], [x0 + c, y1 - c, 1, -1]].forEach(([x, y, sx, sy]) => {
+      els.push(`<path d="M${x} ${y}H${x + sx * L}L${x} ${y + sy * L}Z" fill="#1A1A28" opacity="0.9"/>`);
+      els.push(`<path d="M${x + sx * L} ${y}L${x} ${y + sy * L}" stroke="#4A4A66" stroke-width="1.5" opacity="0.7"/>`);
+    });
+    // hairlines + marks
+    const hy = [y0 + 44, y1 - 44], vx = [x0 + 34, x1 - 34], g = 3;
+    let lines = '';
+    hy.forEach((y) => { lines += `M150 ${y}H468M556 ${y}H874`; });
+    vx.forEach((x) => { lines += `M${x} 196V470M${x} 554V828`; });
+    els.push(`<path d="${lines}" stroke="${gold}" stroke-width="${g}" stroke-linecap="round" opacity="0.92"/>`);
+    hy.forEach((y) => els.push(`<rect x="486" y="${y - 5}" width="20" height="10" rx="5" fill="#16161F"/><rect x="518" y="${y - 5}" width="20" height="10" rx="5" fill="#16161F"/>`));
+    vx.forEach((x) => els.push(`<circle cx="${x}" cy="498" r="5.5" fill="#16161F"/><circle cx="${x}" cy="526" r="5.5" fill="#16161F"/>`));
+    // holes
+    holeCenters().forEach(([x, y]) => {
+      const hm = holeMarkup(u, t.board.slot, x, y, BOARD.holeR, t, '#2E2E44');
+      defs.push(hm.defs); els.push(hm.els);
+    });
+    if (o.layout) {
+      const pts = holeCenters();
+      o.layout.forEach((el, i) => {
+        if (!el) return;
+        const [x, y] = pts[i];
+        els.push(`<g transform="translate(${x - 78} ${y - 78}) scale(${f(156 / 512)})">${pieceInner(t, el, o.pieceOpts || {})}</g>`);
+      });
+    }
+    if (o.glow) els.push(tabbedGlowInner(t));
+    return svgWrap(S, S, `<defs>${defs.join('')}</defs>${els.join('')}`, o.attrs);
+  }
+  // Active board: thick gold rim with glow, top tab filled gold, as on the reference's active board.
+  function tabbedGlowInner(t) {
+    const u = uid('tg'), c = t.board.glowColor || t.accent;
+    const { x0, y0, x1, y1, rx } = TAB, w = x1 - x0, h = y1 - y0;
+    const fill = uid(u + 'f');
+    return `<defs><filter id="${u}" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="10"/></filter>` +
+      `<linearGradient id="${fill}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${lighten(c, 0.25)}"/><stop offset="1" stop-color="${darken(c, 0.15)}"/></linearGradient></defs>` +
+      `<rect x="${x0}" y="${y0}" width="${w}" height="${h}" rx="${rx}" fill="none" stroke="${c}" stroke-width="20" filter="url(#${u})" opacity="0.85"/>` +
+      `<path d="${tabPath(true)}" fill="url(#${fill})" stroke="${lighten(c, 0.4)}" stroke-width="3"/>` +
+      `<path d="${tabPath(false)}" fill="none" stroke="${c}" stroke-width="10" filter="url(#${u})" opacity="0.6"/>` +
+      `<rect x="${x0 + 2}" y="${y0 + 2}" width="${w - 4}" height="${h - 4}" rx="${rx - 2}" fill="none" stroke="${lighten(c, 0.2)}" stroke-width="8"/>`;
+  }
+
+  // Kinetic bead: gunmetal bezel etched with script ticks, nanoweave (or raw ore) shell,
+  // a charge ring in the element colour bleeding to purple, and a glowing angular glyph.
+  function kineticPieceInner(t, el, o) {
+    o = o || {};
+    const spec = Object.assign({}, t.pieces[el], o.override || {});
+    const u = uid('kp'), cx = 256, cy = 248, r = 214, ri = 184;
+    const glow = spec.glow || ELEMENT_INFO[el].hue, kinetic = '#9B5CFF';
+    const defs = [], els = [];
+    const sh = uid(u + 'h'), bez = uid(u + 'z'), clip = uid(u + 'c'), ring = uid(u + 'r'), core = uid(u + 'o'), blur = uid(u + 'b'), shade = uid(u + 's'), gloss = uid(u + 'g');
+    defs.push(`<filter id="${sh}" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="${o.lifted ? 16 : 9}"/></filter>`);
+    defs.push(`<filter id="${blur}" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>`);
+    defs.push(`<linearGradient id="${bez}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F1F2F8"/><stop offset="0.28" stop-color="#8C90A6"/><stop offset="0.52" stop-color="#3A3D4C"/><stop offset="0.76" stop-color="#C9CCDA"/><stop offset="1" stop-color="#474A5A"/></linearGradient>`);
+    defs.push(`<clipPath id="${clip}"><circle cx="${cx}" cy="${cy}" r="${ri}"/></clipPath>`);
+    defs.push(`<linearGradient id="${ring}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${lighten(glow, 0.2)}"/><stop offset="0.5" stop-color="${glow}"/><stop offset="1" stop-color="${kinetic}"/></linearGradient>`);
+    defs.push(`<radialGradient id="${core}"><stop offset="0" stop-color="${glow}" stop-opacity="0.55"/><stop offset="0.7" stop-color="${glow}" stop-opacity="0.1"/><stop offset="1" stop-color="${glow}" stop-opacity="0"/></radialGradient>`);
+    defs.push(`<radialGradient id="${shade}" cx="${cx}" cy="${cy}" r="${ri}" gradientUnits="userSpaceOnUse"><stop offset="0.7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.65"/></radialGradient>`);
+    defs.push(`<linearGradient id="${gloss}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.38"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`);
+    els.push(`<ellipse cx="${cx + (o.lifted ? 14 : 6)}" cy="${cy + (o.lifted ? 30 : 14)}" rx="${r - 4}" ry="${r - 10}" fill="#000" opacity="${o.lifted ? 0.35 : 0.55}" filter="url(#${sh})"/>`);
+    els.push(`<circle cx="${cx}" cy="${cy + 10}" r="${r}" fill="#1C1D26"/>`);
+    // bezel with lathe rings
+    els.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${bez})"/>`);
+    const R = rng(hashStr(el + 'bezel'));
+    let lathe = '';
+    for (let rr = ri + 2; rr < r; rr += 2.2) lathe += `<circle cx="${cx}" cy="${cy}" r="${f(rr)}" fill="none" stroke="${R() > 0.5 ? '#fff' : '#000'}" stroke-width="1" opacity="${f(0.04 + R() * 0.1)}"/>`;
+    els.push(lathe);
+    els.push(`<circle cx="${cx}" cy="${cy}" r="${r - 1}" fill="none" stroke="#000" stroke-width="2.5" opacity="0.5"/>`);
+    // shell
+    const shell = paintMaterial(u, spec.mat, { shape: 'circle', cx, cy, r: ri }, null, { glow: spec.mat === 'kinetic_ore' ? glow : null });
+    defs.push(shell.defs);
+    els.push(`<g clip-path="url(#${clip})">${shell.els}<rect x="${cx - ri}" y="${cy - ri}" width="${ri * 2}" height="${ri * 2}" fill="url(#${shade})"/></g>`);
+    els.push(`<circle cx="${cx}" cy="${cy}" r="${ri}" fill="none" stroke="#000" stroke-width="5" opacity="0.7"/>`);
+    // etched script ticks on the bezel
+    let ticks = '';
+    for (let i = 0; i < 48; i++) {
+      if (i % 12 === 0) continue;
+      const a = (i / 48) * Math.PI * 2, l = i % 3 === 0 ? 14 : 7, r0 = ri + 7;
+      ticks += `M${f(cx + Math.cos(a) * r0)} ${f(cy + Math.sin(a) * r0)}L${f(cx + Math.cos(a) * (r0 + l))} ${f(cy + Math.sin(a) * (r0 + l))}`;
+    }
+    els.push(`<path d="${ticks}" stroke="#1C1D27" stroke-width="3" stroke-linecap="round" opacity="0.75"/>`);
+    if (!o.back) {
+      // charge ring + core light
+      els.push(`<circle cx="${cx}" cy="${cy}" r="152" fill="none" stroke="url(#${ring})" stroke-width="24" opacity="0.55" filter="url(#${blur})"/>`);
+      els.push(`<circle cx="${cx}" cy="${cy}" r="152" fill="none" stroke="url(#${ring})" stroke-width="7"/>`);
+      els.push(`<circle cx="${cx}" cy="${cy}" r="132" fill="#08080D" opacity="0.55"/>`);
+      els.push(`<circle cx="${cx}" cy="${cy}" r="132" fill="url(#${core})"/>`);
+      const gs = 196, gx = cx - gs / 2, gy = cy - gs / 2;
+      els.push(`<g filter="url(#${blur})" opacity="0.95">${glyphMarkup(t.glyphs, el, gx, gy, gs, glow, 1.7)}</g>`);
+      els.push(glyphMarkup(t.glyphs, el, gx, gy, gs, lighten(spec.inlay || glow, 0.35), 1));
+    } else {
+      // hidden: the Busara sixteen-dot diamond in kinetic purple on the bare weave
+      let d = '';
+      for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) d += `<circle cx="${cx + (i - j) * 32}" cy="${cy - 48 + (i + j) * 32}" r="12" fill="${kinetic}"/>`;
+      els.push(`<g filter="url(#${blur})" opacity="0.8">${d}</g>${d.replace(new RegExp(kinetic, 'g'), '#D9C4FF')}`);
+    }
+    els.push(`<path d="M${cx - r * 0.74} ${cy - r * 0.36}A${r * 0.82} ${r * 0.82} 0 0 1 ${cx + r * 0.52} ${cy - r * 0.68}A${r * 0.95} ${r * 0.76} 0 0 0 ${cx - r * 0.74} ${cy - r * 0.36}Z" fill="url(#${gloss})"/>`);
+    return `<defs>${defs.join('')}</defs>${els.join('')}`;
+  }
+
+  // ------------------------------------------------------------ interface kit (Panther Court)
+  // Nine-slice friendly UI sprites matching the reference mockups. border = [left, bottom, right, top]
+  // in pixels, written to the Unity .meta so Image.Type = Sliced stretches them cleanly.
+  const KIT = {
+    steel: ['#C3B6EE', '#7E6FB8', '#2F3149', '#5C5F8C', '#A99BD9'],
+    gold: '#E9A340', orange: '#FF8A1F', ember: '#E8590C', purple: '#9B5CFF', violet: '#C08BFF',
+    leather: '#221D1A', wood: '#2B231E', woodLight: '#5A3A26', slate: '#1C1D2E', ink: '#0F0F16',
+  };
+  const kitDefs = (u) => {
+    const s = KIT.steel;
+    return `<linearGradient id="${u}steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${s[0]}"/><stop offset="0.25" stop-color="${s[3]}"/><stop offset="0.5" stop-color="${s[2]}"/><stop offset="0.78" stop-color="${s[1]}"/><stop offset="1" stop-color="${s[4]}"/></linearGradient>` +
+      `<linearGradient id="${u}gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${lighten(KIT.gold, 0.3)}"/><stop offset="1" stop-color="${darken(KIT.gold, 0.2)}"/></linearGradient>` +
+      `<linearGradient id="${u}metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F1F2F8"/><stop offset="0.3" stop-color="#8C90A6"/><stop offset="0.55" stop-color="#3A3D4C"/><stop offset="0.8" stop-color="#C9CCDA"/><stop offset="1" stop-color="#474A5A"/></linearGradient>` +
+      `<filter id="${u}glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>` +
+      `<filter id="${u}soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>`;
+  };
+  const woodFill = (u, x, y, w, h, base, seed) => {
+    const a = noiseLayer(u, { x, y, w, h, freq: '0.004 0.09', oct: 4, seed: seed || 3, table: '0 0.2 0.7 0.1 0 0.4 0.8 0.15 0', color: darken(base, 0.55), op: 0.85 });
+    const b = noiseLayer(u, { x, y, w, h, freq: '0.006 0.22', oct: 2, seed: (seed || 3) + 5, table: '0 0 0 0.4 0 0 0.35 0', color: lighten(base, 0.3), op: 0.4 });
+    return { defs: a.def + b.def, els: `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${base}"/>${a.el}${b.el}` };
+  };
+  const leatherFill = (u, x, y, w, h) => {
+    const a = noiseLayer(u, { x, y, w, h, freq: '0.35', oct: 3, seed: 21, table: '0 0 0.3 0 0.45 0', color: '#000', op: 0.8 });
+    const b = noiseLayer(u, { x, y, w, h, freq: '0.02', oct: 3, seed: 22, table: '0 0.3 0 0.2', color: '#4A3E36', op: 0.5 });
+    return { defs: a.def + b.def, els: `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${KIT.leather}"/>${a.el}${b.el}` };
+  };
+  // outlined triangles alternating up and down, each with an inner echo, like the reference friezes
+  const triangleRow = (x0, x1, yTop, yBot, step, stroke, sw) => {
+    let d = '';
+    const inset = (yBot - yTop) * 0.28;
+    for (let x = x0, i = 0; x < x1; x += step / 2, i++) {
+      const up = i % 2 === 0;
+      const a = up ? `M${x} ${yBot}L${x + step / 2} ${yTop}L${x + step} ${yBot}Z` : `M${x} ${yTop}L${x + step / 2} ${yBot}L${x + step} ${yTop}Z`;
+      const ix = step * 0.22;
+      const b = up ? `M${x + ix} ${yBot - inset * 0.55}L${x + step / 2} ${yTop + inset}L${x + step - ix} ${yBot - inset * 0.55}Z` : `M${x + ix} ${yTop + inset * 0.55}L${x + step / 2} ${yBot - inset}L${x + step - ix} ${yTop + inset * 0.55}Z`;
+      d += a + b;
+    }
+    return `<path d="${d}" fill="none" stroke="${stroke}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+  };
+  const roundedPill = (x, y, w, h) => `M${x + h / 2} ${y}H${x + w - h / 2}A${h / 2} ${h / 2} 0 0 1 ${x + w - h / 2} ${y + h}H${x + h / 2}A${h / 2} ${h / 2} 0 0 1 ${x + h / 2} ${y}Z`;
+
+  const UI_KIT = {
+    // Iridescent steel device bezel; the centre is transparent so any panel shows through.
+    frame_device: { w: 512, h: 512, border: [128, 128, 128, 136], svg: (u) => {
+      const ring = 'M16 72Q16 24 64 24H180L200 8H312L332 24H448Q496 24 496 72V440Q496 496 440 496H72Q16 496 16 440Z' + 'M60 92Q60 64 88 64H424Q452 64 452 92V420Q452 452 420 452H92Q60 452 60 420Z';
+      return `<path d="${ring}" fill="url(#${u}steel)" fill-rule="evenodd"/>` +
+        `<path d="M16 72Q16 24 64 24H180L200 8H312L332 24H448" fill="none" stroke="#fff" stroke-width="2.5" opacity="0.55"/>` +
+        `<path d="M60 92Q60 64 88 64H424Q452 64 452 92V420Q452 452 420 452H92Q60 452 60 420Z" fill="none" stroke="#0B0B12" stroke-width="7"/>` +
+        `<path d="M60 92Q60 64 88 64H424Q452 64 452 92V420Q452 452 420 452H92Q60 452 60 420Z" fill="none" stroke="${KIT.violet}" stroke-width="1.5" opacity="0.5" transform="translate(0 2)"/>` +
+        `<path d="M16 440Q16 496 72 496H440Q496 496 496 440" fill="none" stroke="#000" stroke-width="3" opacity="0.4"/>`;
+    } },
+    panel_leather: { w: 256, h: 256, border: [48, 48, 48, 48], svg: (u) => {
+      const l = leatherFill(u, 0, 0, 256, 256);
+      return `<defs><clipPath id="${u}c"><rect x="4" y="4" width="248" height="248" rx="22"/></clipPath>${l.defs}</defs><g clip-path="url(#${u}c)">${l.els}</g>` +
+        `<rect x="4" y="4" width="248" height="248" rx="22" fill="none" stroke="#000" stroke-width="3" opacity="0.6"/>` +
+        `<rect x="18" y="18" width="220" height="220" rx="14" fill="none" stroke="${KIT.gold}" stroke-width="2.5"/>`;
+    } },
+    panel_wood: { w: 256, h: 256, border: [40, 40, 40, 40], svg: (u) => {
+      const w = woodFill(u, 0, 0, 256, 256, KIT.wood, 4);
+      return `<defs><clipPath id="${u}c"><rect x="4" y="4" width="248" height="248" rx="18"/></clipPath>${w.defs}</defs><g clip-path="url(#${u}c)">${w.els}</g>` +
+        `<rect x="5" y="5" width="246" height="246" rx="17" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.12"/>` +
+        `<rect x="4" y="4" width="248" height="248" rx="18" fill="none" stroke="#000" stroke-width="3" opacity="0.65"/>`;
+    } },
+    panel_neon: { w: 512, h: 512, border: [104, 104, 104, 104], svg: (u) => {
+      const p = 'M64 40H200L216 28H296L312 40H448Q472 40 472 64V200L484 216V296L472 312V448Q472 472 448 472H312L296 484H216L200 472H64Q40 472 40 448V312L28 296V216L40 200V64Q40 40 64 40Z';
+      let ticks = '';
+      for (let i = 0; i < 4; i++) ticks += `<rect x="${236 + i * 12}" y="490" width="6" height="6" rx="3" fill="${KIT.violet}"/>`;
+      return `<rect x="8" y="8" width="496" height="496" rx="40" fill="${KIT.slate}"/>` +
+        `<path d="${p}" fill="none" stroke="${KIT.purple}" stroke-width="12" filter="url(#${u}glow)" opacity="0.8"/>` +
+        `<path d="${p}" fill="none" stroke="${KIT.violet}" stroke-width="3.5"/>` + ticks;
+    } },
+    frieze_neon: { w: 2048, h: 160, border: [0, 0, 0, 0], svg: (u) => {
+      const g = `<linearGradient id="${u}fg" x1="0" y1="0" x2="2048" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F5A23A"/><stop offset="0.45" stop-color="#F28A3C"/><stop offset="0.62" stop-color="#C36BE0"/><stop offset="1" stop-color="${KIT.purple}"/></linearGradient>`;
+      const row = triangleRow(0, 2048, 28, 132, 168, `url(#${u}fg)`, 7);
+      return `<defs>${g}</defs><g filter="url(#${u}glow)" opacity="0.85">${row}</g>${row}` +
+        `<path d="M0 12H2048M0 148H2048" stroke="url(#${u}fg)" stroke-width="4" opacity="0.8"/>`;
+    } },
+    frieze_carved: { w: 1024, h: 128, border: [0, 0, 0, 0], svg: (u) => {
+      const w = woodFill(u, 0, 0, 1024, 128, '#3A2C22', 9);
+      let tri = '', hi = '';
+      for (let x = 0, i = 0; x < 1024; x += 64, i++) {
+        const up = i % 2 === 0;
+        tri += up ? `M${x} 104L${x + 64} 104L${x + 32} 24Z` : `M${x} 24L${x + 64} 24L${x + 32} 104Z`;
+        hi += up ? `M${x + 32} 24L${x} 104` : `M${x} 24L${x + 64} 24`;
+      }
+      return `<defs>${w.defs}</defs>${w.els}<path d="${tri}" fill="#000" opacity="0.38"/><path d="${tri}" fill="none" stroke="#000" stroke-width="3" opacity="0.5" transform="translate(1.5 2)"/>` +
+        `<path d="${hi}" stroke="#E2B98F" stroke-width="2" opacity="0.35"/><path d="M0 8H1024M0 120H1024" stroke="#000" stroke-width="6" opacity="0.5"/><path d="M0 12H1024" stroke="#fff" stroke-width="1.5" opacity="0.15"/>`;
+    } },
+    button_neon: { w: 640, h: 200, border: [140, 60, 140, 60], svg: (u) => {
+      const outer = 'M60 24H580L612 56V136L580 168H60L28 136V56Z';
+      let dots = '';
+      for (let i = 0; i < 5; i++) dots += `<circle cx="${292 + i * 14}" cy="182" r="4" fill="${KIT.orange}"/>`;
+      return `<path d="${outer}" fill="#2A1A14" stroke="${KIT.orange}" stroke-width="8" stroke-linejoin="round"/>` +
+        `<path d="M70 40H570L594 64V128L570 152H70L46 128V64Z" fill="none" stroke="${darken(KIT.orange, 0.2)}" stroke-width="2.5"/>` +
+        `<path d="M46 76Q34 96 46 116M594 76Q606 96 594 116" fill="none" stroke="${KIT.orange}" stroke-width="3"/>` +
+        `<path d="${roundedPill(80, 52, 480, 88)}" fill="${KIT.purple}" opacity="0.7" filter="url(#${u}glow)"/>` +
+        `<linearGradient id="${u}pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A4462"/><stop offset="0.5" stop-color="#2A2638"/><stop offset="1" stop-color="#1A1824"/></linearGradient>` +
+        `<path d="${roundedPill(80, 52, 480, 88)}" fill="url(#${u}pg)" stroke="${KIT.violet}" stroke-width="5"/>` +
+        `<path d="${roundedPill(96, 58, 448, 30)}" fill="#fff" opacity="0.08"/>` +
+        `<rect x="270" y="170" width="100" height="24" rx="6" fill="#2A1A14" stroke="${KIT.orange}" stroke-width="3"/>` + dots;
+    } },
+    button_glow: { w: 640, h: 180, border: [150, 60, 150, 60], svg: (u) => {
+      const cradle = 'M8 120Q90 120 120 64Q140 24 190 24H450Q500 24 520 64Q550 120 632 120V172H8Z';
+      const caps = 'M150 128Q160 48 210 44H430Q480 48 490 128Q492 150 470 150H170Q148 150 150 128Z';
+      return `<path d="${cradle}" fill="url(#${u}steel)"/><path d="${cradle}" fill="none" stroke="#000" stroke-width="3" opacity="0.4"/>` +
+        `<path d="${caps}" fill="${KIT.orange}" filter="url(#${u}glow)" opacity="0.9"/>` +
+        `<radialGradient id="${u}og" cx="0.5" cy="0.35" r="0.75"><stop offset="0" stop-color="#FFC266"/><stop offset="0.55" stop-color="${KIT.orange}"/><stop offset="1" stop-color="#8A2A05"/></radialGradient>` +
+        `<path d="${caps}" fill="url(#${u}og)" stroke="#2A1206" stroke-width="4"/>` +
+        `<path d="M176 70Q190 54 214 54H426Q450 54 464 70" fill="none" stroke="#fff" stroke-width="5" opacity="0.45" stroke-linecap="round"/>`;
+    } },
+    button_pill: { w: 320, h: 112, border: [56, 40, 56, 40], svg: (u) => {
+      return `<linearGradient id="${u}bp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#55505E"/><stop offset="1" stop-color="#2A2730"/></linearGradient>` +
+        `<path d="${roundedPill(8, 14, 304, 88)}" fill="#000" opacity="0.45" transform="translate(0 4)"/>` +
+        `<path d="${roundedPill(8, 10, 304, 88)}" fill="url(#${u}bp)"/>` +
+        `<path d="${roundedPill(20, 14, 280, 30)}" fill="#fff" opacity="0.1"/>`;
+    } },
+    button_outline: { w: 320, h: 112, border: [56, 40, 56, 40], svg: (u) =>
+      `<path d="${roundedPill(10, 12, 300, 88)}" fill="#2A211C"/><path d="${roundedPill(10, 12, 300, 88)}" fill="none" stroke="url(#${u}gold)" stroke-width="5"/>` +
+      `<path d="${roundedPill(18, 18, 284, 28)}" fill="#fff" opacity="0.05"/>` },
+    button_ring: { w: 256, h: 256, border: [0, 0, 0, 0], svg: (u) =>
+      `<circle cx="128" cy="134" r="112" fill="#000" opacity="0.5" filter="url(#${u}soft)"/>` +
+      `<circle cx="128" cy="128" r="112" fill="url(#${u}metal)"/>` +
+      `<circle cx="128" cy="128" r="84" fill="#141419" stroke="#000" stroke-width="5"/>` +
+      `<radialGradient id="${u}rg" cx="0.45" cy="0.35"><stop offset="0" stop-color="#2E2D38"/><stop offset="1" stop-color="#0E0E13"/></radialGradient>` +
+      `<circle cx="128" cy="128" r="80" fill="url(#${u}rg)"/>` +
+      `<path d="M50 96A84 84 0 0 1 160 46" fill="none" stroke="#fff" stroke-width="3" opacity="0.5"/>` },
+    knob_power: { w: 384, h: 384, border: [0, 0, 0, 0], svg: (u) => {
+      const arc = (r, a0, a1) => { const p = (a) => `${f(192 + Math.cos(a) * r)} ${f(192 + Math.sin(a) * r)}`; return `M${p(a0)}A${r} ${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${p(a1)}`; };
+      const a0 = Math.PI * 0.62, a1 = Math.PI * 2.32;
+      return `<linearGradient id="${u}ka" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#FFC266"/><stop offset="1" stop-color="${KIT.ember}"/></linearGradient>` +
+        `<path d="${arc(172, a0, a1)}" fill="none" stroke="${KIT.orange}" stroke-width="22" stroke-linecap="round" filter="url(#${u}glow)" opacity="0.7"/>` +
+        `<path d="${arc(172, a0, a1)}" fill="none" stroke="url(#${u}ka)" stroke-width="14" stroke-linecap="round"/>` +
+        `<circle cx="192" cy="200" r="132" fill="#000" opacity="0.5" filter="url(#${u}soft)"/>` +
+        `<circle cx="192" cy="192" r="132" fill="url(#${u}metal)"/>` +
+        `<circle cx="192" cy="192" r="100" fill="#121217" stroke="#000" stroke-width="6"/>` +
+        `<path d="M192 64V88" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity="0.8"/>`;
+    } },
+    tile_avatar: { w: 256, h: 256, border: [0, 0, 0, 0], svg: (u) => {
+      const w = woodFill(u, 0, 0, 256, 256, KIT.woodLight, 13);
+      return `<defs><clipPath id="${u}c"><rect x="12" y="12" width="232" height="232" rx="30"/></clipPath>${w.defs}</defs>` +
+        `<rect x="12" y="20" width="232" height="232" rx="30" fill="#000" opacity="0.5"/>` +
+        `<g clip-path="url(#${u}c)">${w.els}</g><rect x="13" y="13" width="230" height="230" rx="29" fill="none" stroke="#fff" stroke-width="2" opacity="0.2"/>` +
+        `<circle cx="128" cy="116" r="78" fill="#3A2C26"/><circle cx="128" cy="116" r="78" fill="none" stroke="${KIT.orange}" stroke-width="8"/>` +
+        `<circle cx="128" cy="98" r="26" fill="#7B655B"/><path d="M80 176Q84 132 128 132Q172 132 176 176Q160 190 128 190Q96 190 80 176Z" fill="#7B655B"/>`;
+    } },
+    tile_avatar_idle: { w: 256, h: 256, border: [0, 0, 0, 0], svg: (u) => UI_KIT.tile_avatar.svg(u).replace(new RegExp(`stroke="${KIT.orange}" stroke-width="8"`), 'stroke="#8C90A6" stroke-width="8"').replace(new RegExp(KIT.woodLight, 'g'), '#4A3A30') },
+    card_kingdom: { w: 640, h: 320, border: [90, 60, 90, 80], svg: (u) => {
+      const w = woodFill(u, 0, 0, 640, 320, '#3A2A20', 17);
+      return `<defs><clipPath id="${u}c"><rect x="8" y="24" width="624" height="288" rx="34"/></clipPath>${w.defs}</defs>` +
+        `<g clip-path="url(#${u}c)">${w.els}</g>` +
+        `<rect x="8" y="24" width="624" height="288" rx="34" fill="none" stroke="#000" stroke-width="3" opacity="0.6"/>` +
+        `<rect x="20" y="36" width="600" height="264" rx="26" fill="none" stroke="url(#${u}gold)" stroke-width="4"/>`;
+    } },
+    label_tab: { w: 320, h: 96, border: [44, 36, 44, 36], svg: (u) =>
+      `<rect x="8" y="10" width="304" height="76" rx="18" fill="#1E1A17"/><rect x="8" y="10" width="304" height="76" rx="18" fill="none" stroke="url(#${u}gold)" stroke-width="5"/>` +
+      `<rect x="16" y="16" width="288" height="20" rx="10" fill="#fff" opacity="0.05"/>` },
+    inset_dark: { w: 256, h: 256, border: [40, 40, 40, 40], svg: (u) =>
+      `<rect x="6" y="6" width="244" height="244" rx="18" fill="#121117"/>` +
+      `<rect x="6" y="6" width="244" height="244" rx="18" fill="none" stroke="#000" stroke-width="8" opacity="0.7" filter="url(#${u}soft)"/>` +
+      `<path d="M24 250H232" stroke="#fff" stroke-width="2" opacity="0.12"/>` },
+    chip_virtue: { w: 320, h: 96, border: [0, 0, 0, 0], svg: (u) =>
+      `<rect x="54" y="22" width="200" height="52" rx="26" fill="#121219" stroke="#2C2C3A" stroke-width="2"/>` +
+      `<circle cx="50" cy="48" r="38" fill="url(#${u}metal)"/><circle cx="50" cy="48" r="26" fill="#1A1A22" stroke="#000" stroke-width="3"/>` +
+      `<path d="M270 40L284 24L298 40ZM270 56L284 72L298 56Z" fill="#B9BCCB"/>` },
+    icon_add: { w: 128, h: 128, border: [0, 0, 0, 0], svg: (u) =>
+      `<rect x="14" y="14" width="100" height="100" rx="14" fill="none" stroke="${KIT.gold}" stroke-width="10" filter="url(#${u}glow)" opacity="0.6"/>` +
+      `<rect x="14" y="14" width="100" height="100" rx="14" fill="#1A1410" stroke="url(#${u}gold)" stroke-width="6"/>` +
+      `<path d="M64 36V92M36 64H92" stroke="url(#${u}gold)" stroke-width="9" stroke-linecap="round"/>` },
+    dots_kinetic: { w: 512, h: 48, border: [0, 0, 0, 0], svg: (u) => {
+      let d = '';
+      for (let i = 0; i < 9; i++) d += `<circle cx="${32 + i * 56}" cy="24" r="${i % 2 ? 6 : 10}" fill="${KIT.violet}"/>`;
+      return `<g filter="url(#${u}glow)">${d}</g>${d}`;
+    } },
+    ornament_diamonds: { w: 64, h: 256, border: [0, 0, 0, 0], svg: (u) => {
+      const dia = (y, s) => `<path d="M32 ${y - s}L${32 + s} ${y}L32 ${y + s}L${32 - s} ${y}Z" fill="#1A1410" stroke="url(#${u}gold)" stroke-width="3.5"/>`;
+      return `<path d="M32 0V96M32 160V256" stroke="${KIT.gold}" stroke-width="3"/>${dia(108, 16)}${dia(128, 12)}${dia(148, 16)}`;
+    } },
+  };
+  function uiKitSVG(name) {
+    const k = UI_KIT[name], u = uid('ui');
+    return svgWrap(k.w, k.h, `<defs>${kitDefs(u)}</defs>${k.svg(u)}`);
+  }
+
   // ------------------------------------------------------------ sprite list
   // Everything export-sprites.mjs writes for one theme. size = output pixels.
   function spriteList(themeId) {
@@ -1113,12 +1474,13 @@
     list.push({ file: 'piece_hidden.png', size: 256, svg: () => pieceSVG(t, 'earth', { back: true }) });
     Object.keys(PIECE_STATES).forEach((s) => list.push({ file: `piece_state_${s}.png`, size: 256, svg: () => pieceStateSVG(t, s) }));
     Object.keys(SLOT_STATES).forEach((s) => list.push({ file: `slot_state_${s}.png`, size: 256, svg: () => slotStateSVG(t, s) }));
+    if (t.uiKit) Object.entries(UI_KIT).forEach(([name, k]) => list.push({ file: `ui/${name}.png`, w: k.w, h: k.h, border: k.border, svg: () => uiKitSVG(name) }));
     return list;
   }
 
   const api = {
     ELEMENTS, ELEMENT_INFO, GLYPHS, MATERIALS, THEMES, SLOT_STYLES, SLOT_STATES, PIECE_STATES, BOARD, FRIEZES,
-    CLASSIC, ALL_THEMES, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
+    CLASSIC, ALL_THEMES, UI_KIT, uiKitSVG, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
     color: { mix, lighten, darken, luminance },
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

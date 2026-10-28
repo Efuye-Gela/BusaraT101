@@ -53,77 +53,92 @@
   "files": [
     {
       "file": "board.png",
-      "size": 1024,
+      "width": 1024,
+      "height": 1024,
       "guid": "67e482c7c42fa67a310c0cfa8979cd3b"
     },
     {
       "file": "board_turn_glow.png",
-      "size": 1024,
+      "width": 1024,
+      "height": 1024,
       "guid": "7998bc8d4b298ea76c70f6082b081bee"
     },
     {
       "file": "piece_water.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "a0c5129e23bd7feece7fd81ee42ec049"
     },
     {
       "file": "piece_earth.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "1f7dfa895ec262b93bd8bd46d975fe69"
     },
     {
       "file": "piece_fire.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "e390775d063c9efd64099e58303d9cd0"
     },
     {
       "file": "piece_air.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "6a60533e8e264e29216b216f30d3091f"
     },
     {
       "file": "piece_hidden.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "076ef5a3f5333291b0e60c87e87573da"
     },
     {
       "file": "piece_state_selected.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "70c674939cd78800662cc9899cdd6fa0"
     },
     {
       "file": "piece_state_threatened.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "3256048b4b3d5829824859d5e241daeb"
     },
     {
       "file": "piece_state_shielded.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "ba5daef666780fc5d685d850d5ed616a"
     },
     {
       "file": "slot_state_hover.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "f27768b3d68a0d97a1d61965be785d43"
     },
     {
       "file": "slot_state_legal.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "2dfb3d5ac740d7534b42d30fb5040e59"
     },
     {
       "file": "slot_state_blocked.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "a09363cf290b958235c3ab0cf87e6677"
     },
     {
       "file": "slot_state_selected.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "c179ae1c697f7f98de089b9f6b28d3c9"
     },
     {
       "file": "slot_state_target.png",
-      "size": 256,
+      "width": 256,
+      "height": 256,
       "guid": "2348fbd47dfee45aec894fab8fcdb6e6"
     }
   ]

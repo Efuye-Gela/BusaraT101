@@ -1,0 +1,338 @@
+{
+  "id": "panther-court",
+  "name": "Panther Court",
+  "era": "fusion",
+  "origin": "A hidden Afrofuturist kingdom: royal ritual, nanotech and kinetic ore",
+  "kingdoms": [
+    "Empire Volta",
+    "N'evulandis"
+  ],
+  "colors": {
+    "accent": "#A66BFF",
+    "danger": "#FF5A4A",
+    "light": "#EBDDFF",
+    "palette": {
+      "Slate": "#2E2E44",
+      "Royal gold": "#E9A340",
+      "Kinetic purple": "#9B5CFF",
+      "Iridescent steel": "#5B5F86",
+      "Ember": "#FF8A1F"
+    }
+  },
+  "board": {
+    "frame": "graphene",
+    "field": "graphene",
+    "frieze": "triangles",
+    "slot": "rim"
+  },
+  "pieces": {
+    "water": {
+      "material": "Kinetic bead",
+      "glyph": "angular/emissive"
+    },
+    "earth": {
+      "material": "Kinetic ore",
+      "glyph": "angular/emissive"
+    },
+    "fire": {
+      "material": "Kinetic bead",
+      "glyph": "angular/emissive"
+    },
+    "air": {
+      "material": "Kinetic bead",
+      "glyph": "angular/emissive"
+    }
+  },
+  "geometry": {
+    "note": "Board sprite maps 1024 design units to its pixel size. Slots are a 4x4 grid; slot overlays cover one slot pitch.",
+    "boardUnits": 1024,
+    "frameBand": 96,
+    "slotPitch": 208,
+    "slotRadius": 82,
+    "pieceDiscRadiusOf512": 214
+  },
+  "files": [
+    {
+      "file": "board.png",
+      "width": 1024,
+      "height": 1024,
+      "guid": "3947cb66e4e1b86e5053952ab8d11156"
+    },
+    {
+      "file": "board_turn_glow.png",
+      "width": 1024,
+      "height": 1024,
+      "guid": "e840056dfaa521d278631ae47cd88fb8"
+    },
+    {
+      "file": "piece_water.png",
+      "width": 256,
+      "height": 256,
+      "guid": "b8747fb961edcd2cd5dac50033e2839a"
+    },
+    {
+      "file": "piece_earth.png",
+      "width": 256,
+      "height": 256,
+      "guid": "a4af45c4ae8561639f80c24fa55ee9d5"
+    },
+    {
+      "file": "piece_fire.png",
+      "width": 256,
+      "height": 256,
+      "guid": "62742e2254aa290ecc1d39e7a157d695"
+    },
+    {
+      "file": "piece_air.png",
+      "width": 256,
+      "height": 256,
+      "guid": "71100e26458a4a86c195ff0a979dd184"
+    },
+    {
+      "file": "piece_hidden.png",
+      "width": 256,
+      "height": 256,
+      "guid": "26d55e3a0c4ac9add244735c9d1a95c9"
+    },
+    {
+      "file": "piece_state_selected.png",
+      "width": 256,
+      "height": 256,
+      "guid": "22f0e95c1bdfb50a6a2d59e43b43960c"
+    },
+    {
+      "file": "piece_state_threatened.png",
+      "width": 256,
+      "height": 256,
+      "guid": "54b1a75edc1d83ff07ec8cae6ab58660"
+    },
+    {
+      "file": "piece_state_shielded.png",
+      "width": 256,
+      "height": 256,
+      "guid": "6fb62d5af8ef97b2903f55aec40b1307"
+    },
+    {
+      "file": "slot_state_hover.png",
+      "width": 256,
+      "height": 256,
+      "guid": "090b9bde1f04e9eb84f4becf52fed9f1"
+    },
+    {
+      "file": "slot_state_legal.png",
+      "width": 256,
+      "height": 256,
+      "guid": "68c27964b13cf6b8556bd89b84326dd8"
+    },
+    {
+      "file": "slot_state_blocked.png",
+      "width": 256,
+      "height": 256,
+      "guid": "66397dfd80bddecb6903c2caa85e6bcd"
+    },
+    {
+      "file": "slot_state_selected.png",
+      "width": 256,
+      "height": 256,
+      "guid": "86919d3e75211a7100047b1e182aac9c"
+    },
+    {
+      "file": "slot_state_target.png",
+      "width": 256,
+      "height": 256,
+      "guid": "9325ae1645bc6586508dc0923e016650"
+    },
+    {
+      "file": "ui/frame_device.png",
+      "width": 512,
+      "height": 512,
+      "guid": "69bcf53847b6c412e6bcbbe139cd8af2",
+      "nineSliceBorder": {
+        "left": 128,
+        "bottom": 128,
+        "right": 128,
+        "top": 136
+      }
+    },
+    {
+      "file": "ui/panel_leather.png",
+      "width": 256,
+      "height": 256,
+      "guid": "39421e6477158bcd7289e99c4effd4c3",
+      "nineSliceBorder": {
+        "left": 48,
+        "bottom": 48,
+        "right": 48,
+        "top": 48
+      }
+    },
+    {
+      "file": "ui/panel_wood.png",
+      "width": 256,
+      "height": 256,
+      "guid": "6cf93d6833674d434af218a27e770f20",
+      "nineSliceBorder": {
+        "left": 40,
+        "bottom": 40,
+        "right": 40,
+        "top": 40
+      }
+    },
+    {
+      "file": "ui/panel_neon.png",
+      "width": 512,
+      "height": 512,
+      "guid": "eef077dace0c030907c21a667756a49c",
+      "nineSliceBorder": {
+        "left": 104,
+        "bottom": 104,
+        "right": 104,
+        "top": 104
+      }
+    },
+    {
+      "file": "ui/frieze_neon.png",
+      "width": 2048,
+      "height": 160,
+      "guid": "e6f4fe6b7f1d7dd3eb17013360a155d2"
+    },
+    {
+      "file": "ui/frieze_carved.png",
+      "width": 1024,
+      "height": 128,
+      "guid": "cb204d4da3d53dc06aabe83b815e2389"
+    },
+    {
+      "file": "ui/button_neon.png",
+      "width": 640,
+      "height": 200,
+      "guid": "7c8d47b91a8707ed7f9da2afc05c364c",
+      "nineSliceBorder": {
+        "left": 140,
+        "bottom": 60,
+        "right": 140,
+        "top": 60
+      }
+    },
+    {
+      "file": "ui/button_glow.png",
+      "width": 640,
+      "height": 180,
+      "guid": "63fec04ba7b3adf269894df2097ce712",
+      "nineSliceBorder": {
+        "left": 150,
+        "bottom": 60,
+        "right": 150,
+        "top": 60
+      }
+    },
+    {
+      "file": "ui/button_pill.png",
+      "width": 320,
+      "height": 112,
+      "guid": "4ef562ebff138514fd7b8fc76f477f2b",
+      "nineSliceBorder": {
+        "left": 56,
+        "bottom": 40,
+        "right": 56,
+        "top": 40
+      }
+    },
+    {
+      "file": "ui/button_outline.png",
+      "width": 320,
+      "height": 112,
+      "guid": "8f3d6520ba9b8f932f44de63a833c6a3",
+      "nineSliceBorder": {
+        "left": 56,
+        "bottom": 40,
+        "right": 56,
+        "top": 40
+      }
+    },
+    {
+      "file": "ui/button_ring.png",
+      "width": 256,
+      "height": 256,
+      "guid": "c6b0a3ad7e637aa0ac149b4e4c2a5eac"
+    },
+    {
+      "file": "ui/knob_power.png",
+      "width": 384,
+      "height": 384,
+      "guid": "5a825834d7fb1c9575453cba5e185acf"
+    },
+    {
+      "file": "ui/tile_avatar.png",
+      "width": 256,
+      "height": 256,
+      "guid": "7186e3ce9d9693994de28125da258869"
+    },
+    {
+      "file": "ui/tile_avatar_idle.png",
+      "width": 256,
+      "height": 256,
+      "guid": "8d65602fa2d46954f83fdc77822a8be2"
+    },
+    {
+      "file": "ui/card_kingdom.png",
+      "width": 640,
+      "height": 320,
+      "guid": "d4adf010fc6fa1c215e8757795d963ef",
+      "nineSliceBorder": {
+        "left": 90,
+        "bottom": 60,
+        "right": 90,
+        "top": 80
+      }
+    },
+    {
+      "file": "ui/label_tab.png",
+      "width": 320,
+      "height": 96,
+      "guid": "a3d6bfa6659712d3c6b9ef502673eca1",
+      "nineSliceBorder": {
+        "left": 44,
+        "bottom": 36,
+        "right": 44,
+        "top": 36
+      }
+    },
+    {
+      "file": "ui/inset_dark.png",
+      "width": 256,
+      "height": 256,
+      "guid": "7b79710ed4fc54316b110c7f51710c40",
+      "nineSliceBorder": {
+        "left": 40,
+        "bottom": 40,
+        "right": 40,
+        "top": 40
+      }
+    },
+    {
+      "file": "ui/chip_virtue.png",
+      "width": 320,
+      "height": 96,
+      "guid": "efe79fb9004b282e572b88b07d563822"
+    },
+    {
+      "file": "ui/icon_add.png",
+      "width": 128,
+      "height": 128,
+      "guid": "4bdf1ed13637b8aeea88086b54e2b2e2"
+    },
+    {
+      "file": "ui/dots_kinetic.png",
+      "width": 512,
+      "height": 48,
+      "guid": "063586b7f43c56c8bc7c8af3fde9e43c"
+    },
+    {
+      "file": "ui/ornament_diamonds.png",
+      "width": 64,
+      "height": 256,
+      "guid": "53699c9862e6c70b945c581b2a9392a4"
+    }
+  ]
+}

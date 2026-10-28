@@ -50,8 +50,9 @@ const platform = (target, size, quality) => `  - serializedVersion: 4
     forceMaximumCompressionQuality_BC6H_BC7: 0
 `;
 
-// Single-mode UI sprite, no mipmaps, alpha is transparency, max size = the file's own size.
-const spriteMeta = (guid, size) => `fileFormatVersion: 2
+// Single-mode UI sprite, no mipmaps, alpha is transparency. size = import cap (power of two),
+// border = nine-slice [left, bottom, right, top] in pixels.
+const spriteMeta = (guid, size, border = [0, 0, 0, 0]) => `fileFormatVersion: 2
 guid: ${guid}
 TextureImporter:
   internalIDToNameTable: []
@@ -102,7 +103,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: ${border[0]}, y: ${border[1]}, z: ${border[2]}, w: ${border[3]}}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -144,6 +145,7 @@ ${platform('DefaultTexturePlatform', size, 100)}${platform('Standalone', size, 5
   assetBundleVariant:
 `;
 
+const importCap = (px) => { let p = 32; while (p < px) p *= 2; return p; };
 const assetPath = (abs) => path.relative(path.join(repo, 'Busara'), abs).split(path.sep).join('/');
 const writeIfChanged = (file, text) => { if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== text) fs.writeFileSync(file, text); };
 
@@ -173,30 +175,37 @@ async function main() {
       const source = s.raster
         ? 'data:image/png;base64,' + fs.readFileSync(path.join(spritesRoot, s.raster)).toString('base64')
         : null;
-      const b64 = await page.evaluate(async ({ id, file, size, source }) => {
+      const W = s.w || s.size, H = s.h || s.size;
+      const b64 = await page.evaluate(async ({ id, file, W, H, source }) => {
         let src = source;
         if (!src) {
           const sprite = window.BusaraThemes.spriteList(id).find((x) => x.file === file);
-          const svg = sprite.svg().replace(/ width="\d+" height="\d+"/, ` width="${size}" height="${size}"`);
+          const svg = sprite.svg().replace(/ width="\d+" height="\d+"/, ` width="${W}" height="${H}"`);
           src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
         }
         const img = new Image();
         img.src = src;
         await img.decode();
         const c = document.createElement('canvas');
-        c.width = c.height = size;
+        c.width = W;
+        c.height = H;
         const ctx = c.getContext('2d');
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
-        // Raster sources keep their aspect ratio, centred on a square canvas.
-        const k = Math.min(size / img.naturalWidth, size / img.naturalHeight);
+        // Raster sources keep their aspect ratio, centred on the canvas.
+        const k = Math.min(W / img.naturalWidth, H / img.naturalHeight);
         const w = img.naturalWidth * k, h = img.naturalHeight * k;
-        ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
+        ctx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
         return c.toDataURL('image/png').split(',')[1];
-      }, { id: t.id, file: s.file, size: s.size, source });
+      }, { id: t.id, file: s.file, W, H, source });
       const png = path.join(dir, s.file);
+      const sub = path.dirname(png);
+      if (sub !== dir) {
+        fs.mkdirSync(sub, { recursive: true });
+        writeIfChanged(sub + '.meta', folderMeta(stableGuid(assetPath(sub))));
+      }
       fs.writeFileSync(png, Buffer.from(b64, 'base64'));
-      writeIfChanged(png + '.meta', spriteMeta(stableGuid(assetPath(png)), s.size));
+      writeIfChanged(png + '.meta', spriteMeta(stableGuid(assetPath(png)), importCap(Math.max(W, H)), s.border));
     }
     const manifest = {
       id: t.id,
@@ -217,7 +226,8 @@ async function main() {
         slotRadius: engine.BOARD.holeR,
         pieceDiscRadiusOf512: 214,
       },
-      files: sprites.map((s) => ({ file: s.file, size: s.size, guid: stableGuid(assetPath(path.join(dir, s.file))) })),
+      files: sprites.map((s) => Object.assign({ file: s.file, width: s.w || s.size, height: s.h || s.size, guid: stableGuid(assetPath(path.join(dir, s.file))) },
+        s.border && s.border.some((v) => v > 0) ? { nineSliceBorder: { left: s.border[0], bottom: s.border[1], right: s.border[2], top: s.border[3] } } : {})),
     };
     const mf = path.join(dir, 'manifest.json');
     writeIfChanged(mf, JSON.stringify(manifest, null, 2) + '\n');

@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Saira+Stencil+One&family=Poppins:wght@500;600;800&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: an indigo-dyed workshop. One live board leads; every section below re-skins to the theme on that board. */
 :root {
@@ -268,6 +268,69 @@ pre.spec { background: var(--surface); border: 1px solid var(--line); border-rad
 code { font-family: var(--font-mono); font-size: 0.85em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
 footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var(--ink-2); font-size: var(--step--1); }
 
+
+/* Panther Court screens: rebuilt from the exported nine-slice kit. Everything inside a screen scales with cqw. */
+.pc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.pc-cell { container-type: inline-size; min-width: 0; }
+.pc-cell figcaption { margin-top: 10px; font-size: var(--step--1); color: var(--ink-2); }
+.pc-cell figcaption b { color: var(--ink); font-weight: 600; }
+.pc-screen { position: relative; aspect-ratio: 4 / 3; border: 6.4cqw solid transparent; border-image: var(--k-frame_device) 136 128 128 128 fill / 6.4cqw 6cqw 6cqw 6cqw stretch; font-family: "Poppins", var(--font-body); color: #ECE6DA; }
+.pc-in { position: absolute; inset: 0; border-radius: 2.4cqw; overflow: hidden; background: #121016; }
+.pc-in.leather { background: #17141A; }
+.pc-in.leather::before, .pc-wood::before { content: ""; position: absolute; inset: 0; opacity: 0.9; }
+.pc-in.leather::before { background: radial-gradient(120% 90% at 30% 20%, rgba(120,110,160,.12), transparent 60%), repeating-radial-gradient(circle at 20% 30%, rgba(255,255,255,.015) 0 1px, transparent 1px 3px); }
+.pc-wood { position: absolute; border: 2cqw solid transparent; border-image: var(--k-panel_wood) 40 fill / 2cqw stretch; }
+.pc-abs { position: absolute; }
+.pc-frieze { position: absolute; left: 0; right: 0; height: 7cqw; background: var(--k-frieze_neon) center / 100% 100% no-repeat; }
+.pc-carved { position: absolute; left: 0; right: 0; height: 5.5cqw; background: var(--k-frieze_carved) left center / auto 100% repeat-x; }
+.pc-title { position: absolute; left: 0; right: 0; top: 30%; text-align: center; font-family: "Saira Stencil One", "Big Shoulders Display", sans-serif; font-size: 15cqw; line-height: 1; letter-spacing: .02em; background: linear-gradient(180deg, #E9E3DC 0%, #BDB2A6 55%, #8C8178 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 .5cqw .4cqw rgba(0,0,0,.6)); }
+.pc-btn { position: absolute; display: grid; place-items: center; font-weight: 800; letter-spacing: .02em; border: 0; background: none; cursor: pointer; color: #F3E6D2; }
+.pc-play { left: 50%; translate: -50% 0; bottom: 16%; width: 36cqw; height: 11.25cqw; background: var(--k-button_neon) center / 100% 100% no-repeat; font-size: 4.6cqw; padding-bottom: 1.2cqw; }
+.pc-next { left: 50%; translate: -50% 0; bottom: 0; width: 46cqw; height: 13cqw; background: var(--k-button_glow) center / 100% 100% no-repeat; font-size: 4.4cqw; color: #FFF6EA; padding-top: 1cqw; text-shadow: 0 .3cqw .6cqw rgba(80,20,0,.6); }
+.pc-glyphs { position: absolute; left: 4%; right: 4%; bottom: 4%; height: 4cqw; opacity: .35; background: var(--k-frieze_carved) left / auto 100% repeat-x; filter: grayscale(1) brightness(.8); }
+.pc-h { font-weight: 600; text-align: center; color: #CFC6BC; }
+.pc-tiles { position: absolute; left: 0; right: 0; top: 34%; display: flex; justify-content: center; align-items: center; gap: 2cqw; }
+.pc-tile { position: relative; width: 14cqw; aspect-ratio: 1; background: var(--k-tile_avatar_idle) center / contain no-repeat; }
+.pc-tile.on { background-image: var(--k-tile_avatar); }
+.pc-tile span { position: absolute; left: 0; right: 0; bottom: 5%; text-align: center; font-size: 2.2cqw; font-weight: 600; color: #F4ECE2; text-shadow: 0 .2cqw .3cqw rgba(0,0,0,.8); }
+.pc-add { width: 6cqw; aspect-ratio: 1; background: var(--k-icon_add) center / contain no-repeat; }
+.pc-inset { position: absolute; border: 1.6cqw solid transparent; border-image: var(--k-inset_dark) 40 fill / 1.6cqw stretch; display: grid; place-items: center; font-size: 2.4cqw; color: #D9D1C8; }
+.pc-side { position: absolute; left: 0; top: 0; bottom: 0; width: 28%; }
+.pc-plist { position: absolute; left: 0; width: 28%; top: 30%; display: grid; justify-items: center; gap: .8cqw; font-size: 1.9cqw; }
+.pc-plist i { display: block; width: 5.4cqw; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #8B8794, #4A4752 70%); box-shadow: inset 0 -.4cqw .6cqw rgba(0,0,0,.6), 0 .3cqw .5cqw rgba(0,0,0,.5); margin: 0 auto .5cqw; }
+.pc-plist .on { padding: 1cqw 1.6cqw; border-radius: 1.2cqw; background: linear-gradient(#E9B452, #B87822); color: #2A1A08; box-shadow: 0 0 1.6cqw rgba(233,163,64,.5); }
+.pc-plist .on i { background: radial-gradient(circle at 40% 35%, #FFE58A, #E1A92F 70%); }
+.pc-cards { position: absolute; left: 30%; right: 2%; top: 3%; bottom: 0; display: grid; gap: 1.6cqw; align-content: start; }
+.pc-card { position: relative; height: 22cqw; border: 2.6cqw solid transparent; border-image: var(--k-card_kingdom) 80 90 60 90 fill / 2.6cqw 3cqw 2cqw 3cqw stretch; }
+.pc-tab { position: absolute; left: 1cqw; top: -3.6cqw; padding: .5cqw 2cqw; font-size: 2.4cqw; font-weight: 600; border: 1.4cqw solid transparent; border-image: var(--k-label_tab) 36 44 36 44 fill / 1.2cqw 1.6cqw stretch; }
+.pc-card .por { position: absolute; left: 0; top: 1cqw; width: 14cqw; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #26222C, #0E0D12 70%); box-shadow: inset 0 .4cqw .8cqw rgba(0,0,0,.8); }
+.pc-card .vg { position: absolute; left: 16cqw; top: 0; font-size: 2.3cqw; line-height: 1.05; font-weight: 600; }
+.pc-card .slots { position: absolute; left: 26cqw; right: 0; top: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1cqw; }
+.pc-card .slots div { height: 5.2cqw; border-radius: .9cqw; background: #121117; box-shadow: inset 0 .4cqw .6cqw rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; gap: .6cqw; font-size: 2cqw; font-weight: 600; }
+.pc-card .slots svg { width: 3cqw; height: 3cqw; }
+.pc-card .desc { position: absolute; left: 16cqw; width: 22cqw; top: 6.6cqw; bottom: 0; border-radius: .9cqw; background: #121117; box-shadow: inset 0 .4cqw .6cqw rgba(0,0,0,.7); font-size: 1.35cqw; line-height: 1.35; padding: 1cqw; overflow: hidden; color: #C9C1B8; }
+.pc-card .pow { position: absolute; left: 39.5cqw; right: 0; top: 6.6cqw; bottom: 0; font-size: 1.5cqw; color: #C9C1B8; }
+.pc-card .pow div { overflow: hidden; margin-top: .5cqw; height: calc(100% - 2.6cqw); border-radius: .9cqw; background: #121117; box-shadow: inset 0 .4cqw .6cqw rgba(0,0,0,.7); padding: 1cqw; font-size: 2.2cqw; color: #ECE6DA; }
+.pc-card .pow small { display: block; font-size: 1.3cqw; color: #A79F96; margin-top: .4cqw; line-height: 1.3; }
+.pc-bar { position: absolute; left: 1%; right: 1%; top: 1%; height: 8cqw; display: flex; align-items: center; gap: 1.2cqw; padding: 0 1.6cqw; background: linear-gradient(#1A1A22, #101016); border-bottom: .3cqw solid #3A2A1C; }
+.pc-bar .orb { width: 6.4cqw; aspect-ratio: 1; background: var(--k-button_ring) center / contain no-repeat; flex: none; }
+.pc-chip { position: relative; width: 12.4cqw; aspect-ratio: 320 / 96; background: var(--k-chip_virtue) center / contain no-repeat; font-size: 1.15cqw; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.pc-chip span { position: absolute; left: 30%; right: 22%; top: 50%; translate: 0 -50%; display: flex; justify-content: space-between; }
+.pc-board-area { position: absolute; left: 4%; top: 15%; width: 56%; bottom: 3%; border: 3.4cqw solid transparent; border-image: var(--k-panel_neon) 104 fill / 3.4cqw stretch; }
+.pc-boards { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.2cqw; }
+.pc-boards img { width: 100%; height: auto; }
+.pc-orn { position: absolute; width: 2cqw; height: 8cqw; background: var(--k-ornament_diamonds) center / contain no-repeat; }
+.pc-right { position: absolute; right: 2%; top: 15%; width: 34%; bottom: 3%; border: 1.6cqw solid transparent; border-image: var(--k-panel_leather) 48 fill / 1.6cqw stretch; }
+.pc-pills { position: absolute; left: 4%; right: 4%; top: 24%; display: grid; grid-template-columns: repeat(4, 1fr); gap: .6cqw; }
+.pc-pill { height: 3.6cqw; background: var(--k-button_pill) center / 100% 100% no-repeat; display: grid; place-items: center; font-size: 1.15cqw; font-weight: 600; }
+.pc-confirm { position: absolute; left: 50%; translate: -50% 0; top: 32%; width: 14cqw; height: 4.4cqw; background: var(--k-button_outline) center / 100% 100% no-repeat; display: grid; place-items: center; font-size: 1.8cqw; font-weight: 600; color: #E9B452; }
+.pc-dots { position: absolute; left: 12%; right: 12%; top: 41%; height: 2cqw; background: var(--k-dots_kinetic) center / contain no-repeat; }
+.pc-rings { position: absolute; left: 14%; right: 14%; top: 46%; display: grid; grid-template-columns: 1fr 1fr; gap: .8cqw 2cqw; justify-items: center; font-size: 1.3cqw; }
+.pc-rings div { text-align: center; }
+.pc-rings i { display: block; width: 5.6cqw; aspect-ratio: 1; background: var(--k-button_ring) center / contain no-repeat; margin: 0 auto .2cqw; }
+.pc-knob { position: absolute; left: 50%; translate: -50% 0; bottom: 1%; width: 8.6cqw; aspect-ratio: 1; background: var(--k-knob_power) center / contain no-repeat; }
+@media (max-width: 760px) { .pc-grid { grid-template-columns: minmax(0, 1fr); } }
+
 @media (max-width: 960px) {
   .hero-grid, .sec-head, .ws, .sprite-grid, .contract, .ui-stage { grid-template-columns: minmax(0, 1fr); }
   .eras { grid-template-columns: minmax(0, 1fr); }
@@ -293,6 +356,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     </a>
     <nav class="nav" aria-label="Sections">
       <a href="#directions">Directions</a>
+      <a href="#panther">Panther Court</a>
       <a href="#eras">Past, future, fusion</a>
       <a href="#materials">Materials</a>
       <a href="#holes">Holes &amp; states</a>
@@ -352,6 +416,16 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     </div>
   </section>
 
+
+  <section class="block" id="panther">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Panther Court</h2>
+        <p>An Afrofuturist superhero-kingdom direction built from your mockups. The board, holes and interface follow the reference as closely as the sprite format allows. The stones are new: kinetic beads with a black triangle-weave shell, an etched gunmetal bezel and a charge ring in the element colour. Every frame, button and panel here is a nine-slice sprite from <code>Themes/panther-court/ui</code>.</p>
+      </div>
+      <div class="pc-grid" id="pc-grid"></div>
+    </div>
+  </section>
   <section class="block" id="eras">
     <div class="wrap">
       <div class="sec-head">
@@ -1009,8 +1083,50 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     list.forEach((s) => strip.appendChild(img(uri('sp:' + t.id + s.file, s.svg), s.file)));
   }
 
+
+  // ------------------------------------------------------------ Panther Court screens
+  function renderPanther() {
+    const grid = $('#pc-grid');
+    if (!grid || !B.UI_KIT) return;
+    const sec = $('#panther');
+    Object.keys(B.UI_KIT).forEach((k) => sec.style.setProperty('--k-' + k, `url("${uri('kit:' + k, () => B.uiKitSVG(k))}")`));
+    const t = B.themeById('panther-court');
+    const vIcon = (name) => { const v = VIRTUES.find((x) => x[0] === name); return `<svg viewBox="0 0 24 24" fill="none" stroke="#E9A340" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${v[1]}"/></svg>`; };
+    const cards = [
+      ['Egolica', 'Egolica shares its gold wealth equally among citizens through a universal basic income. The kingdom values unity, security, happiness and environmental sustainability.', [[2, 'Security'], [3, 'Nature'], [4, 'Economy']], 'Abundance', 'Free while your Kingdom Card is hidden. Reveal it and add Resources equal to the player count. Once per game.'],
+      ['Konga', 'Founded in the nineteenth century, Konga is ruled by King Sekou and Queen Pokou. Advisers and military leaders support a kingdom known for military trade and its powerful army.', [[3, 'Art'], [4, 'Security'], [2, 'Nature']], 'Magic', 'Pay 2 Virtues to take two actions this turn rather than one.'],
+      ['Empire Volta', 'Volta brings together ethnic groups in Africa through shared knowledge, traditions, magic and technology. Nakomean warriors govern using the Volta Stones of Power.', [[3, 'Energy'], [4, 'Security'], [2, 'Wisdom']], 'Celestial Dome', 'Pay 1 Virtue to cancel an attack or disaster aimed at you.'],
+    ];
+    const boardImg = (lay, glow) => `<img alt="" src="${uri('pcb:' + lay.join() + glow, () => B.boardSVG(t, { layout: lay, glow }))}">`;
+    const L = (s) => s.split('').map((c) => ({ f: 'fire', w: 'water', e: 'earth', a: 'air' })[c] || null);
+    const screens = [
+      ['Title', 'Iridescent steel bezel, neon triangle friezes, stencil title and the neon Play button.',
+        `<div class="pc-in leather"><div class="pc-frieze" style="top:12%"></div><div class="pc-title">BUSARA</div><div class="pc-frieze" style="top:56%"></div><button class="pc-btn pc-play" type="button">PLAY</button><div class="pc-glyphs"></div></div>`],
+      ['Add players', 'Dark wood with carved friezes, avatar tiles, a recessed name field and the glowing Next capsule.',
+        `<div class="pc-in"><div class="pc-wood" style="inset:0"></div><div class="pc-carved" style="top:2%"></div><div class="pc-carved" style="bottom:4%"></div>` +
+        `<div class="pc-h pc-abs" style="left:0;right:0;top:15%;font-size:5.4cqw">Add Players</div>` +
+        `<div class="pc-tiles">${[1, 2, 3, 4].map((n) => `<div class="pc-tile${n === 1 ? ' on' : ''}"><span>Player ${n}</span></div>`).join('')}<div class="pc-add"></div></div>` +
+        `<div class="pc-inset" style="left:26%;right:26%;top:64%;height:8cqw">Create Name</div><button class="pc-btn pc-next" type="button">NEXT</button></div>`],
+      ['Choose a kingdom', 'Seat list on dark wood; gold-framed kingdom cards with virtue goals and powers from the game data.',
+        `<div class="pc-in"><div class="pc-wood pc-side"></div><div class="pc-abs" style="left:3%;width:24%;top:7%;font-size:3.2cqw;font-weight:500;line-height:1.15">Choose a kingdom</div>` +
+        `<div class="pc-carved" style="top:22%;width:28%;height:4cqw"></div>` +
+        `<div class="pc-plist"><div class="on"><i></i>Player 1</div><div><i></i>Player 2</div><div><i></i>Player 3</div><div><i></i>Player 4</div></div>` +
+        `<div class="pc-orn" style="left:27.2%;top:30%"></div>` +
+        `<div class="pc-cards">${cards.map(([k, story, goal, pw, pwText]) => `<div class="pc-card" style="margin-top:3.4cqw"><div class="pc-tab">${k}</div><div class="por"></div><div class="vg">Virtue<br>Goal</div>` +
+          `<div class="slots">${goal.map(([n, v]) => `<div>${vIcon(v)}${n}</div>`).join('')}</div><div class="desc">${story}</div><div class="pow">Power<div>${pw}<small>${pwText}</small></div></div></div>`).join('')}</div></div>`],
+      ['Game', 'Virtue counters, the neon board area with tabbed slate boards and kinetic stones, and the leather action panel.',
+        `<div class="pc-in"><div class="pc-bar"><div class="orb"></div>${['Art', 'Economy', 'Energy', 'Nature', 'Security', 'Wisdom'].map((v, i) => `<div class="pc-chip"><span>${v}<b>${[3, 1, 0, 2, 4, 1][i]}</b></span></div>`).join('')}</div>` +
+        `<div class="pc-orn" style="left:1%;top:34%"></div><div class="pc-orn" style="left:61.5%;top:52%"></div>` +
+        `<div class="pc-board-area"><div class="pc-boards">${boardImg(L('..........f..a..'), true)}${boardImg(L('.w.....fw.e..fa.'), false)}${boardImg(L('.f..e.w.......a.'), false)}${boardImg(L('..a...e.w.f....w'), false)}</div></div>` +
+        `<div class="pc-right"><div class="pc-inset" style="left:4%;right:4%;top:2%;height:8cqw;font-size:1.6cqw;color:#9F98A8">Info</div>` +
+        `<div class="pc-pills">${[1, 2, 3, 4].map((n) => `<div class="pc-pill">Player ${n}</div>`).join('')}</div><div class="pc-confirm">Confirm</div><div class="pc-dots"></div>` +
+        `<div class="pc-rings">${['Forge', 'Draw', 'Trade', 'Weapon'].map((a) => `<div><i></i>${a}</div>`).join('')}</div><div class="pc-knob" title="Use power"></div></div></div>`],
+    ];
+    grid.innerHTML = screens.map(([name, note, inner]) => `<figure class="pc-cell" style="margin:0"><div class="pc-screen">${inner}</div><figcaption><b>${name}.</b> ${note}</figcaption></figure>`).join('');
+  }
   // ------------------------------------------------------------ boot
   renderDirections();
+  renderPanther();
   renderEras();
   renderMaterials();
   buildWorkshop();

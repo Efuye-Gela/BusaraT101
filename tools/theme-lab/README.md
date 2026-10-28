@@ -4,7 +4,7 @@ Art direction and sprite generation for Busara's board and piece customisations.
 
 | File | What it does |
 | --- | --- |
-| `engine.js` | Theme data (14 directions: 7 past kingdoms, 4 future cities, 3 fusions), 41 piece materials, 8 hole profiles, and the SVG generators for boards, pieces, holes and every play state. Runs in the browser and in Node. |
+| `engine.js` | Theme data (15 directions: 7 past kingdoms, 4 future cities, 4 fusions, plus Busara Classic), piece materials, 9 hole profiles, the SVG generators for boards, pieces, holes and every play state, and the Panther Court interface kit. Runs in the browser and in Node. |
 | `index.html` | The art lab: a playable board, direction gallery, material library, hole and state matrix, themed interface kit and a workshop for mixing eras. Open it directly in a browser. |
 | `export-sprites.mjs` | Rasterises each theme (plus Busara Classic) with Chromium into `Busara/Assets/Busara/Sprites/Themes/<theme-id>/`, with Unity `.meta` files whose GUIDs are derived from the path, so re-exporting never breaks references. |
 
@@ -66,6 +66,16 @@ downscaled to 2048 (Unity's import cap) with sprite-sheet rects scaled to match.
 | `UI/Backgrounds`, `UI/Panels`, `UI/Frames`, `UI/Buttons`, `UI/Icons`, `UI/Effects`, `UI/Shapes` | Interface art, grouped by role |
 | `Branding/` | Busara and publisher logos |
 | `Archive/` | Superseded designs, duplicates, screenshots and reference photos (kept, unused) |
+
+## Panther Court interface kit
+
+Panther Court (built from the Afrofuturist superhero-kingdom mockups) also exports a nine-slice
+interface kit to `Themes/panther-court/ui/`: device frame, leather / wood / neon panels, neon and
+carved triangle friezes, Play / Next / pill / outline buttons, ring buttons, power knob, avatar
+tiles, kingdom card, label tab, dark inset, virtue counter chip, add icon, kinetic dots and
+diamond ornament. Each `.meta` carries its sprite border, so set the Image type to **Sliced**.
+The art lab's Panther Court section rebuilds the four reference screens from these sprites.
+Names avoid Marvel trademarks (no "Wakanda", "Vibranium" or "Kimoyo") so the theme can ship.
 
 ## Adding a theme
 
