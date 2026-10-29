@@ -37,6 +37,12 @@ public class UiSkin : ScriptableObject
     [Tooltip("Low-emphasis buttons such as More (nine-slice).")]
     public Sprite secondaryButton;
 
+    [Header("Menus")]
+    [Tooltip("Decorative strip repeated across the home screen.")]
+    public Sprite frieze;
+    [Tooltip("Bezel around the home screen's board showcase (nine-slice).")]
+    public Sprite frame;
+
     [Header("Nine-slice border on screen, in canvas units")]
     [Tooltip("Tabs, cards and buttons are drawn at their own proportions, scaled to their height; these set the rest.")]
     public float panelBorder = 26f;

@@ -24,6 +24,8 @@ MonoBehaviour:
   holder: {fileID: 21300000, guid: c6b0a3ad7e637aa0ac149b4e4c2a5eac, type: 3}
   primaryButton: {fileID: 21300000, guid: 7c8d47b91a8707ed7f9da2afc05c364c, type: 3}
   secondaryButton: {fileID: 21300000, guid: 8f3d6520ba9b8f932f44de63a833c6a3, type: 3}
+  frieze: {fileID: 21300000, guid: e6f4fe6b7f1d7dd3eb17013360a155d2, type: 3}
+  frame: {fileID: 21300000, guid: 69bcf53847b6c412e6bcbbe139cd8af2, type: 3}
   panelBorder: 26
   insetBorder: 14
   popupBorder: 40

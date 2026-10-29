@@ -6455,4 +6455,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   style: {fileID: 11400000, guid: 34755d7d8d6b7906723e7e56899b281c, type: 2}
   catalog: {fileID: 11400000, guid: b8ccf7762f4098c3edd26c28fdeffd92, type: 2}
+  skin: {fileID: 11400000, guid: 365537555ffd0df5df672cd4bdab4766, type: 2}
   showcaseSeconds: 4.5

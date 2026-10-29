@@ -129,6 +129,9 @@ the colours. `UiKit` generates its rounded panels at runtime, so no extra sprite
 - **Home**: wordmark, tagline, then Play and Quit. These are the scene's own buttons, restyled, so
   their click events are unchanged. On the right, a board showcase cycles through every theme with
   pieces in each seat colour.
+  With a `UiSkin` assigned (mainMenu uses `PantherCourtUiSkin`), the screen also takes the skin's look:
+  neon friezes across the top and bottom, the neon Play button, the gold outline Quit button and a steel
+  bezel around the showcase.
 - **Setup**: one card per player. Each card has the name, a board preview with the player's piece
   (arrows change the theme, and the piece or a swatch changes the colour) and the kingdom choice.
   Below the choice are the kingdom's power, its cost and the virtues it needs to win.

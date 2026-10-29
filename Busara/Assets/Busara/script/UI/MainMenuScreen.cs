@@ -7,12 +7,15 @@ using UnityEngine.UI;
 /// <summary>
 /// Lays out the home screen: the Busara wordmark and tagline with the scene's Play and Quit buttons
 /// on the left, and a showcase of board themes with pieces on the right. The scene's own buttons keep
-/// their click events; this only moves and restyles them.
+/// their click events; this only moves and restyles them. With a <see cref="UiSkin"/>, the screen takes
+/// that theme's friezes, buttons and showcase bezel.
 /// </summary>
 public class MainMenuScreen : MonoBehaviour
 {
     public BusaraUiStyle style;
     public ThemeCatalog catalog;
+    [Tooltip("Optional theme interface kit for the friezes, buttons and showcase frame.")]
+    public UiSkin skin;
     [Tooltip("Seconds each board theme stays in the showcase.")]
     public float showcaseSeconds = 4.5f;
 
@@ -22,7 +25,7 @@ public class MainMenuScreen : MonoBehaviour
         (0, 0, ResourceType.Fire), (0, 2, ResourceType.Water), (1, 1, ResourceType.Earth), (1, 3, ResourceType.Air),
         (2, 0, ResourceType.Air), (2, 2, ResourceType.Fire), (3, 1, ResourceType.Water), (3, 3, ResourceType.Earth),
     };
-    private const float BoardSize = 640f;
+    private float BoardSize = 640f;
 
     private UiKit ui;
     private Image board;
@@ -36,6 +39,10 @@ public class MainMenuScreen : MonoBehaviour
     {
         ui = new UiKit(style);
         BusaraUiStyle look = ui.Style;
+        bool friezes = skin != null && skin.frieze != null;
+        // Friezes take the top and bottom bands of the screen, so the content shrinks to fit between them.
+        if (friezes)
+            BoardSize = 560f;
         Transform canvas = transform;
         Transform legacy = canvas.Find("First entery");
         Button play = Find<Button>(legacy, "Play");
@@ -55,7 +62,7 @@ public class MainMenuScreen : MonoBehaviour
         column.anchorMin = new Vector2(0f, 0f);
         column.anchorMax = new Vector2(0f, 1f);
         column.pivot = new Vector2(0f, 0.5f);
-        column.sizeDelta = new Vector2(700, -160);
+        column.sizeDelta = new Vector2(700, friezes ? -280 : -160);
         column.anchoredPosition = new Vector2(140, 0);
         VerticalLayoutGroup stack = UiKit.Vertical(column, 26, 0, TextAnchor.MiddleLeft);
         stack.childForceExpandWidth = false;
@@ -66,7 +73,8 @@ public class MainMenuScreen : MonoBehaviour
             logo.color = look.ink;
             logo.preserveAspect = true;
             logo.raycastTarget = false;
-            UiKit.Size(logo, preferredWidth: 520, preferredHeight: 520 * look.logo.rect.height / Mathf.Max(1f, look.logo.rect.width));
+            float logoWidth = friezes ? 440f : 520f;
+            UiKit.Size(logo, preferredWidth: logoWidth, preferredHeight: logoWidth * look.logo.rect.height / Mathf.Max(1f, look.logo.rect.width));
         }
         else
             UiKit.Size(ui.Text("Wordmark", column, "BUSARA", look.Display, 140, look.ink), preferredWidth: 640, preferredHeight: 170);
@@ -76,10 +84,16 @@ public class MainMenuScreen : MonoBehaviour
         UiKit.Size(tagline, preferredWidth: 620, preferredHeight: 116);
         UiKit.Size(UiKit.Rect("Spacer", column), preferredHeight: 10);
         if (play != null)
+        {
             Restyle(play, column, "Play", UiButtonKind.Primary, new Vector2(420, 96), 36);
+            if (skin != null && skin.primaryButton != null)
+                SkinButton(play, skin.primaryButton, new Vector2(460, 144), "PLAY", 46, 0.14f);
+        }
         if (quit != null)
         {
             Restyle(quit, column, "Quit", UiButtonKind.Ghost, new Vector2(420, 72), 28);
+            if (skin != null && skin.secondaryButton != null)
+                SkinButton(quit, skin.secondaryButton, new Vector2(420, 84), "Quit", 28, 0f);
             // Browsers cannot close their own tab, so the web build has nothing to quit.
             quit.gameObject.SetActive(Application.platform != RuntimePlatform.WebGLPlayer);
         }
@@ -87,7 +101,56 @@ public class MainMenuScreen : MonoBehaviour
             legacy.SetAsLastSibling();
         column.SetAsLastSibling();
 
+        if (friezes)
+        {
+            // Neon friezes run across the top and bottom of the screen, under the content.
+            Frieze("Frieze Top", canvas, 1f, wash.transform.GetSiblingIndex() + 1);
+            Frieze("Frieze Bottom", canvas, 0f, wash.transform.GetSiblingIndex() + 1);
+        }
         BuildShowcase(canvas, look);
+    }
+
+    private void Frieze(string objectName, Transform canvas, float edge, int siblingIndex)
+    {
+        // One copy stretched across the width: the frieze's colour gradient would show a seam if tiled.
+        const float height = 120f;
+        Image strip = UiKit.Rect(objectName, canvas).gameObject.AddComponent<Image>();
+        strip.sprite = skin.frieze;
+        strip.type = Image.Type.Simple;
+        strip.raycastTarget = false;
+        strip.color = new Color(1f, 1f, 1f, 0.9f);
+        RectTransform rect = strip.rectTransform;
+        rect.anchorMin = new Vector2(0f, edge);
+        rect.anchorMax = new Vector2(1f, edge);
+        rect.pivot = new Vector2(0.5f, edge);
+        rect.sizeDelta = new Vector2(0f, height);
+        rect.anchoredPosition = Vector2.zero;
+        strip.transform.SetSiblingIndex(siblingIndex);
+    }
+
+    // Draws a kit button at its own proportions (scaled to the button's height) and keeps the art's colours.
+    private void SkinButton(Button button, Sprite sprite, Vector2 size, string label, float fontSize, float labelLift)
+    {
+        if (button.targetGraphic is Image image)
+        {
+            image.sprite = sprite;
+            image.type = sprite.border.sqrMagnitude > 0f ? Image.Type.Sliced : Image.Type.Simple;
+            image.pixelsPerUnitMultiplier = sprite.rect.height / size.y;
+            image.preserveAspect = false;
+        }
+        UiKit.Tint(button, Color.white);
+        UiKit.Size(button, preferredWidth: size.x, preferredHeight: size.y);
+        TMP_Text text = button.GetComponentInChildren<TMP_Text>(true);
+        if (text == null)
+            return;
+        text.text = label;
+        text.font = skin.headingFont != null ? skin.headingFont : ui.Style.Heading;
+        text.fontSize = fontSize;
+        text.color = skin.ink;
+        text.characterSpacing = label == label.ToUpperInvariant() ? 6 : 0;
+        // The neon button's pill sits above a row of dots, so lift the label onto the pill.
+        UiKit.Stretch(text.rectTransform);
+        text.rectTransform.offsetMin = new Vector2(0f, size.y * labelLift);
     }
 
     private void OnEnable()
@@ -102,11 +165,23 @@ public class MainMenuScreen : MonoBehaviour
             return;
         RectTransform showcase = UiKit.Rect("Theme Showcase", canvas);
         showcase.anchorMin = showcase.anchorMax = showcase.pivot = new Vector2(1f, 0.5f);
-        showcase.sizeDelta = new Vector2(BoardSize, BoardSize + 110);
+        bool framed = skin != null && skin.frame != null;
+        // A frame needs room below the board so the caption clears it.
+        showcase.sizeDelta = new Vector2(BoardSize, BoardSize + (framed ? 160 : 110));
         showcase.anchoredPosition = new Vector2(-150, 0);
         showcaseGroup = showcase.gameObject.AddComponent<CanvasGroup>();
         showcaseGroup.blocksRaycasts = false;
 
+        if (framed)
+        {
+            const float pad = 44f;
+            Image frame = UiKit.Rect("Showcase Frame", showcase).gameObject.AddComponent<Image>();
+            frame.sprite = skin.frame;
+            frame.type = Image.Type.Sliced;
+            frame.pixelsPerUnitMultiplier = skin.frame.border.x / pad;
+            frame.raycastTarget = false;
+            UiKit.Pin(frame.rectTransform, new Vector2(0.5f, 1f), new Vector2(BoardSize + 2 * pad, BoardSize + 2 * pad), new Vector2(0, pad));
+        }
         board = UiKit.Rect("Board", showcase).gameObject.AddComponent<Image>();
         board.raycastTarget = false;
         board.preserveAspect = true;
@@ -127,7 +202,7 @@ public class MainMenuScreen : MonoBehaviour
         themeName = ui.Text("Theme Name", showcase, "", look.Heading, 32, look.ink, TextAlignmentOptions.Center);
         themeName.enableWordWrapping = false;
         UiKit.Pin(themeName.rectTransform, new Vector2(0.5f, 0f), new Vector2(BoardSize, 44), new Vector2(0, 46));
-        themeDetail = ui.Text("Theme Detail", showcase, "", look.Body, 21, look.inkMuted, TextAlignmentOptions.Center);
+        themeDetail = ui.Text("Theme Detail", showcase, "", look.Body, 21, skin != null ? skin.accent : look.inkMuted, TextAlignmentOptions.Center);
         UiKit.Pin(themeDetail.rectTransform, new Vector2(0.5f, 0f), new Vector2(BoardSize, 30), new Vector2(0, 12));
         Show(0);
     }
