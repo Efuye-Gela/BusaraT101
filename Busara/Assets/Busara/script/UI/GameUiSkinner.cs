@@ -66,15 +66,14 @@ public class GameUiSkinner : MonoBehaviour
         var changed = new List<Object>();
         if (skin == null)
             return changed;
-        Canvas canvas = GetComponentInParent<Canvas>();
-        float canvasScale = canvas != null ? canvas.transform.lossyScale.x : 1f;
+        Transform canvas = transform;
         foreach (var rule in Rules)
         {
             Transform root = transform.Find(rule.root);
             if (root == null)
                 continue;
             foreach (Transform target in Named(root, rule.name, rule.parent))
-                Skin(target, rule.role, canvasScale, changed);
+                Skin(target, rule.role, canvas, changed);
         }
         foreach (string rootName in TextRoots)
         {
@@ -87,11 +86,11 @@ public class GameUiSkinner : MonoBehaviour
         return changed;
     }
 
-    private void Skin(Transform target, Role role, float canvasScale, List<Object> changed)
+    private void Skin(Transform target, Role role, Transform canvas, List<Object> changed)
     {
         if (role == Role.RawPanel)
         {
-            SkinRawPanel(target, canvasScale, changed);
+            SkinRawPanel(target, canvas, changed);
             return;
         }
         Image image = target.GetComponent<Image>();
@@ -107,14 +106,15 @@ public class GameUiSkinner : MonoBehaviour
         if (sprite == null)
             return;
         image.sprite = sprite;
-        image.color = new Color(1f, 1f, 1f, image.color.a);
+        // Several of these (the tabs, More) are invisible hit areas in the scene; the skin gives them art.
+        image.color = Color.white;
         if (sprite.border.sqrMagnitude > 0f)
         {
             image.type = Image.Type.Sliced;
             image.fillCenter = true;
             image.pixelsPerUnitMultiplier = FitsHeight(role)
                 ? NaturalMultiplier(image.rectTransform, sprite)
-                : Multiplier(image.rectTransform, sprite, BorderFor(role), canvasScale);
+                : Multiplier(image.rectTransform, sprite, BorderFor(role), canvas);
         }
         else
         {
@@ -126,7 +126,7 @@ public class GameUiSkinner : MonoBehaviour
     }
 
     // RawImage backgrounds cannot nine-slice, so draw the skin's panel in a child behind the content instead.
-    private void SkinRawPanel(Transform target, float canvasScale, List<Object> changed)
+    private void SkinRawPanel(Transform target, Transform canvas, List<Object> changed)
     {
         RawImage raw = target.GetComponent<RawImage>();
         Transform existing = target.Find(SkinBackgroundName);
@@ -147,7 +147,7 @@ public class GameUiSkinner : MonoBehaviour
         image.sprite = skin.panel;
         image.type = Image.Type.Sliced;
         image.color = Color.white;
-        image.pixelsPerUnitMultiplier = Multiplier(image.rectTransform, skin.panel, skin.panelBorder, canvasScale);
+        image.pixelsPerUnitMultiplier = Multiplier(image.rectTransform, skin.panel, skin.panelBorder, canvas);
         if (raw != null)
         {
             changed.Add(raw);
@@ -184,6 +184,18 @@ public class GameUiSkinner : MonoBehaviour
             text.font = font;
         bool power = text.transform.parent != null && text.transform.parent.name == "Use Power";
         text.color = power ? skin.accent : body ? skin.inkMuted : skin.ink;
+        if (body || power)
+            return;
+        // The skin's heading font runs wider than the scene's: shrink a label to fit rather than let it
+        // overflow, and never break a single word ("Kingdom") across lines.
+        if (!text.enableAutoSizing)
+        {
+            text.fontSizeMax = text.fontSize;
+            text.fontSizeMin = Mathf.Max(8f, text.fontSize * 0.45f);
+            text.enableAutoSizing = true;
+        }
+        if (text.text != null && text.text.Trim().IndexOf(' ') < 0)
+            text.enableWordWrapping = false;
     }
 
     private Sprite SpriteFor(Role role)
@@ -229,11 +241,20 @@ public class GameUiSkinner : MonoBehaviour
     }
 
     // Nested panels sit under different scales, so size each border for how big it ends up on the canvas.
-    private static float Multiplier(RectTransform rect, Sprite sprite, float borderOnCanvas, float canvasScale)
+    private static float Multiplier(RectTransform rect, Sprite sprite, float borderOnCanvas, Transform canvas)
     {
-        float scale = Mathf.Abs(rect.lossyScale.x / Mathf.Max(0.0001f, canvasScale));
-        float local = borderOnCanvas / Mathf.Max(0.0001f, scale);
+        float local = borderOnCanvas / Mathf.Max(0.0001f, ScaleUnder(rect, canvas));
         return Mathf.Max(0.01f, sprite.border.x / Mathf.Max(1f, local));
+    }
+
+    // Scale of rect's units in canvas units, from the local scales in between. The canvas's own scale is
+    // left out on purpose: GameScene saves it as 0 and the CanvasScaler only sets it after Awake.
+    private static float ScaleUnder(Transform rect, Transform canvas)
+    {
+        float scale = 1f;
+        for (Transform t = rect; t != null && t != canvas; t = t.parent)
+            scale *= Mathf.Abs(t.localScale.x);
+        return scale;
     }
 
     private static IEnumerable<Transform> Named(Transform root, string objectName, string parentName)
