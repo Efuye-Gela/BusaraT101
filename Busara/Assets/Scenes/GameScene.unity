@@ -24330,6 +24330,7 @@ MonoBehaviour:
   kingdomCatalog: {fileID: 11400000, guid: bc030000000000000000000000000008, type: 2}
   dealKingdomsFromCatalog: 0
   requirePlayerSetup: 1
+  uiStyle: {fileID: 11400000, guid: 34755d7d8d6b7906723e7e56899b281c, type: 2}
 --- !u!1 &899330089
 GameObject:
   m_ObjectHideFlags: 0

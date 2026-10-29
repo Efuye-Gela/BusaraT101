@@ -9,6 +9,8 @@ public class PlayerManager : Manager<PlayerManager>
     public KingdomCatalog kingdomCatalog;
     public bool dealKingdomsFromCatalog;
     public bool requirePlayerSetup;
+    [Tooltip("Fonts, colours and art for the player setup screen.")]
+    public BusaraUiStyle uiStyle;
     public bool IsSetupComplete { get; private set; }
     public bool IsAwaitingSetup => requirePlayerSetup && !IsSetupComplete;
     public int SupportedPlayerCount => Players == null ? 0 : Players.Count(player =>

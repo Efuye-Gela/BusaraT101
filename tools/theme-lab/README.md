@@ -119,6 +119,20 @@ in their theme and colour; tapping the piece cycles the colour. The choice trave
 pieces and the owner's name on the board. Turn colours off with `usePlayerColours`. The art lab's *Piece layers* section shows each mask, the
 composites per seat and the live delta.
 
+## Menus
+
+The home screen (`MainMenuScreen` on mainMenu's Canvas) and the player setup screen
+(`PlayerSetupUI`) are built in code from `ScriptableObjects/UI/BusaraUiStyle.asset`. That asset
+holds the Poppins fonts, the light wordmark (`Branding/busara_logo_light.png`), the backdrop and
+the colours. `UiKit` generates its rounded panels at runtime, so no extra sprites are needed.
+
+- **Home**: wordmark, tagline, then Play and Quit. These are the scene's own buttons, restyled, so
+  their click events are unchanged. On the right, a board showcase cycles through every theme with
+  pieces in each seat colour.
+- **Setup**: one card per player. Each card has the name, a board preview with the player's piece
+  (arrows change the theme, and the piece or a swatch changes the colour) and the kingdom choice.
+  Below the choice are the kingdom's power, its cost and the virtues it needs to win.
+
 ## Panther Court interface kit
 
 Panther Court (built from the Afrofuturist superhero-kingdom mockups) also exports a nine-slice

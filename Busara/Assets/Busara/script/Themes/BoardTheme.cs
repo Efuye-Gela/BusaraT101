@@ -61,6 +61,22 @@ public class BoardTheme : ScriptableObject
 
     public string DisplayName => string.IsNullOrEmpty(displayName) ? name : displayName;
 
+    /// <summary>The era as players read it, for menus.</summary>
+    public string EraLabel
+    {
+        get
+        {
+            switch (era)
+            {
+                case "past": return "Past kingdom";
+                case "future": return "Future city";
+                case "fusion": return "Past meets future";
+                case "classic": return "Original board";
+                default: return era ?? "";
+            }
+        }
+    }
+
     public Sprite PieceFor(ResourceType type)
     {
         switch (type)
