@@ -131,6 +131,8 @@ public class GameUiSkinner : MonoBehaviour
         }
         if (role == Role.PowerButton)
             FitPowerLabel(target, changed);
+        if (target.name == "Error Massages")
+            FitMessageBanner(image, canvas, changed);
     }
 
     // RawImage backgrounds cannot nine-slice, so draw the skin's panel in a child behind the content instead.
@@ -165,6 +167,43 @@ public class GameUiSkinner : MonoBehaviour
         }
     }
 
+    // The side bar message was a 400-unit square whose text grew to fill it. A short banner covers less
+    // of the panel; its text is capped at a readable size and kept inside the neon frame.
+    private void FitMessageBanner(Image panel, Transform canvas, List<Object> changed)
+    {
+        const float width = 390f, height = 176f, frame = 26f;
+        RectTransform rect = panel.rectTransform;
+        changed.Add(rect);
+        rect.sizeDelta = new Vector2(width, height);
+        panel.pixelsPerUnitMultiplier = Multiplier(rect, panel.sprite, frame, canvas);
+        TMP_Text message = panel.GetComponentInChildren<TMP_Text>(true);
+        if (message != null && message.name == "Info Side")
+        {
+            changed.Add(message);
+            changed.Add(message.rectTransform);
+            RectTransform area = message.rectTransform;
+            area.anchorMin = Vector2.zero;
+            area.anchorMax = Vector2.one;
+            area.offsetMin = new Vector2(frame + 22f, frame + 14f);
+            area.offsetMax = new Vector2(-(frame + 22f), -(frame + 14f));
+            message.margin = Vector4.zero;
+            message.enableAutoSizing = true;
+            message.fontSizeMin = 14f;
+            message.fontSizeMax = 28f;
+            message.enableWordWrapping = true;
+            message.alignment = TextAlignmentOptions.Center;
+        }
+        Transform close = panel.transform.Find("CloseBtn");
+        if (close is RectTransform button)
+        {
+            changed.Add(button);
+            button.anchorMin = button.anchorMax = Vector2.one;
+            button.pivot = new Vector2(0.5f, 0.5f);
+            button.sizeDelta = new Vector2(44f, 44f);
+            button.anchoredPosition = new Vector2(-frame + 4f, -frame + 4f);
+        }
+    }
+
     // The knob's dark centre holds the label.
     private void FitPowerLabel(Transform button, List<Object> changed)
     {
@@ -191,7 +230,8 @@ public class GameUiSkinner : MonoBehaviour
         if (font != null && text.font != font)
             text.font = font;
         bool power = text.transform.parent != null && text.transform.parent.name == "Use Power";
-        text.color = power ? skin.accent : body ? skin.inkMuted : skin.ink;
+        bool message = text.name == "Info Side" || text.name == "Massage";
+        text.color = power ? skin.accent : message ? skin.ink : body ? skin.inkMuted : skin.ink;
         if (body || power)
             return;
         // The skin's heading font runs wider than the scene's: shrink a label to fit rather than let it
