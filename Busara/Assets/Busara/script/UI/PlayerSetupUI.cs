@@ -168,6 +168,8 @@ public class PlayerSetupUI : MonoBehaviour
             {
                 if (entry.Theme == null)
                     entry.Theme = themes.SeatDefault(i);
+                if (entry.ColourIndex < 0)
+                    entry.ColourIndex = FreeColour(themes, i);
                 ThemePicker(row, entry, themes);
             }
             Button remove = Button("Remove Player", row, () => RemovePlayer(entry));
@@ -175,6 +177,19 @@ public class PlayerSetupUI : MonoBehaviour
             remove.GetComponent<LayoutElement>().flexibleWidth = 0;
         }
         Validate();
+    }
+
+    // The seat's own colour unless another player already took it, then the first free one.
+    private int FreeColour(ThemeCatalog themes, int seat)
+    {
+        int count = Mathf.Max(1, themes.playerColours.Count);
+        for (int step = 0; step < count; step++)
+        {
+            int index = (seat + step) % count;
+            if (!entries.Exists(other => other.ColourIndex == index))
+                return index;
+        }
+        return seat % count;
     }
 
     private void Validate()
@@ -213,7 +228,7 @@ public class PlayerSetupUI : MonoBehaviour
     {
         RectTransform picker = Rect("Board Theme", parent);
         LayoutElement size = picker.gameObject.AddComponent<LayoutElement>();
-        size.minWidth = 440;
+        size.minWidth = 540;
         size.flexibleWidth = 1;
         HorizontalLayoutGroup layout = picker.gameObject.AddComponent<HorizontalLayoutGroup>();
         layout.spacing = 10;
@@ -224,12 +239,18 @@ public class PlayerSetupUI : MonoBehaviour
         layout.childAlignment = TextAnchor.MiddleLeft;
 
         Image preview = null;
+        Image piece = null;
         TMP_Text label = null;
         void Refresh()
         {
             preview.sprite = entry.Theme != null ? entry.Theme.board : null;
             preview.color = entry.Theme != null ? Color.white : Color.clear;
-            label.text = entry.Theme != null ? entry.Theme.DisplayName : "No theme";
+            // The piece shows the theme's layers in this player's colour, exactly as it will look on the board.
+            piece.sprite = ThemeManager.Instance != null ? ThemeManager.Instance.PieceSprite(entry.Theme, ResourceType.Water, entry.ColourIndex) : null;
+            piece.color = piece.sprite != null ? Color.white : Color.clear;
+            PlayerColour colour = themes.usePlayerColours ? themes.ColourAt(entry.ColourIndex) : null;
+            string theme = entry.Theme != null ? entry.Theme.DisplayName : "No theme";
+            label.text = colour != null ? $"{theme}\n{colour.name} pieces" : theme;
         }
         void Step(int direction)
         {
@@ -245,6 +266,20 @@ public class PlayerSetupUI : MonoBehaviour
         LayoutElement thumbSize = thumb.gameObject.AddComponent<LayoutElement>();
         thumbSize.minWidth = 84;
         thumbSize.preferredWidth = 84;
+        RectTransform pieceRect = Rect("Piece Colour", picker);
+        piece = pieceRect.gameObject.AddComponent<Image>();
+        piece.preserveAspect = true;
+        Button pieceButton = pieceRect.gameObject.AddComponent<Button>();
+        pieceButton.targetGraphic = piece;
+        pieceButton.interactable = themes.usePlayerColours && themes.playerColours.Count > 1;
+        pieceButton.onClick.AddListener(() =>
+        {
+            entry.ColourIndex = themes.NextColour(entry.ColourIndex, 1);
+            Refresh();
+        });
+        LayoutElement pieceSize = pieceRect.gameObject.AddComponent<LayoutElement>();
+        pieceSize.minWidth = 64;
+        pieceSize.preferredWidth = 64;
         label = Text("Theme Name", picker, "", 24);
         LayoutElement labelSize = label.gameObject.AddComponent<LayoutElement>();
         labelSize.minWidth = 160;
@@ -275,7 +310,7 @@ public class PlayerSetupUI : MonoBehaviour
         Image background = rect.gameObject.AddComponent<Image>();
         background.color = new Color(0.13f, 0.19f, 0.27f);
         LayoutElement size = rect.gameObject.AddComponent<LayoutElement>();
-        size.minWidth = 520;
+        size.minWidth = 440;
         size.flexibleWidth = 2;
         TMP_Dropdown dropdown = rect.gameObject.AddComponent<TMP_Dropdown>();
         dropdown.targetGraphic = background;

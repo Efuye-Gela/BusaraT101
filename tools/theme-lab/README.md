@@ -43,8 +43,9 @@ width sits inside the hole. The project's default 2D import mode brings PNGs in 
   themes applied, so the editor shows the real look; at runtime `ThemeManager` re-applies them and
   re-skins every piece placed, moved or traded onto a board (`Board.PlaceResource`, `Slot.OccupySlot`,
   `Resource.Start`).
-- **Player setup**: each player row has a board theme picker (previous / next, with a preview).
-  The choice travels on `PlayerSetupEntry.Theme` and is applied in `PlayerManager.TryConfigurePlayers`.
+- **Player setup**: each player row has a board theme picker (previous / next, with a preview) and
+  a piece preview in the player's colour (tap it to change colour). The choices travel on
+  `PlayerSetupEntry.Theme` and `ColourIndex` and are applied in `PlayerManager.TryConfigurePlayers`.
 - **Geometry**: every theme, Classic included, uses the same layout. `ThemeManager` sizes each board's
   slot grid to `board width x 208/1024` with no spacing, hides the slot images (they stay as click
   targets) and stretches slot highlights and the turn glow to their parents.
@@ -108,9 +109,14 @@ antialiased edges. The export fails if a stack's mean passes 0.5.
 Unity's linear colour space would blend separate UI Images in linear light, which washes out the
 lighting (a mean drift of about 6 / 255). So `PieceCompositor` blends the stacks on the CPU in
 sRGB, using the same maths as the check, and caches one sprite per stack and tint set. The layer
-textures import with Read/Write on. `ThemeCatalog.seatColours` (gold, silver, copper, jade)
-replace the `trim` and `motif` tints per seat, so players on the same theme stay distinct. Turn
-this off with `usePlayerColours`. The art lab's *Piece layers* section shows each mask, the
+textures import with Read/Write on.
+
+Player colours replace the `trim` and `motif` tints, so players on the same theme stay distinct.
+`ThemeCatalog.playerColours` holds eight: gold, silver, copper, jade, ruby, lapis, amethyst and
+ivory. Seats 1 to 4 start on the first four. In player setup, each row shows the player's piece
+in their theme and colour; tapping the piece cycles the colour. The choice travels on
+`PlayerSetupEntry.ColourIndex` to `ThemeManager.SetPlayerColour`, which recolours that board's
+pieces and the owner's name on the board. Turn colours off with `usePlayerColours`. The art lab's *Piece layers* section shows each mask, the
 composites per seat and the live delta.
 
 ## Panther Court interface kit

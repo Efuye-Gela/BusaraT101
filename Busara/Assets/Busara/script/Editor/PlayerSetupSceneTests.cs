@@ -68,6 +68,11 @@ public class PlayerSetupSceneTests
         kingdoms[0].Hide();
         yield return null;
         Assert.That(start.interactable, Is.True);
+        Assert.That(setup.Entries.Select(entry => entry.ColourIndex), Is.Unique.And.All.GreaterThanOrEqualTo(0));
+        int firstColour = setup.Entries[0].ColourIndex;
+        setup.GetComponentsInChildren<Button>().First(button => button.name == "Piece Colour").onClick.Invoke();
+        int chosenColour = setup.Entries[0].ColourIndex;
+        Assert.That(chosenColour, Is.Not.EqualTo(firstColour));
         var chosenKingdoms = setup.Entries.Select(entry => entry.Kingdom).ToArray();
         var slotsBefore = manager.Players.Take(3).SelectMany(player => player.Board.Slots)
             .Select(slot => slot.Index).ToArray();
@@ -80,6 +85,7 @@ public class PlayerSetupSceneTests
         Assert.That(turns.ActivePlayer, Is.SameAs(manager.Players[0]));
         Assert.That(manager.Players[0].Name, Is.EqualTo("Configured 1"));
         CollectionAssert.AreEqual(chosenKingdoms, manager.Players.Select(player => player.Kingdom));
+        Assert.That(ThemeManager.Instance.ColourIndexOf(manager.Players[0].Board), Is.EqualTo(chosenColour));
         CollectionAssert.AreEquivalent(slotsBefore, BoardManager.slots.Select(slot => slot.Index));
         Canvas.ForceUpdateCanvases();
         CollectionAssert.AreEqual(boardPositions, manager.Players.Select(player => player.Board.transform.localPosition));

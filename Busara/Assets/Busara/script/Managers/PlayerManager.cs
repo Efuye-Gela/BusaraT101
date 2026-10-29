@@ -58,6 +58,8 @@ public class PlayerManager : Manager<PlayerManager>
                 player.Board.BoardOwnerName.text = player.Name;
             if (entries[i].Theme != null && ThemeManager.Instance != null)
                 ThemeManager.Instance.Apply(player.Board, entries[i].Theme);
+            if (entries[i].ColourIndex >= 0 && ThemeManager.Instance != null)
+                ThemeManager.Instance.SetPlayerColour(player.Board, entries[i].ColourIndex);
         }
         foreach (Player player in Players)
         {

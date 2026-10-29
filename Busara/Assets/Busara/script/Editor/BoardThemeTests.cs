@@ -78,6 +78,22 @@ public class BoardThemeTests
     }
 
     [Test]
+    public void PlayerColoursCycleAndCanBeTurnedOff()
+    {
+        ThemeCatalog catalog = Object.Instantiate(LoadCatalog());
+        int count = catalog.playerColours.Count;
+        Assert.That(count, Is.GreaterThanOrEqualTo(4), "every seat needs its own default colour");
+        Assert.That(catalog.playerColours.Select(colour => colour.name), Is.Unique);
+        Assert.That(catalog.NextColour(count - 1, 1), Is.EqualTo(0));
+        Assert.That(catalog.NextColour(0, -1), Is.EqualTo(count - 1));
+        Assert.That(catalog.PieceColour(-1), Is.Null);
+        Assert.That(catalog.PieceColour(1), Is.EqualTo(catalog.playerColours[1].colour));
+        catalog.usePlayerColours = false;
+        Assert.That(catalog.PieceColour(1), Is.Null);
+        Object.DestroyImmediate(catalog);
+    }
+
+    [Test]
     public void SeatDefaultsAndCyclingStayInsideTheCatalog()
     {
         ThemeCatalog catalog = LoadCatalog();

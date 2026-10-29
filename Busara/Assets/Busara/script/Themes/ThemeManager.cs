@@ -17,6 +17,8 @@ public class ThemeManager : Manager<ThemeManager>
     public ThemeCatalog catalog;
 
     private readonly Dictionary<Board, BoardTheme> applied = new Dictionary<Board, BoardTheme>();
+    // Piece colour chosen in player setup, by board; boards without one use their seat's colour.
+    private readonly Dictionary<Board, int> chosenColour = new Dictionary<Board, int>();
     // Size of each board's drawn art at the last layout, so slots follow resolution or layout changes.
     private readonly Dictionary<Board, Vector2> fittedSize = new Dictionary<Board, Vector2>();
 
@@ -77,6 +79,31 @@ public class ThemeManager : Manager<ThemeManager>
         return board != null && applied.TryGetValue(board, out BoardTheme theme) ? theme : null;
     }
 
+    /// <summary>Colours this board's pieces with <see cref="ThemeCatalog.playerColours"/>[<paramref name="index"/>].</summary>
+    public void SetPlayerColour(Board board, int index)
+    {
+        if (board == null)
+            return;
+        chosenColour[board] = index;
+        ApplyOwnerColour(board);
+        if (applied.ContainsKey(board))
+            FitBoard(board);
+    }
+
+    /// <summary>Index of the colour this board's pieces use: the player's choice, else the seat's.</summary>
+    public int ColourIndexOf(Board board)
+    {
+        return board != null && chosenColour.TryGetValue(board, out int index) ? index : SeatOf(board);
+    }
+
+    // The owner's name on the board takes the piece colour, so players can tell whose pieces are whose.
+    private void ApplyOwnerColour(Board board)
+    {
+        Color? colour = catalog != null ? catalog.PieceColour(ColourIndexOf(board)) : null;
+        if (board.BoardOwnerName != null && colour.HasValue)
+            board.BoardOwnerName.color = colour.Value;
+    }
+
     public void Apply(Board board, BoardTheme theme)
     {
         if (board == null || theme == null)
@@ -103,6 +130,7 @@ public class ThemeManager : Manager<ThemeManager>
                 : Vector3.one;
         }
 
+        ApplyOwnerColour(board);
         if (board.Slots == null)
             return;
         foreach (Slot slot in board.Slots)
@@ -140,7 +168,7 @@ public class ThemeManager : Manager<ThemeManager>
             return;
         SizePiece(resource);
         Image piece = resource.PieceImage;
-        Sprite sprite = PieceSprite(theme, resource.resourceType, SeatOf(board));
+        Sprite sprite = PieceSprite(theme, resource.resourceType, ColourIndexOf(board));
         if (piece != null && sprite != null)
         {
             piece.sprite = sprite;
@@ -189,12 +217,14 @@ public class ThemeManager : Manager<ThemeManager>
         rect.sizeDelta = grid.cellSize * PieceScale;
     }
 
-    /// <summary>The piece composited from the theme's layers in the seat's colour, or the theme's
-    /// pre-composited sprite when it has no layers.</summary>
-    public Sprite PieceSprite(BoardTheme theme, ResourceType type, int seat)
+    /// <summary>The piece composited from the theme's layers in player colour <paramref name="colourIndex"/>,
+    /// or the theme's pre-composited sprite when it has no layers.</summary>
+    public Sprite PieceSprite(BoardTheme theme, ResourceType type, int colourIndex)
     {
-        Color? seatColour = catalog != null ? catalog.SeatColour(seat) : null;
-        Sprite composite = PieceCompositor.Compose($"{theme.id}_{type}", theme.LayersFor(type), seatColour,
+        if (theme == null)
+            return null;
+        Color? colour = catalog != null ? catalog.PieceColour(colourIndex) : null;
+        Sprite composite = PieceCompositor.Compose($"{theme.id}_{type}", theme.LayersFor(type), colour,
             ThemeCatalog.PlayerColourLayers);
         return composite != null ? composite : theme.PieceFor(type);
     }
