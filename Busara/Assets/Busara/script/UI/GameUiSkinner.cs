@@ -55,6 +55,10 @@ public class GameUiSkinner : MonoBehaviour
     private static readonly string[] TextRoots = { "Right SidePanel", "Left Side panel", "Popup" };
     private const string SkinBackgroundName = "Skin Background";
 
+    // Canvas reference pixels per unit. Nine-slice borders are measured in sprite pixels and divided by
+    // spritePPU / referencePPU, so a canvas at 1000 (as GameScene's is) draws them 10x larger than at 100.
+    private float referencePixelsPerUnit = 100f;
+
     private void Awake()
     {
         Apply();
@@ -67,6 +71,10 @@ public class GameUiSkinner : MonoBehaviour
         if (skin == null)
             return changed;
         Transform canvas = transform;
+        CanvasScaler scaler = GetComponent<CanvasScaler>();
+        Canvas rootCanvas = GetComponent<Canvas>();
+        referencePixelsPerUnit = scaler != null ? scaler.referencePixelsPerUnit
+            : rootCanvas != null ? rootCanvas.referencePixelsPerUnit : 100f;
         foreach (var rule in Rules)
         {
             Transform root = transform.Find(rule.root);
@@ -223,10 +231,15 @@ public class GameUiSkinner : MonoBehaviour
         return role == Role.Header || role == Role.Card || role == Role.PrimaryButton || role == Role.SecondaryButton;
     }
 
-    private static float NaturalMultiplier(RectTransform rect, Sprite sprite)
+    private float NaturalMultiplier(RectTransform rect, Sprite sprite)
     {
         float height = rect.rect.height;
-        return height > 1f ? Mathf.Max(0.01f, sprite.rect.height / height) : 1f;
+        return height > 1f ? Mathf.Max(0.01f, sprite.rect.height / height * PixelScale(sprite)) : PixelScale(sprite);
+    }
+
+    private float PixelScale(Sprite sprite)
+    {
+        return referencePixelsPerUnit / Mathf.Max(0.01f, sprite.pixelsPerUnit);
     }
 
     private float BorderFor(Role role)
@@ -241,10 +254,10 @@ public class GameUiSkinner : MonoBehaviour
     }
 
     // Nested panels sit under different scales, so size each border for how big it ends up on the canvas.
-    private static float Multiplier(RectTransform rect, Sprite sprite, float borderOnCanvas, Transform canvas)
+    private float Multiplier(RectTransform rect, Sprite sprite, float borderOnCanvas, Transform canvas)
     {
         float local = borderOnCanvas / Mathf.Max(0.0001f, ScaleUnder(rect, canvas));
-        return Mathf.Max(0.01f, sprite.border.x / Mathf.Max(1f, local));
+        return Mathf.Max(0.01f, sprite.border.x / Mathf.Max(1f, local) * PixelScale(sprite));
     }
 
     // Scale of rect's units in canvas units, from the local scales in between. The canvas's own scale is
