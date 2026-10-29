@@ -133,6 +133,27 @@ the colours. `UiKit` generates its rounded panels at runtime, so no extra sprite
   (arrows change the theme, and the piece or a swatch changes the colour) and the kingdom choice.
   Below the choice are the kingdom's power, its cost and the virtues it needs to win.
 
+## In-game UI skin
+
+`GameUiSkinner` on GameScene's Canvas restyles the side panels, popups and action buttons from a
+`UiSkin` asset. `ScriptableObjects/UI/PantherCourtUiSkin.asset` uses the Panther Court kit:
+
+| Element | Kit sprite |
+| --- | --- |
+| Side panels | leather |
+| Kingdom / Virtue tabs, kingdom name, headers | gold label tab |
+| Description, goals and virtue lists | dark inset |
+| Virtue goal entries | wood kingdom card |
+| Forge, Draw, Trade, Weapon | steel ring buttons |
+| Use Power | the orange power knob |
+| Popups | neon panel |
+
+Popup buttons use the neon button and More uses the outline button. Text is set in Poppins. Objects
+are found by name, so the layout and click events are untouched. The skin applies when the scene
+starts; to see it in the editor too, run *Tools > Busara > UI Skin > Apply Skin In Open Scene* and
+save the scene. To make another skin, create a *Busara > UI Skin* asset from any theme's `ui/`
+sprites and assign it to the skinner.
+
 ## Panther Court interface kit
 
 Panther Court (built from the Afrofuturist superhero-kingdom mockups) also exports a nine-slice
