@@ -119,43 +119,33 @@ in their theme and colour; tapping the piece cycles the colour. The choice trave
 pieces and the owner's name on the board. Turn colours off with `usePlayerColours`. The art lab's *Piece layers* section shows each mask, the
 composites per seat and the live delta.
 
-## Menus
+## Interface in the scenes
 
-The home screen (`MainMenuScreen` on mainMenu's Canvas) and the player setup screen
-(`PlayerSetupUI`) are built in code from `ScriptableObjects/UI/BusaraUiStyle.asset`. That asset
-holds the Poppins fonts, the light wordmark (`Branding/busara_logo_light.png`), the backdrop and
-the colours. `UiKit` generates its rounded panels at runtime, so no extra sprites are needed.
+All interface is authored in the scenes; no script builds or restyles UI at runtime.
 
-- **Home**: wordmark, tagline, then Play and Quit. These are the scene's own buttons, restyled, so
-  their click events are unchanged. On the right, a board showcase cycles through every theme with
-  pieces in each seat colour.
-  With a `UiSkin` assigned (mainMenu uses `PantherCourtUiSkin`), the screen also takes the skin's look:
-  neon friezes across the top and bottom, the neon Play button, the gold outline Quit button and a steel
-  bezel around the showcase.
-- **Setup**: one card per player. Each card has the name, a board preview with the player's piece
-  (arrows change the theme, and the piece or a swatch changes the colour) and the kingdom choice.
-  Below the choice are the kingdom's power, its cost and the virtues it needs to win.
+- **Home (mainMenu)**: neon friezes, the light wordmark (`Branding/busara_logo_light.png`), the
+  tagline, the neon Play button and the gold outline Quit button. Play and Quit keep the scene's
+  click events. `ThemeShowcase` cycles the authored board and pieces through every theme's
+  exported sprites.
+- **Player setup (GameScene)**: `PlayerManager/Player Setup Canvas` holds four authored player cards,
+  an Add Player card and the footer. Each card has a name field, a board preview with the player's
+  piece, theme arrows, eight colour swatches, the kingdom dropdown and the power and win-condition
+  panel. `PlayerSetupUI` and `PlayerSetupCard` fill these in and show one card per player.
+- **Game screen**: the side panels, tabs, info boxes, virtue goals, popups and buttons use the
+  Panther Court kit sprites directly. Forge, Draw, Trade, Weapon and Use Power each have an `Icon`
+  child with that action's icon. The power-choice dialog
+  (`PowerUIgame/Power Choices Canvas`) and each virtue row's `Discard Virtue` button are authored
+  objects too. Each board is followed by an inactive `Unused Board Space`, which keeps a removed
+  player's grid cell.
+- Rounded panels use `Sprites/UI/Shapes/shape_rounded*.png`, `shape_circle.png` and
+  `shape_ring.png`, which are nine-slice sprites with a 32 px radius.
 
-## In-game UI skin
+## Action icons
 
-`GameUiSkinner` on GameScene's Canvas restyles the side panels, popups and action buttons from a
-`UiSkin` asset. `ScriptableObjects/UI/PantherCourtUiSkin.asset` uses the Panther Court kit:
-
-| Element | Kit sprite |
-| --- | --- |
-| Side panels | leather |
-| Kingdom / Virtue tabs, kingdom name, headers | gold label tab |
-| Description, goals and virtue lists | dark inset |
-| Virtue goal entries | wood kingdom card |
-| Forge, Draw, Trade, Weapon | steel ring buttons |
-| Use Power | the orange power knob |
-| Popups | neon panel |
-
-Popup buttons use the neon button and More uses the outline button. Text is set in Poppins. Objects
-are found by name, so the layout and click events are untouched. The skin applies when the scene
-starts; to see it in the editor too, run *Tools > Busara > UI Skin > Apply Skin In Open Scene* and
-save the scene. To make another skin, create a *Busara > UI Skin* asset from any theme's `ui/`
-sprites and assign it to the skinner.
+`ACTION_ICONS` in `engine.js` draws the five action glyphs: forge (hammer and anvil), trade
+(swapping arrows), weapon (crossed spears over a hide shield), power (bolt in a sunburst) and draw
+(a card lifted from the deck). They are forged gold with a dark keyline, so they read on the
+steel rings and the power knob. The exporter writes them to `Sprites/UI/Icons/Actions/` at 256 px.
 
 ## Panther Court interface kit
 

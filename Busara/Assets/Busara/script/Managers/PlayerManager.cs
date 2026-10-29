@@ -9,17 +9,24 @@ public class PlayerManager : Manager<PlayerManager>
     public KingdomCatalog kingdomCatalog;
     public bool dealKingdomsFromCatalog;
     public bool requirePlayerSetup;
-    [Tooltip("Fonts, colours and art for the player setup screen.")]
-    public BusaraUiStyle uiStyle;
+    [Tooltip("The authored player setup screen (GameScene keeps it on this object).")]
+    public PlayerSetupUI setupScreen;
     public bool IsSetupComplete { get; private set; }
     public bool IsAwaitingSetup => requirePlayerSetup && !IsSetupComplete;
+    public const string UnusedBoardSpace = "Unused Board Space";
     public int SupportedPlayerCount => Players == null ? 0 : Players.Count(player =>
         player != null && player.Board != null && player.setUpCard != null);
 
     private void Start()
     {
         if (IsAwaitingSetup)
-            gameObject.AddComponent<PlayerSetupUI>().Initialize(this);
+        {
+            PlayerSetupUI setup = setupScreen != null ? setupScreen : GetComponent<PlayerSetupUI>();
+            if (setup != null)
+                setup.Initialize(this);
+            else
+                Debug.LogError("Player setup is required but no PlayerSetupUI is assigned to the PlayerManager.");
+        }
         else if (dealKingdomsFromCatalog && !IsSetupComplete)
             DealKingdoms();
     }
@@ -69,14 +76,13 @@ public class PlayerManager : Manager<PlayerManager>
                 continue;
             if (player.Board != null)
             {
-                Transform parent = player.Board.transform.parent;
-                if (parent != null && parent.GetComponent<GridLayoutGroup>() != null)
-                {
-                    // An invisible grid cell prevents the surviving boards from shifting to different slot coordinates.
-                    var space = new GameObject("Unused Board Space", typeof(RectTransform));
-                    space.transform.SetParent(parent, false);
-                    space.transform.SetSiblingIndex(player.Board.transform.GetSiblingIndex());
-                }
+                // Each board is followed in the scene by an inactive, empty "Unused Board Space"; turning it on
+                // keeps the grid cell, so the surviving boards keep their slot coordinates.
+                Transform board = player.Board.transform;
+                Transform parent = board.parent;
+                int next = board.GetSiblingIndex() + 1;
+                if (parent != null && next < parent.childCount && parent.GetChild(next).name == UnusedBoardSpace)
+                    parent.GetChild(next).gameObject.SetActive(true);
                 TurnManager.Instance.RemoveTurnBeginListener(player.Board);
                 TurnManager.Instance.RemoveTurnEndListener(player.Board);
                 player.Board.gameObject.SetActive(false);

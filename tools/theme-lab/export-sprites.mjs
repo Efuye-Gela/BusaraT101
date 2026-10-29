@@ -179,7 +179,9 @@ async function main() {
   const ensureFolder = (dir) => {
     for (let d = dir; d.startsWith(spritesRoot + path.sep); d = path.dirname(d)) {
       fs.mkdirSync(d, { recursive: true });
-      writeIfChanged(d + '.meta', folderMeta(stableGuid(assetPath(d))));
+      // Keep an existing folder's GUID; only new folders get a generated one.
+      if (!fs.existsSync(d + '.meta'))
+        fs.writeFileSync(d + '.meta', folderMeta(stableGuid(assetPath(d))));
     }
   };
   const writtenLayers = new Set();
@@ -278,6 +280,16 @@ async function main() {
     writeIfChanged(mf + '.meta', textMeta(stableGuid(assetPath(mf))));
     console.log(`${t.id}: ${sprites.length} sprites`);
   }
+  // Action button icons (forge, trade, weapon, power, draw), shared by every theme.
+  const iconDir = path.join(spritesRoot, 'UI', 'Icons', 'Actions');
+  ensureFolder(iconDir);
+  for (const name of Object.keys(engine.ACTION_ICONS)) {
+    const file = path.join(iconDir, `icon_action_${name}.png`);
+    fs.writeFileSync(file, Buffer.from(await rasterise(engine.actionIconSVG(name), 256, 256), 'base64'));
+    writeIfChanged(file + '.meta', spriteMeta(stableGuid(assetPath(file)), importCap(256)));
+  }
+  console.log(`action icons: ${Object.keys(engine.ACTION_ICONS).length}`);
+
   await browser.close();
   if (Object.keys(report).length) {
     const rows = Object.values(report).flatMap((r) => Object.values(r));

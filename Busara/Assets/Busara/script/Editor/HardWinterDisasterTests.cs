@@ -325,6 +325,12 @@ public class HardWinterDisasterTests
             row.currentPlayer = player;
             row.NumberOfvirtues = Component<TextMeshProUGUI>("Count");
             row.NumberOfvirtues.transform.SetParent(row.transform, false);
+            // Scene rows carry an authored, inactive discard button wired to DiscardForDisaster.
+            var discard = Component<UnityEngine.UI.Button>("Discard Virtue");
+            discard.transform.SetParent(row.transform, false);
+            discard.onClick.AddListener(row.DiscardForDisaster);
+            discard.gameObject.SetActive(false);
+            row.disasterDiscardButton = discard;
             card.VirtueUIList.Add(row);
         }
         go.SetActive(true);

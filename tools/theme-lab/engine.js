@@ -2002,6 +2002,52 @@
     return svgWrap(k.w, k.h, `<defs>${kitDefs(u)}</defs>${k.svg(u)}`);
   }
 
+  // ------------------------------------------------------------ action icons
+  // Glyphs for the in-game action buttons: forged gold with a dark keyline so they read on the steel
+  // ring buttons and the power knob. 256 square, centred, transparent.
+  const ACTION_ICONS = {
+    forge: { name: 'Forge', note: 'Hammer striking an anvil: two resources forged into a virtue.', body: (g) =>
+      // anvil
+      `<path d="M52 112H182C190 112 198 118 202 126L206 134H168V150C168 160 160 166 150 168L162 196H190V214H66V196H94L106 168C94 166 86 158 86 146V134H58C54 134 50 130 50 126V114Z" ${g.fill}/>` +
+      // hammer, raised and angled
+      `<g transform="rotate(-34 150 70)"><rect x="122" y="40" width="64" height="34" rx="6" ${g.fill}/><rect x="146" y="74" width="16" height="70" rx="5" ${g.fill}/></g>` +
+      // sparks
+      `<g ${g.spark}><path d="M96 96L84 76"/><path d="M110 92L108 66"/><path d="M82 104L60 94"/></g>` },
+    trade: { name: 'Trade', note: 'Two arrows swapping: give one resource, take another.', body: (g) =>
+      `<path d="M58 106C66 72 96 50 130 50C156 50 178 62 192 82L206 70V122H154L172 104C164 92 148 84 130 84C112 84 96 94 90 110Z" ${g.fill}/>` +
+      `<path d="M198 150C190 184 160 206 126 206C100 206 78 194 64 174L50 186V134H102L84 152C92 164 108 172 126 172C144 172 160 162 166 146Z" ${g.fill}/>` +
+      `<circle cx="128" cy="128" r="16" ${g.fill}/>` },
+    weapon: { name: 'Weapon', note: 'Crossed spears behind a hide shield: remove a rival’s resource.', body: (g) =>
+      // shafts: dark keyline under a gold core
+      `<path d="M42 214L190 66M214 214L66 66" fill="none" stroke="${g.ink}" stroke-width="18" stroke-linecap="round"/>` +
+      `<path d="M42 214L190 66M214 214L66 66" fill="none" stroke="url(#${g.u}g)" stroke-width="8" stroke-linecap="round"/>` +
+      `<path d="M190 66L200 34L228 28L222 56Z" ${g.fill}/><path d="M66 66L56 34L28 28L34 56Z" ${g.fill}/>` +
+      `<ellipse cx="128" cy="136" rx="46" ry="74" ${g.fill}/>` +
+      `<path d="M128 66V206M104 96C116 108 140 108 152 96M104 176C116 164 140 164 152 176" fill="none" stroke="${g.ink}" stroke-width="7" stroke-linecap="round"/>` },
+    power: { name: 'Power', note: 'A bolt in a sunburst: spend virtues to use your kingdom’s power.', body: (g) => {
+      let rays = '';
+      for (let i = 0; i < 12; i++) rays += `<path d="M128 22L136 52H120Z" transform="rotate(${i * 30} 128 128)"/>`;
+      return `<g ${g.fill}>${rays}</g><circle cx="128" cy="128" r="70" ${g.fill}/>` +
+        `<path d="M140 74L96 138H124L112 186L160 116H132Z" fill="${g.ink}"/>`;
+    } },
+    draw: { name: 'Draw', note: 'A card lifted from the deck: draw a resource.', body: (g) =>
+      `<rect x="54" y="92" width="104" height="138" rx="14" ${g.fill} transform="rotate(-10 106 161)" opacity="0.75"/>` +
+      `<rect x="78" y="82" width="104" height="138" rx="14" ${g.fill}/>` +
+      `<path d="M130 112L154 138H140V178H120V138H106Z" fill="${g.ink}"/>` +
+      `<path d="M182 64L206 40M196 76L226 70M170 54L174 24" ${g.spark}/>` },
+  };
+  function actionIconSVG(name) {
+    const u = uid('ai'), ink = '#1A1206';
+    const g = {
+      ink, u,
+      fill: `fill="url(#${u}g)" stroke="${ink}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"`,
+      spark: `stroke="#FFE7A3" stroke-width="7" stroke-linecap="round" fill="none"`,
+    };
+    const defs = `<defs><linearGradient id="${u}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7A3"/><stop offset="0.45" stop-color="#E8B34A"/><stop offset="1" stop-color="#9A6418"/></linearGradient>` +
+      `<filter id="${u}s" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity="0.55"/></filter></defs>`;
+    return svgWrap(256, 256, `${defs}<g filter="url(#${u}s)">${ACTION_ICONS[name].body(g)}</g>`);
+  }
+
   // ------------------------------------------------------------ sprite list
   // Everything export-sprites.mjs writes for one theme. size = output pixels.
   function spriteList(themeId) {
@@ -2043,7 +2089,7 @@
 
   const api = {
     ELEMENTS, ELEMENT_INFO, GLYPHS, MATERIALS, THEMES, SLOT_STYLES, SLOT_STATES, PIECE_STATES, BOARD, FRIEZES,
-    CLASSIC, ALL_THEMES, UI_KIT, uiKitSVG, PIECE_SHAPES, MOTIFS, pieceLayers, layeredDirectSVG, layerSVG, layerLibrary, pieceAspect, piecePivotY, themeShape, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
+    CLASSIC, ALL_THEMES, UI_KIT, uiKitSVG, ACTION_ICONS, actionIconSVG, PIECE_SHAPES, MOTIFS, pieceLayers, layeredDirectSVG, layerSVG, layerLibrary, pieceAspect, piecePivotY, themeShape, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
     color: { mix, lighten, darken, luminance },
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
