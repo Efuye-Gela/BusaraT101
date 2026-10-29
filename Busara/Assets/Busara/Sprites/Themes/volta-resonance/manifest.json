@@ -144,5 +144,197 @@
       "height": 256,
       "guid": "930825f622da37dd785628520fc6673b"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_water.png",
+        "tint": null,
+        "guid": "c85d2d88b0980d2497f64886c73ec755"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_volta_stone_water.png",
+        "tint": "#FFFFFF",
+        "guid": "4619e02638869b89c41e465bafa002e8"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tumbled/motif_veins_water.png",
+        "tint": "#3E9BFF",
+        "guid": "f166686db09923c71d1f68566a9b1fa2"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_water.png",
+        "tint": null,
+        "guid": "8f0ea0ceecf31c4090c3a911f89bd3f6"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_emissive_water.png",
+        "tint": "#3E9BFF",
+        "guid": "288a3a5b10d043c2a0e5e59c479822d3"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tumbled/glow_ornate_water.png",
+        "tint": null,
+        "guid": "af31a404eb20b769845c35e3f680a904"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_earth.png",
+        "tint": null,
+        "guid": "8ce7b3a538becc13f965140e0aadd1b2"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_volta_stone_earth.png",
+        "tint": "#FFFFFF",
+        "guid": "71dcd3c5bec694815ef4920691a66925"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tumbled/motif_veins_earth.png",
+        "tint": "#8FBF6A",
+        "guid": "400eb5f355dcec67e879efe5cb1039b9"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_earth.png",
+        "tint": null,
+        "guid": "0febc796b624a20bcd246d6d38ebc6dc"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_emissive_earth.png",
+        "tint": "#8FBF6A",
+        "guid": "ca5e27109d88e990133fc59f865a1b66"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tumbled/glow_ornate_earth.png",
+        "tint": null,
+        "guid": "295e4e9d0ca7d4e429d7db2774e80797"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_fire.png",
+        "tint": null,
+        "guid": "464e9d94726a27cc30e4e1637fcf53cf"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_volta_stone_fire.png",
+        "tint": "#FFFFFF",
+        "guid": "c6768c37d4b778bf2e900021200b5115"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tumbled/motif_veins_fire.png",
+        "tint": "#FF5A2A",
+        "guid": "023ae6b45c5b5c5f8c67ee211df9b9ad"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_fire.png",
+        "tint": null,
+        "guid": "a85dfb19a0afade697ba6216e85d7a56"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_emissive_fire.png",
+        "tint": "#FF5A2A",
+        "guid": "fd2b81ffee94dd1ac9e70a9a11862229"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tumbled/glow_ornate_fire.png",
+        "tint": null,
+        "guid": "70b5ad3bde98afd8c4e1180542e7ef66"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_air.png",
+        "tint": null,
+        "guid": "5f88cd8456565d916bf14f26f8e1739b"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_volta_stone_air.png",
+        "tint": "#FFFFFF",
+        "guid": "71e5d9e43a30b4c75e0884bf8485c918"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tumbled/motif_veins_air.png",
+        "tint": "#FFC23A",
+        "guid": "adb9d6c51bd308e41153806cda949df2"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_air.png",
+        "tint": null,
+        "guid": "77af8e3b9377dd862a71e28caffc1719"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_emissive_air.png",
+        "tint": "#FFC23A",
+        "guid": "9abb39d7190a98f47107e28e78c999e1"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tumbled/glow_ornate_air.png",
+        "tint": null,
+        "guid": "3719217c4f1e4e0fd3416ac19782bc38"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_earth.png",
+        "tint": null,
+        "guid": "8ce7b3a538becc13f965140e0aadd1b2"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_volta_stone_earth.png",
+        "tint": "#FFFFFF",
+        "guid": "71dcd3c5bec694815ef4920691a66925"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tumbled/motif_veins_earth.png",
+        "tint": "#8FBF6A",
+        "guid": "400eb5f355dcec67e879efe5cb1039b9"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_earth.png",
+        "tint": null,
+        "guid": "0febc796b624a20bcd246d6d38ebc6dc"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_emissive_back.png",
+        "tint": "#8FBF6A",
+        "guid": "3666b0e4e242e64b43bf9de4712130c3"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tumbled/glow_ornate_back.png",
+        "tint": null,
+        "guid": "ec96a92d9cab5ec7654ac9bb168d9cec"
+      }
+    ]
+  }
 }

@@ -51,8 +51,8 @@ const platform = (target, size, quality) => `  - serializedVersion: 4
 `;
 
 // Single-mode UI sprite, no mipmaps, alpha is transparency. size = import cap (power of two),
-// border = nine-slice [left, bottom, right, top] in pixels.
-const spriteMeta = (guid, size, border = [0, 0, 0, 0]) => `fileFormatVersion: 2
+// border = nine-slice [left, bottom, right, top] in pixels. readable keeps a CPU copy (piece layers are composited at runtime).
+const spriteMeta = (guid, size, border = [0, 0, 0, 0], readable = false) => `fileFormatVersion: 2
 guid: ${guid}
 TextureImporter:
   internalIDToNameTable: []
@@ -75,7 +75,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: ${readable ? 1 : 0}
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -166,6 +166,25 @@ async function main() {
   fs.mkdirSync(outRoot, { recursive: true });
   writeIfChanged(outRoot + '.meta', folderMeta(stableGuid(assetPath(outRoot))));
 
+  // Rasterise an SVG string (generated in Node) at W x H and return base64 PNG.
+  const rasterise = (svg, W, H) => page.evaluate(async ({ svg, W, H }) => {
+    const img = new Image();
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg.replace(/ width="\d+" height="\d+"/, ` width="${W}" height="${H}"`));
+    await img.decode();
+    const c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    c.getContext('2d').drawImage(img, 0, 0, W, H);
+    return c.toDataURL('image/png').split(',')[1];
+  }, { svg, W, H });
+  const ensureFolder = (dir) => {
+    for (let d = dir; d.startsWith(spritesRoot + path.sep); d = path.dirname(d)) {
+      fs.mkdirSync(d, { recursive: true });
+      writeIfChanged(d + '.meta', folderMeta(stableGuid(assetPath(d))));
+    }
+  };
+  const writtenLayers = new Set();
+  const report = {};
+
   for (const t of themes) {
     const dir = path.join(outRoot, t.id);
     fs.mkdirSync(dir, { recursive: true });
@@ -233,12 +252,91 @@ async function main() {
       files: sprites.map((s) => Object.assign({ file: s.file, width: s.w || s.size, height: s.h || s.size, guid: stableGuid(assetPath(path.join(dir, s.file))) },
         s.border && s.border.some((v) => v > 0) ? { nineSliceBorder: { left: s.border[0], bottom: s.border[1], right: s.border[2], top: s.border[3] } } : {})),
     };
+    // Layer library: shared sprites under Sprites/Pieces/<shape>/, stacks per element in the manifest.
+    const lib = engine.layerLibrary(t.id);
+    if (lib) {
+      for (const e of lib.entries) {
+        if (writtenLayers.has(e.path)) continue;
+        writtenLayers.add(e.path);
+        const file = path.join(spritesRoot, e.path);
+        ensureFolder(path.dirname(file));
+        fs.writeFileSync(file, Buffer.from(await rasterise(e.svg(), e.w, e.h), 'base64'));
+        writeIfChanged(file + '.meta', spriteMeta(stableGuid(assetPath(file)), importCap(Math.max(e.w, e.h)), undefined, true));
+      }
+      manifest.layers = Object.fromEntries(Object.entries(lib.stacks).map(([k, stack]) => [k, stack.map((ly) => ({
+        name: ly.name, file: ly.path, tint: ly.tint, guid: stableGuid(assetPath(path.join(spritesRoot, ly.path))),
+      }))]));
+      report[t.id] = {};
+      for (const [k, stack] of Object.entries(lib.stacks)) {
+        const direct = fs.readFileSync(path.join(dir, k === 'hidden' ? 'piece_hidden.png' : `piece_${k}.png`)).toString('base64');
+        const layers = stack.map((ly) => ({ tint: ly.tint, b64: fs.readFileSync(path.join(spritesRoot, ly.path)).toString('base64') }));
+        report[t.id][k] = await page.evaluate(verifyComposite, { direct, layers, board: t.board.fieldTint || engine.MATERIALS[t.board.field].base });
+      }
+    }
     const mf = path.join(dir, 'manifest.json');
     writeIfChanged(mf, JSON.stringify(manifest, null, 2) + '\n');
     writeIfChanged(mf + '.meta', textMeta(stableGuid(assetPath(mf))));
     console.log(`${t.id}: ${sprites.length} sprites`);
   }
   await browser.close();
+  if (Object.keys(report).length) {
+    const rows = Object.values(report).flatMap((r) => Object.values(r));
+    const worst = (key) => Math.max(...rows.map((r) => r[key]));
+    const summary = {
+      stacks: rows.length,
+      meanDelta: Number((rows.reduce((s, r) => s + r.mean, 0) / rows.length).toFixed(4)),
+      worstMeanDelta: worst('mean'), worstMaxDelta: worst('max'),
+      unityLinearMeanDelta: Number((rows.reduce((s, r) => s + r.linearMean, 0) / rows.length).toFixed(4)),
+      unityLinearWorstMax: worst('linearMax'),
+    };
+    fs.writeFileSync(path.join(here, 'layer-verification.json'), JSON.stringify({ summary, themes: report }, null, 2) + '\n');
+    console.log(`layers: composite vs direct render, mean channel delta ${summary.meanDelta} / 255 (worst stack ${summary.worstMeanDelta}, max ${summary.worstMaxDelta}); ` +
+      `(stacking them as separate UI Images in linear colour space would drift by mean ${summary.unityLinearMeanDelta}, max ${summary.unityLinearWorstMax}, so Unity composites in sRGB on the CPU)`);
+    if (summary.worstMeanDelta > 0.5) { console.error('Layer composite drifted from the direct render.'); process.exitCode = 1; }
+  }
+}
+
+// Runs in the page. Composites tinted layer PNGs exactly like a Unity UI Image stack (rgb * tint, then over)
+// and compares with the direct render: premultiplied sRGB channels, and on-screen colour in linear blending.
+async function verifyComposite({ direct, layers, board }) {
+  const load = async (b64) => {
+    const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();
+    const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+    const x = c.getContext('2d'); x.drawImage(img, 0, 0);
+    return x.getImageData(0, 0, c.width, c.height);
+  };
+  const hex = (h) => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => v / 255); };
+  const lin = (v) => (v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+  const enc = (v) => (v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055);
+  const D = await load(direct), N = D.width * D.height;
+  const acc = new Float32Array(N * 4), accL = new Float32Array(N * 3), bg = hex(board).map(lin);
+  for (let i = 0; i < N; i++) { accL[i * 3] = bg[0]; accL[i * 3 + 1] = bg[1]; accL[i * 3 + 2] = bg[2]; }
+  for (const ly of layers) {
+    const I = await load(ly.b64), t = ly.tint ? hex(ly.tint) : [1, 1, 1], tl = t.map(lin), d = I.data;
+    for (let i = 0; i < N; i++) {
+      const a = d[i * 4 + 3] / 255; if (!a) continue;
+      for (let c = 0; c < 3; c++) {
+        const v = (d[i * 4 + c] / 255) * t[c];
+        acc[i * 4 + c] = v * a + acc[i * 4 + c] * (1 - a);
+        accL[i * 3 + c] = lin(d[i * 4 + c] / 255) * tl[c] * a + accL[i * 3 + c] * (1 - a);
+      }
+      acc[i * 4 + 3] = a + acc[i * 4 + 3] * (1 - a);
+    }
+  }
+  let sum = 0, max = 0, sumL = 0, maxL = 0;
+  const dd = D.data;
+  for (let i = 0; i < N; i++) {
+    const da = dd[i * 4 + 3] / 255;
+    for (let c = 0; c < 4; c++) {
+      const ref = c === 3 ? da : (dd[i * 4 + c] / 255) * da;
+      const e = Math.abs(acc[i * 4 + c] - ref) * 255; sum += e; if (e > max) max = e;
+    }
+    for (let c = 0; c < 3; c++) {
+      const refL = lin(dd[i * 4 + c] / 255) * da + bg[c] * (1 - da);
+      const e = Math.abs(enc(accL[i * 3 + c]) - enc(refL)) * 255; sumL += e; if (e > maxL) maxL = e;
+    }
+  }
+  return { mean: Number((sum / (N * 4)).toFixed(4)), max: Math.round(max), linearMean: Number((sumL / (N * 3)).toFixed(4)), linearMax: Math.round(maxL) };
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) await main();

@@ -143,5 +143,197 @@
       "height": 256,
       "guid": "a3007570b60605e2ef3f240ab449ab5e"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/square/shadow.png",
+        "tint": null,
+        "guid": "eb6962972a138c28f4159490930ea256"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/square/paint_terracotta.png",
+        "tint": "#5E6A72",
+        "guid": "599544257d663e0167b5ea3345f6cc27"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/square/motif_dots.png",
+        "tint": "#E9E3D7",
+        "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/square/detail.png",
+        "tint": null,
+        "guid": "9373d10d5a8e790eaa427223ef851e42"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/square/relief_ornate_carved_water.png",
+        "tint": null,
+        "guid": "5cdf3768ea1f75f29daf248da30d743c"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/square/glyph_ornate_carved_water.png",
+        "tint": "#E9E3D7",
+        "guid": "454b734c835a604d9f6260f214685d0d"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/square/shadow.png",
+        "tint": null,
+        "guid": "eb6962972a138c28f4159490930ea256"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/square/paint_imigongo_clay.png",
+        "tint": "#2A2523",
+        "guid": "4e0448a7bbbee3ffe589c323d1e8adc4"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/square/motif_dots.png",
+        "tint": "#E9E3D7",
+        "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/square/detail.png",
+        "tint": null,
+        "guid": "9373d10d5a8e790eaa427223ef851e42"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/square/relief_ornate_carved_earth.png",
+        "tint": null,
+        "guid": "3cc44e8ece1ce1a993e29e17808527af"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/square/glyph_ornate_carved_earth.png",
+        "tint": "#E9E3D7",
+        "guid": "82db0f8e8d0412ebba2351aff1eef403"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/square/shadow.png",
+        "tint": null,
+        "guid": "eb6962972a138c28f4159490930ea256"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/square/paint_terracotta.png",
+        "tint": "#9E3B22",
+        "guid": "599544257d663e0167b5ea3345f6cc27"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/square/motif_dots.png",
+        "tint": "#E9E3D7",
+        "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/square/detail.png",
+        "tint": null,
+        "guid": "9373d10d5a8e790eaa427223ef851e42"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/square/relief_ornate_carved_fire.png",
+        "tint": null,
+        "guid": "a8b5a5d2f585004c30ec6da9b4bcf382"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/square/glyph_ornate_carved_fire.png",
+        "tint": "#E9E3D7",
+        "guid": "cd6be60bbcf1a19c404fe92d0e2e4248"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/square/shadow.png",
+        "tint": null,
+        "guid": "eb6962972a138c28f4159490930ea256"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/square/paint_terracotta.png",
+        "tint": "#E2D8C6",
+        "guid": "599544257d663e0167b5ea3345f6cc27"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/square/motif_dots.png",
+        "tint": "#1E1A19",
+        "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/square/detail.png",
+        "tint": null,
+        "guid": "9373d10d5a8e790eaa427223ef851e42"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/square/relief_ornate_carved_air.png",
+        "tint": null,
+        "guid": "dbd7e22b2dcf8764bd8ebc5617554a73"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/square/glyph_ornate_carved_air.png",
+        "tint": "#1E1A19",
+        "guid": "8b7925d5914991fe2f39c135e8f3db98"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/square/shadow.png",
+        "tint": null,
+        "guid": "eb6962972a138c28f4159490930ea256"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/square/paint_imigongo_clay.png",
+        "tint": "#2A2523",
+        "guid": "4e0448a7bbbee3ffe589c323d1e8adc4"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/square/motif_dots.png",
+        "tint": "#E9E3D7",
+        "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/square/detail.png",
+        "tint": null,
+        "guid": "9373d10d5a8e790eaa427223ef851e42"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/square/relief_ornate_carved_back.png",
+        "tint": null,
+        "guid": "3d6fd50df005dd6d0eea4762d7a34d52"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/square/glyph_ornate_carved_back.png",
+        "tint": "#E9E3D7",
+        "guid": "18aa24bd05584cf1696be46b51468ca7"
+      }
+    ]
+  }
 }

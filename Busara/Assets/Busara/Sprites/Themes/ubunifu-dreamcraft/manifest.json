@@ -143,5 +143,197 @@
       "height": 256,
       "guid": "825ede800af3b9ea750b014e2be822a5"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_dream_glass.png",
+        "tint": "#409bff",
+        "guid": "ce7127f556d388704b02856a711474ad"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_ring.png",
+        "tint": "#CFE2FF",
+        "guid": "e47a9de5326dfe786cff3a456c229c2b"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_minimal_emissive_water.png",
+        "tint": "#CFE2FF",
+        "guid": "be479093e83e515829415a478a0be6f8"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_minimal_water.png",
+        "tint": null,
+        "guid": "b0abffc1c22260904002da3eb1e52d30"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_dream_glass.png",
+        "tint": "#544a66",
+        "guid": "ce7127f556d388704b02856a711474ad"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_ring.png",
+        "tint": "#E8E0FF",
+        "guid": "e47a9de5326dfe786cff3a456c229c2b"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_minimal_emissive_earth.png",
+        "tint": "#E8E0FF",
+        "guid": "1c7f36afbf103aff1c2aabbcc9676f5e"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_minimal_earth.png",
+        "tint": null,
+        "guid": "a1729a4ce60857d34d83697b14aacebe"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_dream_glass.png",
+        "tint": "#ff5d3d",
+        "guid": "ce7127f556d388704b02856a711474ad"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_ring.png",
+        "tint": "#FFD9CF",
+        "guid": "e47a9de5326dfe786cff3a456c229c2b"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_minimal_emissive_fire.png",
+        "tint": "#FFD9CF",
+        "guid": "d17f13f087dcef0b614c86225683965a"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_minimal_fire.png",
+        "tint": null,
+        "guid": "0b7186dd69151e050e42beab24261edc"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_dream_glass.png",
+        "tint": "#fff446",
+        "guid": "ce7127f556d388704b02856a711474ad"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_ring.png",
+        "tint": "#FFF2C9",
+        "guid": "e47a9de5326dfe786cff3a456c229c2b"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_minimal_emissive_air.png",
+        "tint": "#FFF2C9",
+        "guid": "079a658d255470ff27a4be3bd3d64237"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_minimal_air.png",
+        "tint": null,
+        "guid": "3a87868cf401e5822d8b286c29a5a123"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_dream_glass.png",
+        "tint": "#544a66",
+        "guid": "ce7127f556d388704b02856a711474ad"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_ring.png",
+        "tint": "#E8E0FF",
+        "guid": "e47a9de5326dfe786cff3a456c229c2b"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_minimal_emissive_back.png",
+        "tint": "#E8E0FF",
+        "guid": "7400f362b0b289b0bd0a687f3d21e25a"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_minimal_back.png",
+        "tint": null,
+        "guid": "1a95f6beea4dd267b5a3657f53deefe4"
+      }
+    ]
+  }
 }

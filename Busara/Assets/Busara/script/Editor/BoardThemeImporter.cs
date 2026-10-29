@@ -12,6 +12,7 @@ using UnityEngine;
 public static class BoardThemeImporter
 {
     public const string SpriteRoot = "Assets/Busara/Sprites/Themes";
+    public const string LayerRoot = "Assets/Busara/Sprites/Pieces";
     public const string AssetRoot = "Assets/Busara/ScriptableObjects/Themes";
     public const string CatalogPath = AssetRoot + "/ThemeCatalog.asset";
 
@@ -25,6 +26,25 @@ public static class BoardThemeImporter
         public string origin;
         public Colors colors;
         public Geometry geometry;
+        public Layers layers;
+    }
+
+    [System.Serializable]
+    private class Layers
+    {
+        public LayerEntry[] water;
+        public LayerEntry[] earth;
+        public LayerEntry[] fire;
+        public LayerEntry[] air;
+        public LayerEntry[] hidden;
+    }
+
+    [System.Serializable]
+    private class LayerEntry
+    {
+        public string name;
+        public string file; // relative to Assets/Busara/Sprites
+        public string tint; // null for untinted layers
     }
 
     [System.Serializable]
@@ -49,6 +69,9 @@ public static class BoardThemeImporter
         if (!AssetDatabase.IsValidFolder(AssetRoot))
             AssetDatabase.CreateFolder("Assets/Busara/ScriptableObjects", "Themes");
         var imported = new List<BoardTheme>();
+        // Piece layers are composited on the CPU at runtime, so they keep a readable copy.
+        if (AssetDatabase.IsValidFolder(LayerRoot))
+            ConfigureSprites(LayerRoot, true);
         foreach (string folder in AssetDatabase.GetSubFolders(SpriteRoot).OrderBy(path => path))
         {
             string manifestPath = folder + "/manifest.json";
@@ -97,7 +120,7 @@ public static class BoardThemeImporter
         EditorSceneManager.MarkSceneDirty(manager.gameObject.scene);
     }
 
-    private static void ConfigureSprites(string folder)
+    private static void ConfigureSprites(string folder, bool readable = false)
     {
         foreach (string guid in AssetDatabase.FindAssets("t:Texture2D", new[] { folder }))
         {
@@ -105,13 +128,15 @@ public static class BoardThemeImporter
             if (!(AssetImporter.GetAtPath(path) is TextureImporter importer))
                 continue;
             bool changed = importer.textureType != TextureImporterType.Sprite ||
-                importer.spriteImportMode != SpriteImportMode.Single || importer.mipmapEnabled || !importer.alphaIsTransparency;
+                importer.spriteImportMode != SpriteImportMode.Single || importer.mipmapEnabled || !importer.alphaIsTransparency ||
+                importer.isReadable != readable;
             if (!changed)
                 continue;
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
             importer.mipmapEnabled = false;
             importer.alphaIsTransparency = true;
+            importer.isReadable = readable;
             importer.SaveAndReimport();
         }
     }
@@ -150,6 +175,12 @@ public static class BoardThemeImporter
             theme.pieceAspect = manifest.geometry.pieceAspect;
             theme.piecePivotY = manifest.geometry.piecePivotY;
         }
+        Layers layers = manifest.layers ?? new Layers();
+        theme.waterLayers = LoadLayers(layers.water);
+        theme.earthLayers = LoadLayers(layers.earth);
+        theme.fireLayers = LoadLayers(layers.fire);
+        theme.airLayers = LoadLayers(layers.air);
+        theme.hiddenLayers = LoadLayers(layers.hidden);
         if (manifest.colors != null)
         {
             if (ColorUtility.TryParseHtmlString(manifest.colors.accent, out Color accent)) theme.accent = accent;
@@ -158,5 +189,24 @@ public static class BoardThemeImporter
         }
         EditorUtility.SetDirty(theme);
         return theme;
+    }
+
+    private static List<PieceLayer> LoadLayers(LayerEntry[] entries)
+    {
+        var layers = new List<PieceLayer>();
+        if (entries == null)
+            return layers;
+        foreach (LayerEntry entry in entries)
+        {
+            bool tinted = ColorUtility.TryParseHtmlString(entry.tint, out Color tint);
+            layers.Add(new PieceLayer
+            {
+                name = entry.name,
+                sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Busara/Sprites/" + entry.file),
+                tinted = tinted,
+                tint = tinted ? tint : Color.white,
+            });
+        }
+        return layers;
     }
 }

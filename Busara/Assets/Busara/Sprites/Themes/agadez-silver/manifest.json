@@ -144,5 +144,227 @@
       "height": 256,
       "guid": "eb087a0df3aa4f537cca8607f2d84aff"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "3737a4e5a434580cfeed4f7aa53201ae"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_leather_indigo.png",
+        "tint": "#2D4A8A",
+        "guid": "df80126872ae05797445dfccae6a13c4"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_dots.png",
+        "tint": "#E6E8EB",
+        "guid": "e1914cf0ced0b363bef756b92dbaf793"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tall/relief_ornate_carved_water.png",
+        "tint": null,
+        "guid": "b5245fdd5eb6797819e4d1435482bff4"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_ornate_carved_water.png",
+        "tint": "#E6E8EB",
+        "guid": "63332ff8706917fa4cc7605f08ae5c5c"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "3737a4e5a434580cfeed4f7aa53201ae"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_ebony.png",
+        "tint": "#2B201C",
+        "guid": "f968ee9f68c7a7f278c2303d675680e3"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_dots.png",
+        "tint": "#E6E8EB",
+        "guid": "e1914cf0ced0b363bef756b92dbaf793"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tall/relief_ornate_carved_earth.png",
+        "tint": null,
+        "guid": "1338cf4b35e33797bcdc09d447d1bff7"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_ornate_carved_earth.png",
+        "tint": "#E6E8EB",
+        "guid": "e4515657edbf3b75215c6efdc8a21e74"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "3737a4e5a434580cfeed4f7aa53201ae"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_carnelian.png",
+        "tint": "#b7431f",
+        "guid": "19c82cd3222584d5184e88498d798be0"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_dots.png",
+        "tint": "#F2F2F2",
+        "guid": "e1914cf0ced0b363bef756b92dbaf793"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tall/relief_ornate_carved_fire.png",
+        "tint": null,
+        "guid": "91551d868394e79f4efbcfa2b510a7a9"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_ornate_carved_fire.png",
+        "tint": "#F2F2F2",
+        "guid": "ddb42b7dd1e94c889aa4cc9d9b782865"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "3737a4e5a434580cfeed4f7aa53201ae"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "2f5cd89d622d827659091ca27207010c"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_dots.png",
+        "tint": "#B07A2A",
+        "guid": "e1914cf0ced0b363bef756b92dbaf793"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tall/relief_ornate_carved_air.png",
+        "tint": null,
+        "guid": "89b22346411a2a31a5a2bec55bac5208"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_ornate_carved_air.png",
+        "tint": "#B07A2A",
+        "guid": "a5de4cf263b492a71ed600584bbe1b3a"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "3737a4e5a434580cfeed4f7aa53201ae"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_ebony.png",
+        "tint": "#2B201C",
+        "guid": "f968ee9f68c7a7f278c2303d675680e3"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_dots.png",
+        "tint": "#E6E8EB",
+        "guid": "e1914cf0ced0b363bef756b92dbaf793"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tall/relief_ornate_carved_back.png",
+        "tint": null,
+        "guid": "355cad993b2b6d802e488b36791a6321"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_ornate_carved_back.png",
+        "tint": "#E6E8EB",
+        "guid": "72cddb7db01888dbe94c0d52db57f9ac"
+      }
+    ]
+  }
 }

@@ -144,5 +144,167 @@
       "height": 256,
       "guid": "6f420517fd4c7ec554b7a328eb4d388e"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_water.png",
+        "tint": null,
+        "guid": "c85d2d88b0980d2497f64886c73ec755"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_tanzanite_water.png",
+        "tint": "#3c4ead",
+        "guid": "2c848a14361a21f2e39d119f3cd25a7c"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_water.png",
+        "tint": null,
+        "guid": "8f0ea0ceecf31c4090c3a911f89bd3f6"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tumbled/relief_ornate_carved_water.png",
+        "tint": null,
+        "guid": "f3b3a7fb0f9d38d99580490e2512299e"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_carved_water.png",
+        "tint": "#F2EBDD",
+        "guid": "5a2603644174517c695516ed4356c771"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_earth.png",
+        "tint": null,
+        "guid": "8ce7b3a538becc13f965140e0aadd1b2"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_mkomwe_seed_earth.png",
+        "tint": "#6E5B4E",
+        "guid": "e3a64c9f5b927a7a6f6a85d8c8bb2879"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_earth.png",
+        "tint": null,
+        "guid": "0febc796b624a20bcd246d6d38ebc6dc"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tumbled/relief_ornate_carved_earth.png",
+        "tint": null,
+        "guid": "e5564ca223eaa0777c8fab77a62afbd1"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_carved_earth.png",
+        "tint": "#E2C578",
+        "guid": "19e8d4a2c83f6dc2600d4fd6729b4aad"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_fire.png",
+        "tint": null,
+        "guid": "464e9d94726a27cc30e4e1637fcf53cf"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_coral_stone_fire.png",
+        "tint": "#B4472E",
+        "guid": "ed4a88f90fffce6771a425c7c2ebb77f"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_fire.png",
+        "tint": null,
+        "guid": "a85dfb19a0afade697ba6216e85d7a56"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tumbled/relief_ornate_carved_fire.png",
+        "tint": null,
+        "guid": "93e75d97755855e05a0e6946bca25738"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_carved_fire.png",
+        "tint": "#F2EBDD",
+        "guid": "8b161767e26c8fbd0730698a51bb64f8"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_air.png",
+        "tint": null,
+        "guid": "5f88cd8456565d916bf14f26f8e1739b"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_cowrie_air.png",
+        "tint": "#EFE6D2",
+        "guid": "cb3005356f5dbf0c4f80a522862a1551"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_air.png",
+        "tint": null,
+        "guid": "77af8e3b9377dd862a71e28caffc1719"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tumbled/relief_ornate_carved_air.png",
+        "tint": null,
+        "guid": "287cbf33e4dbef4689c1f7de89be2da0"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_carved_air.png",
+        "tint": "#8A6A3E",
+        "guid": "7af8f865383f2af0f89d208d1d335073"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tumbled/shadow_earth.png",
+        "tint": null,
+        "guid": "8ce7b3a538becc13f965140e0aadd1b2"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tumbled/paint_mkomwe_seed_earth.png",
+        "tint": "#6E5B4E",
+        "guid": "e3a64c9f5b927a7a6f6a85d8c8bb2879"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tumbled/detail_earth.png",
+        "tint": null,
+        "guid": "0febc796b624a20bcd246d6d38ebc6dc"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/tumbled/relief_ornate_carved_back.png",
+        "tint": null,
+        "guid": "821dfc3249e75c47a0d61fa51e7bced9"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tumbled/glyph_ornate_carved_back.png",
+        "tint": "#E2C578",
+        "guid": "e4afcfe3e28156eb6dd3075c4c3a89b9"
+      }
+    ]
+  }
 }

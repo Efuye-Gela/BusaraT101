@@ -348,6 +348,18 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
 .finish-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: end; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
 .finish-row figure { margin: 0; text-align: center; font-size: var(--step--1); color: var(--ink-2); }
 @media (max-width: 760px) { .shape-extra { grid-template-columns: minmax(0, 1fr); } }
+.layer-controls { display: flex; flex-wrap: wrap; gap: 12px 18px; margin-bottom: 18px; }
+.layer-controls .field { min-width: 150px; }
+.layer-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.layer-strip figure { margin: 0; display: grid; gap: 6px; align-content: start; font-size: .74rem; color: var(--ink-2); line-height: 1.3; }
+.layer-strip .cell { aspect-ratio: 1 / 1.2; border-radius: 8px; display: grid; place-items: end center; padding: 6px; overflow: hidden;
+  background: #22252b repeating-conic-gradient(#2b2f36 0 25%, #22252b 0 50%) 0 0 / 14px 14px; }
+.layer-strip .cell.out { background: var(--layer-field, #3a2a1c); }
+.layer-strip .cell > * { width: 100%; height: auto; max-height: 100%; object-fit: contain; }
+.layer-strip b { color: var(--ink); font-weight: 600; }
+.layer-strip i { display: inline-block; width: .8em; height: .8em; border-radius: 50%; vertical-align: -.05em; margin-right: .3em; border: 1px solid rgba(255,255,255,.35); }
+.layer-strip .sep { grid-column: 1 / -1; height: 1px; background: var(--line); margin: 2px 0; }
+.layer-caption { margin-top: 10px; font: .8rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--ink-2); overflow-wrap: anywhere; }
 
 @media (max-width: 960px) {
   .hero-grid, .sec-head, .ws, .sprite-grid, .contract, .ui-stage { grid-template-columns: minmax(0, 1fr); }
@@ -377,6 +389,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
       <a href="#panther">Panther Court</a>
       <a href="#eras">Past, future, fusion</a>
       <a href="#shapes">Piece shapes</a>
+      <a href="#layers">Piece layers</a>
       <a href="#materials">Materials</a>
       <a href="#holes">Holes &amp; states</a>
       <a href="#interface">Interface</a>
@@ -474,6 +487,22 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
         <figure><img id="layer-demo" alt="Agadez Silver board with tall banded pieces overlapping the row behind"><figcaption><b>Layering.</b> Tall towers rise over the hole behind them and hide part of that piece; rows nearer the player draw on top.</figcaption></figure>
         <figure><div class="finish-row" id="finish-row"></div><figcaption><b>Glyph finishes.</b> Carved, gold leaf, hand-painted and glowing, all on the same Fire hexagon.</figcaption></figure>
       </div>
+    </div>
+  </section>
+
+  <section class="block" id="layers">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Piece layers</h2>
+        <p>Every piece is a stack of shared masks: shadow, trim, paint, motif, lighting, relief and glyph. Each mask is drawn in white or grey and tinted on top, the same way a Unity Image colour works, so one set of 222 sprites covers all fifteen layered themes and each seat can recolour its trim and motif. The composite is checked against the direct render, here and in the exporter.</p>
+      </div>
+      <div class="layer-controls">
+        <div class="field"><label for="ly-theme">Theme</label><select id="ly-theme"></select></div>
+        <div class="field"><label for="ly-el">Piece</label><select id="ly-el"></select></div>
+        <div class="field"><label for="ly-shape">Shape</label><select id="ly-shape"></select></div>
+      </div>
+      <div class="layer-strip" id="layer-strip" aria-live="polite"></div>
+      <p class="layer-caption" id="layer-caption"></p>
     </div>
   </section>
 
@@ -1188,11 +1217,96 @@ footer { border-top: 1px solid var(--line); padding-block: 32px 48px; color: var
     $('#finish-row').innerHTML = [['carved', 'Carved'], ['gilded', 'Gold leaf'], ['painted', 'Hand-painted'], ['emissive', 'Glowing']].map(([fm, label]) =>
       `<figure><img alt="${label} Fire hexagon" src="${uri('fin:' + fm, () => B.pieceSVG(me, 'fire', { shape: 'hex', finish: fm }))}">${label}</figure>`).join('');
   }
+  // ------------------------------------------------------------ piece layers
+  // Seat colours match ThemeCatalog.seatColours in Unity; they replace the trim and motif tints.
+  const SEATS = [['Seat 1', '#E2B54A', 'gold'], ['Seat 2', '#D9DDE3', 'silver'], ['Seat 3', '#C8754A', 'copper'], ['Seat 4', '#4FB58A', 'jade']];
+  const SEAT_LAYERS = ['trim', 'motif'];
+  const L = { theme: store.get('ly-theme', 'agadez-silver'), el: 'water', shape: '' };
+  const loadImg = (src) => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = src; });
+  const svgUri = (svg) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  // rgb * tint, then over: the canvas multiply blend works on sRGB values like the exporter's check and Unity's PieceCompositor.
+  function compositeLayers(imgs, tints, W, H) {
+    const out = document.createElement('canvas'); out.width = W; out.height = H;
+    const ox = out.getContext('2d'), tmp = document.createElement('canvas'); tmp.width = W; tmp.height = H;
+    const tx = tmp.getContext('2d');
+    imgs.forEach((im, i) => {
+      tx.globalCompositeOperation = 'copy'; tx.drawImage(im, 0, 0, W, H);
+      if (tints[i]) {
+        tx.globalCompositeOperation = 'multiply'; tx.fillStyle = tints[i]; tx.fillRect(0, 0, W, H);
+        tx.globalCompositeOperation = 'destination-in'; tx.drawImage(im, 0, 0, W, H);
+      }
+      ox.drawImage(tmp, 0, 0);
+    });
+    return out;
+  }
+  function delta(a, b) {
+    const A = a.getContext('2d').getImageData(0, 0, a.width, a.height).data, Bd = b.getContext('2d').getImageData(0, 0, b.width, b.height).data;
+    let sum = 0, max = 0;
+    for (let i = 0; i < A.length; i += 4) {
+      const aa = A[i + 3] / 255, ba = Bd[i + 3] / 255;
+      for (let c = 0; c < 4; c++) {
+        const e = c === 3 ? Math.abs(A[i + 3] - Bd[i + 3]) : Math.abs(A[i + c] * aa - Bd[i + c] * ba);
+        sum += e; if (e > max) max = e;
+      }
+    }
+    return { mean: sum / A.length, max: Math.round(max) };
+  }
+  let layerRun = 0;
+  async function renderLayers() {
+    const run = ++layerRun, t = B.themeById(L.theme), back = L.el === 'hidden';
+    const o = { back, shape: L.shape || undefined };
+    const st = B.pieceLayers(t, back ? 'earth' : L.el, o);
+    const W = 256, H = Math.round(256 * st.H / 512);
+    $('#layer-strip').style.setProperty('--layer-field', t.board.fieldTint || B.MATERIALS[t.board.field].base);
+    const masks = st.layers.map((ly) => svgUri(B.layerSVG(st, ly.key)));
+    let imgs, direct;
+    try {
+      imgs = await Promise.all(masks.map(loadImg));
+      direct = await loadImg(svgUri(B.layeredDirectSVG(st)));
+    } catch (e) { return; }
+    if (run !== layerRun) return;
+    const directCanvas = document.createElement('canvas'); directCanvas.width = W; directCanvas.height = H;
+    directCanvas.getContext('2d').drawImage(direct, 0, 0, W, H);
+    const own = compositeLayers(imgs, st.layers.map((ly) => ly.tint), W, H);
+    const seat = (c) => compositeLayers(imgs, st.layers.map((ly) => (ly.tint && SEAT_LAYERS.includes(ly.name) ? c : ly.tint)), W, H);
+    const label = { shadow: 'shadow (shared)', detail: 'detail (shared)', paint: 'paint mask', motif: 'motif: ' + (st.motif || 'none'), relief: 'relief (' + st.finish + ')', glyph: 'glyph (' + st.finish + ')' };
+    const strip = $('#layer-strip');
+    strip.innerHTML = '';
+    const card = (node, caption, out) => {
+      const f = el('figure'), c = el('div', { class: 'cell' + (out ? ' out' : '') });
+      c.append(node); f.append(c, el('figcaption', null, caption)); strip.append(f);
+    };
+    st.layers.forEach((ly, i) => card(img(masks[i], ly.name + ' layer'), `${ly.tint ? `<i style="background:${ly.tint}"></i>` : ''}${label[ly.name] || ly.name}`));
+    strip.append(el('div', { class: 'sep' }));
+    card(own, '<b>composite</b>: theme tints', true);
+    card(directCanvas, '<b>direct render</b>', true);
+    SEATS.forEach(([name, c, word]) => card(seat(c), `<i style="background:${c}"></i><b>composite</b>: ${name}, ${word}`, true));
+    let note;
+    try {
+      const d = delta(own, directCanvas);
+      note = `composite vs direct render: mean channel Δ ${d.mean.toFixed(3)} / 255 (max ${d.max}, antialiased edges only)`;
+    } catch (e) { note = 'composite vs direct render: this browser blocks reading SVG pixels, so the Δ check runs in the exporter'; }
+    $('#layer-caption').textContent = `${note} · ${st.layers.length} layers · sprite ${W}×${H}`;
+  }
+  function buildLayers() {
+    const themes = B.THEMES.filter((t) => !t.raster && B.themeShape(t) !== 'dome');
+    if (!themes.some((t) => t.id === L.theme)) L.theme = themes[0].id;
+    const fill = (sel, items, value) => { sel.innerHTML = items.map(([v, n]) => `<option value="${v}">${n}</option>`).join(''); sel.value = value; };
+    fill($('#ly-theme'), themes.map((t) => [t.id, t.name]), L.theme);
+    fill($('#ly-el'), [...B.ELEMENTS.map((e) => [e, NAMES[e]]), ['hidden', 'Hidden (back)']], L.el);
+    fill($('#ly-shape'), [['', 'Theme default'], ...Object.entries(B.PIECE_SHAPES).filter(([id]) => id !== 'dome').map(([id, sh]) => [id, sh.name])], L.shape);
+    $('#ly-theme').addEventListener('change', (e) => { L.theme = e.target.value; store.set('ly-theme', L.theme); renderLayers(); });
+    $('#ly-el').addEventListener('change', (e) => { L.el = e.target.value; renderLayers(); });
+    $('#ly-shape').addEventListener('change', (e) => { L.shape = e.target.value; renderLayers(); });
+    renderLayers();
+  }
+
   // ------------------------------------------------------------ boot
   renderDirections();
   renderPanther();
   renderEras();
   renderShapes();
+  buildLayers();
   renderMaterials();
   buildWorkshop();
   applyTheme(S.theme);

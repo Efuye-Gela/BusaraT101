@@ -144,5 +144,227 @@
       "height": 256,
       "guid": "e338e96609f44a5a5643de3bd1eba529"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_ewaste_alloy.png",
+        "tint": "#6E7376",
+        "guid": "c536bd9e18ba2a27532d1c7196f922e5"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_solar_glass.png",
+        "tint": "#1E4E9A",
+        "guid": "55c57a2b72ffbbc0e275e9c2881cd536"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_ring.png",
+        "tint": "#CFE6FF",
+        "guid": "168157ebbb2d08566df4c8c0f7abb090"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_minimal_emissive_water.png",
+        "tint": "#CFE6FF",
+        "guid": "f4092628abc0f470920140deaf97398e"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tall/glow_minimal_water.png",
+        "tint": null,
+        "guid": "ede849ed061f3598a0e8df91d1bb493e"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_ewaste_alloy.png",
+        "tint": "#6E7376",
+        "guid": "c536bd9e18ba2a27532d1c7196f922e5"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_ewaste_alloy.png",
+        "tint": "#6E7376",
+        "guid": "4afff9da8d2ecd8207b16eff6ab2e5a1"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_ring.png",
+        "tint": "#F2C200",
+        "guid": "168157ebbb2d08566df4c8c0f7abb090"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_minimal_emissive_earth.png",
+        "tint": "#F2C200",
+        "guid": "98e978a0e1c1904f20432b6e249ef37c"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tall/glow_minimal_earth.png",
+        "tint": null,
+        "guid": "9aacb490e69a59c71e167cc5c551106b"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_ewaste_alloy.png",
+        "tint": "#6E7376",
+        "guid": "c536bd9e18ba2a27532d1c7196f922e5"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_anodized.png",
+        "tint": "#dd472e",
+        "guid": "f6b11efa8a81a1adc04fd8b7b1ff0968"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_ring.png",
+        "tint": "#FFE0D6",
+        "guid": "168157ebbb2d08566df4c8c0f7abb090"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_minimal_emissive_fire.png",
+        "tint": "#FFE0D6",
+        "guid": "a565c52399a8281017c0bc0f695f2837"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tall/glow_minimal_fire.png",
+        "tint": null,
+        "guid": "34bbe9963c234d1b31208c60cebd1c83"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_ewaste_alloy.png",
+        "tint": "#6E7376",
+        "guid": "c536bd9e18ba2a27532d1c7196f922e5"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_liquid_chrome.png",
+        "tint": "#ffe35d",
+        "guid": "0c26cf764754a0a3c0a8b1816d1d4aa7"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_ring.png",
+        "tint": "#3A2A08",
+        "guid": "168157ebbb2d08566df4c8c0f7abb090"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_minimal_emissive_air.png",
+        "tint": "#3A2A08",
+        "guid": "a4554b2f7af9d458e50872f5d446e770"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tall/glow_minimal_air.png",
+        "tint": null,
+        "guid": "76276e030c9d216a92d355bee85c7d75"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/tall/shadow.png",
+        "tint": null,
+        "guid": "2656b25ddb6af7194466f1d9ac1ef9ba"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/tall/trim_ewaste_alloy.png",
+        "tint": "#6E7376",
+        "guid": "c536bd9e18ba2a27532d1c7196f922e5"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/tall/paint_ewaste_alloy.png",
+        "tint": "#6E7376",
+        "guid": "4afff9da8d2ecd8207b16eff6ab2e5a1"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/tall/motif_ring.png",
+        "tint": "#F2C200",
+        "guid": "168157ebbb2d08566df4c8c0f7abb090"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/tall/detail.png",
+        "tint": null,
+        "guid": "5d4b2da3004273f4b2c0de95a42d00a8"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/tall/glyph_minimal_emissive_back.png",
+        "tint": "#F2C200",
+        "guid": "7b9b0c540af91f897cb07792fbb853a6"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/tall/glow_minimal_back.png",
+        "tint": null,
+        "guid": "64fe740fc0c60dc149b377dcfdc1e430"
+      }
+    ]
+  }
 }

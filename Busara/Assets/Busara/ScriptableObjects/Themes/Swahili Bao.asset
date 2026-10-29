@@ -28,6 +28,111 @@ MonoBehaviour:
   pieceShielded: {fileID: 21300000, guid: 3147b710cb8e21b8e13b7544883d5b03, type: 3}
   pieceAspect: 1.125
   piecePivotY: 0.4583
+  waterLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: c85d2d88b0980d2497f64886c73ec755, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: 2c848a14361a21f2e39d119f3cd25a7c, type: 3}
+    tinted: 1
+    tint: {r: 0.235294, g: 0.305882, b: 0.678431, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 8f0ea0ceecf31c4090c3a911f89bd3f6, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: relief
+    sprite: {fileID: 21300000, guid: f3b3a7fb0f9d38d99580490e2512299e, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 5a2603644174517c695516ed4356c771, type: 3}
+    tinted: 1
+    tint: {r: 0.94902, g: 0.921569, b: 0.866667, a: 1}
+  earthLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 8ce7b3a538becc13f965140e0aadd1b2, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: e3a64c9f5b927a7a6f6a85d8c8bb2879, type: 3}
+    tinted: 1
+    tint: {r: 0.431373, g: 0.356863, b: 0.305882, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 0febc796b624a20bcd246d6d38ebc6dc, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: relief
+    sprite: {fileID: 21300000, guid: e5564ca223eaa0777c8fab77a62afbd1, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 19e8d4a2c83f6dc2600d4fd6729b4aad, type: 3}
+    tinted: 1
+    tint: {r: 0.886275, g: 0.772549, b: 0.470588, a: 1}
+  fireLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 464e9d94726a27cc30e4e1637fcf53cf, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: ed4a88f90fffce6771a425c7c2ebb77f, type: 3}
+    tinted: 1
+    tint: {r: 0.705882, g: 0.278431, b: 0.180392, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: a85dfb19a0afade697ba6216e85d7a56, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: relief
+    sprite: {fileID: 21300000, guid: 93e75d97755855e05a0e6946bca25738, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 8b161767e26c8fbd0730698a51bb64f8, type: 3}
+    tinted: 1
+    tint: {r: 0.94902, g: 0.921569, b: 0.866667, a: 1}
+  airLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 5f88cd8456565d916bf14f26f8e1739b, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: cb3005356f5dbf0c4f80a522862a1551, type: 3}
+    tinted: 1
+    tint: {r: 0.937255, g: 0.901961, b: 0.823529, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 77af8e3b9377dd862a71e28caffc1719, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: relief
+    sprite: {fileID: 21300000, guid: 287cbf33e4dbef4689c1f7de89be2da0, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 7af8f865383f2af0f89d208d1d335073, type: 3}
+    tinted: 1
+    tint: {r: 0.541176, g: 0.415686, b: 0.243137, a: 1}
+  hiddenLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 8ce7b3a538becc13f965140e0aadd1b2, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: e3a64c9f5b927a7a6f6a85d8c8bb2879, type: 3}
+    tinted: 1
+    tint: {r: 0.431373, g: 0.356863, b: 0.305882, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 0febc796b624a20bcd246d6d38ebc6dc, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: relief
+    sprite: {fileID: 21300000, guid: 821dfc3249e75c47a0d61fa51e7bced9, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: e4afcfe3e28156eb6dd3075c4c3a89b9, type: 3}
+    tinted: 1
+    tint: {r: 0.886275, g: 0.772549, b: 0.470588, a: 1}
   slotHover: {fileID: 21300000, guid: 51684ff171b50499714af82342f5c52b, type: 3}
   slotLegal: {fileID: 21300000, guid: 0b09a3cbd992d1d3909a4fade81dae3c, type: 3}
   slotBlocked: {fileID: 21300000, guid: 48609c62c2be9eb78fe265f16fb07d7a, type: 3}

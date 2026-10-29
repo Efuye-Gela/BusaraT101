@@ -144,5 +144,167 @@
       "height": 256,
       "guid": "2348fbd47dfee45aec894fab8fcdb6e6"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/faceted/shadow.png",
+        "tint": null,
+        "guid": "758bc4e7991a2bf65ea8c998c69b4050"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/faceted/paint_shift_prism.png",
+        "tint": "#4fa5ff",
+        "guid": "59ba3eb3adc02a47c848d1fb9bbfd885"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/faceted/detail.png",
+        "tint": null,
+        "guid": "038bc0245c2654cb9704922b42da1cbd"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/faceted/relief_minimal_carved_water.png",
+        "tint": null,
+        "guid": "a160c0ad470105afa97c666c2bf66d28"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/faceted/glyph_minimal_carved_water.png",
+        "tint": "#1E2B4A",
+        "guid": "94c6fc511c824ae4bdd4557f9e450a51"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/faceted/shadow.png",
+        "tint": null,
+        "guid": "758bc4e7991a2bf65ea8c998c69b4050"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/faceted/paint_shift_prism.png",
+        "tint": "#504f57",
+        "guid": "59ba3eb3adc02a47c848d1fb9bbfd885"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/faceted/detail.png",
+        "tint": null,
+        "guid": "038bc0245c2654cb9704922b42da1cbd"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/faceted/relief_minimal_carved_earth.png",
+        "tint": null,
+        "guid": "98727983e9acaa42ac47bb7373146c5c"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/faceted/glyph_minimal_carved_earth.png",
+        "tint": "#F2EFE6",
+        "guid": "b4c27769e9dd712a787fa398f1a413e3"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/faceted/shadow.png",
+        "tint": null,
+        "guid": "758bc4e7991a2bf65ea8c998c69b4050"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/faceted/paint_shift_prism.png",
+        "tint": "#ff5e3c",
+        "guid": "59ba3eb3adc02a47c848d1fb9bbfd885"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/faceted/detail.png",
+        "tint": null,
+        "guid": "038bc0245c2654cb9704922b42da1cbd"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/faceted/relief_minimal_carved_fire.png",
+        "tint": null,
+        "guid": "119bf6d9f3e8a4769855c5ade22178c0"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/faceted/glyph_minimal_carved_fire.png",
+        "tint": "#3A1208",
+        "guid": "2f21071ff628f67360dd0b9881f4c1a6"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/faceted/shadow.png",
+        "tint": null,
+        "guid": "758bc4e7991a2bf65ea8c998c69b4050"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/faceted/paint_shift_prism.png",
+        "tint": "#fffa4f",
+        "guid": "59ba3eb3adc02a47c848d1fb9bbfd885"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/faceted/detail.png",
+        "tint": null,
+        "guid": "038bc0245c2654cb9704922b42da1cbd"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/faceted/relief_minimal_carved_air.png",
+        "tint": null,
+        "guid": "8dd0aeca77274b4db842157b8589e60a"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/faceted/glyph_minimal_carved_air.png",
+        "tint": "#3A2A08",
+        "guid": "1cfd4a3fcbfe283d678ed080ac8ead6f"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/faceted/shadow.png",
+        "tint": null,
+        "guid": "758bc4e7991a2bf65ea8c998c69b4050"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/faceted/paint_shift_prism.png",
+        "tint": "#504f57",
+        "guid": "59ba3eb3adc02a47c848d1fb9bbfd885"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/faceted/detail.png",
+        "tint": null,
+        "guid": "038bc0245c2654cb9704922b42da1cbd"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/faceted/relief_minimal_carved_back.png",
+        "tint": null,
+        "guid": "b3d485fea76fd4b3631cf571c7d7ef80"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/faceted/glyph_minimal_carved_back.png",
+        "tint": "#F2EFE6",
+        "guid": "203715116d9699f70d030de338879def"
+      }
+    ]
+  }
 }

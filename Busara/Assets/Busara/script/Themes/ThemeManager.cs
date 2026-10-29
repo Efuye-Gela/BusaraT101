@@ -132,12 +132,15 @@ public class ThemeManager : Manager<ThemeManager>
 
     public void SkinResource(Resource resource)
     {
-        BoardTheme theme = ThemeFor(resource);
+        Board board = BoardFor(resource);
+        BoardTheme theme = ThemeOf(board);
+        if (theme == null && catalog != null)
+            theme = catalog.SeatDefault(0);
         if (theme == null)
             return;
         SizePiece(resource);
         Image piece = resource.PieceImage;
-        Sprite sprite = theme.PieceFor(resource.resourceType);
+        Sprite sprite = PieceSprite(theme, resource.resourceType, SeatOf(board));
         if (piece != null && sprite != null)
         {
             piece.sprite = sprite;
@@ -186,15 +189,38 @@ public class ThemeManager : Manager<ThemeManager>
         rect.sizeDelta = grid.cellSize * PieceScale;
     }
 
-    private BoardTheme ThemeFor(Resource resource)
+    /// <summary>The piece composited from the theme's layers in the seat's colour, or the theme's
+    /// pre-composited sprite when it has no layers.</summary>
+    public Sprite PieceSprite(BoardTheme theme, ResourceType type, int seat)
+    {
+        Color? seatColour = catalog != null ? catalog.SeatColour(seat) : null;
+        Sprite composite = PieceCompositor.Compose($"{theme.id}_{type}", theme.LayersFor(type), seatColour,
+            ThemeCatalog.PlayerColourLayers);
+        return composite != null ? composite : theme.PieceFor(type);
+    }
+
+    private static Board BoardFor(Resource resource)
     {
         Board board = resource.slot != null ? resource.slot.board : null;
         if (board == null && TurnManager.Instance != null && TurnManager.Instance.ActivePlayer != null)
             board = TurnManager.Instance.ActivePlayer.Board;
-        BoardTheme theme = ThemeOf(board);
-        if (theme == null && catalog != null)
-            theme = catalog.SeatDefault(0);
-        return theme;
+        return board;
+    }
+
+    /// <summary>Seat index of the player who owns <paramref name="board"/>, in the same order as the seat defaults.</summary>
+    public static int SeatOf(Board board)
+    {
+        if (board == null)
+            return -1;
+        if (PlayerManager.Instance != null && PlayerManager.Instance.Players != null)
+        {
+            int index = PlayerManager.Instance.Players.FindIndex(player => player != null && player.Board == board);
+            if (index >= 0)
+                return index;
+        }
+        if (BoardManager.Instance != null && BoardManager.Instance.gameBoards != null)
+            return BoardManager.Instance.gameBoards.IndexOf(board);
+        return -1;
     }
 
     private static bool LayoutSlots(Board board)

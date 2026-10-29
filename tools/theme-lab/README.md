@@ -79,6 +79,40 @@ Piece sprites are 256 wide and `256 x pieceAspect` tall. The manifest and `Board
 `pieceAspect` and `piecePivotY` (base centre height from the bottom); `ThemeManager` pins that
 point to the slot centre so tall pieces rise over the row behind, and lower rows draw in front.
 
+## Piece layers
+
+Every piece except the cabochon and Classic's raster icons is also exported as a stack of shared
+layer masks under `Sprites/Pieces/<shape>/`. From the bottom up:
+
+| Layer | Drawn as | Tint |
+| --- | --- | --- |
+| `shadow` | contact shadow | none |
+| `trim` | metal rim, band or vial caps | rim metal, or the seat colour |
+| `paint` | white or grey material mask | piece colour |
+| `motif` | dots, ring, charge, veins or stitch | inlay or glow colour, or the seat colour |
+| `detail` | black and white lighting, shared by every material | none |
+| `relief` | carved or gilded relief | none |
+| `glyph` | element glyph (or the back mark) | ink, gold or glow |
+| `glow` | emissive core | none |
+
+Masks with the same key are the same image, so the 75 stacks (15 themes x 4 elements + the
+hidden back) share 222 files. Each theme's `manifest.json` lists its stacks under `layers` (file,
+GUID, tint). The single `piece_*.png` sprites are those stacks pre-composited and stay as the
+fallback.
+
+A layer is drawn as `rgb x tint`, then alpha-composited over the layers below. The exporter
+re-composites every exported stack and compares it with the direct render. The result is written to
+`layer-verification.json`: currently a mean channel delta of 0.22 / 255, at most 50, and only on
+antialiased edges. The export fails if a stack's mean passes 0.5.
+
+Unity's linear colour space would blend separate UI Images in linear light, which washes out the
+lighting (a mean drift of about 6 / 255). So `PieceCompositor` blends the stacks on the CPU in
+sRGB, using the same maths as the check, and caches one sprite per stack and tint set. The layer
+textures import with Read/Write on. `ThemeCatalog.seatColours` (gold, silver, copper, jade)
+replace the `trim` and `motif` tints per seat, so players on the same theme stay distinct. Turn
+this off with `usePlayerColours`. The art lab's *Piece layers* section shows each mask, the
+composites per seat and the live delta.
+
 ## Panther Court interface kit
 
 Panther Court (built from the Afrofuturist superhero-kingdom mockups) also exports a nine-slice

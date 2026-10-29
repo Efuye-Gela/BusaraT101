@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -36,6 +37,16 @@ public class BoardTheme : ScriptableObject
     [Tooltip("Height of the piece's base centre above the sprite's bottom edge, as a fraction of its height.")]
     [Range(0f, 1f)] public float piecePivotY = 0.5f;
 
+    [Header("Piece layers")]
+    [Tooltip("Each piece as a stack of shared layer sprites (Sprites/Pieces/<shape>/), drawn bottom to top with " +
+             "their tint. When set, pieces are composited from these so seats can recolour them; the single piece " +
+             "sprites above are the same art pre-composited and remain the fallback.")]
+    public List<PieceLayer> waterLayers = new List<PieceLayer>();
+    public List<PieceLayer> earthLayers = new List<PieceLayer>();
+    public List<PieceLayer> fireLayers = new List<PieceLayer>();
+    public List<PieceLayer> airLayers = new List<PieceLayer>();
+    public List<PieceLayer> hiddenLayers = new List<PieceLayer>();
+
     [Header("Slot overlays")]
     public Sprite slotHover;
     public Sprite slotLegal;
@@ -61,4 +72,28 @@ public class BoardTheme : ScriptableObject
             default: return null;
         }
     }
+
+    public List<PieceLayer> LayersFor(ResourceType type)
+    {
+        switch (type)
+        {
+            case ResourceType.Water: return waterLayers;
+            case ResourceType.Earth: return earthLayers;
+            case ResourceType.Fire: return fireLayers;
+            case ResourceType.Air: return airLayers;
+            default: return null;
+        }
+    }
+}
+
+/// <summary>One layer of a piece: a greyscale or white mask multiplied by its tint, like a UI Image colour.</summary>
+[System.Serializable]
+public class PieceLayer
+{
+    [Tooltip("shadow, trim, paint, motif, detail, relief, glyph or glow.")]
+    public string name;
+    public Sprite sprite;
+    [Tooltip("Untinted layers (shadow, detail, relief) keep their own colours.")]
+    public bool tinted;
+    public Color tint = Color.white;
 }

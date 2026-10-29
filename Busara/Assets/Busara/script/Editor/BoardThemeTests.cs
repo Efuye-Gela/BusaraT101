@@ -49,6 +49,35 @@ public class BoardThemeTests
     }
 
     [Test]
+    public void LayeredPiecesCompositeAtThePieceSpriteSize()
+    {
+        foreach (BoardTheme theme in LoadCatalog().themes.Where(theme => theme.waterLayers.Count > 0))
+        {
+            foreach (ResourceType type in new[] { ResourceType.Water, ResourceType.Earth, ResourceType.Fire, ResourceType.Air })
+            {
+                List<PieceLayer> layers = theme.LayersFor(type);
+                Assert.That(layers.Select(layer => layer.sprite), Has.None.Null, $"{theme.id} {type} is missing a layer sprite");
+                Sprite composite = PieceCompositor.Compose($"test_{theme.id}_{type}", layers, null, ThemeCatalog.PlayerColourLayers);
+                Assert.That(composite, Is.Not.Null, $"{theme.id} {type} layers did not composite (Read/Write off?)");
+                Assert.That(composite.rect.size, Is.EqualTo(theme.PieceFor(type).rect.size));
+            }
+            Assert.That(theme.hiddenLayers, Is.Not.Empty, $"{theme.id} has no hidden-piece layers");
+        }
+    }
+
+    [Test]
+    public void SeatColourOnlyRecoloursTrimAndMotif()
+    {
+        BoardTheme theme = LoadCatalog().themes.FirstOrDefault(t => t.waterLayers.Any(layer => layer.name == "motif"));
+        Assert.That(theme, Is.Not.Null);
+        Sprite plain = PieceCompositor.Compose("seat_test", theme.waterLayers, null, ThemeCatalog.PlayerColourLayers);
+        Sprite jade = PieceCompositor.Compose("seat_test", theme.waterLayers, new Color(0.31f, 0.71f, 0.54f), ThemeCatalog.PlayerColourLayers);
+        Sprite paintOnly = PieceCompositor.Compose("seat_test", theme.waterLayers, Color.red, new[] { "no-such-layer" });
+        Assert.That(jade, Is.Not.SameAs(plain));
+        Assert.That(paintOnly, Is.SameAs(plain), "an override that names no layer should reuse the cached composite");
+    }
+
+    [Test]
     public void SeatDefaultsAndCyclingStayInsideTheCatalog()
     {
         ThemeCatalog catalog = LoadCatalog();

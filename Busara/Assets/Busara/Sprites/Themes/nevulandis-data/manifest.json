@@ -144,5 +144,227 @@
       "height": 256,
       "guid": "1d4f6233c20393a2aa355e1bd81bf236"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/vial/shadow.png",
+        "tint": null,
+        "guid": "3958d7f9aa910e8d21ab87ac409b6e8d"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_base_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "a8455a790bf7927c6a14ba4ce39d2dcf"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/vial/paint_crystal.png",
+        "tint": "#226fbe",
+        "guid": "bfda55e2011014c6624b2b01f85c10f5"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_top_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "c90a13e418614d532a91ed3c6cc0f1c9"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/vial/detail.png",
+        "tint": null,
+        "guid": "72f4072695bb7e308cc88f4a1c1b2d13"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/vial/glyph_minimal_emissive_water.png",
+        "tint": "#BFE9FF",
+        "guid": "9a4f462001bba820afe881e444007c82"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/vial/glow_minimal_water.png",
+        "tint": null,
+        "guid": "4f124a742462e7ada66423f2e5eede64"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/vial/shadow.png",
+        "tint": null,
+        "guid": "3958d7f9aa910e8d21ab87ac409b6e8d"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_base_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "a8455a790bf7927c6a14ba4ce39d2dcf"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/vial/paint_crystal.png",
+        "tint": "#343b3f",
+        "guid": "bfda55e2011014c6624b2b01f85c10f5"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_top_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "c90a13e418614d532a91ed3c6cc0f1c9"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/vial/detail.png",
+        "tint": null,
+        "guid": "72f4072695bb7e308cc88f4a1c1b2d13"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/vial/glyph_minimal_emissive_earth.png",
+        "tint": "#E6ECEF",
+        "guid": "f9e9f60fa609aa3797e6f1c3ccf3c789"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/vial/glow_minimal_earth.png",
+        "tint": null,
+        "guid": "b8af3de6f9a01bd49b3f6671f159dc31"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/vial/shadow.png",
+        "tint": null,
+        "guid": "3958d7f9aa910e8d21ab87ac409b6e8d"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_base_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "a8455a790bf7927c6a14ba4ce39d2dcf"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/vial/paint_crystal.png",
+        "tint": "#be3823",
+        "guid": "bfda55e2011014c6624b2b01f85c10f5"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_top_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "c90a13e418614d532a91ed3c6cc0f1c9"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/vial/detail.png",
+        "tint": null,
+        "guid": "72f4072695bb7e308cc88f4a1c1b2d13"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/vial/glyph_minimal_emissive_fire.png",
+        "tint": "#FFD2C4",
+        "guid": "b64dacbbda6f81cb014df7fb1d87d85c"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/vial/glow_minimal_fire.png",
+        "tint": null,
+        "guid": "7c391a7aef25328e5b084bc3d521e71f"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/vial/shadow.png",
+        "tint": null,
+        "guid": "3958d7f9aa910e8d21ab87ac409b6e8d"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_base_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "a8455a790bf7927c6a14ba4ce39d2dcf"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/vial/paint_crystal.png",
+        "tint": "#e3a026",
+        "guid": "bfda55e2011014c6624b2b01f85c10f5"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_top_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "c90a13e418614d532a91ed3c6cc0f1c9"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/vial/detail.png",
+        "tint": null,
+        "guid": "72f4072695bb7e308cc88f4a1c1b2d13"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/vial/glyph_minimal_emissive_air.png",
+        "tint": "#FFF0C4",
+        "guid": "f32abbb525c15eebc7a0f12d47958122"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/vial/glow_minimal_air.png",
+        "tint": null,
+        "guid": "2aaf67d87cf56c22a89562955a815b48"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/vial/shadow.png",
+        "tint": null,
+        "guid": "3958d7f9aa910e8d21ab87ac409b6e8d"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_base_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "a8455a790bf7927c6a14ba4ce39d2dcf"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/vial/paint_crystal.png",
+        "tint": "#343b3f",
+        "guid": "bfda55e2011014c6624b2b01f85c10f5"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/vial/trim_top_silver.png",
+        "tint": "#B9BCC0",
+        "guid": "c90a13e418614d532a91ed3c6cc0f1c9"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/vial/detail.png",
+        "tint": null,
+        "guid": "72f4072695bb7e308cc88f4a1c1b2d13"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/vial/glyph_minimal_emissive_back.png",
+        "tint": "#E6ECEF",
+        "guid": "d9b21fcbab5a2828676b0b40d72bd75f"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/vial/glow_minimal_back.png",
+        "tint": null,
+        "guid": "f0a3f3446c2978a3d687c78a5177f2d7"
+      }
+    ]
+  }
 }

@@ -34,3 +34,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d0ac1ef6987e9f573e3377f1f616ccc, type: 2}
   - {fileID: 11400000, guid: 8c9cc85c49d60b2f5a7b1e27458de99d, type: 2}
   - {fileID: 11400000, guid: ff2099fc5749aedfcd6f07cb14464e99, type: 2}
+  usePlayerColours: 1
+  seatColours:
+  - {r: 0.886275, g: 0.709804, b: 0.290196, a: 1}
+  - {r: 0.85098, g: 0.866667, b: 0.890196, a: 1}
+  - {r: 0.784314, g: 0.458824, b: 0.290196, a: 1}
+  - {r: 0.309804, g: 0.709804, b: 0.541176, a: 1}

@@ -145,5 +145,167 @@
       "height": 256,
       "guid": "44e6d94ea46a5c919254d6fe065ba984"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/pebble/shadow_water.png",
+        "tint": null,
+        "guid": "611846aba4af6aaaddb697e18151987f"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/pebble/paint_river_stone_water.png",
+        "tint": "#3D566B",
+        "guid": "22880254c3ec3dae4d94c4bdae01ec58"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/pebble/detail_water.png",
+        "tint": null,
+        "guid": "e7d60788c40bd21dbcc2e30ed67d7075"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/pebble/glyph_ornate_emissive_water.png",
+        "tint": "#7FD8FF",
+        "guid": "d1f1fa6b042077b6515d38c1f98ba84a"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/pebble/glow_ornate_water.png",
+        "tint": null,
+        "guid": "5bbe426eb58c49cff3a9bc7cd9a737ea"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/pebble/shadow_earth.png",
+        "tint": null,
+        "guid": "8c2de3801b63019be467c44e25047b0f"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/pebble/paint_river_stone_earth.png",
+        "tint": "#2A2C2E",
+        "guid": "09699f3c2d08ccca76d6039804a66caf"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/pebble/detail_earth.png",
+        "tint": null,
+        "guid": "37a21194aee222415fc4a61b653c6ad9"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/pebble/glyph_ornate_emissive_earth.png",
+        "tint": "#D6E7EC",
+        "guid": "105cefc5893ffecf702f09b70cddf518"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/pebble/glow_ornate_earth.png",
+        "tint": null,
+        "guid": "e6815ef3640f3a09c944322fdfadaf8f"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/pebble/shadow_fire.png",
+        "tint": null,
+        "guid": "32e7ebbad99425940b64afd29576d305"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/pebble/paint_river_stone_fire.png",
+        "tint": "#7A3A2A",
+        "guid": "6c8c092abfb1cb891bc2c19f637d9469"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/pebble/detail_fire.png",
+        "tint": null,
+        "guid": "d11a33b03d11667b01dd2a8d962f93ca"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/pebble/glyph_ornate_emissive_fire.png",
+        "tint": "#FF9A7A",
+        "guid": "a44a322eeafcc0b70931312edd1d29fa"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/pebble/glow_ornate_fire.png",
+        "tint": null,
+        "guid": "9832927e3776f1725ee34787f0f2026c"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/pebble/shadow_air.png",
+        "tint": null,
+        "guid": "b18e7365ed1db077bf1a7998d8e9eeed"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/pebble/paint_marble_air.png",
+        "tint": "#E6E1D8",
+        "guid": "3b361587e6bd2a613af4dd668f0abd8b"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/pebble/detail_air.png",
+        "tint": null,
+        "guid": "70e63b23e19e14e5fe15990aa4f3afd4"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/pebble/glyph_ornate_emissive_air.png",
+        "tint": "#E3A93A",
+        "guid": "a55758b737e8caef4a4423a5b2a16c6c"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/pebble/glow_ornate_air.png",
+        "tint": null,
+        "guid": "4f46cc36259c1af8e3d394f59685c7d9"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/pebble/shadow_earth.png",
+        "tint": null,
+        "guid": "8c2de3801b63019be467c44e25047b0f"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/pebble/paint_river_stone_earth.png",
+        "tint": "#2A2C2E",
+        "guid": "09699f3c2d08ccca76d6039804a66caf"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/pebble/detail_earth.png",
+        "tint": null,
+        "guid": "37a21194aee222415fc4a61b653c6ad9"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/pebble/glyph_ornate_emissive_back.png",
+        "tint": "#D6E7EC",
+        "guid": "12fa1e88f9808c4f6d088251b9db7f2f"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/pebble/glow_ornate_back.png",
+        "tint": null,
+        "guid": "f0c7c4a44230872fb200a6e2f40b258e"
+      }
+    ]
+  }
 }

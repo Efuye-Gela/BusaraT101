@@ -28,6 +28,131 @@ MonoBehaviour:
   pieceShielded: {fileID: 21300000, guid: 8cd9fb96718ca589309d46fafcf948a4, type: 3}
   pieceAspect: 1.1094
   piecePivotY: 0.4648
+  waterLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 41ce95817e0d23d7a726bbbb8667ef7e, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: a355d88c60fc16db8577d9c147cedff6, type: 3}
+    tinted: 1
+    tint: {r: 0.690196, g: 0.541176, b: 0.243137, a: 1}
+  - name: motif
+    sprite: {fileID: 21300000, guid: f7a43d8983afa81bf0d0c6e257f6dc7f, type: 3}
+    tinted: 1
+    tint: {r: 0.372549, g: 0.705882, b: 1, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 350614e3f9d0c0b11d064a657c5cb7a2, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 59224f4f491c68c63c4835d5e66ee752, type: 3}
+    tinted: 1
+    tint: {r: 0.372549, g: 0.705882, b: 1, a: 1}
+  - name: glow
+    sprite: {fileID: 21300000, guid: e5c2603a746869e723467b0d69dee7ed, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  earthLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 41ce95817e0d23d7a726bbbb8667ef7e, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: 443b31bdfc16afd9042c0058c08ac699, type: 3}
+    tinted: 1
+    tint: {r: 0.486275, g: 0.333333, b: 0.188235, a: 1}
+  - name: motif
+    sprite: {fileID: 21300000, guid: f7a43d8983afa81bf0d0c6e257f6dc7f, type: 3}
+    tinted: 1
+    tint: {r: 0.486275, g: 0.878431, b: 0.627451, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 350614e3f9d0c0b11d064a657c5cb7a2, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 6609b5cd69901e5d019541d9cdca26ad, type: 3}
+    tinted: 1
+    tint: {r: 0.486275, g: 0.878431, b: 0.627451, a: 1}
+  - name: glow
+    sprite: {fileID: 21300000, guid: 73a4b51bc823bfcc452c6aaa00f6190b, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  fireLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 41ce95817e0d23d7a726bbbb8667ef7e, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: 8a413923ce4c54a615edadfdb821da67, type: 3}
+    tinted: 1
+    tint: {r: 0.662745, g: 0.345098, b: 0.227451, a: 1}
+  - name: motif
+    sprite: {fileID: 21300000, guid: f7a43d8983afa81bf0d0c6e257f6dc7f, type: 3}
+    tinted: 1
+    tint: {r: 1, g: 0.478431, b: 0.321569, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 350614e3f9d0c0b11d064a657c5cb7a2, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 4f8006f4caaf4304510ce662721fc120, type: 3}
+    tinted: 1
+    tint: {r: 1, g: 0.478431, b: 0.321569, a: 1}
+  - name: glow
+    sprite: {fileID: 21300000, guid: 1ded01eab0fff3c0932a5e96d85e9a41, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  airLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 41ce95817e0d23d7a726bbbb8667ef7e, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: efdc8a43d1f457bb91dc9a6176680e48, type: 3}
+    tinted: 1
+    tint: {r: 0.788235, g: 0.588235, b: 0.180392, a: 1}
+  - name: motif
+    sprite: {fileID: 21300000, guid: f7a43d8983afa81bf0d0c6e257f6dc7f, type: 3}
+    tinted: 1
+    tint: {r: 1, g: 0.941176, b: 0.690196, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 350614e3f9d0c0b11d064a657c5cb7a2, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: 9192382b368a81ee44ac76f08cd6eed9, type: 3}
+    tinted: 1
+    tint: {r: 1, g: 0.941176, b: 0.690196, a: 1}
+  - name: glow
+    sprite: {fileID: 21300000, guid: 8f4c6072169628d9dc14af18ca6e6b3f, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  hiddenLayers:
+  - name: shadow
+    sprite: {fileID: 21300000, guid: 41ce95817e0d23d7a726bbbb8667ef7e, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: paint
+    sprite: {fileID: 21300000, guid: 443b31bdfc16afd9042c0058c08ac699, type: 3}
+    tinted: 1
+    tint: {r: 0.486275, g: 0.333333, b: 0.188235, a: 1}
+  - name: motif
+    sprite: {fileID: 21300000, guid: f7a43d8983afa81bf0d0c6e257f6dc7f, type: 3}
+    tinted: 1
+    tint: {r: 0.486275, g: 0.878431, b: 0.627451, a: 1}
+  - name: detail
+    sprite: {fileID: 21300000, guid: 350614e3f9d0c0b11d064a657c5cb7a2, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - name: glyph
+    sprite: {fileID: 21300000, guid: fee3ea5624cc704a44ced63db40740ca, type: 3}
+    tinted: 1
+    tint: {r: 0.486275, g: 0.878431, b: 0.627451, a: 1}
+  - name: glow
+    sprite: {fileID: 21300000, guid: 3ec72cf3fc9ea2c0716f0a5ec65a13ea, type: 3}
+    tinted: 0
+    tint: {r: 1, g: 1, b: 1, a: 1}
   slotHover: {fileID: 21300000, guid: c03f2a03afbeedc6e300f7d4dd242a64, type: 3}
   slotLegal: {fileID: 21300000, guid: da30aa40175e90807fc758e8471ac0de, type: 3}
   slotBlocked: {fileID: 21300000, guid: cfd7445a2b134dc29a509dac9ef4ea11, type: 3}

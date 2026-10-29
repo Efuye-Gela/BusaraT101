@@ -1,0 +1,492 @@
+{
+  "summary": {
+    "stacks": 75,
+    "meanDelta": 0.2205,
+    "worstMeanDelta": 0.3281,
+    "worstMaxDelta": 50,
+    "unityLinearMeanDelta": 6.3434,
+    "unityLinearWorstMax": 80
+  },
+  "themes": {
+    "akan-goldweight": {
+      "water": {
+        "mean": 0.2244,
+        "max": 13,
+        "linearMean": 5.2644,
+        "linearMax": 49
+      },
+      "earth": {
+        "mean": 0.2149,
+        "max": 3,
+        "linearMean": 5.0849,
+        "linearMax": 49
+      },
+      "fire": {
+        "mean": 0.2509,
+        "max": 43,
+        "linearMean": 4.9657,
+        "linearMax": 63
+      },
+      "air": {
+        "mean": 0.1969,
+        "max": 35,
+        "linearMean": 5.6157,
+        "linearMax": 58
+      },
+      "hidden": {
+        "mean": 0.2167,
+        "max": 3,
+        "linearMean": 5.1912,
+        "linearMax": 49
+      }
+    },
+    "kuba-raffia": {
+      "water": {
+        "mean": 0.2872,
+        "max": 14,
+        "linearMean": 5.2574,
+        "linearMax": 65
+      },
+      "earth": {
+        "mean": 0.1866,
+        "max": 4,
+        "linearMean": 5.0431,
+        "linearMax": 62
+      },
+      "fire": {
+        "mean": 0.2888,
+        "max": 30,
+        "linearMean": 5.0692,
+        "linearMax": 59
+      },
+      "air": {
+        "mean": 0.2616,
+        "max": 29,
+        "linearMean": 6.4245,
+        "linearMax": 69
+      },
+      "hidden": {
+        "mean": 0.1859,
+        "max": 4,
+        "linearMean": 5.157,
+        "linearMax": 62
+      }
+    },
+    "aksum-stele": {
+      "water": {
+        "mean": 0.2187,
+        "max": 3,
+        "linearMean": 4.7007,
+        "linearMax": 34
+      },
+      "earth": {
+        "mean": 0.2306,
+        "max": 3,
+        "linearMean": 3.0935,
+        "linearMax": 46
+      },
+      "fire": {
+        "mean": 0.2678,
+        "max": 3,
+        "linearMean": 4.7629,
+        "linearMax": 50
+      },
+      "air": {
+        "mean": 0.2451,
+        "max": 4,
+        "linearMean": 12.5689,
+        "linearMax": 68
+      },
+      "hidden": {
+        "mean": 0.2312,
+        "max": 3,
+        "linearMean": 3.1482,
+        "linearMax": 47
+      }
+    },
+    "imigongo-relief": {
+      "water": {
+        "mean": 0.2435,
+        "max": 18,
+        "linearMean": 4.7343,
+        "linearMax": 49
+      },
+      "earth": {
+        "mean": 0.3171,
+        "max": 7,
+        "linearMean": 7.063,
+        "linearMax": 59
+      },
+      "fire": {
+        "mean": 0.2292,
+        "max": 39,
+        "linearMean": 5.8529,
+        "linearMax": 80
+      },
+      "air": {
+        "mean": 0.3086,
+        "max": 33,
+        "linearMean": 6.5142,
+        "linearMax": 74
+      },
+      "hidden": {
+        "mean": 0.3165,
+        "max": 4,
+        "linearMean": 7.2254,
+        "linearMax": 56
+      }
+    },
+    "swahili-bao": {
+      "water": {
+        "mean": 0.1515,
+        "max": 10,
+        "linearMean": 3.5362,
+        "linearMax": 56
+      },
+      "earth": {
+        "mean": 0.1917,
+        "max": 3,
+        "linearMean": 3.1538,
+        "linearMax": 48
+      },
+      "fire": {
+        "mean": 0.1607,
+        "max": 21,
+        "linearMean": 4.1097,
+        "linearMax": 60
+      },
+      "air": {
+        "mean": 0.1689,
+        "max": 27,
+        "linearMean": 8.594,
+        "linearMax": 68
+      },
+      "hidden": {
+        "mean": 0.1911,
+        "max": 3,
+        "linearMean": 3.2431,
+        "linearMax": 49
+      }
+    },
+    "meroe-faience": {
+      "water": {
+        "mean": 0.3281,
+        "max": 3,
+        "linearMean": 5.5962,
+        "linearMax": 54
+      },
+      "earth": {
+        "mean": 0.303,
+        "max": 3,
+        "linearMean": 6.7012,
+        "linearMax": 56
+      },
+      "fire": {
+        "mean": 0.2861,
+        "max": 3,
+        "linearMean": 5.9352,
+        "linearMax": 53
+      },
+      "air": {
+        "mean": 0.2044,
+        "max": 3,
+        "linearMean": 5.4434,
+        "linearMax": 58
+      },
+      "hidden": {
+        "mean": 0.3004,
+        "max": 3,
+        "linearMean": 6.7246,
+        "linearMax": 57
+      }
+    },
+    "agadez-silver": {
+      "water": {
+        "mean": 0.2534,
+        "max": 25,
+        "linearMean": 6.9079,
+        "linearMax": 59
+      },
+      "earth": {
+        "mean": 0.2475,
+        "max": 4,
+        "linearMean": 5.8737,
+        "linearMax": 61
+      },
+      "fire": {
+        "mean": 0.2806,
+        "max": 26,
+        "linearMean": 7.7607,
+        "linearMax": 76
+      },
+      "air": {
+        "mean": 0.2924,
+        "max": 50,
+        "linearMean": 10.7387,
+        "linearMax": 67
+      },
+      "hidden": {
+        "mean": 0.2486,
+        "max": 4,
+        "linearMean": 5.9944,
+        "linearMax": 61
+      }
+    },
+    "nevulandis-data": {
+      "water": {
+        "mean": 0.1955,
+        "max": 4,
+        "linearMean": 5.1138,
+        "linearMax": 63
+      },
+      "earth": {
+        "mean": 0.1898,
+        "max": 4,
+        "linearMean": 5.8403,
+        "linearMax": 60
+      },
+      "fire": {
+        "mean": 0.191,
+        "max": 4,
+        "linearMean": 5.3838,
+        "linearMax": 63
+      },
+      "air": {
+        "mean": 0.1873,
+        "max": 4,
+        "linearMean": 4.8788,
+        "linearMax": 63
+      },
+      "hidden": {
+        "mean": 0.1901,
+        "max": 4,
+        "linearMean": 6.1505,
+        "linearMax": 60
+      }
+    },
+    "ubunifu-dreamcraft": {
+      "water": {
+        "mean": 0.1548,
+        "max": 7,
+        "linearMean": 7.221,
+        "linearMax": 73
+      },
+      "earth": {
+        "mean": 0.1395,
+        "max": 7,
+        "linearMean": 5.5664,
+        "linearMax": 73
+      },
+      "fire": {
+        "mean": 0.172,
+        "max": 7,
+        "linearMean": 7.0043,
+        "linearMax": 73
+      },
+      "air": {
+        "mean": 0.1874,
+        "max": 7,
+        "linearMean": 8.3209,
+        "linearMax": 73
+      },
+      "hidden": {
+        "mean": 0.1416,
+        "max": 7,
+        "linearMean": 6.427,
+        "linearMax": 73
+      }
+    },
+    "eko-2090": {
+      "water": {
+        "mean": 0.2578,
+        "max": 4,
+        "linearMean": 6.1063,
+        "linearMax": 52
+      },
+      "earth": {
+        "mean": 0.2714,
+        "max": 4,
+        "linearMean": 7.2148,
+        "linearMax": 73
+      },
+      "fire": {
+        "mean": 0.2573,
+        "max": 4,
+        "linearMean": 7.112,
+        "linearMax": 61
+      },
+      "air": {
+        "mean": 0.2831,
+        "max": 4,
+        "linearMean": 10.6318,
+        "linearMax": 73
+      },
+      "hidden": {
+        "mean": 0.2749,
+        "max": 4,
+        "linearMean": 7.3847,
+        "linearMax": 62
+      }
+    },
+    "volta-resonance": {
+      "water": {
+        "mean": 0.1063,
+        "max": 2,
+        "linearMean": 4.2074,
+        "linearMax": 71
+      },
+      "earth": {
+        "mean": 0.1327,
+        "max": 3,
+        "linearMean": 4.1444,
+        "linearMax": 55
+      },
+      "fire": {
+        "mean": 0.1311,
+        "max": 2,
+        "linearMean": 4.0629,
+        "linearMax": 72
+      },
+      "air": {
+        "mean": 0.1144,
+        "max": 2,
+        "linearMean": 4.7451,
+        "linearMax": 72
+      },
+      "hidden": {
+        "mean": 0.1339,
+        "max": 3,
+        "linearMean": 4.5277,
+        "linearMax": 55
+      }
+    },
+    "kente-circuit": {
+      "water": {
+        "mean": 0.2211,
+        "max": 3,
+        "linearMean": 6.0742,
+        "linearMax": 50
+      },
+      "earth": {
+        "mean": 0.2531,
+        "max": 3,
+        "linearMean": 5.8447,
+        "linearMax": 50
+      },
+      "fire": {
+        "mean": 0.2699,
+        "max": 3,
+        "linearMean": 5.6205,
+        "linearMax": 49
+      },
+      "air": {
+        "mean": 0.1822,
+        "max": 3,
+        "linearMean": 5.9112,
+        "linearMax": 58
+      },
+      "hidden": {
+        "mean": 0.2536,
+        "max": 3,
+        "linearMean": 6.1128,
+        "linearMax": 50
+      }
+    },
+    "lalibela-orbital": {
+      "water": {
+        "mean": 0.2011,
+        "max": 3,
+        "linearMean": 4.4742,
+        "linearMax": 38
+      },
+      "earth": {
+        "mean": 0.212,
+        "max": 3,
+        "linearMean": 3.9199,
+        "linearMax": 49
+      },
+      "fire": {
+        "mean": 0.2322,
+        "max": 3,
+        "linearMean": 4.1767,
+        "linearMax": 39
+      },
+      "air": {
+        "mean": 0.2426,
+        "max": 4,
+        "linearMean": 13.0224,
+        "linearMax": 68
+      },
+      "hidden": {
+        "mean": 0.2118,
+        "max": 3,
+        "linearMean": 4.7994,
+        "linearMax": 50
+      }
+    },
+    "danakil-prism": {
+      "water": {
+        "mean": 0.1859,
+        "max": 13,
+        "linearMean": 6.2597,
+        "linearMax": 73
+      },
+      "earth": {
+        "mean": 0.28,
+        "max": 4,
+        "linearMean": 7.9729,
+        "linearMax": 52
+      },
+      "fire": {
+        "mean": 0.2716,
+        "max": 23,
+        "linearMean": 7.4381,
+        "linearMax": 73
+      },
+      "air": {
+        "mean": 0.2145,
+        "max": 42,
+        "linearMean": 6.7466,
+        "linearMax": 73
+      },
+      "hidden": {
+        "mean": 0.2803,
+        "max": 4,
+        "linearMean": 7.9663,
+        "linearMax": 53
+      }
+    },
+    "panther-court": {
+      "water": {
+        "mean": 0.1768,
+        "max": 7,
+        "linearMean": 10.5754,
+        "linearMax": 73
+      },
+      "earth": {
+        "mean": 0.1366,
+        "max": 7,
+        "linearMean": 10.8098,
+        "linearMax": 73
+      },
+      "fire": {
+        "mean": 0.169,
+        "max": 7,
+        "linearMean": 10.1442,
+        "linearMax": 73
+      },
+      "air": {
+        "mean": 0.1633,
+        "max": 7,
+        "linearMean": 11.094,
+        "linearMax": 73
+      },
+      "hidden": {
+        "mean": 0.1377,
+        "max": 7,
+        "linearMean": 11.7019,
+        "linearMax": 73
+      }
+    }
+  }
+}

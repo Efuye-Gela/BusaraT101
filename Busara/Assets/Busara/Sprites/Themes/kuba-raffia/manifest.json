@@ -144,5 +144,227 @@
       "height": 256,
       "guid": "db53d68d5343bfb3468a8defd9022c60"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/coin/shadow.png",
+        "tint": null,
+        "guid": "15624642c31679034ed245811649e275"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/coin/trim_copper.png",
+        "tint": "#A9583A",
+        "guid": "1fd27e6c5905776ae0602dcce6218702"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/coin/paint_leather_indigo.png",
+        "tint": "#25335A",
+        "guid": "80152316e0e98b245351b0ed5f2518c6"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/coin/motif_dots.png",
+        "tint": "#EFE6D2",
+        "guid": "0e348c101ea98162bf5de803d3b3f82f"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/coin/detail.png",
+        "tint": null,
+        "guid": "aba8658ef9c85ff14a2afff8e19dd4d5"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/coin/relief_ornate_carved_water.png",
+        "tint": null,
+        "guid": "a24f21af7ea06ac55263185cf0310b03"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/coin/glyph_ornate_carved_water.png",
+        "tint": "#EFE6D2",
+        "guid": "3ab35430cf914f422571b4e633a0642a"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/coin/shadow.png",
+        "tint": null,
+        "guid": "15624642c31679034ed245811649e275"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/coin/trim_copper.png",
+        "tint": "#A9583A",
+        "guid": "1fd27e6c5905776ae0602dcce6218702"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/coin/paint_malachite.png",
+        "tint": "#21875e",
+        "guid": "4689c40e7ad458ac8e958731ee28a3a4"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/coin/motif_dots.png",
+        "tint": "#EFE6D2",
+        "guid": "0e348c101ea98162bf5de803d3b3f82f"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/coin/detail.png",
+        "tint": null,
+        "guid": "aba8658ef9c85ff14a2afff8e19dd4d5"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/coin/relief_ornate_carved_earth.png",
+        "tint": null,
+        "guid": "85141b9a52bd754b3b5c76a9b1b45445"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/coin/glyph_ornate_carved_earth.png",
+        "tint": "#EFE6D2",
+        "guid": "950e06303cee53659776606acb90a3ee"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/coin/shadow.png",
+        "tint": null,
+        "guid": "15624642c31679034ed245811649e275"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/coin/trim_copper.png",
+        "tint": "#A9583A",
+        "guid": "1fd27e6c5905776ae0602dcce6218702"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/coin/paint_camwood.png",
+        "tint": "#8F2F22",
+        "guid": "709a1afad5b226728f468d54bf030fb2"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/coin/motif_dots.png",
+        "tint": "#EFE6D2",
+        "guid": "0e348c101ea98162bf5de803d3b3f82f"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/coin/detail.png",
+        "tint": null,
+        "guid": "aba8658ef9c85ff14a2afff8e19dd4d5"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/coin/relief_ornate_carved_fire.png",
+        "tint": null,
+        "guid": "8a5617fa18c411de4b8fba6efbfb85e9"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/coin/glyph_ornate_carved_fire.png",
+        "tint": "#EFE6D2",
+        "guid": "babb5db2f4f357cf20ef4b0d0a97d208"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/coin/shadow.png",
+        "tint": null,
+        "guid": "15624642c31679034ed245811649e275"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/coin/trim_copper.png",
+        "tint": "#A9583A",
+        "guid": "1fd27e6c5905776ae0602dcce6218702"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/coin/paint_cowrie.png",
+        "tint": "#EFE6D2",
+        "guid": "71bc70b3bcd2c7d145e3078f74a21aa5"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/coin/motif_dots.png",
+        "tint": "#7A4A1E",
+        "guid": "0e348c101ea98162bf5de803d3b3f82f"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/coin/detail.png",
+        "tint": null,
+        "guid": "aba8658ef9c85ff14a2afff8e19dd4d5"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/coin/relief_ornate_carved_air.png",
+        "tint": null,
+        "guid": "85d3a9cbdb1e3470aacc94c1b14bff3b"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/coin/glyph_ornate_carved_air.png",
+        "tint": "#7A4A1E",
+        "guid": "5b000a8363137e9692cdf35bacb72ad5"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/coin/shadow.png",
+        "tint": null,
+        "guid": "15624642c31679034ed245811649e275"
+      },
+      {
+        "name": "trim",
+        "file": "Pieces/coin/trim_copper.png",
+        "tint": "#A9583A",
+        "guid": "1fd27e6c5905776ae0602dcce6218702"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/coin/paint_malachite.png",
+        "tint": "#21875e",
+        "guid": "4689c40e7ad458ac8e958731ee28a3a4"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/coin/motif_dots.png",
+        "tint": "#EFE6D2",
+        "guid": "0e348c101ea98162bf5de803d3b3f82f"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/coin/detail.png",
+        "tint": null,
+        "guid": "aba8658ef9c85ff14a2afff8e19dd4d5"
+      },
+      {
+        "name": "relief",
+        "file": "Pieces/coin/relief_ornate_carved_back.png",
+        "tint": null,
+        "guid": "afadab8c166fbc35804705a350de2d69"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/coin/glyph_ornate_carved_back.png",
+        "tint": "#EFE6D2",
+        "guid": "47e0c0c22186dd90495f6e8d1f08c5ee"
+      }
+    ]
+  }
 }

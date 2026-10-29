@@ -337,5 +337,197 @@
       "height": 256,
       "guid": "53699c9862e6c70b945c581b2a9392a4"
     }
-  ]
+  ],
+  "layers": {
+    "water": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_kinetic_bead.png",
+        "tint": "#121218",
+        "guid": "e882e11b970b68bb6028c1c7d42f3961"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_charge.png",
+        "tint": "#3E8BFF",
+        "guid": "71aec69e818db1eb2f1f69ed76c70850"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_angular_emissive_water.png",
+        "tint": "#3E8BFF",
+        "guid": "907dc00ceb67ff1a89ccd68594ec57e4"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_angular_water.png",
+        "tint": null,
+        "guid": "5077a9381776995755dd7e1605794834"
+      }
+    ],
+    "earth": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_kinetic_ore.png",
+        "tint": "#FFFFFF",
+        "guid": "e63f249f2606f1c69119400cfcbe9aa8"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_charge.png",
+        "tint": "#B07CFF",
+        "guid": "71aec69e818db1eb2f1f69ed76c70850"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_angular_emissive_earth.png",
+        "tint": "#B07CFF",
+        "guid": "248ec28afd28d73ef1a585ed35566a0d"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_angular_earth.png",
+        "tint": null,
+        "guid": "15fb7e5c30692d8c94bf8aab9228e16d"
+      }
+    ],
+    "fire": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_kinetic_bead.png",
+        "tint": "#121218",
+        "guid": "e882e11b970b68bb6028c1c7d42f3961"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_charge.png",
+        "tint": "#FF5A2E",
+        "guid": "71aec69e818db1eb2f1f69ed76c70850"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_angular_emissive_fire.png",
+        "tint": "#FF5A2E",
+        "guid": "5eb81a625c6bbd90f3b3040b0f104c12"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_angular_fire.png",
+        "tint": null,
+        "guid": "d775a9844ae6d92693674b99a7cb6efb"
+      }
+    ],
+    "air": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_kinetic_bead.png",
+        "tint": "#121218",
+        "guid": "e882e11b970b68bb6028c1c7d42f3961"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_charge.png",
+        "tint": "#FFB830",
+        "guid": "71aec69e818db1eb2f1f69ed76c70850"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_angular_emissive_air.png",
+        "tint": "#FFB830",
+        "guid": "94bbc68bb88814f0718942790c3d39db"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_angular_air.png",
+        "tint": null,
+        "guid": "5ad5139cbad3d581cdcd9168027b363d"
+      }
+    ],
+    "hidden": [
+      {
+        "name": "shadow",
+        "file": "Pieces/sphere/shadow.png",
+        "tint": null,
+        "guid": "bb651481ca04fff80289b4a3cfa72109"
+      },
+      {
+        "name": "paint",
+        "file": "Pieces/sphere/paint_kinetic_ore.png",
+        "tint": "#FFFFFF",
+        "guid": "e63f249f2606f1c69119400cfcbe9aa8"
+      },
+      {
+        "name": "motif",
+        "file": "Pieces/sphere/motif_charge.png",
+        "tint": "#B07CFF",
+        "guid": "71aec69e818db1eb2f1f69ed76c70850"
+      },
+      {
+        "name": "detail",
+        "file": "Pieces/sphere/detail.png",
+        "tint": null,
+        "guid": "b4fffd65d821fa639ca189fc395d6132"
+      },
+      {
+        "name": "glyph",
+        "file": "Pieces/sphere/glyph_angular_emissive_back.png",
+        "tint": "#B07CFF",
+        "guid": "e30350fc99506eb49f03df2fb8a59e5e"
+      },
+      {
+        "name": "glow",
+        "file": "Pieces/sphere/glow_angular_back.png",
+        "tint": null,
+        "guid": "1d2dcff401788ad04b2e052f2a28c931"
+      }
+    ]
+  }
 }

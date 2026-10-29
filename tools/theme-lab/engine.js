@@ -555,7 +555,7 @@
       thesis: 'Carved from one rock. Granite stepped like the stelae, river stones tumbled by the Blue Nile.',
       motif: 'False windows and monkey-head beam ends of the Aksum stelae; stepped, rock-hewn holes; silver cross lattice.',
       board: { frame: 'granite', field: 'granite', fieldTint: '#7B6F69', frieze: 'stele', fc: ['#4E4542', '#7B6F69', '#2E2826', '#B9BCC0'], radius: 6, slot: 'stepped', ring: '#B9BCC0', corner: 'cross' },
-      pieceShape: 'pebble', glyphs: 'ornate', glyphMode: 'painted',
+      pieceShape: 'pebble', pieceMotif: 'none', glyphs: 'ornate', glyphMode: 'painted',
       pieces: { water: { mat: 'river_stone', color: '#4F6A80', inlay: '#E3E6EA' }, earth: { mat: 'river_stone', color: '#2F3134', inlay: '#E3E6EA' }, fire: { mat: 'sandstone', color: '#A2492E', inlay: '#F4EDE4' }, air: { mat: 'marble', inlay: '#8C9198' } },
       accent: '#C9CED4', danger: '#B5452E', light: '#F4F4F2',
       palette: [['Granite', '#6E625E'], ['Basalt', '#2F3134'], ['Silver', '#B9BCC0'], ['Red tuff', '#A2492E'], ['Marble', '#E6E1D8']],
@@ -579,7 +579,7 @@
       thesis: 'Played under a carved door. Mangrove-teak bowls, brass studs, counters from the sea.',
       motif: 'Zanzibar door rosettes and brass bosses; holes carved as smooth bao bowls; coral, tanzanite and cowrie pieces.',
       board: { frame: 'mangrove', field: 'iroko', frieze: 'rosette', fc: ['#3D2617', '#B9834F', '#E2C578', '#C9A24A'], radius: 40, slot: 'bowl', ring: '#C9A24A', corner: 'stud' },
-      pieceShape: 'tumbled', glyphs: 'ornate', glyphMode: 'carved',
+      pieceShape: 'tumbled', pieceMotif: 'none', glyphs: 'ornate', glyphMode: 'carved',
       pieces: { water: { mat: 'tanzanite', inlay: '#F2EBDD' }, earth: { mat: 'mkomwe_seed', inlay: '#E2C578' }, fire: { mat: 'coral_stone', color: '#B4472E', inlay: '#F2EBDD' }, air: { mat: 'cowrie', inlay: '#8A6A3E' } },
       accent: '#E2C578', danger: '#BF3F2A', light: '#FFF6E3',
       palette: [['Mangrove', '#5E3A24'], ['Iroko', '#9A6A37'], ['Brass boss', '#C9A24A'], ['Tanzanite', '#3A4BA6'], ['Coral', '#B4472E']],
@@ -651,7 +651,7 @@
       thesis: 'Stones of Power. Meteoric ore that answers to will, veins lit with the element inside.',
       motif: 'Volta stone slabs with branching light veins; portal holes; each piece glows from inside with its element.',
       board: { frame: 'volta_stone', field: 'volta_stone', frieze: 'chevron', fc: ['#141218', '#2A2632', '#E8A33A', '#E8A33A'], radius: 12, slot: 'portal', ring: '#E8A33A', corner: 'bracket', glow: '#E8A33A' },
-      pieceShape: 'tumbled', glyphs: 'ornate', glyphMode: 'emissive',
+      pieceShape: 'tumbled', pieceMotif: 'veins', glyphs: 'ornate', glyphMode: 'emissive',
       pieces: { water: { mat: 'volta_stone', glow: '#3E9BFF', inlay: '#BFE0FF' }, earth: { mat: 'volta_stone', glow: '#8FBF6A', inlay: '#E2F5D2' }, fire: { mat: 'volta_stone', glow: '#FF5A2A', inlay: '#FFD4C2' }, air: { mat: 'volta_stone', glow: '#FFC23A', inlay: '#FFF1C4' } },
       accent: '#E8A33A', danger: '#FF4D3A', light: '#FFF0D2',
       palette: [['Volta stone', '#1D1B22'], ['Ember vein', '#E8A33A'], ['Tide vein', '#3E9BFF'], ['Flare vein', '#FF5A2A'], ['Moss vein', '#8FBF6A']],
@@ -675,7 +675,7 @@
       thesis: 'Carve down into rock, look up into orbit. Basalt crosses ringed with station light.',
       motif: 'Bete Giyorgis cross plan as the frame tile; stepped holes with a ring of light; river stones with glowing glyphs.',
       board: { frame: 'river_stone', field: 'river_stone', fieldTint: '#3E4447', frieze: 'crosses', fc: ['#2C3134', '#A8B2B8', '#5FD0E8', '#5FD0E8'], radius: 16, slot: 'stepped', ring: '#5FD0E8', corner: 'cross', glowRing: true },
-      pieceShape: 'pebble', glyphs: 'ornate', glyphMode: 'emissive',
+      pieceShape: 'pebble', pieceMotif: 'none', glyphs: 'ornate', glyphMode: 'emissive',
       pieces: { water: { mat: 'river_stone', color: '#3D566B', inlay: '#7FD8FF' }, earth: { mat: 'river_stone', color: '#2A2C2E', inlay: '#D6E7EC' }, fire: { mat: 'river_stone', color: '#7A3A2A', inlay: '#FF9A7A' }, air: { mat: 'marble', inlay: '#E3A93A' } },
       accent: '#5FD0E8', danger: '#FF6A4D', light: '#E0F8FF',
       palette: [['Basalt', '#3E4447'], ['Station cyan', '#5FD0E8'], ['Cross grey', '#A8B2B8'], ['Ember', '#FF9A7A'], ['Marble', '#E6E1D8']],
@@ -687,7 +687,7 @@
       thesis: 'Where humans began, and where identity dissolves. Salt crust, sulphur colour, crystals that never hold one hue.',
       motif: 'Hexagonal salt polygons; sulphur-yellow and acid-green accents; shift-prism pieces whose tint drifts.',
       board: { frame: 'marble', field: 'nano_ceramic', fieldTint: '#EEE9DC', frieze: 'salthex', fc: ['#E9E2CF', '#D8E36A', '#C7B98E', '#4FBF8E'], radius: 30, slot: 'socket', ring: '#B8C94A', corner: 'bracket' },
-      pieceShape: 'faceted', glyphs: 'minimal', glyphMode: 'carved',
+      pieceShape: 'faceted', pieceMotif: 'none', glyphs: 'minimal', glyphMode: 'carved',
       pieces: { water: { mat: 'shift_prism', color: '#3A79C9', inlay: '#1E2B4A' }, earth: { mat: 'shift_prism', color: '#3B3A40', inlay: '#F2EFE6' }, fire: { mat: 'shift_prism', color: '#C9452C', inlay: '#3A1208' }, air: { mat: 'shift_prism', color: '#E2B83A', inlay: '#3A2A08' } },
       accent: '#B8C94A', danger: '#D9482F', light: '#FBFFE0',
       palette: [['Salt crust', '#E9E2CF'], ['Sulphur', '#D8E36A'], ['Acid green', '#4FBF8E'], ['Brine', '#C7B98E'], ['Prism', '#8A7BD1']],
@@ -1210,6 +1210,259 @@
     return { body: `<defs>${defs.join('')}</defs>${els.join('')}`, H };
   }
 
+  // ------------------------------------------------------------ layered pieces
+  // A piece is a stack of layers, composited like a Unity UI Image stack (sprite.rgb * tint, then
+  // "over"). Tinted layers are greyscale or white masks; untinted layers carry shared lighting.
+  //   trim   (tint: metal)      rims, bands, caps; below the paint so insets sit on top
+  //   paint  (tint: body)       the material as a greyscale texture
+  //   motif  (tint: accent)     dots ring, line ring, charge ring, veins, stitch
+  //   detail (shared)           shadow, side walls, bevels, gloss; one per shape (per element
+  //                             only for irregular stones), identical across themes and players
+  //   relief (shared, untinted) carved shadow/highlight, gilded drop shadow
+  //   glyph  (tint: ink)        the element symbol
+  //   glow   (untinted)         hot white core for glowing glyphs
+  const MOTIFS = {
+    none: 'No motif',
+    dots: 'Dots ring',
+    ring: 'Line ring',
+    charge: 'Charge ring',
+    veins: 'Glowing veins',
+    stitch: 'Stitched ring',
+  };
+  // Families whose baked texture runs brighter than a multiply can reproduce: lift the tint to match.
+  // Measured as baked / layered mean brightness on the top face (tools/theme-lab, layer calibration).
+  const EXPOSURE = { weave: 1.09, banded: 1.11, chatoyant: 1.07, glass: 1.13, anodized: 1.22, chrome: 1.26, iridescent: 1.45, gradient: 1.34, prism: 1.36, gem: 1.04 };
+  const expose = (hex, k) => { if (!k || k === 1) return hex; const [r, g, b] = hex2rgb(hex); return rgb2hex(r * k, g * k, b * k); };
+  const motifOf = (t, el, o) => (o && o.motif) || (t.pieces[el] && t.pieces[el].motif) || t.pieceMotif ||
+    (t.pieceStyle === 'kinetic' ? 'charge' : t.glyphs === 'ornate' ? 'dots' : t.glyphs === 'minimal' ? 'ring' : 'charge');
+  const finishOf = (t, el, o) => (o && o.finish) || (t.pieces[el] && t.pieces[el].finish) || t.glyphMode || 'carved';
+  const layerShapeOf = (t, el, o) => (o && o.shape) || (t.pieces[el] && t.pieces[el].shape) || (t.pieceStyle === 'kinetic' ? 'sphere' : t.pieceShape || 'coin');
+
+  function grey(u, defs, matId, rect, clipD, seed) {
+    const m = MATERIALS[matId];
+    const c = uid(u + 'gc'), d = uid(u + 'gd');
+    defs.push(`<clipPath id="${c}"><path d="${clipD}"/></clipPath>`);
+    defs.push(`<filter id="${d}" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="1024" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/></filter>`);
+    const p = paintMaterial(u, matId, rect, m.family === 'veined' ? null : '#FFFFFF', { glow: '#000000', seed: seed || 0 });
+    defs.push(p.defs);
+    return `<g clip-path="url(#${c})"><g filter="url(#${d})">${p.els}</g></g>`;
+  }
+  // n points evenly spaced along a closed polyline
+  function alongOutline(pts, n) {
+    const segs = pts.map((p, i) => { const q = pts[(i + 1) % pts.length]; return [p, q, Math.hypot(q[0] - p[0], q[1] - p[1])]; });
+    const total = segs.reduce((s, x) => s + x[2], 0), out = [];
+    for (let k = 0; k < n; k++) {
+      let d = (k / n) * total;
+      for (const [p, q, l] of segs) { if (d <= l) { out.push([p[0] + (q[0] - p[0]) * d / l, p[1] + (q[1] - p[1]) * d / l]); break; } d -= l; }
+    }
+    return out;
+  }
+  const wrapLayer = (defs, els) => `<defs>${defs.join('')}</defs>${els.join('')}`;
+
+  function pieceLayers(t, el, o) {
+    o = o || {};
+    const spec = Object.assign({}, t.pieces[el], o.override || {});
+    const m = MATERIALS[spec.mat];
+    const shape = layerShapeOf(t, el, o);
+    const S = PIECE_SHAPES[shape] || PIECE_SHAPES.coin, h = S.h;
+    const motif = motifOf(t, el, o), finish = finishOf(t, el, o);
+    const cx = 256, cy = 248, by = cy + h, H = 512 + h;
+    const fp = footprint(shape === 'dome' ? 'coin' : shape, el);
+    const base = shift(fp, cx, by), top = shift(fp, cx, cy);
+    const full = { shape: 'rect', x: 0, y: 0, w: 512, h: H };
+    const rimMat = spec.rim || t.pieceRim || (shape === 'vial' ? 'silver' : 'copper');
+    const glow = spec.glow || (m.family === 'veined' ? ELEMENT_INFO[el].hue : null);
+    const tints = Object.assign({
+      trim: expose(MATERIALS[rimMat].base, EXPOSURE[MATERIALS[rimMat].family]),
+      paint: m.family === 'veined' ? '#FFFFFF' : expose(spec.color || m.base, EXPOSURE[m.family]),
+      motif: motif === 'charge' || motif === 'veins' ? (glow || spec.inlay) : spec.inlay,
+      glyph: finish === 'emissive' ? (glow || spec.inlay) : finish === 'gilded' ? '#E7BE58' : spec.inlay,
+    }, o.tints || {});
+    const layers = [];
+    // Each layer gets a deterministic library key: identical keys are identical images, so themes share files.
+    const irregular = !!S.round, elk = irregular ? '_' + el : '', gk = o.back ? 'back' : el;
+    const L = (name, tint, build, key) => { const u = uid('ly' + name[0]); const defs = [], els = []; build(u, defs, els); if (els.length) layers.push({ name, tint, key: key || name, body: wrapLayer(defs, els) }); };
+    const sphere = shape === 'sphere', vial = shape === 'vial', ringed = shape === 'coin' || shape === 'tall' || shape === 'dome';
+    const R = 206;
+    const circleD = (x, y, r) => `M${x - r} ${y}A${r} ${r} 0 1 0 ${x + r} ${y}A${r} ${r} 0 1 0 ${x - r} ${y}Z`;
+    const sidePath = polyD(hull(base.concat(top)));
+    const inset = scalePts(top, 0.8, cx, cy);
+    const tallR = 196, shaft = (y0, y1) => `M${cx - tallR} ${y0}A${tallR} ${tallR} 0 0 0 ${cx + tallR} ${y0}V${y1}A${tallR} ${tallR} 0 0 1 ${cx - tallR} ${y1}Z`;
+    // vial geometry
+    const capR = 150, capH = 30, gr = 106, g0 = cy + capH, g1 = by - capH;
+    const capPts = (yTop) => { const b = shift(footprint('coin', el).map(([x, y]) => [x * capR / 214, y * capR / 214]), cx, yTop + capH); return { b, tp: shift(b, 0, -capH) }; };
+    const vialBody = `M${cx - gr} ${g0}V${g1}A${gr} ${gr * 0.45} 0 0 0 ${cx + gr} ${g1}V${g0}Z`;
+    const yc = (g0 + g1) / 2, ch = (g1 - g0) * 0.84;
+    const crystal = `M${cx - 34} ${yc - ch / 2 + 30}L${cx} ${yc - ch / 2}L${cx + 40} ${yc - ch / 2 + 44}L${cx + 52} ${yc + ch / 2 - 40}L${cx + 8} ${yc + ch / 2}L${cx - 46} ${yc + ch / 2 - 30}Z`;
+    const faceCentre = vial ? [cx + 4, yc] : sphere ? [cx - 6, cy - 4] : [cx, cy];
+
+    // ---- shadow (shared, untinted): under everything, as in the baked render
+    L('shadow', null, (u, defs, els) => {
+      const bl = uid(u + 'bl');
+      defs.push(`<filter id="${bl}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="11"/></filter>`);
+      if (sphere) els.push(`<ellipse cx="${cx + 24}" cy="${cy + 150}" rx="${R * 0.95}" ry="${R * 0.42}" fill="#000" opacity="0.5" filter="url(#${bl})"/>`);
+      else if (vial) els.push(`<ellipse cx="${cx + 18}" cy="${by + 40}" rx="${capR * 1.1}" ry="${capR * 0.55}" fill="#000" opacity="0.55" filter="url(#${bl})"/>`);
+      else els.push(`<path d="${polyD(shift(base, 14, 22))}" fill="#000" opacity="0.5" filter="url(#${bl})"/>`);
+    }, 'shadow' + elk);
+    // ---- trim
+    if (ringed) L('trim', tints.trim, (u, defs, els) => els.push(grey(u, defs, rimMat, full, sidePath, 5)), `trim_${rimMat}${elk}`);
+    if (vial) L('trim', tints.trim, (u, defs, els) => {
+      const cb = capPts(by - capH);
+      els.push(grey(u, defs, rimMat, full, polyD(hull(cb.b.concat(cb.tp))), 3));
+    }, `trim_base_${rimMat}`);
+    // ---- paint
+    L('paint', tints.paint, (u, defs, els) => {
+      if (sphere) els.push(grey(u, defs, spec.mat, { shape: 'circle', cx, cy, r: R }, circleD(cx, cy, R)));
+      else if (vial) {
+        const vb = uid(u + 'vb');
+        defs.push(`<filter id="${vb}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="11"/></filter>`);
+        els.push(`<path d="${vialBody}" fill="#2E2E2E" opacity="0.9"/><path d="${vialBody}" fill="#8C8C8C" opacity="0.55" filter="url(#${vb})"/>`);
+        const cry = uid(u + 'cy');
+        defs.push(`<linearGradient id="${cry}" x1="0" y1="0" x2="1" y2="0.2"><stop offset="0" stop-color="#fff"/><stop offset="0.5" stop-color="#D8D8D8"/><stop offset="1" stop-color="#9A9A9A"/></linearGradient>`);
+        els.push(`<path d="${crystal}" fill="url(#${cry})"/>`);
+      } else if (ringed) {
+        els.push(grey(u, defs, spec.mat, full, polyD(inset), 11));
+        if (shape === 'tall') els.push(grey(u, defs, spec.mat, full, shaft(cy + 60, by - 60), 9));
+      } else els.push(grey(u, defs, spec.mat, full, sidePath, 13));
+    }, vial ? 'paint_crystal' : `paint_${spec.mat}${elk}`);
+    if (vial) L('trim', tints.trim, (u, defs, els) => {
+      const ct = capPts(cy);
+      [cx - capR + 16, cx + capR - 16].forEach((x) => els.push(`<rect x="${x - 9}" y="${g0}" width="18" height="${g1 - g0}" rx="6" fill="#E0E0E0"/>` +
+        [0.25, 0.5, 0.75].map((k) => `<rect x="${x - 11}" y="${f(g0 + (g1 - g0) * k)}" width="22" height="6" rx="3" fill="#9A9A9A"/>`).join('')));
+      els.push(grey(u, defs, rimMat, full, polyD(hull(ct.b.concat(ct.tp))), 4));
+    }, `trim_top_${rimMat}`);
+    // ---- motif (white mask on the top face)
+    if (motif !== 'none' && !vial) L('motif', tints.motif, (u, defs, els) => {
+      const ringPts = sphere ? fp.map(([x, y]) => [cx + x * (R * 0.74) / 214, cy + y * (R * 0.74) / 214]) : scalePts(top, ringed ? 0.72 : 0.8, cx, cy);
+      if (motif === 'dots') {
+        alongOutline(ringPts, 28).forEach(([x, y], i) => els.push(`<circle cx="${f(x)}" cy="${f(y)}" r="${i % 2 ? 3.2 : 5.4}" fill="#fff"/>`));
+      } else if (motif === 'ring') {
+        els.push(`<path d="${polyD(ringPts)}" fill="none" stroke="#fff" stroke-width="3.5"/>`);
+        const [l, r2] = [ringPts.reduce((a, p) => (p[0] < a[0] ? p : a)), ringPts.reduce((a, p) => (p[0] > a[0] ? p : a))];
+        els.push(`<path d="M${f(l[0])} ${f(l[1])}h28M${f(r2[0])} ${f(r2[1])}h-28" stroke="#fff" stroke-width="6" stroke-linecap="round"/>`);
+      } else if (motif === 'stitch') {
+        els.push(`<path d="${polyD(scalePts(top, 0.9, cx, cy))}" fill="none" stroke="#fff" stroke-width="4.5" stroke-dasharray="14 10" stroke-linecap="round"/>`);
+      } else if (motif === 'charge') {
+        const b = uid(u + 'b');
+        defs.push(`<filter id="${b}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>`);
+        const d = polyD(sphere ? fp.map(([x, y]) => [cx + x * 152 / 214, cy + y * 152 / 214]) : scalePts(top, 0.72, cx, cy));
+        els.push(`<path d="${d}" fill="none" stroke="#fff" stroke-width="22" opacity="0.6" filter="url(#${b})"/><path d="${d}" fill="none" stroke="#fff" stroke-width="7"/>`);
+      } else if (motif === 'veins') {
+        const c = uid(u + 'vc');
+        defs.push(`<clipPath id="${c}"><path d="${sphere ? circleD(cx, cy, R) : sidePath}"/></clipPath>`);
+        const a = noiseLayer(u, { x: 0, y: 0, w: 512, h: H, type: 'turbulence', freq: '0.012', oct: 3, seed: hashStr(el) % 50, table: '1 0.15 0 0 0 0 0 0 0 0 0 0', color: '#FFFFFF', op: 0.7, blur: 5 });
+        const b = noiseLayer(u, { x: 0, y: 0, w: 512, h: H, type: 'turbulence', freq: '0.012', oct: 3, seed: hashStr(el) % 50, table: '1 0 0 0 0 0 0 0 0 0 0 0 0 0', color: '#FFFFFF', op: 1 });
+        defs.push(a.def, b.def);
+        els.push(`<g clip-path="url(#${c})">${a.el}${b.el}</g>`);
+      }
+    }, `motif_${motif}${motif === 'veins' ? '_' + el : elk}`);
+    // ---- detail (shared lighting, black and white only)
+    L('detail', null, (u, defs, els) => {
+      const bl = uid(u + 'bl');
+      defs.push(`<filter id="${bl}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="11"/></filter>`);
+      if (sphere) {
+        const sc = uid(u + 's'), sp = uid(u + 'k');
+        defs.push(`<radialGradient id="${sc}" cx="${cx - 60}" cy="${cy - 70}" r="${R * 1.25}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity="0.32"/><stop offset="0.35" stop-color="#fff" stop-opacity="0"/><stop offset="0.72" stop-color="#000" stop-opacity="0.25"/><stop offset="1" stop-color="#000" stop-opacity="0.8"/></radialGradient>`);
+        defs.push(`<radialGradient id="${sp}"><stop offset="0" stop-color="#fff" stop-opacity="0.85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`);
+        els.push(`<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#${sc})"/>`);
+        els.push(`<path d="M${cx + R * 0.55} ${cy + R * 0.72}A${R * 0.92} ${R * 0.92} 0 0 0 ${cx + R * 0.9} ${cy + R * 0.2}" fill="none" stroke="#fff" stroke-width="6" opacity="0.25" stroke-linecap="round"/>`);
+        els.push(`<ellipse cx="${cx - 70}" cy="${cy - 92}" rx="58" ry="34" fill="url(#${sp})" transform="rotate(-28 ${cx - 70} ${cy - 92})"/>`);
+        return;
+      }
+      if (vial) {
+        const glass = uid(u + 'g');
+        defs.push(`<linearGradient id="${glass}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0.18"/><stop offset="0.2" stop-color="#fff" stop-opacity="0.45"/><stop offset="0.32" stop-color="#fff" stop-opacity="0.06"/><stop offset="0.85" stop-color="#000" stop-opacity="0.15"/><stop offset="1" stop-color="#fff" stop-opacity="0.12"/></linearGradient>`);
+        els.push(`<path d="${vialBody}" fill="url(#${glass})"/>`);
+        [by - capH, cy].forEach((yTop) => {
+          const c = capPts(yTop);
+          els.push(sideFaces(c.tp, capH, 0.9) + bevelBand(c.tp, scalePts(c.tp, 0.82, cx, yTop), 0.6));
+          els.push(`<circle cx="${cx}" cy="${yTop}" r="${capR * 0.66}" fill="none" stroke="#000" stroke-width="4" opacity="0.35"/>`);
+        });
+        els.push(`<ellipse cx="${cx - 34}" cy="${cy - 40}" rx="44" ry="22" fill="#fff" opacity="0.35" transform="rotate(-25 ${cx - 34} ${cy - 40})"/>`);
+        return;
+      }
+      els.push(sideFaces(top, h, S.round ? 0.8 : 1.1));
+      if (S.round) {
+        const sh = uid(u + 'r'), rs = uid(u + 's'), hi = uid(u + 'h');
+        defs.push(`<linearGradient id="${sh}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.45"/></linearGradient>`);
+        defs.push(`<radialGradient id="${rs}" cx="${cx - 40}" cy="${cy - 50}" r="260" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity="0.22"/><stop offset="0.5" stop-color="#fff" stop-opacity="0"/><stop offset="0.85" stop-color="#000" stop-opacity="0.22"/><stop offset="1" stop-color="#000" stop-opacity="0.5"/></radialGradient>`);
+        defs.push(`<radialGradient id="${hi}"><stop offset="0" stop-color="#fff" stop-opacity="0.55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`);
+        els.push(`<path d="${sidePath}" fill="url(#${sh})"/><path d="${polyD(top)}" fill="url(#${rs})"/>`);
+        els.push(`<ellipse cx="${cx - 70}" cy="${cy - 70}" rx="80" ry="40" fill="url(#${hi})" transform="rotate(-24 ${cx - 70} ${cy - 70})"/>`);
+      } else if (shape === 'faceted') {
+        const n = 16, r0 = 206, r1 = 112;
+        for (let i = 0; i < n; i++) {
+          const a0 = (i / n) * Math.PI * 2, a1 = ((i + 1) / n) * Math.PI * 2, am = (a0 + a1) / 2;
+          const p = (r, a) => `${f(cx + Math.cos(a) * r)} ${f(cy + Math.sin(a) * r)}`;
+          const lit = -(Math.cos(am) * LIGHT[0] + Math.sin(am) * LIGHT[1]);
+          els.push(`<path d="M${p(r1, a0)}L${p(r0, am)}L${p(r1, a1)}Z" fill="${lit > 0 ? '#fff' : '#000'}" opacity="${f(Math.abs(lit) * 0.35 + 0.05)}"/>`);
+          els.push(`<path d="M${p(r0, a0)}L${p(r0, a1)}L${p(r1, a1)}L${p(r0, am)}L${p(r1, a0)}Z" fill="${(i % 2) ? '#fff' : '#000'}" opacity="0.1"/>`);
+        }
+        const table = Array.from({ length: 8 }, (_, i) => { const a = (i / 8) * Math.PI * 2 + Math.PI / 8; return [cx + Math.cos(a) * r1, cy + Math.sin(a) * r1]; });
+        els.push(`<path d="${polyD(table)}" fill="#fff" opacity="0.08" stroke="#fff" stroke-opacity="0.35" stroke-width="2"/>`);
+      } else if (ringed) {
+        els.push(bevelBand(top, scalePts(top, 0.84, cx, cy), 0.7));
+        const isd = uid(u + 'i');
+        defs.push(`<radialGradient id="${isd}" cx="${cx + 30}" cy="${cy + 40}" r="200" gradientUnits="userSpaceOnUse"><stop offset="0.75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.55"/></radialGradient>`);
+        els.push(`<path d="${polyD(inset)}" fill="url(#${isd})"/>`);
+        if (shape === 'tall') {
+          const cyl = uid(u + 'y');
+          defs.push(`<linearGradient id="${cyl}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity="0.35"/><stop offset="0.24" stop-color="#fff" stop-opacity="0.2"/><stop offset="0.55" stop-color="#000" stop-opacity="0.08"/><stop offset="1" stop-color="#000" stop-opacity="0.62"/></linearGradient>`);
+          els.push(`<path d="${shaft(cy + 60, by - 60)}" fill="url(#${cyl})"/>`);
+          [cy + 60, by - 60].forEach((y) => els.push(`<path d="M${cx - tallR} ${y}A${tallR} ${tallR} 0 0 0 ${cx + tallR} ${y}" fill="none" stroke="#000" stroke-width="4" opacity="0.45"/>`));
+        }
+      } else {
+        els.push(bevelBand(top, scalePts(top, 0.86, cx, cy), 0.85));
+      }
+      els.push(`<path d="${polyD(top)}" fill="none" stroke="#000" stroke-width="2.5" opacity="0.45"/>`);
+      if (!S.round) {
+        const sp = uid(u + 'p'), c2 = uid(u + 'q');
+        defs.push(`<linearGradient id="${sp}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.26"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>`);
+        defs.push(`<clipPath id="${c2}"><path d="${polyD(top)}"/></clipPath>`);
+        els.push(`<g clip-path="url(#${c2})"><ellipse cx="${cx - 40}" cy="${cy - 150}" rx="230" ry="110" fill="url(#${sp})"/></g>`);
+      }
+    }, 'detail' + elk);
+    // ---- glyph (+ shared relief / glow)
+    const gsK = { coin: 0.78, dome: 0.85, tall: 0.8, hex: 0.92, square: 0.95, pebble: 0.8, tumbled: 0.74, faceted: 0.62, sphere: 0.82, vial: 0.66 }[shape] || 0.9;
+    const gs = (t.glyphs === 'ornate' ? 236 : 220) * gsK, [gx0, gy0] = faceCentre, gx = gx0 - gs / 2, gy = gy0 - gs / 2;
+    const glyphWhite = (dx, dy, w) => (o.back ? busaraDots(gx0 + dx, gy0 + dy, gsK, '#fff') : glyphMarkup(t.glyphs, el, gx + dx, gy + dy, gs, '#fff', w || 1));
+    const asColour = (markup, c) => markup.replace(/#fff\b/g, c);
+    const em = vial ? 'emissive' : finish;
+    if (em === 'carved') L('relief', null, (u, defs, els) => els.push(`<g opacity="0.55">${asColour(glyphWhite(-3, -4, 1.15), '#000')}</g><g opacity="0.3">${glyphWhite(3, 4, 1.05)}</g>`), `relief_${t.glyphs}_${em}_${gk}`);
+    if (em === 'gilded') L('relief', null, (u, defs, els) => els.push(`<g opacity="0.55">${asColour(glyphWhite(2, 4, 1.15), '#000')}</g>`), `relief_${t.glyphs}_${em}_${gk}`);
+    L('glyph', vial ? (glow || spec.inlay) : tints.glyph, (u, defs, els) => {
+      if (em === 'emissive') {
+        const b = uid(u + 'b');
+        defs.push(`<filter id="${b}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="9"/></filter>`);
+        els.push(`<g filter="url(#${b})" opacity="0.95">${glyphWhite(0, 0, 1.6)}</g>${glyphWhite(0, 0, 1)}`);
+      } else if (em === 'gilded') {
+        const mk = uid(u + 'm'), n = uid(u + 'n');
+        defs.push(`<mask id="${mk}" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="${H}">${glyphWhite(0, 0, 1.15)}</mask>`);
+        defs.push(`<filter id="${n}" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves="2" seed="5"/><feColorMatrix type="matrix" values="0 0 0 0 0.62 0 0 0 0 0.62 0 0 0 0 0.62 1 0 0 0 -0.35"/></filter>`);
+        els.push(`<g mask="url(#${mk})"><rect x="${f(gx - 10)}" y="${f(gy - 10)}" width="${f(gs + 20)}" height="${f(gs + 20)}" fill="#fff"/><rect x="${f(gx - 10)}" y="${f(gy - 10)}" width="${f(gs + 20)}" height="${f(gs + 20)}" filter="url(#${n})"/></g>`);
+      } else if (em === 'painted') {
+        const d = uid(u + 'p');
+        defs.push(`<filter id="${d}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>`);
+        els.push(`<g filter="url(#${d})"><g opacity="0.95">${glyphWhite(0, 0, 1.25)}</g></g>`);
+      } else els.push(glyphWhite(0, 0, 1));
+    }, `glyph_${t.glyphs}_${em}_${gk}`);
+    if (em === 'emissive') L('glow', null, (u, defs, els) => els.push(`<g opacity="0.5">${glyphWhite(0, 0, 0.9)}</g>`), `glow_${t.glyphs}_${gk}`);
+    return { shape, motif, finish: em, H, tints, layers };
+  }
+  // One SVG with every layer composited exactly as Unity does it: rgb * tint (in sRGB), then over.
+  function layeredDirectSVG(stack) {
+    let defs = '', body = '';
+    stack.layers.forEach((ly) => {
+      if (!ly.tint) { body += ly.body; return; }
+      const id = uid('tn'), [r, g, b] = hex2rgb(ly.tint).map((v) => f(v / 255));
+      defs += `<filter id="${id}" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="${stack.H}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="${r} 0 0 0 0 0 ${g} 0 0 0 0 0 ${b} 0 0 0 0 0 1 0"/></filter>`;
+      body += `<g filter="url(#${id})">${ly.body}</g>`;
+    });
+    return svgWrap(512, stack.H, `<defs>${defs}</defs>${body}`);
+  }
+  // One layer alone, by its library key (unique within a stack) or, failing that, its name.
+  const layerSVG = (stack, key) => { const ly = stack.layers.find((x) => x.key === key) || stack.layers.find((x) => x.name === key); return ly ? svgWrap(512, stack.H, ly.body) : null; };
+
   // ------------------------------------------------------------ pieces
   // 512 sprite, disc r=214 centred, room for a soft contact shadow.
   // Body markup + sprite height for any shape. Dome and kinetic keep the 512 square.
@@ -1221,7 +1474,9 @@
   }
   // Markup placed with its base centre at (256, 248) in a 512 box, for boards and holes.
   function pieceInner(t, el, o) {
-    const p = pieceBody(t, el, o);
+    const p = isLayered(t, o)
+      ? (() => { const st = pieceLayers(t, el, o); return { H: st.H, body: layeredDirectSVG(st).replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '') }; })()
+      : pieceBody(t, el, o);
     return p.H === 512 ? p.body : `<g transform="translate(0 ${248 - (p.H - 264)})">${p.body}</g>`;
   }
   function domePieceInner(t, el, o) {
@@ -1308,8 +1563,13 @@
     }
     return `<defs>${defs.join('')}</defs>${els.join('')}`;
   }
+  // The layered stack is the source of truth: a piece sprite is the direct render of its layers,
+  // so it matches a runtime composite of the exported layer sprites. {baked: true} gives the legacy renderer.
+  const isLayered = (t, o) => !t.raster && !(o && o.baked) && layerShapeOf(t, ELEMENTS[0], o) !== 'dome';
   function pieceSVG(theme, el, o) {
-    const p = pieceBody(typeof theme === 'string' ? themeById(theme) : theme, el, o);
+    const t = typeof theme === 'string' ? themeById(theme) : theme;
+    if (isLayered(t, o)) return layeredDirectSVG(pieceLayers(t, el, o));
+    const p = pieceBody(t, el, o);
     return svgWrap(512, p.H, p.body, o && o.attrs);
   }
 
@@ -1762,9 +2022,28 @@
     return list;
   }
 
+  // Layer sprites for a theme: shared library entries (deduplicated by path across themes) and the
+  // per-element stacks that reference them. Paths are relative to Assets/Busara/Sprites.
+  function layerLibrary(themeId) {
+    const t = themeById(themeId);
+    if (!isLayered(t)) return null;
+    const entries = new Map(), stacks = {};
+    const add = (key, el, o) => {
+      const st = pieceLayers(t, el, o);
+      stacks[key] = st.layers.map((ly) => {
+        const path = `Pieces/${st.shape}/${ly.key}.png`;
+        if (!entries.has(path)) entries.set(path, { path, w: 256, h: Math.round(256 * st.H / 512), svg: () => svgWrap(512, st.H, ly.body) });
+        return { name: ly.name, path, tint: ly.tint };
+      });
+    };
+    ELEMENTS.forEach((el) => add(el, el));
+    add('hidden', 'earth', { back: true });
+    return { entries: [...entries.values()], stacks };
+  }
+
   const api = {
     ELEMENTS, ELEMENT_INFO, GLYPHS, MATERIALS, THEMES, SLOT_STYLES, SLOT_STATES, PIECE_STATES, BOARD, FRIEZES,
-    CLASSIC, ALL_THEMES, UI_KIT, uiKitSVG, PIECE_SHAPES, pieceAspect, piecePivotY, themeShape, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
+    CLASSIC, ALL_THEMES, UI_KIT, uiKitSVG, PIECE_SHAPES, MOTIFS, pieceLayers, layeredDirectSVG, layerSVG, layerLibrary, pieceAspect, piecePivotY, themeShape, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
     color: { mix, lighten, darken, luminance },
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
