@@ -45,6 +45,15 @@ public sealed partial class MatchService
                 {
                     version = receipt.version, kind = transition.eventKind, actionId = transition.actionId
                 });
+                // Bots act at once, in the same write, until a human must choose.
+                foreach (var bot in OnlineBot.Run(room.Value.state, random))
+                {
+                    room.Value.state = bot.state;
+                    room.Value.events.Add(new HistoryEvent
+                    {
+                        version = Revision(bot.state), kind = bot.eventKind, actionId = bot.actionId
+                    });
+                }
             }
             catch (RuleException error)
             {

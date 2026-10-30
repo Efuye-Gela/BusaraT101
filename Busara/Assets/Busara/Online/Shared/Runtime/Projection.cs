@@ -12,6 +12,20 @@ namespace Busara.Online
             DomainRules.ValidateState(state);
             if (viewer < 0 || viewer >= state.seats.Count || !state.seats[viewer].joined || state.seats[viewer].bot)
                 throw new RuleException("forbidden", "You do not own a seat in this match.");
+            return Build(state, viewer);
+        }
+
+        // A bot decides from exactly what a player in its seat would see.
+        public static ClientView ForBot(MatchState state, int seat)
+        {
+            DomainRules.ValidateState(state);
+            if (seat < 0 || seat >= state.seats.Count || !state.seats[seat].bot)
+                throw new RuleException("forbidden", "That seat is not a bot.");
+            return Build(state, seat);
+        }
+
+        private static ClientView Build(MatchState state, int viewer)
+        {
             bool full = Definitions.IsFull(state.ruleset);
             int actor = full ? DomainRules.DecisionActor(state) : state.pending?.owner ?? -1;
             int acting = full ? DomainRules.ActingSeat(state) : state.activeSeat;

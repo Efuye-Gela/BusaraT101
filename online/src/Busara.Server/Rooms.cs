@@ -231,9 +231,16 @@ public sealed class Rooms(Database database, ServerSettings settings, IGameRando
             var transition = DomainRules.Apply(state, seat, request, random);
             if (transition.state.version != checked(state.version + 1))
                 throw new InvalidOperationException("Domain transition did not advance one revision.");
-            await SaveState(connection, tx, transition.state, ct);
             await Event(connection, tx, transition.state, transition.eventKind, transition.actionId, ct);
             receipt.version = Revision(transition.state);
+            // Bots act at once, in the same transaction, until a human must choose.
+            MatchState final = transition.state;
+            foreach (var bot in OnlineBot.Run(final, random))
+            {
+                await Event(connection, tx, bot.state, bot.eventKind, bot.actionId, ct);
+                final = bot.state;
+            }
+            await SaveState(connection, tx, final, ct);
         }
         catch (RuleException error)
         {

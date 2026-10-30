@@ -7,16 +7,17 @@ namespace Busara.Online
     {
         public static string Error(IList<SlotState> board, int seat, IList<int> slots, bool weapon)
         {
-            if (board == null || seat < 0 || seat > 1 || slots == null ||
-                (weapon ? slots.Count != 3 : slots.Count < 2 || slots.Count > 32))
-                return weapon ? "Select exactly three connected resources." : "Select an ordered chain of 2 to 32 resources.";
+            if (board == null || seat < 0 || seat > 3 || slots == null ||
+                (weapon ? slots.Count != 3 : slots.Count < 2 || slots.Count > board.Count))
+                return weapon ? "Select exactly three connected resources." :
+                    "Select an ordered chain of 2 to " + board.Count + " resources.";
             if (slots.Distinct().Count() != slots.Count)
                 return "Select each resource only once.";
             var selected = new List<SlotState>();
             foreach (int id in slots)
             {
                 SlotState slot = board.FirstOrDefault(item => item != null && item.id == id);
-                if (id < 0 || id >= 32 || slot == null || slot.pieceId == null ||
+                if (id < 0 || id >= 64 || slot == null || slot.pieceId == null ||
                     (int)slot.type < 0 || (int)slot.type > 3)
                     return "Choose occupied participating board spaces.";
                 selected.Add(slot);

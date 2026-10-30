@@ -200,3 +200,73 @@ public sealed class SeatsRulesetTests
         Assert.That(Definitions.MaximumSeats(Definitions.SeatsRuleset), Is.EqualTo(4));
     }
 }
+
+public sealed class OnlineBotTests
+{
+    private sealed class SeededRandom(int seed) : IGameRandom
+    {
+        private readonly Random random = new(seed);
+        public int Next(int maximum) => random.Next(maximum);
+    }
+
+    private static MatchState Started(int seats, IGameRandom random)
+    {
+        MatchState state = DomainRules.Create("bots-" + Guid.NewGuid().ToString("N"), seats);
+        state.seats[0].ready = true;
+        for (int seat = 1; seat < seats; seat++)
+            state = DomainRules.Apply(state, 0, new OnlineCommand
+            {
+                kind = "addBot", target = seat, commandId = Guid.NewGuid().ToString(),
+                expectedVersion = state.version.ToString()
+            }, random).state;
+        state = DomainRules.Apply(state, 0, new OnlineCommand
+        {
+            kind = "start", commandId = Guid.NewGuid().ToString(), expectedVersion = state.version.ToString()
+        }, random).state;
+        return state;
+    }
+
+    [TestCase(2, 1)]
+    [TestCase(3, 2)]
+    [TestCase(4, 3)]
+    [TestCase(4, 4)]
+    public void BotsPlayAWholeMatchToTheEnd(int seats, int seed)
+    {
+        var random = new SeededRandom(seed);
+        MatchState state = Started(seats, random);
+        // The host seat plays as a bot too, so the match runs unattended.
+        state.seats[0].bot = true;
+        int steps = 0;
+        while (state.phase != "Finished" && steps < 5000)
+        {
+            var transitions = OnlineBot.Run(state, random);
+            Assert.That(transitions, Is.Not.Empty, "bots must always find a legal choice");
+            state = transitions[^1].state;
+            steps += transitions.Count;
+            DomainRules.ValidateState(state);
+        }
+        Assert.That(state.phase, Is.EqualTo("Finished"), $"no result after {steps} bot steps");
+        Assert.That(state.draw || state.winner >= 0, Is.True);
+        TestContext.Out.WriteLine($"{seats} seats: {(state.draw ? "draw" : "seat " + (state.winner + 1) + " won")} after {steps} steps");
+    }
+
+    [Test]
+    public void BotsStopWhenAHumanMustAct()
+    {
+        var random = new SeededRandom(7);
+        MatchState state = Started(3, random);
+        Assert.That(OnlineBot.NextActor(state), Is.EqualTo(0), "the human host sets up first");
+        Assert.That(OnlineBot.Run(state, random), Is.Empty);
+        foreach (var (type, space) in state.seats[0].setupRemaining.ToList().Zip(new[] { 0, 2, 9, 11, 16 }))
+            state = DomainRules.Apply(state, 0, new OnlineCommand
+            {
+                kind = "setupPlace", to = space, resourceType = (int)type, commandId = Guid.NewGuid().ToString(),
+                expectedVersion = state.version.ToString()
+            }, random).state;
+        var transitions = OnlineBot.Run(state, random);
+        state = transitions[^1].state;
+        Assert.That(state.phase, Is.EqualTo("Action"), "both bots set up");
+        Assert.That(OnlineBot.NextActor(state), Is.EqualTo(0));
+        Assert.Throws<RuleException>(() => Projection.ForBot(state, 0), "a human seat is not a bot");
+    }
+}
