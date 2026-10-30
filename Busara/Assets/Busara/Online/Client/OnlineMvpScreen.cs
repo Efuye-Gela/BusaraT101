@@ -126,6 +126,7 @@ namespace Busara.Online.Client
             target.Clear();
             page = target;
             content = target.Content;
+            boards = null;
             controls.Clear();
             if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
             if (view == null) Entry();

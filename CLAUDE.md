@@ -29,6 +29,11 @@ UGS-hosted online play: anonymous Unity Authentication, the `BusaraUgs` Cloud Co
 and private Cloud Save. The client is a WebGL build hosted on Vercel. Setup and deployment are in `docs/ugs-setup.md`
 and `docs/vercel-hosting.md`. The online build requires Unity 6000.3.6f1 with WebGL.
 
+New matches use ruleset `busara-online-v4`: two to four seats on the offline 8x8 board (quadrants clockwise), room
+codes, and server-side bots (`OnlineBot`, played after every human command). Two-seat v4 plays exactly like v3; the
+domain tests run the whole power suite for both. Deploy the `BusaraUgs` module before the Web client: the module
+rejects command fields it does not know.
+
 `Busara/Assets/Busara/Online/Editor` has no asmdef, so it compiles into Assembly-CSharp-Editor together with the
 offline game's global types. Fully qualify online types that share an offline name (`Busara.Online.KingdomCatalog`):
 a clash is a compile error, and any compile error fails the batch Web build.

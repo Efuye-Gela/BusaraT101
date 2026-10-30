@@ -21,7 +21,12 @@ namespace Busara.Online.Client
                     ? OnlineTheme.Gold : OnlineTheme.Text;
             Label("Revision", view.phase + "  " + Dot + "  revision " + view.version);
             Label("Power status", PowerStatus(view));
-            for (int seat = 0; seat < 2; seat++) SeatDetails(view, seat);
+            // Two seats use the large side-by-side boards; three or four use the 2x2 grid, one cell per seat.
+            bool grid = view.players.Count > 2;
+            boards = Use<RectTransform>(grid ? "Quad" : "Duo");
+            if (grid)
+                foreach (var player in view.players) Use<RectTransform>("Cell " + player.seat);
+            foreach (var player in view.players) SeatDetails(view, player.seat);
             foreach (var slot in view.board) Slot(view, slot);
             Dock(view);
             Info(view);

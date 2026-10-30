@@ -24,9 +24,9 @@ namespace Busara.Online.Client
 
         private void Info(ClientView view)
         {
-            for (int seat = 0; seat < 2; seat++)
+            foreach (var seatView in view.players)
             {
-                int target = seat;
+                int seat = seatView.seat, target = seat;
                 var viewButton = Button("view-seat-" + seat, "View seat " + (seat + 1), () =>
                 {
                     viewedSeat = target;

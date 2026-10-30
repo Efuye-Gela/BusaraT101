@@ -22,9 +22,12 @@ namespace Busara.Online.Client
             return rect;
         }
 
+        // The board group in use (Duo for two seats, Quad for three or four); its controls are looked up first.
+        private Transform boards;
+
         private T Use<T>(string name) where T : Component
         {
-            Transform child = content != null ? content.Find(name) : null;
+            Transform child = (boards != null ? FindDeep(boards, name) : null) ?? (content != null ? content.Find(name) : null);
             if (child == null)
             {
                 Debug.LogError("OnlineMVP is missing the authored control '" + name + "' on the " + page.name + " page.");
@@ -58,13 +61,24 @@ namespace Busara.Online.Client
             controls.Add(new Control { id = id, label = label, selectable = button });
         }
 
-        private void Input(string id, string label, string value, Action<string> changed)
+        private static Transform FindDeep(Transform parent, string name)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.name == name) return child;
+                Transform found = FindDeep(child, name);
+                if (found != null) return found;
+            }
+            return null;
+        }
+
+        private void Input(string id, string label, string value, Action<string> changed, bool editable = false)
         {
             var input = Use<TMP_InputField>(id);
             if (input == null) return;
             input.onValueChanged.RemoveAllListeners();
             input.SetTextWithoutNotify(value);
-            input.interactable = session.CanAct;
+            input.interactable = editable || session.CanAct;
             input.onValueChanged.AddListener(v => changed(v));
             controls.Add(new Control { id = id, label = label, selectable = input });
         }

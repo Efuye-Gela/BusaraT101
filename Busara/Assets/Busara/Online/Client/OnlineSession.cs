@@ -7,12 +7,13 @@ namespace Busara.Online.Client
 {
     public sealed class OnlineSession : MonoBehaviour
     {
-        [Serializable] private sealed class RoomRequest { public string commandId; }
+        [Serializable] private sealed class RoomRequest { public string commandId; public int seats; public string code; }
         [Serializable] private sealed class RoomOperation
         {
             public string path;
             public string body;
             public bool matchingInvite;
+            public bool byCode;
         }
         [Serializable] private sealed class ApiError { public string code; public string message; }
         public ClientView View { get; private set; }
@@ -26,11 +27,13 @@ namespace Busara.Online.Client
         public bool RoomPending => roomRequestBody != null;
         public bool RoomOperationsReady => roomOutboxReady;
         public bool CanRetryRoom => RoomPending && roomOutboxReady && !Busy &&
-            (roomRequestPath != "/api/rooms/join" || HasInvite);
+            (roomRequestPath != "/api/rooms/join" || HasInvite || roomByCode);
         public bool CanDiscardRoom { get; private set; }
         public bool CanAct => Guest != null && View != null && outboxReady && projectionHealthy && !Busy && !Pending && !expired;
         public bool CanResolveConflict { get; private set; }
         public string InviteUrl { get; private set; }
+        // The room code to share: from the creation receipt, then from the lobby view after a reload.
+        public string RoomCode => !string.IsNullOrEmpty(View?.roomCode) ? View.roomCode : createdCode;
         public event Action Changed;
         private OnlineBrowserTransport transport;
         private string matchId;
@@ -51,6 +54,10 @@ namespace Busara.Online.Client
         private bool recoveringPending;
         // The room request a player chose before having a guest; it is sent once the new guest's room outbox is ready.
         private string roomAfterGuest;
+        private int roomSeats = DomainRules.MinimumSeats;
+        private string roomCode = "";
+        private bool roomByCode;
+        private string createdCode;
 
         public void Initialize(OnlineBrowserTransport browser)
         {
@@ -121,6 +128,7 @@ namespace Busara.Online.Client
                         roomRequestBody = operation.body;
                         roomCommandId = request.commandId;
                         if (roomRequestPath == "/api/rooms/join") HasInvite = operation.matchingInvite;
+                        roomByCode = operation.byCode;
                         roomAfterGuest = null;
                         if (CanRetryRoom) RetryRoom();
                         else Status = "Invitation acceptance is unresolved. Reopen the SAME private invitation to retry the saved request. No invitation secret is stored.";
@@ -209,8 +217,19 @@ namespace Busara.Online.Client
         }
 
         public bool CanStartRoom => !Busy && (Guest != null ? roomOutboxReady : NeedsGuest);
-        public void CreateRoom() { StartRoom("/api/rooms"); }
-        public void JoinRoom() { if (HasInvite) StartRoom("/api/rooms/join"); }
+        public void CreateRoom(int seats = DomainRules.MinimumSeats)
+        {
+            roomSeats = Math.Max(DomainRules.MinimumSeats, Math.Min(DomainRules.MaximumSeats, seats));
+            roomCode = "";
+            StartRoom("/api/rooms");
+        }
+        public void JoinRoom() { if (HasInvite) { roomCode = ""; StartRoom("/api/rooms/join"); } }
+        public void JoinWithCode(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code)) return;
+            roomCode = code.Trim();
+            StartRoom("/api/rooms/join");
+        }
         private void StartRoom(string path)
         {
             if (Guest == null) CreateGuestFor(path);
@@ -223,7 +242,13 @@ namespace Busara.Online.Client
             if (roomRequestBody == null)
             {
                 string commandId = Guid.NewGuid().ToString();
-                string body = JsonUtility.ToJson(new RoomRequest { commandId = commandId });
+                bool creating = path == "/api/rooms";
+                string body = JsonUtility.ToJson(new RoomRequest
+                {
+                    commandId = commandId, seats = creating ? roomSeats : DomainRules.MinimumSeats,
+                    code = creating ? "" : roomCode
+                });
+                roomByCode = !creating && roomCode.Length > 0;
                 if (!transport.StoreRoomOutbox(JsonUtility.ToJson(new RoomOperation { path = path, body = body })))
                 {
                     Status = "Room request NOT sent: durable storage unavailable or a different request is pending. Reload to reconcile.";
@@ -260,6 +285,7 @@ namespace Busara.Online.Client
                     }
                     matchId = result.matchId;
                     InviteUrl = result.inviteUrl;
+                    createdCode = result.code;
                     HasInvite = false;
                     roomRequestBody = null;
                     roomRequestPath = null;

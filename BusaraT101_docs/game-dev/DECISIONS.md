@@ -93,3 +93,20 @@
   are copied from the offline assets and checked by an EditMode test.
 - Reconsider if: the offline and online games share one scene or accounts replace guests.
 
+## D-008 — Online and offline bots, two to four seats
+
+- Date: 2026-10-30
+- Status: active
+- Decision: offline Play opens a New Game screen (1-3 bots, Easy/Normal/Hard),
+  then the setup screen with those bots seated; any setup seat can switch between
+  human and bot. Online, ruleset `busara-online-v4` seats two to four players on
+  the offline 8x8 board; the host creates a room for 2-4, shares an 8-character
+  code or the link, and fills empty seats with bots that the server plays after
+  every human command. Bots decide from their own seat's projection only.
+- Reason and evidence: requested to match Konker's flow. Domain tests run every
+  power test for v3 and two-seat v4; bots play whole 2-, 3- and 4-seat matches to
+  a winner; UGS tests cover codes, links and bots.
+- Consequences: online bots play ordinary actions only (no powers, they reject
+  trades and pass reactions). The module must be deployed before the client.
+- Reconsider if: online bots should use powers or offline bot strengths.
+

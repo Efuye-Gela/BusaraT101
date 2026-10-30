@@ -234,6 +234,14 @@ the original event or rewinds the version counter.
 - `online/src/Busara.Ugs`: default Cloud Code adapter using the same domain.
 - `online/tests/Busara.Ugs.Tests`: simulated CAS/worker tests, not live UGS evidence.
 - `online/scripts/smoke-ugs.cjs`: explicit real UGS API smoke; see [setup](ugs-setup.md).
+- Seats and bots (ruleset `busara-online-v4`): rooms hold two to four seats on
+  the offline 8x8 board, seated clockwise (top-left, top-right, bottom-right,
+  bottom-left). Players join with the 8-character room code or the invitation
+  link, which fill the next empty seat until the room is full or starts. The host
+  can add a bot to any empty seat; bots (`Shared/Runtime/OnlineBot.cs`) decide
+  from their own projection and the server plays them right after each human
+  command. Trades, weapons and targeted powers name their player when there are
+  more than two seats, and reactions are offered to each eligible seat in turn.
 - `Busara/Assets/Busara/Online/Client`: the Unity online client. Its scene
   `Scenes/OnlineMVP.unity` is an authored scene with EgComponents **v0.1.4** UI
   pages (`Entry`, `Lobby`, `Match`). Every control a page can show is saved in

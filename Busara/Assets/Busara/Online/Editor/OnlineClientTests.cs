@@ -135,15 +135,23 @@ public sealed class OnlineClientTests
             var pages = components.OfType<OnlinePage>().ToDictionary(page => page.Id);
             var pending = new[] { "retry-pending", "resolve-conflict" };
             AssertAuthored(pages["Entry"], pending.Concat(new[] { "Entry heading", "Scope", "Entry actions", "Offline distinction",
-                "retry-session", "retry-room", "discard-room", "create-room", "join-room" }));
+                "retry-session", "retry-room", "discard-room", "create-room", "join-room", "Name caption", "entry-name",
+                "New room caption", "seat-count", "Code caption", "room-code", "join-code" }));
             AssertAuthored(pages["Lobby"], pending.Concat(new[] { "Lobby heading", "Scope", "Seat card 0", "Seat card 1", "Seat 0",
-                "Seat 1", "player-name", "configure", "start", "copy-invite", "Room revision" }));
+                "Seat 1", "player-name", "configure", "start", "copy-invite", "Room revision", "Seat card 2", "Seat card 3",
+                "Seat 2", "Seat 3", "seat-bot-1", "seat-bot-2", "seat-bot-3", "Room code caption", "Room code" }));
             AssertAuthored(pages["Match"], pending.Concat(new[] { "Turn", "Revision", "Power status", "Board owner 0", "Board owner 1",
                 "Player details 0", "Player details 1", "Legal actions", "choice-draw--1--1--1", "mode-forge:-1", "mode-trade:-1",
                 "choice-weapon--1--1--1", "use-power", "Setup heading", "Setup hint" })
                 .Concat(Enumerable.Range(0, 4).Select(i => "mode-setupPlace:" + i))
                 .Concat(Enumerable.Range(0, 32).Select(i => "slot-" + i)));
             AssertAuthored(pages["Match"], Enumerable.Range(0, 32).Select(i => "slot-" + i + "/Legal"));
+            // Three or four seats use the 2x2 grid: one cell per seat, clockwise, each with its 16 slots.
+            AssertAuthored(pages["Match"], new[] { "Duo", "Quad" }.Concat(Enumerable.Range(0, 4).Select(i => "Quad/Cell " + i)));
+            for (int seat = 0; seat < 4; seat++)
+                AssertAuthored(pages["Match"], new[] { "view-seat-" + seat, "Board owner " + seat, "Player details " + seat }
+                    .Concat(Enumerable.Range(0, 64).Where(id => DomainRules.SeatOfSlot(id) == seat).Select(id => "slot-" + id))
+                    .Select(name => "Quad/Cell " + seat + "/" + name));
             AssertAuthored(pages["Match"], new[] { "view-seat-0", "view-seat-1", "info-tab-kingdom", "info-tab-virtues",
                 "info-tab-combos", "Info title", "Kingdom name", "Kingdom story", "Power name", "Power description",
                 "Goal heading", "Goal note", "Forged heading", "Forged note", "Combos heading" }
