@@ -134,7 +134,7 @@ public static class HeuristicBot
                 $"{slot.Index}:{(slot.resource == null ? 0 : slot.resource.GetInstanceID())}:{slot.resource?.resourceType}")) +
             ":" + string.Join(";", recipes.Select(recipe => $"{recipe.Virtue}:{recipe.Needed}:{recipe.Stock}:{recipe.First}:{recipe.Second}")) +
             ":" + string.Join(";", cells.Select(cell => $"{cell.Index}>{string.Join(",", cell.Neighbors)}"));
-        return new BotDecision(player, candidates, signature);
+        return new BotDecision(player, BotStrengths.Apply(candidates, player.BotStrength, signature), signature);
     }
 
     public static string Execute(BotDecision decision)

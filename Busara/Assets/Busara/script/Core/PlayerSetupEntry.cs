@@ -7,6 +7,7 @@ public class PlayerSetupEntry
     public string Name;
     public Kingdom Kingdom;
     public bool IsBotControlled;
+    public BotStrength Strength = BotStrength.Normal;
     public BoardTheme Theme;
     /// <summary>Index into <see cref="ThemeCatalog.playerColours"/> for this player's pieces; -1 uses the seat's colour.</summary>
     public int ColourIndex = -1;

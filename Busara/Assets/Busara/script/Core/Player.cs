@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public string Name;
     public bool IsBotControlled;
+    public BotStrength BotStrength = BotStrength.Normal;
     public List<Virtue> Virtues = new List<Virtue>();
     public int PlayerNumber;
 

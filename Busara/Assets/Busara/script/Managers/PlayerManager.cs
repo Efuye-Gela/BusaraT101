@@ -60,6 +60,7 @@ public class PlayerManager : Manager<PlayerManager>
             player.name = player.Name;
             player.Kingdom = entries[i].Kingdom;
             player.IsBotControlled = entries[i].IsBotControlled;
+            player.BotStrength = entries[i].Strength;
             player.kingdomRevealed = false;
             player.virtuesHidden = false;
             player.knownKingdoms.Clear();

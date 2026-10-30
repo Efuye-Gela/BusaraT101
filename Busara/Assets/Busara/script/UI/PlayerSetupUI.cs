@@ -65,8 +65,21 @@ public class PlayerSetupUI : MonoBehaviour
 
         if (screen != null)
             screen.SetActive(true);
-        for (int i = 0; i < Mathf.Min(PlayerSetupRules.MinimumPlayers, Capacity); i++)
-            entries.Add(new PlayerSetupEntry($"Player {i + 1}"));
+        // The main menu's New Game screen seats one human against its chosen number of bots.
+        int bots = Mathf.Min(GameLaunch.TakeBots(), Capacity - 1);
+        if (bots > 0)
+        {
+            entries.Add(new PlayerSetupEntry("Player 1"));
+            for (int i = 0; i < bots; i++)
+            {
+                var bot = new PlayerSetupEntry($"Bot {i + 2}", isBotControlled: true) { Strength = GameLaunch.Strength };
+                bot.Kingdom = FreeKingdom();
+                entries.Add(bot);
+            }
+        }
+        else
+            for (int i = 0; i < Mathf.Min(PlayerSetupRules.MinimumPlayers, Capacity); i++)
+                entries.Add(new PlayerSetupEntry($"Player {i + 1}"));
         RebuildRows();
     }
 
@@ -232,27 +245,46 @@ public class PlayerSetupUI : MonoBehaviour
         });
     }
 
-    // A bot plays its seat through BotPlayerController. Default names follow the switch ("Player 2" <-> "Bot 2"),
-    // and a bot without a kingdom gets a free one at random so the game can start.
+    // The control button cycles Human -> Normal bot -> Hard bot -> Easy bot -> Human. A bot plays its seat through
+    // BotPlayerController. Default names follow the switch ("Player 2" <-> "Bot 2"), and a bot without a kingdom
+    // gets a free one at random so the game can start.
     private void ToggleBot(int seat)
     {
         PlayerSetupEntry entry = EntryAt(seat);
         if (entry == null)
             return;
-        entry.IsBotControlled = !entry.IsBotControlled;
-        string from = entry.IsBotControlled ? "Player " : "Bot ";
-        string to = entry.IsBotControlled ? "Bot " : "Player ";
-        if (entry.Name != null && entry.Name.StartsWith(from) && int.TryParse(entry.Name.Substring(from.Length), out int number) &&
-            !entries.Exists(other => other != entry && other.Name == to + number))
-            entry.Name = to + number;
-        if (entry.IsBotControlled && entry.Kingdom == null && manager.kingdomCatalog != null)
+        bool wasBot = entry.IsBotControlled;
+        if (!wasBot)
         {
-            List<Kingdom> free = manager.kingdomCatalog.kingdoms.FindAll(kingdom =>
-                kingdom != null && !entries.Exists(other => other.Kingdom == kingdom));
-            if (free.Count > 0)
-                entry.Kingdom = free[Random.Range(0, free.Count)];
+            entry.IsBotControlled = true;
+            entry.Strength = BotStrength.Normal;
         }
+        else if (entry.Strength == BotStrength.Normal)
+            entry.Strength = BotStrength.Hard;
+        else if (entry.Strength == BotStrength.Hard)
+            entry.Strength = BotStrength.Easy;
+        else
+            entry.IsBotControlled = false;
+        if (wasBot != entry.IsBotControlled)
+        {
+            string from = entry.IsBotControlled ? "Player " : "Bot ";
+            string to = entry.IsBotControlled ? "Bot " : "Player ";
+            if (entry.Name != null && entry.Name.StartsWith(from) && int.TryParse(entry.Name.Substring(from.Length), out int number) &&
+                !entries.Exists(other => other != entry && other.Name == to + number))
+                entry.Name = to + number;
+        }
+        if (entry.IsBotControlled && entry.Kingdom == null)
+            entry.Kingdom = FreeKingdom();
         RebuildRows();
+    }
+
+    private Kingdom FreeKingdom()
+    {
+        if (manager.kingdomCatalog == null || manager.kingdomCatalog.kingdoms == null)
+            return null;
+        List<Kingdom> free = manager.kingdomCatalog.kingdoms.FindAll(kingdom =>
+            kingdom != null && !entries.Exists(other => other.Kingdom == kingdom));
+        return free.Count > 0 ? free[Random.Range(0, free.Count)] : null;
     }
 
     private void StepTheme(int seat, int direction)
@@ -271,7 +303,7 @@ public class PlayerSetupUI : MonoBehaviour
         card.seatLabel.text = $"PLAYER {seat + 1}";
         card.removeButton.interactable = entries.Count > PlayerSetupRules.MinimumPlayers;
         card.nameInput.SetTextWithoutNotify(entry.Name);
-        card.controlLabel.text = entry.IsBotControlled ? "Bot" : "Human";
+        card.controlLabel.text = entry.IsBotControlled ? entry.Strength + " bot" : "Human";
         TMP_Dropdown kingdoms = card.kingdomDropdown;
         kingdoms.SetValueWithoutNotify(entry.Kingdom == null || manager.kingdomCatalog == null ? 0 :
             manager.kingdomCatalog.kingdoms.IndexOf(entry.Kingdom) + 1);

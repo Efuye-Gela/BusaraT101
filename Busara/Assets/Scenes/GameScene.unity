@@ -130199,7 +130199,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 104
+  m_PreferredWidth: 128
   m_PreferredHeight: 40
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -130282,8 +130282,8 @@ MonoBehaviour:
   m_fontColor: {r: 0.956863, g: 0.937255, b: 0.901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
-  m_fontSize: 17
-  m_fontSizeBase: 17
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 12
@@ -130443,7 +130443,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 104
+  m_PreferredWidth: 128
   m_PreferredHeight: 40
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -130526,8 +130526,8 @@ MonoBehaviour:
   m_fontColor: {r: 0.956863, g: 0.937255, b: 0.901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
-  m_fontSize: 17
-  m_fontSizeBase: 17
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 12
@@ -130687,7 +130687,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 104
+  m_PreferredWidth: 128
   m_PreferredHeight: 40
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -130770,8 +130770,8 @@ MonoBehaviour:
   m_fontColor: {r: 0.956863, g: 0.937255, b: 0.901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
-  m_fontSize: 17
-  m_fontSizeBase: 17
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 12
@@ -130931,7 +130931,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: 104
+  m_PreferredWidth: 128
   m_PreferredHeight: 40
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -131014,8 +131014,8 @@ MonoBehaviour:
   m_fontColor: {r: 0.956863, g: 0.937255, b: 0.901961, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
-  m_fontSize: 17
-  m_fontSizeBase: 17
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 12
