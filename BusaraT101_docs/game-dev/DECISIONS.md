@@ -54,10 +54,23 @@
 ## D-005 — One online theme from the authored art
 
 - Date: 2026-10-07
-- Status: active
+- Status: superseded by D-006
 - Decision: `OnlineTheme` holds the palette (olive-slate surfaces, charcoal
   wells, amber/ember edges, warm text), typography (Poppins, Share Tech
   accents) and layout. Board slots sit over the authored `Board.png` wells.
 - Reason and evidence: derived from `Background.png` and `Board.png`.
 - Consequences: new online UI must use the theme and prefabs, not ad-hoc colours.
 - Reconsider if: the offline UI adopts a different art direction.
+
+## D-006 — Online client uses the offline game's Panther Court art
+
+- Date: 2026-10-30
+- Status: active
+- Decision: OnlineMVP is authored with the Panther Court kit the offline game
+  uses: a wood backdrop, a carved frieze, leather panels, gold-outline buttons, a glowing
+  primary button, the Panther Court board, its resource pieces and its selection ring.
+  `OnlineTheme` keeps only runtime state colours (gold, parchment, selection tints).
+- Reason and evidence: in the first two-browser play test on Vercel the online
+  game looked nothing like the offline one.
+- Consequences: new online controls copy an existing authored control so they keep the kit.
+- Reconsider if: online play lets each player pick a board theme, as offline does.

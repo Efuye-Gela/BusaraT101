@@ -11,10 +11,11 @@ The art pipeline is in `tools/theme-lab`, and the project-local Unity skills are
   power-choice button.
 - The online scene (`Busara/Assets/Busara/Online/Scenes/OnlineMVP.unity`) follows the same rule. Every control
   is saved under its page's `Content`, named by control id; the browser tests find controls by those names.
-  Nothing regenerates the scene, and the Web build uses it as saved.
+  Nothing regenerates the scene, and the Web build uses it as saved. It uses the same Panther Court kit, board
+  and pieces as the offline game.
 - The only runtime sprite swapping is gameplay content. `ThemeManager` applies the board theme each
-  player picks, `PieceCompositor` builds seat-coloured pieces, and `ThemeShowcase` runs the home-screen
-  slideshow.
+  player picks, `PieceCompositor` builds seat-coloured pieces, `ThemeShowcase` runs the home-screen
+  slideshow, and the online board shows each slot's resource piece.
 - Use fully qualified uGUI types (`UnityEngine.UI.Image`, `UnityEngine.UI.Button`). The game defines its
   own global `Selectable` class.
 - GameScene's CanvasScaler uses **1000** reference pixels per unit. Its nine-slice images therefore need

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Busara.Online.Client
 {
-    // Match page: authored turn bar, seat panels and board art; slots sit on the art's wells.
+    // Match page: authored turn bar, seat panels and board art; slots sit on the art's wells and show the theme's pieces.
     public sealed partial class OnlineMvpScreen
     {
         private void Board()
@@ -18,7 +18,7 @@ namespace Busara.Online.Client
             var turnLabel = Label("Turn", turn);
             if (turnLabel != null)
                 turnLabel.color = view.phase == "Finished" || view.decision != null || view.activeSeat == view.seat
-                    ? OnlineTheme.Amber : OnlineTheme.Text;
+                    ? OnlineTheme.Gold : OnlineTheme.Text;
             Label("Revision", view.phase + "  " + Dot + "  revision " + view.version);
             Label("Power status", PowerStatus(view));
             for (int seat = 0; seat < 2; seat++) SeatDetails(view, seat);
@@ -35,7 +35,7 @@ namespace Busara.Online.Client
             if (player == null) return;
             var owner = Label("Board owner " + seat, "Seat " + (seat + 1) + "  " + Dot + "  " + player.name +
                 (seat == view.seat ? "  (you)" : ""));
-            if (owner != null) owner.color = seat == view.seat ? OnlineTheme.Amber : OnlineTheme.Text;
+            if (owner != null) owner.color = seat == view.seat ? OnlineTheme.Gold : OnlineTheme.Text;
             string kingdom = string.IsNullOrEmpty(player.kingdom) ? "Kingdom hidden" : player.kingdom;
             string virtues = !player.virtuesVisible ? "Virtues hidden" :
                 player.virtues.Count == 0 ? "No virtues" : string.Join(", ", player.virtues.GroupBy(t => t.type)
@@ -56,7 +56,7 @@ namespace Busara.Online.Client
             if (button == null) return;
             // The authored slot shows selection, its resource and its place in a chosen chain.
             bool selected = source == slot.id || selectedIndex >= 0;
-            button.image.color = selected ? OnlineTheme.Hex(0xFFB21A, .28f) : OnlineTheme.Hex(0xFFB21A, 0f);
+            button.image.color = selected ? OnlineTheme.SlotChosen : OnlineTheme.SlotIdle;
             var label = button.transform.Find("Label").GetComponent<TMP_Text>();
             label.text = slot.id.ToString();
             label.color = selected ? OnlineTheme.Text : OnlineTheme.TextMuted;

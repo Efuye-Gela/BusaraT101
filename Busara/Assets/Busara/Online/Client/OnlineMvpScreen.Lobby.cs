@@ -55,11 +55,11 @@ namespace Busara.Online.Client
             {
                 // Ready seats and your own seat are marked by colour: state, not styling.
                 var card = Use<Image>("Seat card " + player.seat);
-                if (card != null) card.color = player.ready ? OnlineTheme.Selected : OnlineTheme.SurfaceRaised;
+                if (card != null) card.color = player.ready ? OnlineTheme.Selected : OnlineTheme.Unselected;
                 var seat = Label("Seat " + player.seat,
                     "Seat " + (player.seat + 1) + "  " + Dot + "  " + (player.joined ? player.name : "Waiting for invited player") +
                     "\n" + (player.ready ? "Ready" : "Not ready"));
-                if (seat != null) seat.color = player.seat == view.seat ? OnlineTheme.Amber : OnlineTheme.Text;
+                if (seat != null) seat.color = player.seat == view.seat ? OnlineTheme.Gold : OnlineTheme.Text;
             }
             Input("player-name", "Your name", draftName, value => draftName = value);
             var self = view.players.Find(p => p.seat == view.seat);
