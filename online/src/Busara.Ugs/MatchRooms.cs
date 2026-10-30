@@ -27,8 +27,35 @@ public sealed partial class MatchService
 
     private static Reply CreationReply(Creation creation) => Reply.Ok(new RoomResult
     {
-        matchId = creation.matchId, version = "1", inviteUrl = "#invite=" + creation.inviteToken
+        matchId = creation.matchId, version = "1", inviteUrl = "#invite=" + creation.inviteToken,
+        code = string.IsNullOrEmpty(creation.code) ? null : creation.code
     });
+
+    // Room codes: 8 characters from an alphabet without look-alikes (31^8, about 8.5e11), so a code cannot
+    // practically be guessed within its 24 hours. Joins compare hashes in constant time.
+    private const string CodeAlphabet = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+    private const int CodeLength = 8;
+
+    private static string NewCode()
+    {
+        var code = new char[CodeLength];
+        for (int i = 0; i < CodeLength; i++)
+            code[i] = CodeAlphabet[System.Security.Cryptography.RandomNumberGenerator.GetInt32(CodeAlphabet.Length)];
+        return new string(code);
+    }
+
+    private static string? NormalizeCode(string? code)
+    {
+        string value = new string((code ?? "").Where(c => !char.IsWhiteSpace(c) && c != '-').ToArray()).ToUpperInvariant();
+        return value.Length == CodeLength && value.All(c => CodeAlphabet.Contains(c)) ? value : null;
+    }
+
+    private static string CodeId(string code) => "busara_code_" + Hash("room-code\n" + code)[..40].ToLowerInvariant();
+
+    // The first empty seat that is neither claimed by a player nor filled by a bot.
+    private static int OpenSeat(RoomDocument room) =>
+        Enumerable.Range(1, room.members.Length - 1).FirstOrDefault(seat => room.members[seat] == "" &&
+            !room.state.seats[seat].joined, -1);
 
     private async Task<(RoomDocument Value, string Lock)> Room(string matchId)
     {
@@ -55,12 +82,19 @@ public sealed partial class MatchService
     private static void ValidateRoom(RoomDocument room, string matchId)
     {
         if (room.schemaVersion is not (1 or 2) || room.state is null || room.state.id != matchId ||
-            room.members is null || room.members.Length != 2 || room.receipts is null ||
+            room.members is null || room.members.Length != room.state.seats.Count || room.receipts is null ||
             room.receiptOrder is null || room.events is null ||
             string.IsNullOrEmpty(room.creationKey) || string.IsNullOrEmpty(room.inviteHash))
             throw new InvalidOperationException("Invalid room schema.");
         try { DomainRules.ValidateState(room.state); }
         catch (RuleException) { throw new InvalidOperationException("Stored domain state is invalid."); }
+    }
+
+    private static ClientView MemberView(RoomDocument room, int seat)
+    {
+        ClientView view = Projection.ForSeat(room.state, seat);
+        if (room.state.phase == "Lobby" && room.code.Length > 0) view.roomCode = room.code;
+        return view;
     }
 
     private static int Seat(RoomDocument room, string actor)

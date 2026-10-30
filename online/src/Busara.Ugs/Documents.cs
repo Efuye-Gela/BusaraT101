@@ -31,6 +31,8 @@ public sealed class Creation
     public string commandId = "";
     public string matchId = "";
     public string inviteToken = "";
+    // The short room code a player can type instead of opening the invitation link. Empty for older rooms.
+    public string code = "";
 }
 
 public sealed class Receipt
@@ -57,6 +59,9 @@ public sealed class RoomDocument
     public bool published;
     public string[] members = new[] { "", "" };
     public string inviteHash = "";
+    public string codeHash = "";
+    // Kept so members can see and share the code in the lobby; joins compare against codeHash.
+    public string code = "";
     public DateTimeOffset inviteExpiresAt;
     public MatchState state = new();
     public Dictionary<string, Receipt> receipts = new();
@@ -84,4 +89,12 @@ public sealed class RoomRequest
 {
     public string commandId = "";
     public string? inviteToken;
+    public string? code;
+    public int seats = DomainRules.MinimumSeats;
+}
+
+// Maps a room code's hash to its match. Written once when the room is created.
+public sealed class CodeDocument
+{
+    public string matchId = "";
 }

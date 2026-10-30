@@ -70,5 +70,7 @@ namespace Busara.Online
         public int extraActions;
         public List<int> extraTurns = new List<int>();
         public string notice;
+        // The lobby's room code, shown to members so they can share it; empty once the match starts.
+        public string roomCode;
     }
 }

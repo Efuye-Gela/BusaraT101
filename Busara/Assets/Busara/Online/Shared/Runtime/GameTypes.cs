@@ -39,6 +39,7 @@ namespace Busara.Online
     {
         public string matchId;
         public string inviteUrl;
+        public string code;
         public string version;
     }
 

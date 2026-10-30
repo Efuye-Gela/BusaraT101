@@ -91,14 +91,18 @@ mergeInto(LibraryManager.library, {
     if (path === '/api/rooms/join') {
       try {
         var operation = JSON.parse(localStorage.getItem(BusaraOnline.roomKey));
-        if (!BusaraOnline.ownsRoomOutbox || !operation || operation.path !== path ||
-            operation.body !== body || !BusaraOnline.invite || operation.inviteHash !== BusaraOnline.inviteHash) {
+        var parsed = JSON.parse(body);
+        // A typed room code joins without an invitation link; the link's secret is added only for link joins.
+        var byCode = typeof parsed.code === 'string' && parsed.code.length > 0;
+        if (!BusaraOnline.ownsRoomOutbox || !operation || operation.path !== path || operation.body !== body ||
+            (!byCode && (!BusaraOnline.invite || operation.inviteHash !== BusaraOnline.inviteHash))) {
           BusaraOnline.emit('response', '{"code":"original_invitation_required"}', id, 409);
           return;
         }
-        var parsed = JSON.parse(body);
-        parsed.inviteToken = BusaraOnline.invite;
-        body = JSON.stringify(parsed);
+        if (!byCode) {
+          parsed.inviteToken = BusaraOnline.invite;
+          body = JSON.stringify(parsed);
+        }
       } catch (_) { BusaraOnline.emit('protocolError', '', id); return; }
     }
     var controller = new AbortController();
@@ -151,6 +155,7 @@ mergeInto(LibraryManager.library, {
         if (saved) {
           var operation = JSON.parse(saved);
           operation.matchingInvite = !!BusaraOnline.invite && operation.inviteHash === BusaraOnline.inviteHash;
+          operation.byCode = operation.path === '/api/rooms/join' && !operation.inviteHash;
           BusaraOnline.emit('roomOutbox', JSON.stringify(operation));
         } else BusaraOnline.emit('roomOutbox', '');
       } catch (_) { BusaraOnline.emit('storageError'); }
@@ -164,9 +169,11 @@ mergeInto(LibraryManager.library, {
       var operation = JSON.parse(UTF8ToString(operationPtr));
       if (operation.path !== '/api/rooms' && operation.path !== '/api/rooms/join') return 0;
       var joining = operation.path === '/api/rooms/join';
-      if (joining && (!BusaraOnline.invite || !BusaraOnline.inviteHash)) return 0;
+      var request = JSON.parse(operation.body);
+      var byCode = joining && typeof request.code === 'string' && request.code.length > 0;
+      if (joining && !byCode && (!BusaraOnline.invite || !BusaraOnline.inviteHash)) return 0;
       var body = JSON.stringify({path: operation.path, body: operation.body,
-        inviteHash: joining ? BusaraOnline.inviteHash : null});
+        inviteHash: joining && !byCode ? BusaraOnline.inviteHash : null});
       var saved = localStorage.getItem(BusaraOnline.roomKey);
       if (saved && saved !== body) return 0;
       localStorage.setItem(BusaraOnline.roomKey, body);

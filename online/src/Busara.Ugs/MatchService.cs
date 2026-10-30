@@ -65,7 +65,10 @@ public sealed partial class MatchService(IPrivateStore store, IGameRandom random
     private async Task<Reply> Create(string actor, RoomRequest request)
     {
         CommandId(request.commandId);
-        if (request.inviteToken is not null) throw new RequestError(400, "invalid_request");
+        // Unity's JsonUtility writes empty strings for unset fields, so empty means absent.
+        if (!string.IsNullOrEmpty(request.inviteToken) || !string.IsNullOrEmpty(request.code) ||
+            request.seats is < DomainRules.MinimumSeats or > DomainRules.MaximumSeats)
+            throw new RequestError(400, "invalid_request");
         string key = CreationKey(actor, request.commandId);
         Creation? candidate = null;
         for (int attempt = 0; attempt < Attempts; attempt++)
@@ -79,14 +82,18 @@ public sealed partial class MatchService(IPrivateStore store, IGameRandom random
                 string id = Guid.NewGuid().ToString("D");
                 string secret = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32))
                     .TrimEnd('=').Replace('+', '-').Replace('/', '_');
+                string code = NewCode();
                 candidate = new Creation
                 {
-                    actor = actor, commandId = request.commandId, matchId = id, inviteToken = id + "." + secret
+                    actor = actor, commandId = request.commandId, matchId = id, inviteToken = id + "." + secret, code = code
                 };
+                var members = Enumerable.Repeat("", request.seats).ToArray();
+                members[0] = actor;
                 newRoom = new RoomDocument
                 {
-                    creationKey = key, members = new[] { actor, "" }, state = DomainRules.Create(id),
-                    inviteHash = Hash(candidate.inviteToken), inviteExpiresAt = Now.AddHours(24),
+                    creationKey = key, members = members, state = DomainRules.Create(id, request.seats),
+                    inviteHash = Hash(candidate.inviteToken), codeHash = Hash(code), code = code,
+                    inviteExpiresAt = Now.AddHours(24),
                     events = new List<HistoryEvent> { new() { version = "1", kind = "RoomCreated" } }
                 };
             }
@@ -94,7 +101,12 @@ public sealed partial class MatchService(IPrivateStore store, IGameRandom random
             string guestJson = Encode(guest.Doc);
             // Publish only after initialization. A losing/crashed creator can leave
             // an inaccessible orphan, never a second published room or a reset state.
-            if (newRoom is not null) await store.CreateCandidate(RoomId(candidate.matchId), Encode(newRoom));
+            if (newRoom is not null)
+            {
+                await store.CreateCandidate(RoomId(candidate.matchId), Encode(newRoom));
+                // An orphaned code (a lost creation race) points at an unpublished room, which reads as unavailable.
+                await store.CreateCandidate(CodeId(candidate.code), Encode(new CodeDocument { matchId = candidate.matchId }));
+            }
             if (await store.CompareExchange(guest.Key, guestJson, guest.Lock))
                 return CreationReply(await EnsurePublished(candidate));
         }
@@ -105,8 +117,21 @@ public sealed partial class MatchService(IPrivateStore store, IGameRandom random
     {
         CommandId(request.commandId);
         string token = request.inviteToken ?? "";
-        if (token.Length != 80 || token[36] != '.') throw new RequestError(404, "invite_unavailable");
-        string matchId = token[..36];
+        string? code = string.IsNullOrEmpty(request.inviteToken) && !string.IsNullOrEmpty(request.code)
+            ? NormalizeCode(request.code) ?? throw new RequestError(404, "invite_unavailable") : null;
+        string matchId;
+        if (code is not null)
+        {
+            var index = await store.Read(CodeId(code));
+            if (index is null) throw new RequestError(404, "invite_unavailable");
+            matchId = DecodeStored<CodeDocument>(index.Json).matchId;
+        }
+        else
+        {
+            if (token.Length != 80 || token[36] != '.')
+                throw new RequestError(404, "invite_unavailable");
+            matchId = token[..36];
+        }
         string fingerprint = Hash("join\n" + Json.Encode(request));
         string operationKey = CreationKey(actor, request.commandId);
         for (int attempt = 0; attempt < Attempts; attempt++)
@@ -116,13 +141,15 @@ public sealed partial class MatchService(IPrivateStore store, IGameRandom random
                 (guest.Doc.joins.TryGetValue(operationKey, out var reserved) && reserved != fingerprint))
                 throw new RequestError(409, "command_conflict");
             var room = await Room(matchId);
-            if (!CryptographicOperations.FixedTimeEquals(Encoding.ASCII.GetBytes(room.Value.inviteHash),
-                    Encoding.ASCII.GetBytes(Hash(token))))
+            string expected = code is not null ? room.Value.codeHash : room.Value.inviteHash;
+            if (expected.Length == 0 || !CryptographicOperations.FixedTimeEquals(Encoding.ASCII.GetBytes(expected),
+                    Encoding.ASCII.GetBytes(Hash(code ?? token))))
                 throw new RequestError(404, "invite_unavailable");
             var prior = Previous(room.Value, actor, request.commandId, fingerprint);
             if (prior is not null) return prior;
             if (room.Value.members.Contains(actor)) throw new RequestError(409, "already_joined");
-            if (room.Value.inviteExpiresAt <= Now || room.Value.members[1] != "" || room.Value.state.phase != "Lobby")
+            int seat = OpenSeat(room.Value);
+            if (room.Value.inviteExpiresAt <= Now || seat < 0 || room.Value.state.phase != "Lobby")
                 throw new RequestError(409, "invite_unavailable");
             if (!guest.Doc.joins.ContainsKey(operationKey))
             {
@@ -131,8 +158,8 @@ public sealed partial class MatchService(IPrivateStore store, IGameRandom random
                 guest.Doc.joins.Add(operationKey, fingerprint);
                 if (!await store.CompareExchange(guest.Key, Encode(guest.Doc), guest.Lock)) continue;
             }
-            room.Value.state = DomainRules.Join(room.Value.state, 1, "Guest");
-            room.Value.members[1] = actor;
+            room.Value.state = DomainRules.Join(room.Value.state, seat, seat == 1 ? "Guest" : "Guest " + (seat + 1));
+            room.Value.members[seat] = actor;
             var reply = Reply.Ok(new RoomResult { matchId = matchId, version = Revision(room.Value.state) });
             Retain(room.Value, request.commandId, new Receipt { actor = actor, fingerprint = fingerprint, reply = reply });
             room.Value.events.Add(new HistoryEvent { version = Revision(room.Value.state), kind = "SeatJoined" });
@@ -147,7 +174,7 @@ public sealed partial class MatchService(IPrivateStore store, IGameRandom random
         var roomTask = Room(matchId);
         await Task.WhenAll(guestTask, roomTask);
         var room = await roomTask;
-        return Reply.Ok(Projection.ForSeat(room.Value.state, Seat(room.Value, actor)));
+        return Reply.Ok(MemberView(room.Value, Seat(room.Value, actor)));
     }
 
     private static string Revision(MatchState state) => state.version.ToString(CultureInfo.InvariantCulture);

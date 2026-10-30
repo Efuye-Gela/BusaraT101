@@ -77,7 +77,7 @@ public sealed partial class MatchService
             body = Json.Encode(new CommandResult
             {
                 receipt = DecodeStored<CommandReceipt>(body),
-                view = Projection.ForSeat(room.state, seat)
+                view = MemberView(room, seat)
             });
         return new Reply { status = original.status, body = body };
     }
