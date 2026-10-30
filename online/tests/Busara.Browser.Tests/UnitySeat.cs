@@ -113,9 +113,9 @@ internal sealed class UnitySeat : IAsyncDisposable
         try { await Page.GotoAsync(address, new PageGotoOptions { WaitUntil = WaitUntilState.DOMContentLoaded }); }
         catch { throw new AssertionException("The owned Unity Web entry did not load (URL withheld)."); }
         await WaitUiAsync();
-        await ClickAsync("create-guest");
+        // There is no separate guest step: creating or accepting a room creates the guest.
         await WaitAsync(async () => (await ControlsAsync()).Any(c => c.id == "create-room" && c.enabled),
-            "Explicit guest creation did not reach the Unity room entry.");
+            "The Unity room entry did not become available.");
         Assert.That(new Uri(Page.Url).Fragment.Contains("invite", StringComparison.OrdinalIgnoreCase), Is.False,
             "The invitation must be removed before any screenshot.");
     }

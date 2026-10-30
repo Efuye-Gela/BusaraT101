@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using Busara.Online;
@@ -134,7 +135,7 @@ public sealed class OnlineClientTests
             var pages = components.OfType<OnlinePage>().ToDictionary(page => page.Id);
             var pending = new[] { "retry-pending", "resolve-conflict" };
             AssertAuthored(pages["Entry"], pending.Concat(new[] { "Entry heading", "Scope", "Entry actions", "Offline distinction",
-                "create-guest", "retry-session", "retry-room", "discard-room", "create-room", "join-room" }));
+                "retry-session", "retry-room", "discard-room", "create-room", "join-room" }));
             AssertAuthored(pages["Lobby"], pending.Concat(new[] { "Lobby heading", "Scope", "Seat card 0", "Seat card 1", "Seat 0",
                 "Seat 1", "player-name", "configure", "start", "copy-invite", "Room revision" }));
             AssertAuthored(pages["Match"], pending.Concat(new[] { "Turn", "Revision", "Power status", "Board owner 0", "Board owner 1",
@@ -143,11 +144,45 @@ public sealed class OnlineClientTests
                 .Concat(Enumerable.Range(0, 4).Select(i => "mode-setupPlace:" + i))
                 .Concat(Enumerable.Range(0, 32).Select(i => "slot-" + i)));
             AssertAuthored(pages["Match"], Enumerable.Range(0, 32).Select(i => "slot-" + i + "/Legal"));
+            AssertAuthored(pages["Match"], new[] { "view-seat-0", "view-seat-1", "info-tab-kingdom", "info-tab-virtues",
+                "info-tab-combos", "Info title", "Kingdom name", "Kingdom story", "Power name", "Power description",
+                "Goal heading", "Goal note", "Forged heading", "Forged note", "Combos heading" }
+                .Concat(Enumerable.Range(0, 3).Select(i => "Goal row " + i))
+                .Concat(Enumerable.Range(0, 6).Select(i => "Forged " + i))
+                .Concat(Enumerable.Range(0, 6).Select(i => "Combo " + i)));
+            Assert.AreEqual(6, screen.virtueIcons.Length);
+            Assert.IsTrue(screen.virtueIcons.All(sprite => sprite != null));
             var list = pages["Match"].Content.Find("Legal actions").GetComponent<UnityEngine.UI.ScrollRect>().content;
             foreach (string template in new[] { "List Label Template", "List Button Template", "List Primary Template" })
                 Assert.IsFalse(list.Find(template).gameObject.activeSelf, template + " must stay an inactive template.");
             var audit = Eg.Testing.Editor.SceneAudit.Audit(scene);
             Assert.IsEmpty(audit, string.Join("\n", audit));
+        }
+        finally { EditorSceneManager.CloseScene(scene, true); }
+    }
+
+    [Test]
+    public void KingdomTextsMatchTheOfflineKingdomAssets()
+    {
+        Scene scene = EditorSceneManager.OpenScene(BusaraOnlineBuild.ScenePath, OpenSceneMode.Additive);
+        try
+        {
+            var screen = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<OnlineMvpScreen>(true)).Single();
+            CollectionAssert.AreEquivalent(KingdomCatalog.All.Select(k => k.Id), screen.kingdomTexts.Select(k => k.id));
+            var offline = AssetDatabase.FindAssets("t:ScriptableObject", new[] { "Assets/Busara/ScriptableObjects/Kingdoms" })
+                .Select(guid => new SerializedObject(AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid))))
+                .Where(asset => asset.FindProperty("kingdomStory") != null)
+                .ToDictionary(asset => asset.FindProperty("kingdomName").stringValue);
+            foreach (var text in screen.kingdomTexts)
+            {
+                Assert.IsTrue(offline.TryGetValue(text.name, out var asset), "No offline kingdom named " + text.name);
+                Assert.AreEqual(Regex.Replace(asset.FindProperty("kingdomStory").stringValue, @"\s+", " ").Trim(), text.story,
+                    text.name + " story");
+                var power = new SerializedObject(asset.FindProperty("power").objectReferenceValue);
+                string description = Regex.Replace(power.FindProperty("powerDescription").stringValue.Replace("\r\n", "\n"),
+                    @"^COST:\n- [^\n]*\n", "");
+                Assert.AreEqual(Regex.Replace(description, @"\s*\n\s*", " ").Trim(), text.power, text.name + " power");
+            }
         }
         finally { EditorSceneManager.CloseScene(scene, true); }
     }

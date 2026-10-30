@@ -63,8 +63,8 @@ For normal play across different PCs/networks, follow
 then both players open the website with no local server or Node installation.
 For development-only local testing, the UGS guide also includes a loopback-only
 static server; it does **not** run game logic. Open two
-separate browser profiles, create a guest/room in the first, and accept its
-private invitation in the second. Ready both seats, then start. Two ordinary
+separate browser profiles, create a room in the first, and accept its
+private invitation in the second (creating or accepting a room signs in a guest). Ready both seats, then start. Two ordinary
 tabs share an identity and are not two players.
 
 UGS uses persistent anonymous player sessions and a fixed 30-day Busara guest

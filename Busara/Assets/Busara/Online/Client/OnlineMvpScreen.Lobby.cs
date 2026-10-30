@@ -27,11 +27,8 @@ namespace Busara.Online.Client
             Label("Entry actions", "Play online");
             Label("Offline distinction",
                 "Full offline play is unchanged in the desktop game's main menu. This Web entry never starts offline managers.");
-            if (session.Guest == null)
-            {
-                Button("create-guest", "Create a new 30-day guest", session.CreateGuest, session.NeedsGuest && !session.Busy);
+            if (session.Guest == null && !session.NeedsGuest)
                 Button("retry-session", "Retry existing guest session", session.RefreshGuest, !session.Busy);
-            }
             else if (session.RoomPending)
             {
                 Button("retry-room", "Retry saved room request", session.RetryRoom, session.CanRetryRoom);
@@ -40,9 +37,9 @@ namespace Busara.Online.Client
             }
             else
             {
-                Button("create-room", "Create private room", session.CreateRoom, !session.Busy && session.RoomOperationsReady);
+                Button("create-room", "Create private room", session.CreateRoom, session.CanStartRoom);
                 Button("join-room", session.HasInvite ? "Accept private invitation" : "Open an invitation link to join",
-                    session.JoinRoom, session.HasInvite && !session.Busy && session.RoomOperationsReady);
+                    session.JoinRoom, session.HasInvite && session.CanStartRoom);
             }
         }
 

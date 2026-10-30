@@ -14,6 +14,8 @@ namespace Busara.Online.Client
     public sealed partial class OnlineMvpScreen : MonoBehaviour
     {
         public Sprite[] resourceIcons = new Sprite[4];
+        public Sprite[] virtueIcons = new Sprite[6];
+        public KingdomText[] kingdomTexts = new KingdomText[0];
         [SerializeField] private OnlineSession session;
         [SerializeField] private OnlineBrowserTransport browser;
         [SerializeField] private OnlinePage entryPage;

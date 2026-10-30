@@ -242,6 +242,11 @@ the original event or rewinds the version counter.
   offline side panel, round buttons beside the board offer the setup resources
   (`mode-setupPlace:0..3`) and then Draw, Forge, Trade, Weapon and `use-power`;
   each slot's `Legal` ring marks the spaces the current selection can reach. The
+  left panel shows the viewed player's kingdom, power, virtue goal (with the
+  resources that forge each goal virtue), forged virtues and the six resource
+  combinations; clicking a board (`view-seat-0`/`view-seat-1`) views that player.
+  Kingdom stories and power texts are copied from the offline kingdom assets into
+  `OnlineMvpScreen.kingdomTexts`; an EditMode test keeps them identical. The
   variable-length list below copies the inactive `List ... Template` rows inside
   `Legal actions` for prompts, decisions and every other choice. Edit the scene in Unity: nothing regenerates it,
   and the Web build uses it as saved. The main menu's `Play Online` button is

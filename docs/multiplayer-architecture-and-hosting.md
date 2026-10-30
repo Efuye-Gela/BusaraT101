@@ -172,9 +172,9 @@ Neither is the service account used by the deployment CLI.
    to add through **Add Identity Provider**.
 3. Build the Web client with the correct project UUID and environment name
    using section 6. Its `busara-ugs.js` adapter calls the anonymous
-   Authentication REST endpoint when the player explicitly selects
-   **Create guest**. No OAuth client secret or service-account key is needed.
-4. Open the hosted game > **Create guest** > create/join a room. Reload in the
+   Authentication REST endpoint when the player creates or accepts a room
+   with no guest yet. No OAuth client secret or service-account key is needed.
+4. Open the hosted game > create or join a room. Reload in the
    same browser profile and origin without clearing storage. The adapter uses
    its saved session token to restore the same identity; it must not silently
    create a new identity if recovery fails.

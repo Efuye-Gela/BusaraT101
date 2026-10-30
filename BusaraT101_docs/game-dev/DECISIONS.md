@@ -76,3 +76,20 @@
   game looked nothing like the offline one.
 - Consequences: new online controls copy an existing authored control so they keep the kit.
 - Reconsider if: online play lets each player pick a board theme, as offline does.
+
+## D-007 — No separate guest step; offline-style match panels
+
+- Date: 2026-10-30
+- Status: active
+- Decision: creating or accepting a room signs in a new 30-day guest when there is
+  none, so the Entry page offers only Create and Accept. A guest is still never
+  created while a room is being resumed, so a seat never changes identity. The
+  match page uses the offline layout: a left panel with kingdom, power, virtue goal,
+  forged virtues and resource combinations (any player, by clicking their board),
+  the boards in the middle and the round action buttons on the right.
+- Reason and evidence: CartaGames signs in on demand with the same anonymous UGS
+  sign-in, and play-testers expected the offline game's panels online.
+- Consequences: the 30-day guest expiry is unchanged on the server. Kingdom texts
+  are copied from the offline assets and checked by an EditMode test.
+- Reconsider if: the offline and online games share one scene or accounts replace guests.
+

@@ -37,7 +37,7 @@ the `development` environment, and enable **Authentication**, **Cloud Code**
 and **Cloud Save**. Anonymous sign-in is built into Unity Authentication:
 **do not add an identity provider**. It does not appear in the Dashboard's
 **Add Identity Provider** menu and needs no provider-specific configuration.
-Busara's **Create guest** action calls Unity's anonymous authentication endpoint;
+Creating or accepting a room calls Unity's anonymous authentication endpoint;
 you do not need Unity Player Accounts, Google or Username & Password for this
 milestone. See [Unity's anonymous sign-in guide](https://docs.unity.com/en-us/authentication/use-anon-sign-in).
 Record your **Project ID (UUID)** and **environment name**, not the numeric
@@ -243,8 +243,8 @@ test when you do not want to publish a website.
 
 1. Open the URL in **two separate browser profiles**. Ordinary tabs share
    local storage and an identity; two private windows may also share a profile.
-2. In browser A, explicitly create a guest, create a room and copy its invitation.
-3. Open that invitation in browser B, explicitly create its guest and join.
+2. In browser A, create a room (this signs in a new guest) and copy its invitation.
+3. Open that invitation in browser B and accept it (this signs in its own guest).
 4. Give both seats different names and mark both ready. The host starts.
 5. Place the five setup resources on your own non-adjacent spaces. Take a
    normal draw/place or move turn. A visible waiting browser polls every

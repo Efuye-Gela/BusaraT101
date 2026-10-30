@@ -78,9 +78,9 @@ namespace Busara.Online.Client
                 (mode != null || source >= 0 || (c.from < 0 && c.to < 0 && !DockedChoice(c)))))
             {
                 var selected = choice;
-                string label = string.IsNullOrEmpty(choice.label) ? choice.kind : choice.label;
-                if (choice.from >= 0) label += " · " + choice.from;
-                if (choice.to >= 0) label += " → " + choice.to;
+                // Server labels already name their spaces ("Move Water #3 -> #4").
+                string label = string.IsNullOrEmpty(choice.label) ? choice.kind +
+                    (choice.from >= 0 ? " #" + choice.from : "") + (choice.to >= 0 ? " -> #" + choice.to : "") : choice.label;
                 if (choice.paymentCost > 0) label += " · pay " + choice.paymentCost;
                 string id = "choice-" + choice.kind + "-" + choice.from + "-" + choice.to + "-" + choice.resourceType;
                 ListButton(actions, id, label, ref y, () => Choose(selected), session.CanAct);

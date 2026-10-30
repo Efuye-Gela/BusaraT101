@@ -24,6 +24,7 @@ namespace Busara.Online.Client
             for (int seat = 0; seat < 2; seat++) SeatDetails(view, seat);
             foreach (var slot in view.board) Slot(view, slot);
             Dock(view);
+            Info(view);
             var actions = ActionList();
             if (actions == null) return;
             if (paying != null) PaymentPanel(actions);

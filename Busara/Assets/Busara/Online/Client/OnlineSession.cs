@@ -49,6 +49,8 @@ namespace Busara.Online.Client
         private IOnlineDiagnostics diagnostics = new BrowserOnlineDiagnostics();
         private int pendingSample;
         private bool recoveringPending;
+        // The room request a player chose before having a guest; it is sent once the new guest's room outbox is ready.
+        private string roomAfterGuest;
 
         public void Initialize(OnlineBrowserTransport browser)
         {
@@ -119,8 +121,15 @@ namespace Busara.Online.Client
                         roomRequestBody = operation.body;
                         roomCommandId = request.commandId;
                         if (roomRequestPath == "/api/rooms/join") HasInvite = operation.matchingInvite;
+                        roomAfterGuest = null;
                         if (CanRetryRoom) RetryRoom();
                         else Status = "Invitation acceptance is unresolved. Reopen the SAME private invitation to retry the saved request. No invitation secret is stored.";
+                    }
+                    else if (roomAfterGuest != null)
+                    {
+                        string path = roomAfterGuest;
+                        roomAfterGuest = null;
+                        BeginRoom(path);
                     }
                     break;
                 case "roomOutboxLocked":
@@ -154,9 +163,12 @@ namespace Busara.Online.Client
             Changed?.Invoke();
         }
 
-        public void CreateGuest()
+        // Creating or joining a room is what creates the guest: there is no separate sign-in step. A guest is only
+        // ever created when there is no room to resume, so a seat never silently changes identity.
+        private void CreateGuestFor(string roomPath)
         {
             if (Busy || Guest != null || !NeedsGuest) return;
+            roomAfterGuest = roomPath;
             Busy = true;
             transport.Request("POST", "/api/guest", "{}", "", response => AcceptGuest(response, true));
             Changed?.Invoke();
@@ -177,7 +189,7 @@ namespace Busara.Online.Client
                 {
                     expired = false;
                     NeedsGuest = false;
-                    Status = "Guest session active. It expires after 30 days; refresh does not extend it.";
+                    Status = creating ? "Signed in as a new 30-day guest." : "Signed in.";
                     if (!string.IsNullOrEmpty(matchId)) transport.Bind(Guest.guestId, matchId, Guest.csrfToken);
                     else transport.RestoreRoomOutbox(Guest.guestId);
                 }
@@ -187,16 +199,23 @@ namespace Busara.Online.Client
                 // An existing room must never silently acquire a replacement identity.
                 NeedsGuest = string.IsNullOrEmpty(matchId);
                 Status = NeedsGuest
-                    ? "No valid guest session. Create a new 30-day guest explicitly to create or accept an invitation. An old seat cannot be recovered this way."
+                    ? "Create a private room or accept an invitation to start a 30-day guest. An old seat cannot be recovered this way."
                     : "Guest session expired or unavailable. This room cannot be resumed with a new identity or invitation.";
                 expired = !NeedsGuest;
             }
             else Status = Failure(response);
+            if (Guest == null) roomAfterGuest = null;
             Changed?.Invoke();
         }
 
-        public void CreateRoom() { BeginRoom("/api/rooms"); }
-        public void JoinRoom() { if (HasInvite) BeginRoom("/api/rooms/join"); }
+        public bool CanStartRoom => !Busy && (Guest != null ? roomOutboxReady : NeedsGuest);
+        public void CreateRoom() { StartRoom("/api/rooms"); }
+        public void JoinRoom() { if (HasInvite) StartRoom("/api/rooms/join"); }
+        private void StartRoom(string path)
+        {
+            if (Guest == null) CreateGuestFor(path);
+            else BeginRoom(path);
+        }
         public void RetryRoom() { if (CanRetryRoom) BeginRoom(roomRequestPath); }
         private void BeginRoom(string path)
         {

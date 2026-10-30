@@ -97,14 +97,15 @@ namespace Busara.Online.Client
         private void ListLabel(RectTransform list, string label, ref float y, float height)
         {
             var text = Copy<TMP_Text>(list, "List Label", "Instructions");
-            Place(text.rectTransform, list, 12, y + 8, 456, height - 16);
+            float width = list.rect.width - 24;
+            Place(text.rectTransform, list, 12, y + 8, width, height - 16);
             text.text = label;
             // TMP's ellipsis blanks text whose lines overflow the rect, so the label grows to fit.
-            float needed = text.GetPreferredValues(label, 456, 0).y + 16;
+            float needed = text.GetPreferredValues(label, width, 0).y + 16;
             if (needed > height)
             {
                 height = needed;
-                text.rectTransform.sizeDelta = new Vector2(456, height - 16);
+                text.rectTransform.sizeDelta = new Vector2(width, height - 16);
             }
             y += height;
         }
@@ -113,7 +114,7 @@ namespace Busara.Online.Client
             bool primary = false)
         {
             var button = Copy<Button>(list, primary ? "List Primary" : "List Button", id);
-            Place((RectTransform)button.transform, list, 10, y, 460, 56);
+            Place((RectTransform)button.transform, list, 10, y, list.rect.width - 20, 56);
             Bind(button, id, label, action, enabled);
             y += 66;
             return button;
