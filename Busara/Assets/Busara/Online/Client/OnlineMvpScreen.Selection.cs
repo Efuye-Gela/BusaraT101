@@ -21,10 +21,19 @@ namespace Busara.Online.Client
             string error = resourceSelection.Error(session.View);
             ListLabel(actions, error ?? (weapon ? "Valid weapon. Confirm to use it." :
                 "Valid chain. Each recipe rewards all board owners encountered so far."), ref y, 100);
-            var marker = session.View.choices.Find(choice => choice.kind == resourceSelection.Kind);
-            ListButton(actions, "confirm-resource-selection", weapon ? "Use weapon" : "Forge selected chain", ref y,
-                () => session.Submit(marker, null, slots: resourceSelection.Slots),
-                session.CanAct && error == null && marker != null, primary: true);
+            // With more than two seats a weapon names its target: one confirm button per player.
+            var markers = session.View.choices.Where(choice => choice.kind == resourceSelection.Kind).ToList();
+            if (markers.Count == 0) markers.Add(null);
+            foreach (var marker in markers)
+            {
+                var chosen = marker;
+                string target = marker != null && marker.target >= 0
+                    ? session.View.players.Find(p => p.seat == marker.target)?.name : null;
+                ListButton(actions, target == null ? "confirm-resource-selection" : "confirm-resource-selection-" + marker.target,
+                    weapon ? "Use weapon" + (target == null ? "" : " on " + target) : "Forge selected chain", ref y,
+                    () => session.Submit(chosen, null, slots: resourceSelection.Slots),
+                    session.CanAct && error == null && chosen != null, primary: true);
+            }
             ListButton(actions, "clear-resource-selection", "Clear selected resources", ref y,
                 () => { resourceSelection.Begin(resourceSelection.Kind); Rebuild(); }, session.CanAct && slots.Length > 0);
             ListButton(actions, "cancel-resource-selection", "Back without submitting", ref y,

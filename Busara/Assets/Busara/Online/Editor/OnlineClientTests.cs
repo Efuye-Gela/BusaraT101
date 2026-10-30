@@ -141,7 +141,7 @@ public sealed class OnlineClientTests
                 "Seat 1", "player-name", "configure", "start", "copy-invite", "Room revision", "Seat card 2", "Seat card 3",
                 "Seat 2", "Seat 3", "seat-bot-1", "seat-bot-2", "seat-bot-3", "Room code caption", "Room code" }));
             AssertAuthored(pages["Match"], pending.Concat(new[] { "Turn", "Revision", "Power status", "Board owner 0", "Board owner 1",
-                "Player details 0", "Player details 1", "Legal actions", "choice-draw--1--1--1", "mode-forge:-1", "mode-trade:-1",
+                "Player details 0", "Player details 1", "Legal actions", "choice-draw--1--1--1", "choice-forgeChain--1--1--1", "mode-trade:-1",
                 "choice-weapon--1--1--1", "use-power", "Setup heading", "Setup hint" })
                 .Concat(Enumerable.Range(0, 4).Select(i => "mode-setupPlace:" + i))
                 .Concat(Enumerable.Range(0, 32).Select(i => "slot-" + i)));

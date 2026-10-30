@@ -52,16 +52,14 @@ namespace Busara.Online.Client
             }
             string prompt = !string.IsNullOrEmpty(view.decision?.prompt) ? view.decision.prompt :
                 view.awaitingOther ? "The other player's required action is pending. Nothing will be passed automatically." :
-                "Use the round buttons, or tap one of your pieces and then a space to move or forge.";
+                "Use the round buttons. Forge: tap resources in order, then confirm. Or tap one of your pieces " +
+                "and then a space or a neighbouring piece to move or forge a pair.";
             ListLabel(actions, prompt, ref y, 120);
             if (mode != null || source >= 0)
                 ListButton(actions, "clear-selection", "Show all legal actions", ref y, () =>
                 { mode = null; source = -1; resourceFilter = -1; Rebuild(); });
             if (mode == null)
             {
-                foreach (var marker in view.choices.Where(c => c.kind == "forgeChain"))
-                    ListButton(actions, "choice-" + marker.kind + "--1--1--1", marker.label, ref y,
-                        () => Choose(marker), session.CanAct);
                 foreach (var group in view.choices.Where(c => c.to >= 0 || c.from >= 0)
                     .GroupBy(c => c.kind + ":" + (TypedKind(c.kind) ? c.resourceType : -1))
                     .Where(group => !DockedMode(group.Key)))

@@ -11,16 +11,16 @@ namespace Busara.Online.Client
     {
         private const string DrawId = "choice-draw--1--1--1";
         private const string WeaponId = "choice-weapon--1--1--1";
-        private const string ForgeMode = "forge:-1";
+        private const string ForgeChainId = "choice-forgeChain--1--1--1";
         private const string TradeMode = "trade:-1";
         private static readonly string[] PowerKinds = { "power", "abundance", "knowledge" };
 
         // Choices and board modes a round button already offers, so the list doesn't repeat them.
         private static bool DockedMode(string group) =>
-            group == ForgeMode || group == TradeMode || group.StartsWith("setupPlace:", System.StringComparison.Ordinal);
+            group == TradeMode || group.StartsWith("setupPlace:", System.StringComparison.Ordinal);
 
         private static bool DockedChoice(LegalChoice choice) =>
-            choice.kind == "draw" || choice.kind == "weapon" || PowerKinds.Contains(choice.kind);
+            choice.kind == "draw" || choice.kind == "weapon" || choice.kind == "forgeChain" || PowerKinds.Contains(choice.kind);
 
         private void Dock(ClientView view)
         {
@@ -50,12 +50,22 @@ namespace Busara.Online.Client
         {
             var draw = view.choices.Find(c => c.kind == "draw");
             Mark(Button(DrawId, "Draw", () => Choose(draw), session.CanAct && draw != null), false);
-            Mark(Button("mode-" + ForgeMode, "Forge", () => ToggleMode("forge", -1),
-                session.CanAct && view.choices.Any(c => c.kind == "forge")), mode == "forge");
+            // Forge works as offline: tap resources in order (two or more, starting on your board), then confirm.
+            // A quick pair also forges by tapping your piece and then the piece next to it.
+            var chain = view.choices.Find(c => c.kind == "forgeChain");
+            Mark(Button(ForgeChainId, "Forge", () =>
+            {
+                if (resourceSelection.Active && resourceSelection.Kind == "forgeChain") { resourceSelection.Clear(); Rebuild(); }
+                else Choose(chain);
+            }, session.CanAct && chain != null), resourceSelection.Active && resourceSelection.Kind == "forgeChain");
             Mark(Button("mode-" + TradeMode, "Trade", () => ToggleMode("trade", -1),
                 session.CanAct && view.choices.Any(c => c.kind == "trade")), mode == "trade");
             var weapon = view.choices.Find(c => c.kind == "weapon");
-            Mark(Button(WeaponId, "Weapon", () => Choose(weapon), session.CanAct && weapon != null), false);
+            Mark(Button(WeaponId, "Weapon", () =>
+            {
+                if (resourceSelection.Active && resourceSelection.Kind == "weapon") { resourceSelection.Clear(); Rebuild(); }
+                else Choose(weapon);
+            }, session.CanAct && weapon != null), resourceSelection.Active && resourceSelection.Kind == "weapon");
 
             // One power choice is used straight away; several open in the list below.
             var powers = view.choices.Where(c => PowerKinds.Contains(c.kind)).ToList();

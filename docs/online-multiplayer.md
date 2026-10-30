@@ -248,7 +248,10 @@ the original event or rewinds the version counter.
   the scene under the page's `Content`, named by its control id (`create-room`,
   `slot-12`, ...). `OnlineMvpScreen` only shows, fills and wires them. As in the
   offline side panel, round buttons beside the board offer the setup resources
-  (`mode-setupPlace:0..3`) and then Draw, Forge, Trade, Weapon and `use-power`;
+  (`mode-setupPlace:0..3`) and then Draw, Forge, Trade, Weapon and `use-power`.
+  Forge works as offline: tap resources in order (two or more, starting on your
+  board), then confirm (`choice-forgeChain--1--1--1`); a pair also forges by
+  tapping your piece and then its neighbour;
   each slot's `Legal` ring marks the spaces the current selection can reach. The
   left panel shows the viewed player's kingdom, power, virtue goal (with the
   resources that forge each goal virtue), forged virtues and the six resource
