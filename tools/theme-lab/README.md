@@ -131,6 +131,9 @@ All interface is authored in the scenes; no script builds or restyles UI at runt
   an Add Player card and the footer. Each card has a name field, a board preview with the player's
   piece, theme arrows, eight colour swatches, the kingdom dropdown and the power and win-condition
   panel. `PlayerSetupUI` and `PlayerSetupCard` fill these in and show one card per player.
+  It uses the Panther Court "Add players" look: tiled dark wood with carved friezes, leather
+  cards, recessed name and kingdom fields, a gold-framed power panel, steel ring buttons, the
+  kit's add icon, and the glowing Start capsule beside a gold outline Back button.
 - **Game screen**: the side panels, tabs, info boxes, virtue goals, popups and buttons use the
   Panther Court kit sprites directly. Forge, Draw, Trade, Weapon and Use Power each have an `Icon`
   child with that action's icon. The power-choice dialog
