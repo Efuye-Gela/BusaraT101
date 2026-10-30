@@ -83,7 +83,7 @@ namespace Busara.Online
         public static KingdomDefinition ByPower(string power) => All.FirstOrDefault(item => item.Power == power);
 
         public static string[] Pool(string ruleset) =>
-            ruleset == Definitions.FullRuleset ? All.Select(item => item.Id).ToArray() : MvpKingdoms.ToArray();
+            Definitions.IsFull(ruleset) ? All.Select(item => item.Id).ToArray() : MvpKingdoms.ToArray();
 
         private static KingdomDefinition K(string id, string name, string power, string powerName, int cost,
             PowerTiming timing, bool hiddenOnly, params (VirtueType type, int count)[] goals) =>

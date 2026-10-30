@@ -44,7 +44,7 @@ public sealed class CommandCompatibilityTests(PostgresFixture fixture)
         using var host = await fixture.GuestAsync();
         var room = await host.CreateAsync();
         string path = $"/api/rooms/{room.matchId}";
-        Assert.Equal("busara-online-v3", (await host.GetAsync<ClientView>(path)).ruleset);
+        Assert.Equal("busara-online-v4", (await host.GetAsync<ClientView>(path)).ruleset);
         await fixture.ExecuteAsync(
             "UPDATE matches SET state=jsonb_set(state,'{ruleset}','\"busara-online-mvp-v1\"') WHERE id=@id",
             ("id", Guid.Parse(room.matchId)));

@@ -5,6 +5,8 @@ using NUnit.Framework;
 
 namespace Busara.Domain.Tests;
 
+[TestFixture(Definitions.FullRuleset)]
+[TestFixture(Definitions.SeatsRuleset)]
 public sealed partial class FullPowerTests
 {
     private static readonly JsonSerializerOptions Json = new()
@@ -13,13 +15,18 @@ public sealed partial class FullPowerTests
     };
     private sealed class FixedRandom : IGameRandom { public int Next(int maximum) => 0; }
     private MatchState state = null!;
+    private readonly string Ruleset;
+
+    // Every power test runs for saved v3 matches and for two-seat v4, which must play identically.
+    public FullPowerTests(string ruleset) { Ruleset = ruleset; }
     private static string Encode<T>(T value) => JsonSerializer.Serialize(value, Json);
     private static T RoundTrip<T>(T value) => JsonSerializer.Deserialize<T>(Encode(value), Json)!;
 
     private void Setup(string first, string second, params (int id, ResourceType type)[] pieces)
     {
         state = DomainRules.Join(DomainRules.Create("full-" + Guid.NewGuid().ToString("N")), 1, "Bo");
-        Assert.That(state.ruleset, Is.EqualTo(Definitions.FullRuleset));
+        Assert.That(state.ruleset, Is.EqualTo(Definitions.CurrentRuleset));
+        state.ruleset = Ruleset;
         state.seats[0].name = "Ada";
         state.seats[0].kingdom = first;
         state.seats[1].kingdom = second;

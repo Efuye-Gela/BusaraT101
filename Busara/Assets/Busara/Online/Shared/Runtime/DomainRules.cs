@@ -10,7 +10,7 @@ namespace Busara.Online
         public static TransitionResult Apply(MatchState current, int seat, OnlineCommand command, IGameRandom random)
         {
             ValidateState(current);
-            Require(seat >= 0 && seat < 2 && current.seats[seat].joined, "forbidden", "You do not own a seat in this match.");
+            Require(seat >= 0 && seat < current.seats.Count && current.seats[seat].joined, "forbidden", "You do not own a seat in this match.");
             Require(command != null && Guid.TryParse(command.commandId, out _), "invalid_command", "A unique command ID is required.");
             Require(command.expectedVersion == current.version.ToString(CultureInfo.InvariantCulture),
                 "stale_version", "The match changed. Refresh the board and choose again.");
@@ -47,9 +47,15 @@ namespace Busara.Online
                     break;
                 case "start":
                     Require(state.phase == "Lobby" && seat == 0 && state.seats.All(player => player.joined && player.ready),
-                        "not_ready", "The host can start after both players are ready.");
+                        "not_ready", "The host can start once every seat is filled and ready.");
                     Start(state, random);
                     eventKind = "MatchStarted";
+                    break;
+                case "addBot":
+                    AddBot(state, seat, command.target);
+                    break;
+                case "removeBot":
+                    RemoveBot(state, seat, command.target);
                     break;
                 case "setupPlace":
                     RequireSetup(state, seat);
@@ -107,7 +113,7 @@ namespace Busara.Online
                     Forge(state, seat, command.slots);
                     break;
                 case "weapon":
-                    Weapon(state, seat, command.slots);
+                    Weapon(state, seat, command.slots, command.target);
                     break;
                 case "weaponDiscard":
                     WeaponDiscard(state, seat, command);

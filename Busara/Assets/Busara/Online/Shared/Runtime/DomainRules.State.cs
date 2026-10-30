@@ -5,21 +5,22 @@ namespace Busara.Online
 {
     public static partial class DomainRules
     {
-        public static MatchState Create(string matchId)
+        public static MatchState Create(string matchId, int seats = MinimumSeats)
         {
             Require(!string.IsNullOrWhiteSpace(matchId), "invalid_match", "A match ID is required.");
+            Require(seats >= MinimumSeats && seats <= MaximumSeats, "invalid_seats", "Choose two to four players.");
             var state = new MatchState { id = matchId, version = 1 };
-            for (int seat = 0; seat < 2; seat++)
+            for (int seat = 0; seat < seats; seat++)
                 state.seats.Add(new SeatState { seat = seat, joined = seat == 0, name = seat == 0 ? "Host" : "Guest" });
-            for (int id = 0; id < 32; id++)
-                state.board.Add(new SlotState { id = id, seat = id % 8 < 4 ? 0 : 1 });
+            foreach (int id in SlotsOf(seats))
+                state.board.Add(new SlotState { id = id, seat = SeatOfSlot(id) });
             return state;
         }
 
         public static MatchState Join(MatchState current, int seat, string name)
         {
             ValidateState(current);
-            Require(current.phase == "Lobby" && seat == 1 && !current.seats[1].joined,
+            Require(current.phase == "Lobby" && seat >= 1 && seat < current.seats.Count && !current.seats[seat].joined,
                 "room_unavailable", "This invitation cannot claim a seat.");
             MatchState state = Clone(current);
             state.seats[seat].joined = true;
@@ -46,7 +47,7 @@ namespace Busara.Online
                 id = state.pending.id, kind = state.pending.kind, owner = state.pending.owner,
                 continuation = state.pending.continuation, remaining = state.pending.remaining,
                 offerFrom = state.pending.offerFrom, offerResourceType = state.pending.offerResourceType,
-                power = state.pending.power, window = state.pending.window,
+                partner = state.pending.partner, power = state.pending.power, window = state.pending.window,
                 drawnCard = state.pending.drawnCard == null ? null : Copy(state.pending.drawnCard)
             },
             snapshot = state.snapshot == null ? null : new ActionSnapshot
@@ -72,7 +73,7 @@ namespace Busara.Online
         public static CardState Copy(CardState card) => new CardState { id = card.id, type = card.type };
         private static SeatState Copy(SeatState seat) => new SeatState
         {
-            seat = seat.seat, name = seat.name, joined = seat.joined, ready = seat.ready, kingdom = seat.kingdom,
+            seat = seat.seat, name = seat.name, joined = seat.joined, ready = seat.ready, bot = seat.bot, kingdom = seat.kingdom,
             revealed = seat.revealed, virtuesHidden = seat.virtuesHidden, virtues = seat.virtues.Select(Copy).ToList(),
             knownKingdoms = new List<string>(seat.knownKingdoms), setupRemaining = new List<ResourceType>(seat.setupRemaining)
         };

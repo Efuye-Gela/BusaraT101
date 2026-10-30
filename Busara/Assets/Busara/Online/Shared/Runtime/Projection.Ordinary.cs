@@ -9,13 +9,16 @@ namespace Busara.Online
             if (view.choices.Any(choice => choice.kind == "forge"))
                 Add(view, "forgeChain", "Forge an ordered resource chain");
             if (OrdinarySelection.HasWeapon(state.board, viewer))
-                Add(view, "weapon", "Create a weapon from three connected resources");
+                foreach (var (seat, suffix) in Targets(state, viewer))
+                    Add(view, "weapon", "Create a weapon from three connected resources" + suffix,
+                        target: TargetArgument(state, seat));
             foreach (SlotState source in state.board.Where(slot => slot.seat == viewer && slot.pieceId != null &&
                 state.controller < 0))
-                for (int type = 0; type < 4; type++)
-                    if (type != (int)source.type)
-                        Add(view, "trade", "Offer " + source.type + " #" + source.id + " for " + (ResourceType)type,
-                            from: source.id, type: type);
+                foreach (var (seat, suffix) in Targets(state, viewer))
+                    for (int type = 0; type < 4; type++)
+                        if (type != (int)source.type)
+                            Add(view, "trade", "Offer " + source.type + " #" + source.id + " for " + (ResourceType)type + suffix,
+                                from: source.id, type: type, target: TargetArgument(state, seat));
         }
 
         private static void ExpandedDecisionChoices(MatchState state, ClientView view, int viewer)

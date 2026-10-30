@@ -11,7 +11,7 @@ public sealed partial class TwoBrowserUnityTests
     {
         await CreateJoinReadyAndSetUpAsync(capture: false);
         foreach (var seat in seats) await seat.Page.EvaluateAsync("() => busaraLatency.enable()");
-        Assert.That(seats[0].View.ruleset, Is.EqualTo("busara-online-v3"));
+        Assert.That(seats[0].View.ruleset, Is.EqualTo("busara-online-v4"));
         string initialBoard = Board(seats[0].View);
         await ExecuteAsync(0, "trade", from: 0, resource: (int)ResourceType.Fire);
         Assert.That(seats[1].View.decision?.kind, Is.EqualTo("TradeResponse"));

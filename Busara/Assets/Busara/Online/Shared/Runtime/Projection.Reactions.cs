@@ -9,7 +9,7 @@ namespace Busara.Online
         {
             DecisionView decision = view.decision;
             KingdomDefinition kingdom = KingdomCatalog.ByPower(state.pending.power);
-            string opponent = state.seats[1 - viewer].name;
+            string opponent = state.seats[state.pending.window == PowerWindow.Necklace ? state.power.caster : state.activeSeat].name;
             switch (state.pending.window)
             {
                 case PowerWindow.Necklace:

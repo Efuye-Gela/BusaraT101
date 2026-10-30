@@ -21,7 +21,6 @@ namespace Busara.Online
                 (state.controller >= 0 && !DomainRules.ControllerSees(state)))
                 return;
             string label = "Use " + kingdom.PowerName + " (pay " + kingdom.Cost + " virtue" + (kingdom.Cost == 1 ? "" : "s") + ")";
-            SeatState target = state.seats[1 - seat];
             switch (kingdom.Power)
             {
                 case KingdomCatalog.Rain:
@@ -29,24 +28,34 @@ namespace Busara.Online
                         Add(view, "power", label + ": each player " + (count > 0 ? "adds " : "removes ") +
                             System.Math.Abs(count), payment: kingdom.Cost, count: count);
                     break;
-                case KingdomCatalog.Imagination:
-                    IEnumerable<int> types = target.virtuesHidden ? Enumerable.Range(0, 6) :
-                        target.virtues.Select(token => (int)token.type).Distinct().OrderBy(type => type);
-                    foreach (int type in types)
-                        Add(view, "power", label + ": take " + (VirtueType)type, payment: kingdom.Cost, virtue: type);
-                    break;
                 case KingdomCatalog.Transform:
                     for (int type = 0; type < 6; type++)
                         Add(view, "power", label + ": exchange virtues for " + (VirtueType)type,
                             payment: kingdom.Cost, virtue: type);
                     break;
+                case KingdomCatalog.Imagination:
+                    foreach (var (other, suffix) in Targets(state, seat))
+                    {
+                        SeatState target = state.seats[other];
+                        IEnumerable<int> types = target.virtuesHidden ? Enumerable.Range(0, 6) :
+                            target.virtues.Select(token => (int)token.type).Distinct().OrderBy(type => type);
+                        foreach (int type in types)
+                            Add(view, "power", label + ": take " + (VirtueType)type + suffix, payment: kingdom.Cost,
+                                virtue: type, target: TargetArgument(state, other));
+                    }
+                    break;
                 case KingdomCatalog.Invisibility:
-                    if (state.board.Any(slot => slot.seat == target.seat && slot.pieceId != null) &&
-                        state.board.Any(slot => slot.seat == seat && slot.pieceId == null))
-                        Add(view, "power", label, payment: kingdom.Cost);
+                    foreach (var (other, suffix) in Targets(state, seat))
+                        if (state.board.Any(slot => slot.seat == other && slot.pieceId != null) &&
+                            state.board.Any(slot => slot.seat == seat && slot.pieceId == null))
+                            Add(view, "power", label + suffix, payment: kingdom.Cost, target: TargetArgument(state, other));
                     break;
                 default:
-                    Add(view, "power", label, payment: kingdom.Cost);
+                    if (DomainRules.TargetedPowers.Contains(kingdom.Power))
+                        foreach (var (other, suffix) in Targets(state, seat))
+                            Add(view, "power", label + suffix, payment: kingdom.Cost, target: TargetArgument(state, other));
+                    else
+                        Add(view, "power", label, payment: kingdom.Cost);
                     break;
             }
         }

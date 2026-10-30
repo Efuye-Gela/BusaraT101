@@ -9,22 +9,23 @@ namespace Busara.Online
         {
             Require(state != null && state.schemaVersion == 1 && Definitions.IsKnown(state.ruleset),
                 "unsupported_state", "This saved match uses an unsupported state or ruleset version.");
-            ValidateWorld(state.seats, state.board);
+            ValidateWorld(state.ruleset, state.seats, state.board);
+            int seats = state.seats.Count;
             Require(!string.IsNullOrWhiteSpace(state.id) && state.version >= 1 && state.activeSeat >= 0 &&
-                state.activeSeat < 2 && state.winner >= -1 && state.winner <= 1,
+                state.activeSeat < seats && state.winner >= -1 && state.winner < seats,
                 "invalid_state", "The saved match identity or turn is inconsistent.");
             Require(new[] { "Lobby", "Setup", "Action", "Decision", "Finished" }.Contains(state.phase),
                 "invalid_state", "The saved phase is unsupported.");
             Require((state.phase == "Decision") == (state.pending != null),
                 "invalid_state", "The saved decision state is inconsistent.");
             Require(state.reactionPayments != null && state.reactionPayments.All(payment =>
-                payment != null && payment.seat >= 0 && payment.seat < 2 && payment.tokens != null &&
+                payment != null && payment.seat >= 0 && payment.seat < seats && payment.tokens != null &&
                 payment.tokens.All(ValidToken)), "invalid_state", "The saved payment ledger is inconsistent.");
             if (state.phase != "Lobby")
             {
                 Require(state.deck != null && state.deck.Count == 24 && state.seats.All(seat =>
                     KingdomCatalog.Pool(state.ruleset).Contains(seat.kingdom)) &&
-                    state.seats.Select(seat => seat.kingdom).Distinct().Count() == 2,
+                    state.seats.Select(seat => seat.kingdom).Distinct().Count() == seats,
                     "invalid_state", "The saved definitions or deck are inconsistent.");
                 Require(state.deck.All(card => card != null && !string.IsNullOrWhiteSpace(card.id) &&
                     (int)card.type >= 0 && (int)card.type < 4) &&
@@ -36,7 +37,7 @@ namespace Busara.Online
             {
                 Require(state.snapshot != null && !string.IsNullOrWhiteSpace(state.snapshot.actionId),
                     "invalid_state", "The saved action snapshot is missing.");
-                ValidateWorld(state.snapshot.seats, state.snapshot.board);
+                ValidateWorld(state.ruleset, state.snapshot.seats, state.snapshot.board);
                 Require(state.snapshot.deck != null && state.snapshot.deck.Count == 24 &&
                     state.snapshot.deck.All(card => card != null) && state.snapshot.deckRemaining >= 0 &&
                     state.snapshot.deckRemaining <= 24, "invalid_state", "The saved snapshot deck is inconsistent.");
@@ -55,7 +56,7 @@ namespace Busara.Online
             }
             PendingDecision pending = state.pending;
             bool expanded = new[] { "WeaponDiscard", "TradeResponse", "TradeSelect", "TradeDeclined" }.Contains(pending.kind);
-            Require(!string.IsNullOrWhiteSpace(pending.id) && pending.owner >= 0 && pending.owner < 2 &&
+            Require(!string.IsNullOrWhiteSpace(pending.id) && pending.owner >= 0 && pending.owner < state.seats.Count &&
                 (expanded ? Definitions.IsExpanded(state.ruleset) : new[] { "PlaceDraw", "Abundance", "Retraction",
                     "Knowledge", "RetractionNotice", "AbundanceNotice" }.Contains(pending.kind)),
                 "invalid_state", "The saved decision is unsupported.");
@@ -65,7 +66,7 @@ namespace Busara.Online
             Require(pending.continuation == continuation,
                 "invalid_state", "The saved continuation is unsupported.");
             bool opposing = reaction || pending.kind == "WeaponDiscard" || pending.kind == "TradeResponse";
-            Require(pending.owner == (opposing ? 1 - state.activeSeat : state.activeSeat),
+            Require(opposing ? pending.owner != state.activeSeat : pending.owner == state.activeSeat,
                 "invalid_state", "The saved decision owner is inconsistent.");
             if (pending.kind == "PlaceDraw")
                 Require(pending.drawnCard != null && state.deck.Any(card =>
@@ -89,6 +90,10 @@ namespace Busara.Online
         private static void ValidateOffer(MatchState state)
         {
             PendingDecision pending = state.pending;
+            Require(state.seats.Count == 2 || pending.partner >= 0, "invalid_state", "The saved trade has no partner.");
+            int partner = Partner(state);
+            Require(partner >= 0 && partner < state.seats.Count && partner != state.activeSeat,
+                "invalid_state", "The saved trade partner is inconsistent.");
             SlotState source = state.board.SingleOrDefault(slot => slot.id == pending.offerFrom);
             Require(source != null && source.seat == state.activeSeat && source.pieceId != null &&
                 pending.offerResourceType >= 0 && pending.offerResourceType < 4 &&
@@ -98,24 +103,26 @@ namespace Busara.Online
             Require(original.pieceId == source.pieceId && original.type == source.type,
                 "invalid_state", "The saved offered resource changed.");
             if (pending.kind == "TradeSelect")
-                Require(state.board.Any(slot => slot.seat == 1 - state.activeSeat && slot.pieceId != null &&
+                Require(state.board.Any(slot => slot.seat == Partner(state) && slot.pieceId != null &&
                     (int)slot.type == pending.offerResourceType),
                     "invalid_state", "The saved accepted trade has no matching resource.");
         }
 
-        private static void ValidateWorld(List<SeatState> seats, List<SlotState> board)
+        private static void ValidateWorld(string ruleset, List<SeatState> seats, List<SlotState> board)
         {
-            Require(seats != null && seats.Count == 2 && seats[0]?.seat == 0 && seats[1]?.seat == 1 &&
+            Require(seats != null && seats.Count >= MinimumSeats && seats.Count <= Definitions.MaximumSeats(ruleset) &&
+                seats.Select((seat, index) => seat?.seat == index).All(ordered => ordered) &&
                 seats.All(seat => seat.virtues != null && seat.knownKingdoms != null && seat.setupRemaining != null &&
                     seat.virtues.All(ValidToken)), "invalid_state", "The saved players or inventories are inconsistent.");
             var tokens = seats.SelectMany(seat => seat.virtues).ToList();
             Require(tokens.Select(token => token.id).Distinct().Count() == tokens.Count,
                 "invalid_state", "A saved virtue token has multiple owners.");
-            Require(board != null && board.Count == 32 && board.All(slot => slot != null &&
-                slot.id >= 0 && slot.id < 32 && slot.seat == (slot.id % 8 < 4 ? 0 : 1) &&
+            int slots = seats.Count * 16;
+            Require(board != null && board.Count == slots && board.All(slot => slot != null &&
+                slot.id >= 0 && slot.id < 64 && slot.seat == SeatOfSlot(slot.id) && slot.seat < seats.Count &&
                 (int)slot.type >= 0 && (int)slot.type < 4 &&
                 (slot.pieceId == null || !string.IsNullOrWhiteSpace(slot.pieceId))) &&
-                board.Select(slot => slot.id).Distinct().Count() == 32,
+                board.Select(slot => slot.id).Distinct().Count() == slots,
                 "invalid_state", "The saved board geometry is inconsistent.");
             var pieces = board.Where(slot => slot.pieceId != null).Select(slot => slot.pieceId).ToList();
             Require(pieces.Distinct().Count() == pieces.Count, "invalid_state", "A saved resource occupies multiple spaces.");

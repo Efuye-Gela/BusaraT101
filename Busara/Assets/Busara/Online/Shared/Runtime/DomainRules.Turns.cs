@@ -17,7 +17,8 @@ namespace Busara.Online
         {
             var kingdoms = KingdomCatalog.Pool(state.ruleset).ToList();
             Shuffle(kingdoms, random);
-            for (int seat = 0; seat < 2; seat++)
+            Require(kingdoms.Count >= state.seats.Count, "invalid_definition", "Not enough kingdoms for every seat.");
+            for (int seat = 0; seat < state.seats.Count; seat++)
             {
                 state.seats[seat].kingdom = kingdoms[seat];
                 state.seats[seat].setupRemaining = Definitions.Setup(seat).ToList();
@@ -35,7 +36,7 @@ namespace Busara.Online
         {
             if (state.seats[state.activeSeat].setupRemaining.Count != 0)
                 return;
-            state.activeSeat = 1 - state.activeSeat;
+            state.activeSeat = NextSeat(state, state.activeSeat);
             if (state.seats.All(seat => seat.setupRemaining.Count == 0))
                 BeginTurn(state);
         }
@@ -78,7 +79,7 @@ namespace Busara.Online
 
         private static bool Win(MatchState state)
         {
-            foreach (int seat in new[] { state.activeSeat, 1 - state.activeSeat })
+            foreach (int seat in new[] { state.activeSeat }.Concat(OthersAfter(state, state.activeSeat)))
                 if (SharedRules.MeetsGoals(state.seats[seat].virtues.Select(token => token.type),
                     Definitions.Goals(state.seats[seat].kingdom)))
                 {

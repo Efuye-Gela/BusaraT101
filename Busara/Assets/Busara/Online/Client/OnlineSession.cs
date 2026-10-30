@@ -299,7 +299,7 @@ namespace Busara.Online.Client
                 commandId = Guid.NewGuid().ToString(),
                 expectedVersion = View.version,
                 decisionId = View.decision == null ? null : View.decision.id,
-                kind = choice.kind, from = choice.from, to = choice.to, resourceType = choice.resourceType,
+                kind = choice.kind, from = choice.from, to = choice.to, resourceType = choice.resourceType, target = choice.target,
                 name = name, ready = ready,
                 paymentIds = paymentIds == null ? Array.Empty<string>() : new List<string>(paymentIds).ToArray(),
                 slots = slots == null ? Array.Empty<int>() : new List<int>(slots).ToArray(),

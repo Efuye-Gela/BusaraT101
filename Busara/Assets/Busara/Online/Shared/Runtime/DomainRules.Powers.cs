@@ -66,7 +66,8 @@ namespace Busara.Online
                 "You cannot see this kingdom's power and virtues, so you cannot use it.");
             var use = new PowerUseState
             {
-                id = NewId(), power = kingdom.Power, caster = seat, target = 1 - seat, window = PowerWindow.Own,
+                id = NewId(), power = kingdom.Power, caster = seat, target = PowerTarget(state, seat, kingdom.Power, command.target),
+                window = PowerWindow.Own,
                 virtueType = command.virtueType, count = command.count,
                 exchangeIds = (command.exchangeIds ?? new string[0]).ToList()
             };
@@ -122,9 +123,17 @@ namespace Busara.Online
 
         private static void Commit(MatchState state)
         {
-            if (!OfferReaction(state, 1 - state.power.caster, PowerWindow.Necklace))
+            if (!OfferReactionAfter(state, PowerWindow.Necklace, state.power.caster, state.power.caster))
                 ExecutePower(state);
         }
+
+        // Powers that act on one chosen player need a target when there are more than two seats; the rest
+        // record the next seat, which two-seat rules always treated as the opponent.
+        public static readonly string[] TargetedPowers =
+            { KingdomCatalog.IdentitySurfing, KingdomCatalog.Imagination, KingdomCatalog.Invisibility, KingdomCatalog.Knowledge };
+
+        private static int PowerTarget(MatchState state, int seat, string power, int target) =>
+            TargetedPowers.Contains(power) || target >= 0 ? Opponent(state, seat, target) : NextSeat(state, seat);
 
         private static void UseReaction(MatchState state, int seat, OnlineCommand command)
         {
@@ -149,7 +158,7 @@ namespace Busara.Online
             }
             state.power = new PowerUseState
             {
-                id = NewId(), power = kingdom.Power, caster = seat, target = 1 - seat, window = window
+                id = NewId(), power = kingdom.Power, caster = seat, target = state.activeSeat, window = window
             };
             Commit(state);
         }
@@ -160,6 +169,9 @@ namespace Busara.Online
             string window = state.pending.window;
             state.pending = null;
             state.phase = "Action";
+            // With more than two seats, the next eligible player is asked before the window closes.
+            if (window != PowerWindow.Dome && OfferReactionAfter(state, window, WindowActor(state, window), seat))
+                return;
             switch (window)
             {
                 case PowerWindow.Necklace: ExecutePower(state); break;

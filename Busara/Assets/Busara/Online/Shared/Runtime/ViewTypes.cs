@@ -11,6 +11,7 @@ namespace Busara.Online
         public int from = -1;
         public int to = -1;
         public int resourceType = -1;
+        public int target = -1;
         public int paymentCost;
         public int count;
         public int virtueType = -1;
@@ -23,6 +24,7 @@ namespace Busara.Online
         public string name;
         public bool joined;
         public bool ready;
+        public bool bot;
         public string kingdom;
         public bool revealed;
         public bool virtuesVisible;

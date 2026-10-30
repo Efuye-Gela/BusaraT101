@@ -18,6 +18,7 @@ namespace Busara.Online
         public int from = -1;
         public int to = -1;
         public int resourceType = -1;
+        public int target = -1;
         public string[] paymentIds = Array.Empty<string>();
         public int[] slots = Array.Empty<int>();
         public int count;
@@ -89,6 +90,7 @@ namespace Busara.Online
         public string name;
         public bool joined;
         public bool ready;
+        public bool bot;
         public string kingdom;
         public bool revealed;
         public bool virtuesHidden;
@@ -125,6 +127,7 @@ namespace Busara.Online
         public CardState drawnCard;
         public int offerFrom = -1;
         public int offerResourceType = -1;
+        public int partner = -1;
         public string power;
         public string window;
     }

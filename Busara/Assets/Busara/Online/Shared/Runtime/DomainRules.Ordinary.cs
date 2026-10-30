@@ -40,7 +40,7 @@ namespace Busara.Online
             AfterAction(state);
         }
 
-        private static void Weapon(MatchState state, int seat, IList<int> slots)
+        private static void Weapon(MatchState state, int seat, IList<int> slots, int target)
         {
             RequireExpanded(state);
             RequireAction(state, seat);
@@ -48,7 +48,7 @@ namespace Busara.Online
             Require(error == null, "invalid_weapon", error);
             foreach (int id in slots)
                 Slot(state, id).pieceId = null;
-            int opponent = 1 - seat;
+            int opponent = Opponent(state, seat, target);
             if (!state.board.Any(slot => slot.seat == opponent && slot.pieceId != null))
                 AfterAction(state);
             else if (Definitions.IsFull(state.ruleset) && OfferReaction(state, opponent, PowerWindow.Dome))
@@ -73,7 +73,9 @@ namespace Busara.Online
             SlotState offered = OwnedPiece(state, seat, command.from);
             ResourceType requested = Resource(command.resourceType);
             Require(offered.type != requested, "invalid_trade", "Request a different resource type.");
-            Decide(state, 1 - seat, "TradeResponse", "TradeSelect");
+            int partner = Opponent(state, seat, command.target);
+            Decide(state, partner, "TradeResponse", "TradeSelect");
+            state.pending.partner = partner;
             state.pending.offerFrom = offered.id;
             state.pending.offerResourceType = (int)requested;
         }
@@ -88,7 +90,9 @@ namespace Busara.Online
                     "invalid_trade", "You do not own the requested resource.");
             int from = state.pending.offerFrom;
             int resource = state.pending.offerResourceType;
+            int partner = Partner(state);
             Decide(state, state.activeSeat, accept ? "TradeSelect" : "TradeDeclined", accept ? "AfterAction" : "Action");
+            state.pending.partner = partner;
             state.pending.offerFrom = from;
             state.pending.offerResourceType = resource;
         }
@@ -98,7 +102,7 @@ namespace Busara.Online
             RequireExpanded(state);
             RequireDecision(state, seat, command, "TradeSelect");
             SlotState source = OwnedPiece(state, seat, state.pending.offerFrom);
-            SlotState target = OwnedPiece(state, 1 - seat, command.to);
+            SlotState target = OwnedPiece(state, Partner(state), command.to);
             Require((int)target.type == state.pending.offerResourceType,
                 "invalid_trade", "Choose an opposing resource of the requested type.");
             string piece = source.pieceId;

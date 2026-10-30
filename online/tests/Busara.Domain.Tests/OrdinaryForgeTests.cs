@@ -8,7 +8,7 @@ public sealed partial class OrdinaryActionTests
     [Test]
     public void NewMatchesUseV2WhilePersistedV1RetainsPairOnlyRules()
     {
-        Assert.That(new MatchState().ruleset, Is.EqualTo("busara-online-v3"));
+        Assert.That(new MatchState().ruleset, Is.EqualTo("busara-online-v4"));
         Assert.That(DomainRules.Create("new").ruleset, Is.EqualTo(Definitions.CurrentRuleset));
         Board((3, ResourceType.Water), (4, ResourceType.Fire), (5, ResourceType.Fire),
             (6, ResourceType.Fire), (16, ResourceType.Earth), (20, ResourceType.Earth));

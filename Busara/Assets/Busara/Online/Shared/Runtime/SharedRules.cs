@@ -46,7 +46,9 @@ namespace Busara.Online
         public const string LegacyRuleset = "busara-online-mvp-v1";
         public const string OrdinaryRuleset = "busara-online-mvp-v2";
         public const string FullRuleset = "busara-online-v3";
-        public const string CurrentRuleset = FullRuleset;
+        // v4: the full rules for two to four seats, with bots. Two-seat v4 plays exactly like v3.
+        public const string SeatsRuleset = "busara-online-v4";
+        public const string CurrentRuleset = SeatsRuleset;
         public const string Egolica = "egolica";
         public const string Mask = "mask-of-light";
         public const string Knowledge = "nevulandis";
@@ -55,9 +57,11 @@ namespace Busara.Online
         public static readonly ResourceType[] RecipeSecond =
             { ResourceType.Water, ResourceType.Earth, ResourceType.Air, ResourceType.Earth, ResourceType.Water, ResourceType.Earth };
 
-        public static bool IsExpanded(string ruleset) => ruleset == OrdinaryRuleset || ruleset == FullRuleset;
+        public static bool IsExpanded(string ruleset) => ruleset == OrdinaryRuleset || IsFull(ruleset);
 
-        public static bool IsFull(string ruleset) => ruleset == FullRuleset;
+        public static bool IsFull(string ruleset) => ruleset == FullRuleset || ruleset == SeatsRuleset;
+
+        public static int MaximumSeats(string ruleset) => ruleset == SeatsRuleset ? 4 : 2;
 
         public static bool IsKnown(string ruleset) => ruleset == LegacyRuleset || IsExpanded(ruleset);
 
@@ -72,9 +76,17 @@ namespace Busara.Online
         public static string GoalText(string kingdom) =>
             string.Join(", ", Goals(kingdom).Select(goal => goal.Value + " " + goal.Key));
 
-        public static ResourceType[] Setup(int seat) => seat == 0
-            ? new[] { ResourceType.Earth, ResourceType.Water, ResourceType.Water, ResourceType.Air, ResourceType.Air }
-            : new[] { ResourceType.Fire, ResourceType.Fire, ResourceType.Fire, ResourceType.Water, ResourceType.Earth };
+        // The offline setup cards 1-4, in seat order.
+        public static ResourceType[] Setup(int seat)
+        {
+            switch (seat)
+            {
+                case 0: return new[] { ResourceType.Earth, ResourceType.Water, ResourceType.Water, ResourceType.Air, ResourceType.Air };
+                case 1: return new[] { ResourceType.Fire, ResourceType.Fire, ResourceType.Fire, ResourceType.Water, ResourceType.Earth };
+                case 2: return new[] { ResourceType.Fire, ResourceType.Water, ResourceType.Air, ResourceType.Air, ResourceType.Air };
+                default: return new[] { ResourceType.Fire, ResourceType.Fire, ResourceType.Water, ResourceType.Earth, ResourceType.Earth };
+            }
+        }
 
         public static VirtueType Forge(ResourceType first, ResourceType second)
         {

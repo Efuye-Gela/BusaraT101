@@ -29,7 +29,7 @@ namespace Busara.Online
             while (!state.board.Any(slot => slot.seat == state.activeSeat && slot.pieceId != null))
             {
                 state.consecutiveEmptySkips++;
-                if (state.consecutiveEmptySkips > 2)
+                if (state.consecutiveEmptySkips > state.seats.Count)
                 {
                     state.phase = "Finished";
                     state.draw = true;
@@ -43,7 +43,7 @@ namespace Busara.Online
             state.phase = "Action";
             state.pending = null;
             state.snapshot = Capture(state);
-            if (!OfferReaction(state, 1 - state.activeSeat, PowerWindow.TurnStart))
+            if (!OfferReactionAfter(state, PowerWindow.TurnStart, state.activeSeat, state.activeSeat))
                 StartAction(state);
         }
 
@@ -59,7 +59,7 @@ namespace Busara.Online
         {
             state.pending = null;
             state.phase = "Action";
-            if (!OfferReaction(state, 1 - state.activeSeat, PowerWindow.AfterAction))
+            if (!OfferReactionAfter(state, PowerWindow.AfterAction, state.activeSeat, state.activeSeat))
                 EndAction(state);
         }
 
@@ -93,7 +93,7 @@ namespace Busara.Online
 
         private static int NextSeat(MatchState state)
         {
-            int sequential = 1 - state.activeSeat;
+            int sequential = NextSeat(state, state.activeSeat);
             if (state.extraTurns.Count > 0)
             {
                 if (state.resumeSeat < 0)

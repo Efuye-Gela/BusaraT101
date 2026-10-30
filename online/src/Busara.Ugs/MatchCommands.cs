@@ -11,10 +11,11 @@ public sealed partial class MatchService
         CommandId(request.commandId);
         if (request.kind is null || request.kind.Length > 64 || request.name?.Length > 80 ||
             request.decisionId?.Length > 100 || request.expectedVersion?.Length > 20 ||
-            request.resourceType is < -1 or > 3 || request.from is < -1 or > 31 || request.to is < -1 or > 31 ||
+            request.resourceType is < -1 or > 3 || request.from is < -1 or > 63 || request.to is < -1 or > 63 ||
+            request.target is < -1 or > 3 ||
             request.paymentIds is null || request.paymentIds.Length > 12 ||
             request.paymentIds.Any(id => id is null || id.Length > 100) ||
-            request.slots is null || request.slots.Length > 32 || request.slots.Any(slot => slot is < 0 or > 31) ||
+            request.slots is null || request.slots.Length > 64 || request.slots.Any(slot => slot is < 0 or > 63) ||
             request.count is < -3 or > 3 || request.virtueType is < -1 or > 5 ||
             request.exchangeIds?.Length > 12 || request.exchangeIds?.Any(id => id is null || id.Length > 100) == true)
             throw new RequestError(400, "invalid_command");

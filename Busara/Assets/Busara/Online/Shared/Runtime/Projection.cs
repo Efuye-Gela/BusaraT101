@@ -10,7 +10,7 @@ namespace Busara.Online
         public static ClientView ForSeat(MatchState state, int viewer)
         {
             DomainRules.ValidateState(state);
-            if (viewer < 0 || viewer > 1 || !state.seats[viewer].joined)
+            if (viewer < 0 || viewer >= state.seats.Count || !state.seats[viewer].joined || state.seats[viewer].bot)
                 throw new RuleException("forbidden", "You do not own a seat in this match.");
             bool full = Definitions.IsFull(state.ruleset);
             int actor = full ? DomainRules.DecisionActor(state) : state.pending?.owner ?? -1;
@@ -36,7 +36,7 @@ namespace Busara.Online
                 KingdomDefinition kingdom = kingdomVisible ? KingdomCatalog.Find(player.kingdom) : null;
                 view.players.Add(new PlayerView
                 {
-                    seat = player.seat, name = player.name, joined = player.joined, ready = player.ready,
+                    seat = player.seat, name = player.name, joined = player.joined, ready = player.ready, bot = player.bot,
                     kingdom = kingdomVisible ? Definitions.KingdomName(player.kingdom) : null,
                     goal = kingdomVisible ? Definitions.GoalText(player.kingdom) : null,
                     kingdomId = full ? kingdom?.Id : null, powerName = full ? kingdom?.PowerName : null,
@@ -52,6 +52,12 @@ namespace Busara.Online
             if (state.phase == "Lobby")
             {
                 Add(view, "configure", "Update name / ready");
+                if (viewer == 0)
+                    foreach (SeatState seat in state.seats.Where(seat => seat.seat > 0))
+                        if (!seat.joined)
+                            Add(view, "addBot", "Add a bot to seat " + (seat.seat + 1), target: seat.seat);
+                        else if (seat.bot)
+                            Add(view, "removeBot", "Remove the bot from seat " + (seat.seat + 1), target: seat.seat);
                 if (viewer == 0 && state.seats.All(player => player.joined && player.ready))
                     Add(view, "start", "Start match");
             }
@@ -167,13 +173,28 @@ namespace Busara.Online
         }
 
         private static void Add(ClientView view, string kind, string label, int from = -1, int to = -1,
-            int type = -1, int payment = 0, int count = 0, int virtue = -1)
+            int type = -1, int payment = 0, int count = 0, int virtue = -1, int target = -1)
         {
             view.choices.Add(new LegalChoice
             {
                 kind = kind, label = label, from = from, to = to, resourceType = type, paymentCost = payment,
-                count = count, virtueType = virtue
+                count = count, virtueType = virtue, target = target
             });
         }
+
+        // The players a choice can be aimed at. Two-seat choices keep no target, as they always have, and the
+        // rules treat the other seat as the opponent.
+        private static IEnumerable<(int seat, string suffix)> Targets(MatchState state, int seat)
+        {
+            if (state.seats.Count == 2)
+            {
+                yield return (1 - seat, "");
+                yield break;
+            }
+            foreach (int other in DomainRules.OthersAfter(state, seat))
+                yield return (other, " (" + state.seats[other].name + ")");
+        }
+
+        private static int TargetArgument(MatchState state, int target) => state.seats.Count == 2 ? -1 : target;
     }
 }

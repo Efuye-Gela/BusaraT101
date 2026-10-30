@@ -9,9 +9,10 @@ namespace Busara.Online
 
         private static void ValidatePowerState(MatchState state)
         {
-            Require(state.extraTurns != null && state.extraTurns.All(seat => seat == 0 || seat == 1) &&
-                state.extraActions >= 0 && state.controller >= -1 && state.controller <= 1 &&
-                state.resumeSeat >= -1 && state.resumeSeat <= 1,
+            int seats = state.seats.Count;
+            Require(state.extraTurns != null && state.extraTurns.All(seat => seat >= 0 && seat < seats) &&
+                state.extraActions >= 0 && state.controller >= -1 && state.controller < seats &&
+                state.resumeSeat >= -1 && state.resumeSeat < seats,
                 "invalid_state", "The saved turn control state is inconsistent.");
             if (!Definitions.IsFull(state.ruleset))
             {
@@ -20,15 +21,16 @@ namespace Busara.Online
                     "invalid_state", "The saved match uses powers outside its ruleset.");
                 return;
             }
-            Require(state.controller == -1 || state.controller == 1 - state.activeSeat,
+            Require(state.controller == -1 || state.controller != state.activeSeat,
                 "invalid_state", "The saved turn controller is inconsistent.");
             PowerUseState use = state.power;
             if (use == null)
                 return;
             Require(state.pending != null && !string.IsNullOrWhiteSpace(use.id) &&
-                KingdomCatalog.ByPower(use.power) != null && (use.caster == 0 || use.caster == 1) &&
-                use.target == 1 - use.caster && Windows.Contains(use.window) && use.exchangeIds != null &&
-                use.copies != null && use.rainSeat >= 0 && use.rainSeat <= 2 && use.remaining >= 0,
+                KingdomCatalog.ByPower(use.power) != null && use.caster >= 0 && use.caster < seats &&
+                use.target >= 0 && use.target < seats && use.target != use.caster && Windows.Contains(use.window) &&
+                use.exchangeIds != null && use.copies != null && use.rainSeat >= 0 && use.rainSeat <= seats &&
+                use.remaining >= 0,
                 "invalid_state", "The saved power resolution is inconsistent.");
         }
 
@@ -36,7 +38,8 @@ namespace Busara.Online
         {
             PendingDecision pending = state.pending;
             int active = state.activeSeat;
-            Require(!string.IsNullOrWhiteSpace(pending.id) && pending.kind != null && pending.owner >= 0 && pending.owner < 2,
+            Require(!string.IsNullOrWhiteSpace(pending.id) && pending.kind != null && pending.owner >= 0 &&
+                pending.owner < state.seats.Count,
                 "invalid_state", "The saved decision is unsupported.");
             bool trade = pending.kind.StartsWith("Trade");
             Require((pending.kind == "PlaceDraw") == (pending.drawnCard != null) &&
@@ -53,12 +56,13 @@ namespace Busara.Online
                         "invalid_state", "The saved drawn card is inconsistent.");
                     break;
                 case "WeaponDiscard":
-                    Expect(pending, 1 - active, "AfterAction", state.power == null && HasPiece(state, pending.owner));
+                    Expect(pending, pending.owner != active ? pending.owner : -1, "AfterAction",
+                        state.power == null && HasPiece(state, pending.owner));
                     break;
                 case "TradeResponse":
                 case "TradeSelect":
                 case "TradeDeclined":
-                    Expect(pending, pending.kind == "TradeResponse" ? 1 - active : active,
+                    Expect(pending, pending.kind == "TradeResponse" ? Partner(state) : active,
                         pending.kind == "TradeResponse" ? "TradeSelect" : pending.kind == "TradeSelect" ? "AfterAction" : "Action",
                         state.power == null && state.controller < 0);
                     ValidateOffer(state);
@@ -88,7 +92,8 @@ namespace Busara.Online
         {
             PendingDecision pending = state.pending;
             bool necklace = pending.window == PowerWindow.Necklace;
-            int owner = necklace ? (state.power == null ? -1 : 1 - state.power.caster) : 1 - state.activeSeat;
+            int actor = necklace ? (state.power == null ? -1 : state.power.caster) : state.activeSeat;
+            int owner = pending.owner != actor ? pending.owner : -1;
             Expect(pending, owner, "Window", (necklace || (pending.window != PowerWindow.Own &&
                 Windows.Contains(pending.window))) && necklace == (state.power != null) &&
                 pending.power == KingdomCatalog.PowerOf(state.seats[pending.owner].kingdom) &&
