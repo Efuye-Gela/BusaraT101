@@ -21,6 +21,8 @@ internal static class CommandFingerprint
                 if (field.Name == nameof(OnlineCommand.count) && command.count == 0) continue;
                 if (field.Name == nameof(OnlineCommand.virtueType) && command.virtueType == -1) continue;
                 if (field.Name == nameof(OnlineCommand.exchangeIds) && (command.exchangeIds?.Length ?? 0) == 0) continue;
+                // The v4 seat target defaults to -1 and is left out the same way.
+                if (field.Name == nameof(OnlineCommand.target) && command.target == -1) continue;
                 field.WriteTo(writer);
             }
             writer.WriteEndObject();

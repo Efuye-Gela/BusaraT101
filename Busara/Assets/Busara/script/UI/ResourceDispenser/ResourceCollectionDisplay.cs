@@ -206,6 +206,32 @@ public class ResourceCollectionDisplay : MonoBehaviour, SelectionManager.SlotSel
         }
     }
 
+    /// <summary>
+    /// Places the active bot's next setup resource the way a player would: on its own board, never next to
+    /// another of its resources. Same-colour squares of the board's checkerboard are never adjacent, so the bot
+    /// fills those first and always has room for all five. Returns false when there is nothing to place.
+    /// </summary>
+    public bool PlaceForBot()
+    {
+        Player player = TurnManager.Instance != null ? TurnManager.Instance.ActivePlayer : null;
+        if (player == null || !player.IsBotControlled || player.setUpCard == null || player.hasFinishedSettingUp ||
+            collectionResources == null || collectionResources.Count == 0 || selectedResourceType == null)
+            return false;
+        Board board = player.Board;
+        Slot slot = board.Slots
+            .Where(candidate => candidate != null && !candidate.isOccupied &&
+                !BoardManager.GetAdjacentSlots(candidate).Any(next => board.Slots.Contains(next) && next.isOccupied))
+            .OrderBy(candidate => (candidate.Index / 8 + candidate.Index % 8) % 2)
+            .ThenBy(candidate => candidate.Index)
+            .FirstOrDefault();
+        if (slot == null)
+            return false;
+        selectedResourceType.resourceType = collectionResources[0];
+        destinationSlot = slot;
+        PlaceResource(slot);
+        return true;
+    }
+
     public void CheckForCompletion()
     {
         if (PlayerManager.Instance.Players.All(p => p.hasFinishedSettingUp))

@@ -44,6 +44,8 @@ public sealed class BotPlayerController : MonoBehaviour
         }
         if (Paused || Time.timeScale <= 0)
             return;
+        if (SetupTurn())
+            return;
         PowerManager powers = PowerManager.Instance;
         Player actor = player;
         if (powers != null && powers.IsBusy)
@@ -92,6 +94,22 @@ public sealed class BotPlayerController : MonoBehaviour
         {
             Fail(error.Message);
         }
+    }
+
+    // The resource setup turn: place the setup card's resources one at a time, then the turn passes on.
+    private bool SetupTurn()
+    {
+        if (player.hasFinishedSettingUp || player.setUpCard == null || TurnManager.Instance == null ||
+            TurnManager.Instance.ActivePlayer != player || (PlayerManager.Instance != null && PlayerManager.Instance.IsAwaitingSetup))
+            return false;
+        Status = "Placing setup resources.";
+        if (Time.unscaledTime < nextStep)
+            return true;
+        nextStep = Time.unscaledTime + .5f;
+        ResourceCollectionDisplay setup = FindFirstObjectByType<ResourceCollectionDisplay>();
+        if (setup == null || !setup.PlaceForBot())
+            Fail("Could not place a setup resource.");
+        return true;
     }
 
     private void Fail(string message)
