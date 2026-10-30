@@ -1,0 +1,413 @@
+{
+  "id": "nevulandis-data",
+  "shapes": {
+    "square": {
+      "board": "9cbce4aea2a4bd73e6cdd0b199599b7b",
+      "slots": {
+        "hover": "a130cf75eac641f77e1cd1ce7a1f21c6",
+        "legal": "006e723f8042a4a9fa2ec3792871ea45",
+        "blocked": "5c63a6c5ea0ce18b5565c4443dce0dea",
+        "selected": "82d92d641320b2f4965634d8b41d16a9",
+        "target": "5abbf771220e3945f03be6b9ab9790dd"
+      },
+      "pieceAspect": 1.0977,
+      "piecePivotY": 0.4698,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_data_glass.png",
+            "tint": "#226fbe",
+            "guid": "aa89f44f443d01d24f702f817cbca141"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_ring.png",
+            "tint": "#BFE9FF",
+            "guid": "d444d7b842aa7e1c6c9fe72af2b6ba28"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_emissive_water.png",
+            "tint": "#BFE9FF",
+            "guid": "07e6376a6ad32a1fde977277cb54aff1"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/square/glow_minimal_water.png",
+            "tint": null,
+            "guid": "1d5700637b5824fe63a16720e3a4186a"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_data_glass.png",
+            "tint": "#343b3f",
+            "guid": "aa89f44f443d01d24f702f817cbca141"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_ring.png",
+            "tint": "#E6ECEF",
+            "guid": "d444d7b842aa7e1c6c9fe72af2b6ba28"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_emissive_earth.png",
+            "tint": "#E6ECEF",
+            "guid": "ea0797e2883645da98b180e405a796c7"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/square/glow_minimal_earth.png",
+            "tint": null,
+            "guid": "cef37750542a20a47754703f3381f290"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_data_glass.png",
+            "tint": "#be3823",
+            "guid": "aa89f44f443d01d24f702f817cbca141"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_ring.png",
+            "tint": "#FFD2C4",
+            "guid": "d444d7b842aa7e1c6c9fe72af2b6ba28"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_emissive_fire.png",
+            "tint": "#FFD2C4",
+            "guid": "8fa2e1dc9f2b441c460e9627d16a39ef"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/square/glow_minimal_fire.png",
+            "tint": null,
+            "guid": "8bac5ad761fd6a4975a470c898372b96"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_data_glass.png",
+            "tint": "#e3a026",
+            "guid": "aa89f44f443d01d24f702f817cbca141"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_ring.png",
+            "tint": "#FFF0C4",
+            "guid": "d444d7b842aa7e1c6c9fe72af2b6ba28"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_emissive_air.png",
+            "tint": "#FFF0C4",
+            "guid": "8f4a8758a260f2d021956bda70f93891"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/square/glow_minimal_air.png",
+            "tint": null,
+            "guid": "84c9ffbba8bd7fefba3ced2022dca1ba"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_data_glass.png",
+            "tint": "#343b3f",
+            "guid": "aa89f44f443d01d24f702f817cbca141"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_ring.png",
+            "tint": "#E6ECEF",
+            "guid": "d444d7b842aa7e1c6c9fe72af2b6ba28"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_emissive_back.png",
+            "tint": "#E6ECEF",
+            "guid": "8c87fdb573dffa7053f34dc6e107e036"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/square/glow_minimal_back.png",
+            "tint": null,
+            "guid": "0f75a4569f2f905b63e4d702f90117bf"
+          }
+        ]
+      }
+    },
+    "hex": {
+      "board": "125e2bb37d89ecd11439eaeb1124300c",
+      "slots": {
+        "hover": "58c153bfdaee2fba76e824aefef05f19",
+        "legal": "e6b26f8e0ca5bf8d4692008b4b1d888c",
+        "blocked": "e42f432a18e1d359553cb080538dd459",
+        "selected": "0c91553a2cd28dcab1a3862e7a9a8175",
+        "target": "d4c9aaa531280e524e98de4ba0aa3f53"
+      },
+      "pieceAspect": 1.1094,
+      "piecePivotY": 0.4648,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_data_glass.png",
+            "tint": "#226fbe",
+            "guid": "786fed0c9fb8843e3b07daa149077ca8"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_ring.png",
+            "tint": "#BFE9FF",
+            "guid": "5e75c5566ec7f819c6112f04ba2b84ea"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_emissive_water.png",
+            "tint": "#BFE9FF",
+            "guid": "d18c260c038369aade7959c276708d13"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/hex/glow_minimal_water.png",
+            "tint": null,
+            "guid": "1355da75374e6ad27e7bfeec444c9740"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_data_glass.png",
+            "tint": "#343b3f",
+            "guid": "786fed0c9fb8843e3b07daa149077ca8"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_ring.png",
+            "tint": "#E6ECEF",
+            "guid": "5e75c5566ec7f819c6112f04ba2b84ea"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_emissive_earth.png",
+            "tint": "#E6ECEF",
+            "guid": "26a354ebd1024b0531ccd2c574542e60"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/hex/glow_minimal_earth.png",
+            "tint": null,
+            "guid": "42636755065d9b39d302ac817a3232a6"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_data_glass.png",
+            "tint": "#be3823",
+            "guid": "786fed0c9fb8843e3b07daa149077ca8"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_ring.png",
+            "tint": "#FFD2C4",
+            "guid": "5e75c5566ec7f819c6112f04ba2b84ea"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_emissive_fire.png",
+            "tint": "#FFD2C4",
+            "guid": "163280e0383422aa7428588aa30ea5be"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/hex/glow_minimal_fire.png",
+            "tint": null,
+            "guid": "6e42863fd502ff7e1b4ef54ad409c0f9"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_data_glass.png",
+            "tint": "#e3a026",
+            "guid": "786fed0c9fb8843e3b07daa149077ca8"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_ring.png",
+            "tint": "#FFF0C4",
+            "guid": "5e75c5566ec7f819c6112f04ba2b84ea"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_emissive_air.png",
+            "tint": "#FFF0C4",
+            "guid": "816af06f02b7390f92629150d041048c"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/hex/glow_minimal_air.png",
+            "tint": null,
+            "guid": "851d121a309b8ea786605430c825ac0b"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_data_glass.png",
+            "tint": "#343b3f",
+            "guid": "786fed0c9fb8843e3b07daa149077ca8"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_ring.png",
+            "tint": "#E6ECEF",
+            "guid": "5e75c5566ec7f819c6112f04ba2b84ea"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_emissive_back.png",
+            "tint": "#E6ECEF",
+            "guid": "9f8ecd032f1abdd9aab2a7ea3cb4adac"
+          },
+          {
+            "name": "glow",
+            "file": "Pieces/hex/glow_minimal_back.png",
+            "tint": null,
+            "guid": "7bfa61c9fb267fc57fd8d44ee4f58591"
+          }
+        ]
+      }
+    }
+  }
+}

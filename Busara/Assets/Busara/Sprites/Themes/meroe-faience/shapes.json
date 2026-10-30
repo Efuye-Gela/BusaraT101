@@ -1,0 +1,413 @@
+{
+  "id": "meroe-faience",
+  "shapes": {
+    "square": {
+      "board": "74e7c1493f512807d054a4ca62ce7366",
+      "slots": {
+        "hover": "e64b27051f57d95c95508a1e2024be53",
+        "legal": "d380db7d58751efc6ceeb0c9625ab361",
+        "blocked": "11270bada2d454d12cd0d9fe09ea84ea",
+        "selected": "827f37c51ea209b2e1744e3092dfa2ae",
+        "target": "04b953b7f898ae0a38c7e7771d7ab196"
+      },
+      "pieceAspect": 1.0977,
+      "piecePivotY": 0.4698,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_faience.png",
+            "tint": "#2C9C9A",
+            "guid": "78a58fddfc0bdbeb8242ed780a6c20ca"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_dots.png",
+            "tint": "#F6E7B5",
+            "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_ornate_gilded_water.png",
+            "tint": null,
+            "guid": "2cdec3a4cc9a9768d1e24f85604586bc"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_gilded_water.png",
+            "tint": "#E7BE58",
+            "guid": "30ba709defbc1057ff94b16428ea95ea"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_granite.png",
+            "tint": "#2D2B2A",
+            "guid": "d5bdf6cf6a1aeab38f4cfc4584e6e887"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_dots.png",
+            "tint": "#E2B23A",
+            "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_ornate_gilded_earth.png",
+            "tint": null,
+            "guid": "8a50fb19818df1f6497644670cec7978"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_gilded_earth.png",
+            "tint": "#E7BE58",
+            "guid": "e2ed043f32848b4a264266c5df6447a8"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_carnelian.png",
+            "tint": "#b7431f",
+            "guid": "b142c6cab6b583b39c9f90868c38d92e"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_dots.png",
+            "tint": "#F6E7B5",
+            "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_ornate_gilded_fire.png",
+            "tint": null,
+            "guid": "cf1da9b0b7dc4183e7ecd5a103343e8e"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_gilded_fire.png",
+            "tint": "#E7BE58",
+            "guid": "a512405e62d06337f5b1fd57f8ef22b7"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_gold.png",
+            "tint": "#C9962E",
+            "guid": "e75ffd39c4ee1462da15f56d0442ab57"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_dots.png",
+            "tint": "#7A5414",
+            "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_ornate_gilded_air.png",
+            "tint": null,
+            "guid": "ded6a1d51860509e2c310afc56cab0fd"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_gilded_air.png",
+            "tint": "#E7BE58",
+            "guid": "dcea7f3c9abf5136876fc9f127d8fde8"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_granite.png",
+            "tint": "#2D2B2A",
+            "guid": "d5bdf6cf6a1aeab38f4cfc4584e6e887"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/square/motif_dots.png",
+            "tint": "#E2B23A",
+            "guid": "9fe2215b6aae85e84ad69edc94f3cd69"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_ornate_gilded_back.png",
+            "tint": null,
+            "guid": "dfb2e077bc4d2f36cd25834bdf35e3ee"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_gilded_back.png",
+            "tint": "#E7BE58",
+            "guid": "9979e7342f871370f6812de6aece1dc8"
+          }
+        ]
+      }
+    },
+    "hex": {
+      "board": "08c692bc58041cb614e647de44fc0373",
+      "slots": {
+        "hover": "753a534d9575b7a03f8e9fa8107343d2",
+        "legal": "e98f3b1ca65610321b1da871d2ce36bb",
+        "blocked": "a1481b6a0d29d918e44753a689093e67",
+        "selected": "1ad951e9d7f8874192a90830e02f0cdf",
+        "target": "dfef5d02466c47dcdf0ac35d3484d432"
+      },
+      "pieceAspect": 1.1094,
+      "piecePivotY": 0.4648,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_faience.png",
+            "tint": "#2C9C9A",
+            "guid": "5f975404df783293b2a7d6e512569359"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_dots.png",
+            "tint": "#F6E7B5",
+            "guid": "f7a43d8983afa81bf0d0c6e257f6dc7f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_ornate_gilded_water.png",
+            "tint": null,
+            "guid": "67df2278e72f944880b090eb19776957"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_gilded_water.png",
+            "tint": "#E7BE58",
+            "guid": "049e9141cb08477cf1cbf494c430be28"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_granite.png",
+            "tint": "#2D2B2A",
+            "guid": "4ac3468b709f48ae5f56fa0e0d8a381d"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_dots.png",
+            "tint": "#E2B23A",
+            "guid": "f7a43d8983afa81bf0d0c6e257f6dc7f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_ornate_gilded_earth.png",
+            "tint": null,
+            "guid": "05728c72cf9ffefe3f8c4c032cda7920"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_gilded_earth.png",
+            "tint": "#E7BE58",
+            "guid": "b8e5e6355f9673e70f375b3b1ec50bf3"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_carnelian.png",
+            "tint": "#b7431f",
+            "guid": "320f830641462bb3b341504a5a38b483"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_dots.png",
+            "tint": "#F6E7B5",
+            "guid": "f7a43d8983afa81bf0d0c6e257f6dc7f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_ornate_gilded_fire.png",
+            "tint": null,
+            "guid": "825e0fd94a2711f576f9e23c382cbc82"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_gilded_fire.png",
+            "tint": "#E7BE58",
+            "guid": "9b4b9259fd58470ac79dbbd1c1694480"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_gold.png",
+            "tint": "#C9962E",
+            "guid": "efdc8a43d1f457bb91dc9a6176680e48"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_dots.png",
+            "tint": "#7A5414",
+            "guid": "f7a43d8983afa81bf0d0c6e257f6dc7f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_ornate_gilded_air.png",
+            "tint": null,
+            "guid": "e1f475a5207473092b8f851d3a4b640c"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_gilded_air.png",
+            "tint": "#E7BE58",
+            "guid": "38d241c03be83f516a8166409a7aa154"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_granite.png",
+            "tint": "#2D2B2A",
+            "guid": "4ac3468b709f48ae5f56fa0e0d8a381d"
+          },
+          {
+            "name": "motif",
+            "file": "Pieces/hex/motif_dots.png",
+            "tint": "#E2B23A",
+            "guid": "f7a43d8983afa81bf0d0c6e257f6dc7f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_ornate_gilded_back.png",
+            "tint": null,
+            "guid": "fe901b0fd984487969af5475d795a480"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_gilded_back.png",
+            "tint": "#E7BE58",
+            "guid": "0c6b05c53e62db091f89883c6d382e48"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -85,6 +85,13 @@ public class PlayerSetupUI : MonoBehaviour
         else
             for (int i = 0; i < Mathf.Min(PlayerSetupRules.MinimumPlayers, Capacity); i++)
                 entries.Add(new PlayerSetupEntry($"Player {i + 1}"));
+        // Player 1 starts with the board and pieces saved on the main menu's Customize screen.
+        if (entries.Count > 0 && PlayerCustomization.Saved && Themes != null)
+        {
+            entries[0].Theme = Themes.Find(PlayerCustomization.ThemeId);
+            entries[0].ColourIndex = PlayerCustomization.ColourIndex;
+            entries[0].PieceShape = PlayerCustomization.PieceShape;
+        }
         RebuildRows();
     }
 
@@ -332,11 +339,11 @@ public class PlayerSetupUI : MonoBehaviour
         Color tone = colour != null ? colour.colour : readyColour;
         card.colourBar.color = tone;
         card.colourDot.color = tone;
-        card.boardPreview.sprite = entry.Theme != null ? entry.Theme.board : null;
+        card.boardPreview.sprite = entry.Theme != null ? entry.Theme.BoardFor(entry.PieceShape) : null;
         card.boardPreview.enabled = card.boardPreview.sprite != null;
         // The piece shows the theme's layers in this player's colour, exactly as it will look on the board.
         card.piecePreview.sprite = ThemeManager.Instance != null
-            ? ThemeManager.Instance.PieceSprite(entry.Theme, ResourceType.Water, entry.ColourIndex) : null;
+            ? ThemeManager.Instance.PieceSprite(entry.Theme, ResourceType.Water, entry.ColourIndex, entry.PieceShape) : null;
         card.piecePreview.enabled = card.piecePreview.sprite != null;
         card.pieceButton.interactable = themes != null && themes.usePlayerColours && themes.playerColours.Count > 1;
         card.themeName.text = entry.Theme != null ? entry.Theme.DisplayName : "No theme";

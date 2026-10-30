@@ -1,0 +1,293 @@
+{
+  "id": "aksum-stele",
+  "shapes": {
+    "square": {
+      "board": "4b568c4a679276fb7a4f7cfeda36c0a3",
+      "slots": {
+        "hover": "6c27f25d40cd7371e99f7668d7fbaa45",
+        "legal": "25e040fae9ddc6f5b2c8aadd572c0b9c",
+        "blocked": "a16221094ede6bbe432b4ab0146f7e22",
+        "selected": "5e3922b7d6e160014f278152ad23614d",
+        "target": "a625e7000af94ee241d3a3630c260fdd"
+      },
+      "pieceAspect": 1.0977,
+      "piecePivotY": 0.4698,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_river_stone.png",
+            "tint": "#4F6A80",
+            "guid": "8483ce7c761c2bed5dfe43722449f88f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_painted_water.png",
+            "tint": "#E3E6EA",
+            "guid": "1903417e169b80608fa3b551fac96d75"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_river_stone.png",
+            "tint": "#2F3134",
+            "guid": "8483ce7c761c2bed5dfe43722449f88f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_painted_earth.png",
+            "tint": "#E3E6EA",
+            "guid": "7c4b923b47d3e935efb8bf24d8e1592c"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_sandstone.png",
+            "tint": "#A2492E",
+            "guid": "dba18646a4903cb831c2cb9adbf27ea7"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_painted_fire.png",
+            "tint": "#F4EDE4",
+            "guid": "e48bb7be7c340bb3d8d8e0092a098f12"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_marble.png",
+            "tint": "#E6E1D8",
+            "guid": "cd6c5fd95de9406f213bd5f43ea2a588"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_painted_air.png",
+            "tint": "#8C9198",
+            "guid": "ae38d2e50f0773ea98dee5806bd778cc"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_river_stone.png",
+            "tint": "#2F3134",
+            "guid": "8483ce7c761c2bed5dfe43722449f88f"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_ornate_painted_back.png",
+            "tint": "#E3E6EA",
+            "guid": "14a960a0402f0d39008946dcff4ed451"
+          }
+        ]
+      }
+    },
+    "hex": {
+      "board": "8011323c96c0b40af72c5621849e65c3",
+      "slots": {
+        "hover": "99f4f07d12ef3a2488f41b427631a46a",
+        "legal": "ff69234d9042f4fb5ccead76a5be9b4b",
+        "blocked": "9a063b52f667c2f8c43e4c1033ee5ad0",
+        "selected": "dcd3ea24861bcf1a98fbfe30faf0bd46",
+        "target": "b8bfeed90d073e5c33943ff8eeb5928f"
+      },
+      "pieceAspect": 1.1094,
+      "piecePivotY": 0.4648,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_river_stone.png",
+            "tint": "#4F6A80",
+            "guid": "e05d8fe4da2474abd973f8e5ca8bff44"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_painted_water.png",
+            "tint": "#E3E6EA",
+            "guid": "2ede081474521f1bfae6fe61bc05f456"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_river_stone.png",
+            "tint": "#2F3134",
+            "guid": "e05d8fe4da2474abd973f8e5ca8bff44"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_painted_earth.png",
+            "tint": "#E3E6EA",
+            "guid": "0734cc98b722783fc4f7e66eabe9b66f"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_sandstone.png",
+            "tint": "#A2492E",
+            "guid": "56ad155a60fb56b78e61ebdb7c3e5e3a"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_painted_fire.png",
+            "tint": "#F4EDE4",
+            "guid": "7df711e7860149d506fb636817a06246"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_marble.png",
+            "tint": "#E6E1D8",
+            "guid": "1e905693d76823b00a92b1b4cba31471"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_painted_air.png",
+            "tint": "#8C9198",
+            "guid": "3eb276239ffda2f1a2ebf8d06d804a64"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_river_stone.png",
+            "tint": "#2F3134",
+            "guid": "e05d8fe4da2474abd973f8e5ca8bff44"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_ornate_painted_back.png",
+            "tint": "#E3E6EA",
+            "guid": "68079b778d69e267910115410c2952d1"
+          }
+        ]
+      }
+    }
+  }
+}

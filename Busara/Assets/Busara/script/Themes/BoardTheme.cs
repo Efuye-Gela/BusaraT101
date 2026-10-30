@@ -54,6 +54,11 @@ public class BoardTheme : ScriptableObject
     public Sprite slotSelected;
     public Sprite slotTarget;
 
+    [Header("Square and hexagon variants")]
+    [Tooltip("The theme drawn for square or hexagon pieces: holes in that shape and pieces in that shape " +
+             "(tools/theme-lab/export-shapes.mjs). A theme without a variant keeps its own pieces and round holes.")]
+    public List<ShapeVariant> shapes = new List<ShapeVariant>();
+
     [Header("Colours")]
     public Color accent = Color.white;
     public Color danger = Color.red;
@@ -89,6 +94,22 @@ public class BoardTheme : ScriptableObject
         }
     }
 
+    /// <summary>The variant for a piece shape ("square" or "hex"), or null for the theme's own pieces and holes.</summary>
+    public ShapeVariant Variant(string shape)
+    {
+        if (string.IsNullOrEmpty(shape) || shapes == null)
+            return null;
+        return shapes.Find(variant => variant != null && variant.shape == shape);
+    }
+
+    public Sprite BoardFor(string shape) => Variant(shape)?.board ?? board;
+
+    public List<PieceLayer> LayersFor(ResourceType type, string shape)
+    {
+        ShapeVariant variant = Variant(shape);
+        return variant != null ? variant.LayersFor(type) : LayersFor(type);
+    }
+
     public List<PieceLayer> LayersFor(ResourceType type)
     {
         switch (type)
@@ -112,4 +133,37 @@ public class PieceLayer
     [Tooltip("Untinted layers (shadow, detail, relief) keep their own colours.")]
     public bool tinted;
     public Color tint = Color.white;
+}
+
+/// <summary>A theme redrawn for one piece shape: the board's holes, the slot overlays and the pieces in that shape.</summary>
+[System.Serializable]
+public class ShapeVariant
+{
+    [Tooltip("square or hex.")]
+    public string shape;
+    public Sprite board;
+    public float pieceAspect = 1f;
+    [Range(0f, 1f)] public float piecePivotY = 0.5f;
+    public List<PieceLayer> waterLayers = new List<PieceLayer>();
+    public List<PieceLayer> earthLayers = new List<PieceLayer>();
+    public List<PieceLayer> fireLayers = new List<PieceLayer>();
+    public List<PieceLayer> airLayers = new List<PieceLayer>();
+    public List<PieceLayer> hiddenLayers = new List<PieceLayer>();
+    public Sprite slotHover;
+    public Sprite slotLegal;
+    public Sprite slotBlocked;
+    public Sprite slotSelected;
+    public Sprite slotTarget;
+
+    public List<PieceLayer> LayersFor(ResourceType type)
+    {
+        switch (type)
+        {
+            case ResourceType.Water: return waterLayers;
+            case ResourceType.Earth: return earthLayers;
+            case ResourceType.Fire: return fireLayers;
+            case ResourceType.Air: return airLayers;
+            default: return null;
+        }
+    }
 }

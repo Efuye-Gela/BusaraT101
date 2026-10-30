@@ -165,3 +165,12 @@ Names avoid Marvel trademarks (no "Wakanda", "Vibranium" or "Kimoyo") so the the
 Copy a theme object in `THEMES` (or paste the spec from the lab's workshop), keep the readability
 contract (Water blue, Fire red, Air amber, Earth dark, plus the glyph silhouettes), re-run the
 exporter, then run *Import Themes From Sprites* in Unity.
+
+## Square and hexagon variants
+
+`node tools/theme-lab/export-shapes.mjs [theme ids]` redraws every layered theme for square and hexagon pieces:
+`board_square.png` / `board_hex.png` (768 px, every hole in that shape), `slot_state_<state>_<shape>.png`, the
+theme's pieces in that shape added to the shared library under `Sprites/Pieces/<shape>/`, and `shapes.json` with the
+layer stacks and piece geometry. It never rewrites the theme's existing sprites. `boardSVG(theme, { holeShape })` and
+`slotStateSVG(theme, state, { holeShape })` draw the shaped holes; `layerLibrary(id, { shape })` the shaped pieces.
+

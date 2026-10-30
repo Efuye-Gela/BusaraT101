@@ -82,6 +82,8 @@ public class PlayerManager : Manager<PlayerManager>
             player.knownKingdoms.Clear();
             if (player.Board.BoardOwnerName != null)
                 player.Board.BoardOwnerName.text = player.Name;
+            if (ThemeManager.Instance != null)
+                ThemeManager.Instance.SetPieceShape(player.Board, entries[i].PieceShape);
             if (entries[i].Theme != null && ThemeManager.Instance != null)
                 ThemeManager.Instance.Apply(player.Board, entries[i].Theme);
             if (entries[i].ColourIndex >= 0 && ThemeManager.Instance != null)

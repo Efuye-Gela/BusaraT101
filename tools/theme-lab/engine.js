@@ -737,6 +737,26 @@
     portal: { name: 'Portal', era: 'future', note: 'Light pools at the edge; the hole looks deeper than the board.' },
   };
 
+  // Square and hexagon holes for square and hexagon pieces: every hole-sized circle in a hole's markup becomes
+  // the matching shape (a rounded square, or a hexagon oriented like the hex piece's footprint).
+  const HOLE_SHAPES = ['circle', 'square', 'hex'];
+  function shapeHoles(markup, shape) {
+    if (!shape || shape === 'circle') return markup;
+    // Hole-sized highlight arcs follow a circle's edge; a square or hexagon hole has none.
+    markup = markup.replace(/<path d="M[^"]*?A([\d.]+) [\d.]+ [^"]*"[^>]*\/>/g, (m, r) => (+r >= 40 ? '' : m));
+    return markup.replace(/<circle cx="([-\d.]+)" cy="([-\d.]+)" r="([-\d.]+)"([^>]*)\/>/g, (m, cx, cy, r, rest) => {
+      cx = +cx; cy = +cy; r = +r;
+      if (r < 40) return m;
+      if (shape === 'square') {
+        const s = r * 0.92, c = r * 0.22;
+        return `<rect x="${f(cx - s)}" y="${f(cy - s)}" width="${f(2 * s)}" height="${f(2 * s)}" rx="${f(c)}"${rest}/>`;
+      }
+      const R = r * 1.06;
+      const pts = [0, 1, 2, 3, 4, 5].map((i) => `${f(cx + Math.cos(i * Math.PI / 3) * R)},${f(cy + Math.sin(i * Math.PI / 3) * R)}`).join(' ');
+      return `<polygon points="${pts}"${rest}/>`;
+    });
+  }
+
   function holeMarkup(u, style, cx, cy, r, t, surface) {
     const ring = t.board.ring;
     const sDark = darken(surface, 0.6), sLight = lighten(surface, 0.35);
@@ -919,7 +939,7 @@
     const style = o.slot || t.board.slot;
     holeCenters().forEach(([x, y]) => {
       const h = holeMarkup(u, style, x, y, BOARD.holeR, t, surface);
-      defs.push(h.defs); els.push(h.els);
+      defs.push(h.defs); els.push(shapeHoles(h.els, o.holeShape));
     });
 
     // pieces placed on the board (lab preview only)
@@ -1593,7 +1613,7 @@
     selected: 'Chosen destination',
     target: 'Targeted by a weapon or power',
   };
-  function slotStateSVG(theme, state) {
+  function slotStateSVG(theme, state, o) {
     const t = typeof theme === 'string' ? themeById(theme) : theme;
     const c = 104, r = BOARD.holeR, a = t.accent, d = t.danger;
     const past = t.era === 'past';
@@ -1629,7 +1649,7 @@
       }
       default: break;
     }
-    return svgWrap(208, 208, `<defs>${blur}</defs>${b}`);
+    return svgWrap(208, 208, `<defs>${blur}</defs>${shapeHoles(b, o && o.holeShape)}`);
   }
 
   // Piece overlays: 512 viewBox, same frame as pieceSVG.
@@ -1732,7 +1752,7 @@
     // holes
     holeCenters().forEach(([x, y]) => {
       const hm = holeMarkup(u, t.board.slot, x, y, BOARD.holeR, t, '#2E2E44');
-      defs.push(hm.defs); els.push(hm.els);
+      defs.push(hm.defs); els.push(shapeHoles(hm.els, o.holeShape));
     });
     if (o.layout) {
       const pts = holeCenters();
@@ -2070,12 +2090,13 @@
 
   // Layer sprites for a theme: shared library entries (deduplicated by path across themes) and the
   // per-element stacks that reference them. Paths are relative to Assets/Busara/Sprites.
-  function layerLibrary(themeId) {
+  // opts.shape draws the theme's pieces in another shape (square or hex pieces for square or hexagon holes).
+  function layerLibrary(themeId, opts) {
     const t = themeById(themeId);
-    if (!isLayered(t)) return null;
+    if (!isLayered(t, opts)) return null;
     const entries = new Map(), stacks = {};
     const add = (key, el, o) => {
-      const st = pieceLayers(t, el, o);
+      const st = pieceLayers(t, el, Object.assign({}, opts, o));
       stacks[key] = st.layers.map((ly) => {
         const path = `Pieces/${st.shape}/${ly.key}.png`;
         if (!entries.has(path)) entries.set(path, { path, w: 256, h: Math.round(256 * st.H / 512), svg: () => svgWrap(512, st.H, ly.body) });
@@ -2089,7 +2110,7 @@
 
   const api = {
     ELEMENTS, ELEMENT_INFO, GLYPHS, MATERIALS, THEMES, SLOT_STYLES, SLOT_STATES, PIECE_STATES, BOARD, FRIEZES,
-    CLASSIC, ALL_THEMES, UI_KIT, uiKitSVG, ACTION_ICONS, actionIconSVG, PIECE_SHAPES, MOTIFS, pieceLayers, layeredDirectSVG, layerSVG, layerLibrary, pieceAspect, piecePivotY, themeShape, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
+    CLASSIC, ALL_THEMES, HOLE_SHAPES, shapeHoles, isLayered, UI_KIT, uiKitSVG, ACTION_ICONS, actionIconSVG, PIECE_SHAPES, MOTIFS, pieceLayers, layeredDirectSVG, layerSVG, layerLibrary, pieceAspect, piecePivotY, themeShape, themeById, boardSVG, boardGlowSVG, pieceSVG, holeSVG, materialSVG, slotStateSVG, pieceStateSVG, spriteList,
     color: { mix, lighten, darken, luminance },
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

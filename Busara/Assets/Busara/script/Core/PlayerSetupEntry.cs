@@ -13,6 +13,8 @@ public class PlayerSetupEntry
     public BoardTheme Theme;
     /// <summary>Index into <see cref="ThemeCatalog.playerColours"/> for this player's pieces; -1 uses the seat's colour.</summary>
     public int ColourIndex = -1;
+    /// <summary>"" for the theme's own pieces, or "square" / "hex" for square or hexagon pieces in matching holes.</summary>
+    public string PieceShape = "";
 
     public PlayerSetupEntry(string name, Kingdom kingdom = null, bool isBotControlled = false, BoardTheme theme = null)
     {

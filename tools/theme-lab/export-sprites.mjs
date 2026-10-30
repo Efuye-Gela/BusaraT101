@@ -21,7 +21,7 @@ const spritesRoot = path.join(repo, 'Busara', 'Assets', 'Busara', 'Sprites');
 const outRoot = path.join(spritesRoot, 'Themes');
 const engine = require(path.join(here, 'engine.js'));
 
-function loadPlaywright() {
+export function loadPlaywright() {
   try { return require('playwright'); } catch { /* fall through to a global install */ }
   const globalRoot = execSync('npm root -g').toString().trim();
   return require(path.join(globalRoot, 'playwright'));
@@ -29,10 +29,10 @@ function loadPlaywright() {
 
 export const stableGuid = (assetPath) => createHash('md5').update('busara-theme:' + assetPath).digest('hex');
 
-const folderMeta = (guid) =>
+export const folderMeta = (guid) =>
   `fileFormatVersion: 2\nguid: ${guid}\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: \n`;
 
-const textMeta = (guid) =>
+export const textMeta = (guid) =>
   `fileFormatVersion: 2\nguid: ${guid}\nTextScriptImporter:\n  externalObjects: {}\n  userData: \n  assetBundleName: \n  assetBundleVariant: \n`;
 
 const platform = (target, size, quality) => `  - serializedVersion: 4
@@ -52,7 +52,7 @@ const platform = (target, size, quality) => `  - serializedVersion: 4
 
 // Single-mode UI sprite, no mipmaps, alpha is transparency. size = import cap (power of two),
 // border = nine-slice [left, bottom, right, top] in pixels. readable keeps a CPU copy (piece layers are composited at runtime).
-const spriteMeta = (guid, size, border = [0, 0, 0, 0], readable = false) => `fileFormatVersion: 2
+export const spriteMeta = (guid, size, border = [0, 0, 0, 0], readable = false) => `fileFormatVersion: 2
 guid: ${guid}
 TextureImporter:
   internalIDToNameTable: []

@@ -45,4 +45,7 @@ a clash is a compile error, and any compile error fails the batch Web build.
 ## Art pipeline
 
 `node tools/theme-lab/export-sprites.mjs [theme ids]` regenerates the theme sprites, the piece layer
-library and the action icons (`Sprites/UI/Icons/Actions`). See `tools/theme-lab/README.md`.
+library and the action icons (`Sprites/UI/Icons/Actions`). `node tools/theme-lab/export-shapes.mjs [theme ids]` adds each
+theme's square and hexagon variants (`board_<shape>.png`, `slot_state_*_<shape>.png`, pieces in Sprites/Pieces/<shape>,
+`shapes.json`); `BoardThemeImporter` reads them into `BoardTheme.shapes`. The main menu's Customize screen saves the
+player's theme, piece shape and colour (`PlayerCustomization`); square and hexagon pieces sit in matching holes.

@@ -19,6 +19,8 @@ public class ThemeManager : Manager<ThemeManager>
     private readonly Dictionary<Board, BoardTheme> applied = new Dictionary<Board, BoardTheme>();
     // Piece colour chosen in player setup, by board; boards without one use their seat's colour.
     private readonly Dictionary<Board, int> chosenColour = new Dictionary<Board, int>();
+    // Piece shape chosen in customization ("square" or "hex"), by board; the holes follow the pieces.
+    private readonly Dictionary<Board, string> chosenShape = new Dictionary<Board, string>();
     // Size of each board's drawn art at the last layout, so slots follow resolution or layout changes.
     private readonly Dictionary<Board, Vector2> fittedSize = new Dictionary<Board, Vector2>();
 
@@ -90,6 +92,19 @@ public class ThemeManager : Manager<ThemeManager>
             FitBoard(board);
     }
 
+    /// <summary>Draws this board's pieces, and its holes, in <paramref name="shape"/> ("square" or "hex"); empty keeps
+    /// the theme's own round holes and pieces. Themes without that variant also keep their own.</summary>
+    public void SetPieceShape(Board board, string shape)
+    {
+        if (board == null)
+            return;
+        chosenShape[board] = shape ?? "";
+        if (applied.TryGetValue(board, out BoardTheme theme))
+            Apply(board, theme);
+    }
+
+    public string ShapeOf(Board board) => board != null && chosenShape.TryGetValue(board, out string shape) ? shape : "";
+
     /// <summary>Index of the colour this board's pieces use: the player's choice, else the seat's.</summary>
     public int ColourIndexOf(Board board)
     {
@@ -113,7 +128,7 @@ public class ThemeManager : Manager<ThemeManager>
         Image background = board.Background != null ? board.Background : FindBackground(board);
         if (background != null)
         {
-            background.sprite = theme.board;
+            background.sprite = theme.BoardFor(ShapeOf(board));
             background.color = Color.white;
             background.preserveAspect = true;
         }
@@ -135,7 +150,7 @@ public class ThemeManager : Manager<ThemeManager>
             return;
         foreach (Slot slot in board.Slots)
             if (slot != null)
-                SkinSlot(slot, theme);
+                SkinSlot(slot, theme, theme.Variant(ShapeOf(board)));
         FitBoard(board);
     }
 
@@ -168,12 +183,15 @@ public class ThemeManager : Manager<ThemeManager>
             return;
         SizePiece(resource);
         Image piece = resource.PieceImage;
-        Sprite sprite = PieceSprite(theme, resource.resourceType, ColourIndexOf(board));
+        string shape = ShapeOf(board);
+        Sprite sprite = PieceSprite(theme, resource.resourceType, ColourIndexOf(board), shape);
         if (piece != null && sprite != null)
         {
             piece.sprite = sprite;
             piece.preserveAspect = true;
-            FitPieceImage(resource, piece, theme);
+            ShapeVariant variant = theme.Variant(shape);
+            FitPieceImage(resource, piece, variant != null ? variant.pieceAspect : theme.pieceAspect,
+                variant != null ? variant.piecePivotY : theme.piecePivotY);
         }
         Image glow = resource.HighlightImage;
         if (glow != null && theme.pieceSelected != null)
@@ -189,15 +207,15 @@ public class ThemeManager : Manager<ThemeManager>
 
     // Tall shapes are drawn rising from their base: pin the base centre to the piece's centre and
     // let the sprite extend upward. Pieces in lower rows draw later, so they correctly cover the row behind.
-    private static void FitPieceImage(Resource resource, Image piece, BoardTheme theme)
+    private static void FitPieceImage(Resource resource, Image piece, float aspect, float pivotY)
     {
         if (!(resource.transform is RectTransform holder))
             return;
         RectTransform rect = piece.rectTransform;
         float width = holder.rect.width > 0f ? holder.rect.width : holder.sizeDelta.x;
         rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
-        rect.pivot = new Vector2(0.5f, Mathf.Clamp01(theme.piecePivotY));
-        rect.sizeDelta = new Vector2(width, width * Mathf.Max(0.1f, theme.pieceAspect));
+        rect.pivot = new Vector2(0.5f, Mathf.Clamp01(pivotY));
+        rect.sizeDelta = new Vector2(width, width * Mathf.Max(0.1f, aspect));
         rect.anchoredPosition = Vector2.zero;
     }
 
@@ -219,13 +237,18 @@ public class ThemeManager : Manager<ThemeManager>
 
     /// <summary>The piece composited from the theme's layers in player colour <paramref name="colourIndex"/>,
     /// or the theme's pre-composited sprite when it has no layers.</summary>
-    public Sprite PieceSprite(BoardTheme theme, ResourceType type, int colourIndex)
+    public Sprite PieceSprite(BoardTheme theme, ResourceType type, int colourIndex, string shape = "") =>
+        ComposePiece(catalog, theme, type, colourIndex, shape);
+
+    /// <summary>A piece in <paramref name="shape"/> and player colour, for screens without a ThemeManager (the menu).</summary>
+    public static Sprite ComposePiece(ThemeCatalog catalog, BoardTheme theme, ResourceType type, int colourIndex, string shape)
     {
         if (theme == null)
             return null;
         Color? colour = catalog != null ? catalog.PieceColour(colourIndex) : null;
-        Sprite composite = PieceCompositor.Compose($"{theme.id}_{type}", theme.LayersFor(type), colour,
-            ThemeCatalog.PlayerColourLayers);
+        bool shaped = theme.Variant(shape) != null;
+        Sprite composite = PieceCompositor.Compose(shaped ? $"{theme.id}_{shape}_{type}" : $"{theme.id}_{type}",
+            theme.LayersFor(type, shape), colour, ThemeCatalog.PlayerColourLayers);
         return composite != null ? composite : theme.PieceFor(type);
     }
 
@@ -293,16 +316,17 @@ public class ThemeManager : Manager<ThemeManager>
         return new Vector2(side, side);
     }
 
-    private static void SkinSlot(Slot slot, BoardTheme theme)
+    private static void SkinSlot(Slot slot, BoardTheme theme, ShapeVariant variant)
     {
+        Sprite legal = variant != null && variant.slotLegal != null ? variant.slotLegal : theme.slotLegal;
         // The board sprite draws the hole; the slot image stays as an invisible click target.
         Image hole = slot.GetComponent<Image>();
         if (hole != null)
             hole.color = new Color(1f, 1f, 1f, 0f);
         Image highlight = slot.HighlightImage;
-        if (highlight != null && theme.slotLegal != null)
+        if (highlight != null && legal != null)
         {
-            highlight.sprite = theme.slotLegal;
+            highlight.sprite = legal;
             highlight.color = Color.white;
             highlight.preserveAspect = true;
             Stretch(highlight.rectTransform);

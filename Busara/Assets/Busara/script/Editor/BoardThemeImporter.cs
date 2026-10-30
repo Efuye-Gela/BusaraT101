@@ -47,6 +47,28 @@ public static class BoardThemeImporter
         public string tint; // null for untinted layers
     }
 
+    // shapes.json from tools/theme-lab/export-shapes.mjs: the theme redrawn for square and hexagon pieces.
+    [System.Serializable]
+    private class ShapeFile
+    {
+        public ShapeSet shapes;
+    }
+
+    [System.Serializable]
+    private class ShapeSet
+    {
+        public ShapeEntry square;
+        public ShapeEntry hex;
+    }
+
+    [System.Serializable]
+    private class ShapeEntry
+    {
+        public float pieceAspect = 1f;
+        public float piecePivotY = 0.5f;
+        public Layers layers;
+    }
+
     [System.Serializable]
     private class Geometry
     {
@@ -181,6 +203,32 @@ public static class BoardThemeImporter
         theme.fireLayers = LoadLayers(layers.fire);
         theme.airLayers = LoadLayers(layers.air);
         theme.hiddenLayers = LoadLayers(layers.hidden);
+        theme.shapes = new List<ShapeVariant>();
+        TextAsset shapesFile = AssetDatabase.LoadAssetAtPath<TextAsset>(folder + "/shapes.json");
+        ShapeFile shapeFile = shapesFile != null ? JsonUtility.FromJson<ShapeFile>(shapesFile.text) : null;
+        if (shapeFile?.shapes != null)
+            foreach (var (shape, entry) in new[] { ("square", shapeFile.shapes.square), ("hex", shapeFile.shapes.hex) })
+            {
+                if (entry?.layers == null)
+                    continue;
+                theme.shapes.Add(new ShapeVariant
+                {
+                    shape = shape,
+                    board = Load($"board_{shape}.png"),
+                    pieceAspect = entry.pieceAspect,
+                    piecePivotY = entry.piecePivotY,
+                    waterLayers = LoadLayers(entry.layers.water),
+                    earthLayers = LoadLayers(entry.layers.earth),
+                    fireLayers = LoadLayers(entry.layers.fire),
+                    airLayers = LoadLayers(entry.layers.air),
+                    hiddenLayers = LoadLayers(entry.layers.hidden),
+                    slotHover = Load($"slot_state_hover_{shape}.png"),
+                    slotLegal = Load($"slot_state_legal_{shape}.png"),
+                    slotBlocked = Load($"slot_state_blocked_{shape}.png"),
+                    slotSelected = Load($"slot_state_selected_{shape}.png"),
+                    slotTarget = Load($"slot_state_target_{shape}.png"),
+                });
+            }
         if (manifest.colors != null)
         {
             if (ColorUtility.TryParseHtmlString(manifest.colors.accent, out Color accent)) theme.accent = accent;

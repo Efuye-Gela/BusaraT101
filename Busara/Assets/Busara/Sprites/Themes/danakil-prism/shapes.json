@@ -1,0 +1,353 @@
+{
+  "id": "danakil-prism",
+  "shapes": {
+    "square": {
+      "board": "7062152fdc3ce65fddf35ee65987b3bf",
+      "slots": {
+        "hover": "2ed791aa3fc66fda222078f4e8940ca0",
+        "legal": "ffac072eabb8aaf57e2f6b6d481cc974",
+        "blocked": "398c1a311c1a04bf7e8445ae46575084",
+        "selected": "ed05d9833800129ff6d3759a737c46b1",
+        "target": "2c7561d8d41660f95cab7929ae99b71d"
+      },
+      "pieceAspect": 1.0977,
+      "piecePivotY": 0.4698,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_shift_prism.png",
+            "tint": "#4fa5ff",
+            "guid": "4b2f274409f26b2bd71cb32f45618460"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_minimal_carved_water.png",
+            "tint": null,
+            "guid": "d3f9da55dae6c90b3d49965f036f0490"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_carved_water.png",
+            "tint": "#1E2B4A",
+            "guid": "2043b2419673006da17798cad2310667"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_shift_prism.png",
+            "tint": "#504f57",
+            "guid": "4b2f274409f26b2bd71cb32f45618460"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_minimal_carved_earth.png",
+            "tint": null,
+            "guid": "2facb5d4b94a8a304a6d6cbe1d646171"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_carved_earth.png",
+            "tint": "#F2EFE6",
+            "guid": "87f5d89dec177238dc134bc964d5305c"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_shift_prism.png",
+            "tint": "#ff5e3c",
+            "guid": "4b2f274409f26b2bd71cb32f45618460"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_minimal_carved_fire.png",
+            "tint": null,
+            "guid": "ebdb4238bab3b69454df361d74a5b583"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_carved_fire.png",
+            "tint": "#3A1208",
+            "guid": "7272709a930a5d82d9dd91cedc5bbbb1"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_shift_prism.png",
+            "tint": "#fffa4f",
+            "guid": "4b2f274409f26b2bd71cb32f45618460"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_minimal_carved_air.png",
+            "tint": null,
+            "guid": "d9d00cbd3be227cd02bda64f16b2b833"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_carved_air.png",
+            "tint": "#3A2A08",
+            "guid": "0c326ae193e66dd6f24b64f1e855aa73"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/square/shadow.png",
+            "tint": null,
+            "guid": "eb6962972a138c28f4159490930ea256"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/square/paint_shift_prism.png",
+            "tint": "#504f57",
+            "guid": "4b2f274409f26b2bd71cb32f45618460"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/square/detail.png",
+            "tint": null,
+            "guid": "9373d10d5a8e790eaa427223ef851e42"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/square/relief_minimal_carved_back.png",
+            "tint": null,
+            "guid": "91a7859993fffe3f6b2cf65843e4465f"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/square/glyph_minimal_carved_back.png",
+            "tint": "#F2EFE6",
+            "guid": "f17cfeab49f6525f221a9a9ee1e08152"
+          }
+        ]
+      }
+    },
+    "hex": {
+      "board": "d0d701233a71b999ff9e5bcfc30452a1",
+      "slots": {
+        "hover": "d61f4f00066f5b58a150516324b93828",
+        "legal": "d979608fc38665dc1acad00da1cbad6a",
+        "blocked": "bfe061fbcb9b799dc667f758076c1859",
+        "selected": "1d5c97c0942205e27de8a78c5494ad2c",
+        "target": "4546b96b1287b7155bf94d57e663c5b2"
+      },
+      "pieceAspect": 1.1094,
+      "piecePivotY": 0.4648,
+      "layers": {
+        "water": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_shift_prism.png",
+            "tint": "#4fa5ff",
+            "guid": "a9bee95befd1cec442e15453e1f663d1"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_minimal_carved_water.png",
+            "tint": null,
+            "guid": "02babc8d9974a79772d0e63719b51eef"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_carved_water.png",
+            "tint": "#1E2B4A",
+            "guid": "acf3d58a6825a6e9f0dc92df203aab4b"
+          }
+        ],
+        "earth": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_shift_prism.png",
+            "tint": "#504f57",
+            "guid": "a9bee95befd1cec442e15453e1f663d1"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_minimal_carved_earth.png",
+            "tint": null,
+            "guid": "92428f3e36ab5de0fe9937409c7db369"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_carved_earth.png",
+            "tint": "#F2EFE6",
+            "guid": "25a70c626eff04adfef8de5d83507484"
+          }
+        ],
+        "fire": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_shift_prism.png",
+            "tint": "#ff5e3c",
+            "guid": "a9bee95befd1cec442e15453e1f663d1"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_minimal_carved_fire.png",
+            "tint": null,
+            "guid": "644c1f624adc86d7a10865bf5b74f972"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_carved_fire.png",
+            "tint": "#3A1208",
+            "guid": "68f2575de9f13b9f6ba1e139a916fbac"
+          }
+        ],
+        "air": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_shift_prism.png",
+            "tint": "#fffa4f",
+            "guid": "a9bee95befd1cec442e15453e1f663d1"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_minimal_carved_air.png",
+            "tint": null,
+            "guid": "ef24e4a8e814a21f30ec135b3a35dcbe"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_carved_air.png",
+            "tint": "#3A2A08",
+            "guid": "ffae4c8da467e0b5043d90fb8d0de2ae"
+          }
+        ],
+        "hidden": [
+          {
+            "name": "shadow",
+            "file": "Pieces/hex/shadow.png",
+            "tint": null,
+            "guid": "41ce95817e0d23d7a726bbbb8667ef7e"
+          },
+          {
+            "name": "paint",
+            "file": "Pieces/hex/paint_shift_prism.png",
+            "tint": "#504f57",
+            "guid": "a9bee95befd1cec442e15453e1f663d1"
+          },
+          {
+            "name": "detail",
+            "file": "Pieces/hex/detail.png",
+            "tint": null,
+            "guid": "350614e3f9d0c0b11d064a657c5cb7a2"
+          },
+          {
+            "name": "relief",
+            "file": "Pieces/hex/relief_minimal_carved_back.png",
+            "tint": null,
+            "guid": "79d9273831cf952b889e791a6e2847d1"
+          },
+          {
+            "name": "glyph",
+            "file": "Pieces/hex/glyph_minimal_carved_back.png",
+            "tint": "#F2EFE6",
+            "guid": "49ca431210039322dfec133ae1596426"
+          }
+        ]
+      }
+    }
+  }
+}
