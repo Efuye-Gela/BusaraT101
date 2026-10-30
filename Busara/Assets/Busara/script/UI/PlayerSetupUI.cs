@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Drives GameScene's authored player setup screen: one card per player with their name, kingdom
-/// (and what its power does), board theme and piece colour. The cards, buttons and layout are
+/// Drives GameScene's authored player setup screen: one card per player with their name, whether a human
+/// or a bot plays it, kingdom (and what its power does), board theme and piece colour. The cards, buttons and layout are
 /// scene objects; this only fills them in, shows a card per player and blocks the game until Start Game.
 /// </summary>
 public class PlayerSetupUI : MonoBehaviour
@@ -189,6 +189,7 @@ public class PlayerSetupUI : MonoBehaviour
             entry.Name = value;
             Validate();
         });
+        card.controlButton.onClick.AddListener(() => ToggleBot(seat));
         card.previousTheme.onClick.AddListener(() => StepTheme(seat, -1));
         card.nextTheme.onClick.AddListener(() => StepTheme(seat, 1));
         card.pieceButton.onClick.AddListener(() =>
@@ -231,6 +232,29 @@ public class PlayerSetupUI : MonoBehaviour
         });
     }
 
+    // A bot plays its seat through BotPlayerController. Default names follow the switch ("Player 2" <-> "Bot 2"),
+    // and a bot without a kingdom gets a free one at random so the game can start.
+    private void ToggleBot(int seat)
+    {
+        PlayerSetupEntry entry = EntryAt(seat);
+        if (entry == null)
+            return;
+        entry.IsBotControlled = !entry.IsBotControlled;
+        string from = entry.IsBotControlled ? "Player " : "Bot ";
+        string to = entry.IsBotControlled ? "Bot " : "Player ";
+        if (entry.Name != null && entry.Name.StartsWith(from) && int.TryParse(entry.Name.Substring(from.Length), out int number) &&
+            !entries.Exists(other => other != entry && other.Name == to + number))
+            entry.Name = to + number;
+        if (entry.IsBotControlled && entry.Kingdom == null && manager.kingdomCatalog != null)
+        {
+            List<Kingdom> free = manager.kingdomCatalog.kingdoms.FindAll(kingdom =>
+                kingdom != null && !entries.Exists(other => other.Kingdom == kingdom));
+            if (free.Count > 0)
+                entry.Kingdom = free[Random.Range(0, free.Count)];
+        }
+        RebuildRows();
+    }
+
     private void StepTheme(int seat, int direction)
     {
         PlayerSetupEntry entry = EntryAt(seat);
@@ -247,6 +271,7 @@ public class PlayerSetupUI : MonoBehaviour
         card.seatLabel.text = $"PLAYER {seat + 1}";
         card.removeButton.interactable = entries.Count > PlayerSetupRules.MinimumPlayers;
         card.nameInput.SetTextWithoutNotify(entry.Name);
+        card.controlLabel.text = entry.IsBotControlled ? "Bot" : "Human";
         TMP_Dropdown kingdoms = card.kingdomDropdown;
         kingdoms.SetValueWithoutNotify(entry.Kingdom == null || manager.kingdomCatalog == null ? 0 :
             manager.kingdomCatalog.kingdoms.IndexOf(entry.Kingdom) + 1);

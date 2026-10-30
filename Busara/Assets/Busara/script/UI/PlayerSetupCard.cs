@@ -14,6 +14,9 @@ public class PlayerSetupCard : MonoBehaviour
     public TMP_Text seatLabel;
     public UnityEngine.UI.Button removeButton;
     public TMP_InputField nameInput;
+    [Tooltip("Switches the seat between a human player and a bot.")]
+    public UnityEngine.UI.Button controlButton;
+    public TMP_Text controlLabel;
 
     [Header("Board theme and piece colour")]
     public UnityEngine.UI.Image boardPreview;
