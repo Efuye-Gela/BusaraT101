@@ -1,14 +1,9 @@
 using System;
 using System.IO;
-using System.Linq;
-using Busara.Online.Client;
-using TMPro;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public static class BusaraOnlineBuild
 {
@@ -22,32 +17,10 @@ public static class BusaraOnlineBuild
     }
     public const string ScenePath = "Assets/Busara/Online/Scenes/OnlineMVP.unity";
 
-    [MenuItem("Busara/Online MVP/Generate presentation scene")]
-    public static void GenerateScene()
-    {
-        if (Application.isPlaying) throw new InvalidOperationException("Leave Play mode before generating the online scene.");
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-            if (SceneManager.GetSceneAt(i).isDirty)
-                throw new InvalidOperationException("Save or discard open scene edits explicitly before generating OnlineMVP.");
-        var setup = EditorSceneManager.GetSceneManagerSetup();
-        try
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
-            Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            BusaraOnlineSceneBuilder.Populate();
-            if (!EditorSceneManager.SaveScene(scene, ScenePath)) throw new BuildFailedException("Could not persist OnlineMVP scene.");
-            AssetDatabase.SaveAssets();
-            // Append only: existing Offline Play scene indices and default startup remain intact.
-            if (!EditorBuildSettings.scenes.Any(s => s.path == ScenePath))
-                EditorBuildSettings.scenes = EditorBuildSettings.scenes.Concat(new[] { new EditorBuildSettingsScene(ScenePath, true) }).ToArray();
-        }
-        finally { RestorePreviousSceneSetup(setup); }
-    }
-
-    internal static void RestorePreviousSceneSetup(SceneSetup[] setup)
+    internal static void RestorePreviousSceneSetup(UnityEditor.SceneManagement.SceneSetup[] setup)
     {
         // Batch startup can have no scene setup; keep the newly saved scene loaded in that case.
-        if (setup.Length > 0) EditorSceneManager.RestoreSceneManagerSetup(setup);
+        if (setup.Length > 0) UnityEditor.SceneManagement.EditorSceneManager.RestoreSceneManagerSetup(setup);
     }
 
     [MenuItem("Busara/Online MVP/Build Web player")]
@@ -70,7 +43,9 @@ public static class BusaraOnlineBuild
         if (webConfig.backend == "ugs" &&
             (!Guid.TryParse(webConfig.projectId, out _) || string.IsNullOrWhiteSpace(webConfig.environmentName)))
             throw new BuildFailedException("Set BUSARA_UGS_PROJECT_ID and BUSARA_UGS_ENVIRONMENT before building UGS. Use the PowerShell build script parameters; legacy must be chosen explicitly.");
-        GenerateScene();
+        // OnlineMVP is an authored scene: build it as saved, never regenerate it.
+        if (!File.Exists(Path.Combine(projectRoot, "Busara", ScenePath)))
+            throw new BuildFailedException("Missing authored scene " + ScenePath + ".");
         string template = PlayerSettings.WebGL.template;
         var compression = PlayerSettings.WebGL.compressionFormat;
         bool fallback = PlayerSettings.WebGL.decompressionFallback;

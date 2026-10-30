@@ -235,12 +235,14 @@ the original event or rewinds the version counter.
 - `online/tests/Busara.Ugs.Tests`: simulated CAS/worker tests, not live UGS evidence.
 - `online/scripts/smoke-ugs.cjs`: explicit real UGS API smoke; see [setup](ugs-setup.md).
 - `Busara/Assets/Busara/Online/Client`: the Unity online client. Its scene
-  `Scenes/OnlineMVP.unity` is authored by `BusaraOnlineSceneBuilder`
-  (`BusaraOnlineBuild.GenerateScene`) using EgComponents **v0.1.4** UI pages
-  (`Entry`, `Lobby`, `Match`), saved button/label prefabs under `Prefabs/` and
-  baked shape sprites under `Art/`. `OnlineTheme` holds the shared palette and
-  layout, taken from the authored board and panel art. Regenerate the scene
-  after builder changes; do not hand-edit it.
+  `Scenes/OnlineMVP.unity` is an authored scene with EgComponents **v0.1.4** UI
+  pages (`Entry`, `Lobby`, `Match`). Every control a page can show is saved in
+  the scene under the page's `Content`, named by its control id (`create-room`,
+  `slot-12`, ...). `OnlineMvpScreen` only shows, fills and wires them. The
+  variable-length legal-action list copies the inactive `List ... Template`
+  rows inside `Legal actions`. Edit the scene in Unity: nothing regenerates it,
+  and the Web build uses it as saved. The main menu's `Play Online` button is
+  authored too (`SceneLink`, hidden when OnlineMVP is not in the build).
 - `online/tests/Busara.Domain.Tests`: rule, payment, serialization, privacy and
   normal-command progression tests.
 - `online/tests/Busara.Server.Tests`: actual PostgreSQL, multi-worker and restart

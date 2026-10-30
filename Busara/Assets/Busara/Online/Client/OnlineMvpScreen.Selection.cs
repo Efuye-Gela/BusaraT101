@@ -22,9 +22,9 @@ namespace Busara.Online.Client
             ListLabel(actions, error ?? (weapon ? "Valid weapon. Confirm to use it." :
                 "Valid chain. Each recipe rewards all board owners encountered so far."), ref y, 100);
             var marker = session.View.choices.Find(choice => choice.kind == resourceSelection.Kind);
-            Primary(ListButton(actions, "confirm-resource-selection", weapon ? "Use weapon" : "Forge selected chain", ref y,
+            ListButton(actions, "confirm-resource-selection", weapon ? "Use weapon" : "Forge selected chain", ref y,
                 () => session.Submit(marker, null, slots: resourceSelection.Slots),
-                session.CanAct && error == null && marker != null));
+                session.CanAct && error == null && marker != null, primary: true);
             ListButton(actions, "clear-resource-selection", "Clear selected resources", ref y,
                 () => { resourceSelection.Begin(resourceSelection.Kind); Rebuild(); }, session.CanAct && slots.Length > 0);
             ListButton(actions, "cancel-resource-selection", "Back without submitting", ref y,

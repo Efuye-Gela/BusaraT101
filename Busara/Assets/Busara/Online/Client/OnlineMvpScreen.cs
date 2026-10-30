@@ -9,12 +9,10 @@ using UnityEngine.UI;
 
 namespace Busara.Online.Client
 {
-    // Controller for the authored OnlineMVP scene (built by BusaraOnlineSceneBuilder). It picks the Eg page that
-    // matches the server phase and fills that page from the projected view. Only server choices submit actions.
+    // Controller for the authored OnlineMVP scene. It picks the Eg page that matches the server phase and fills that
+    // page's authored controls from the projected view. Only server choices submit actions.
     public sealed partial class OnlineMvpScreen : MonoBehaviour
     {
-        public TMP_FontAsset font;
-        public Sprite boardArt;
         public Sprite[] resourceIcons = new Sprite[4];
         [SerializeField] private OnlineSession session;
         [SerializeField] private OnlineBrowserTransport browser;
@@ -23,10 +21,6 @@ namespace Busara.Online.Client
         [SerializeField] private OnlinePage matchPage;
         [SerializeField] private TMP_Text statusText;
         [SerializeField] private TMP_Text connectionText;
-        [SerializeField] private Button buttonPrefab;
-        [SerializeField] private TMP_Text labelPrefab;
-        [SerializeField] private Sprite roundSprite;
-        [SerializeField] private Sprite circleSprite;
         private IUIService ui;
         private OnlinePage page;
         private RectTransform content;
@@ -61,13 +55,13 @@ namespace Busara.Online.Client
         }
 
         private bool Wired => session != null && browser != null && entryPage != null && lobbyPage != null &&
-            matchPage != null && statusText != null && connectionText != null && buttonPrefab != null && labelPrefab != null;
+            matchPage != null && statusText != null && connectionText != null;
 
         private async void Start()
         {
             if (!Wired)
             {
-                Debug.LogError("OnlineMVP scene is not wired. Rebuild it with Busara/Online/Build Online Scene.");
+                Debug.LogError("OnlineMVP scene is not wired: assign the session, transport, pages and status texts on BusaraOnline.");
                 enabled = false;
                 return;
             }
@@ -137,10 +131,9 @@ namespace Busara.Online.Client
             else Board();
             if (session.Pending)
             {
-                Button("retry-pending", "Retry identical pending action", content, 0, 744, 380, 46, session.RetryPending, !session.Busy);
+                Button("retry-pending", "Retry identical pending action", session.RetryPending, !session.Busy);
                 if (session.CanResolveConflict)
-                    Button("resolve-conflict", "Discard rejected action and reselect", content, 396, 744, 440, 46,
-                        session.ResolveConflict, !session.Busy);
+                    Button("resolve-conflict", "Discard rejected action and reselect", session.ResolveConflict, !session.Busy);
             }
             if (view != null) session.NotifyViewRendered(view.version);
         }

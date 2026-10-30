@@ -98,7 +98,7 @@ the repository-level `online` backend folder is outside Unity's `Assets`.
 | Source in this repository | Reuse pattern |
 | --- | --- |
 | `Busara\Assets\Busara\Online\Shared\Runtime` | Unity-independent C# contracts, rules, stable IDs and per-seat projections |
-| `Busara\Assets\Busara\Online\Client` | Unity presentation and session handling; no authoritative rule execution. The scene is generated from code with EgComponents UI pages and prefabs (`BusaraOnlineSceneBuilder`) |
+| `Busara\Assets\Busara\Online\Client` | Unity presentation and session handling; no authoritative rule execution. `OnlineMVP.unity` is an authored scene: EgComponents UI pages whose controls are all saved in the scene; the controller only shows and fills them |
 | `Busara\Assets\Plugins\WebGL\BusaraOnline.jslib` | Browser bridge, reconnect and immutable command outboxes |
 | `Busara\Assets\WebGLTemplates\BusaraOnline\busara-ugs.js` | Provider-specific Authentication/Cloud Code REST adapter |
 | `online\src\Busara.Ugs\Module.cs` | UGS entry point and authenticated context wiring |

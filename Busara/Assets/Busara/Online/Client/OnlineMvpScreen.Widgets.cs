@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 namespace Busara.Online.Client
 {
-    // Variable-count controls are instantiated from the authored button/label prefabs, so every page shares one style.
+    // Every control is authored in OnlineMVP under its page's Content and named by its id. Rendering shows the
+    // controls a view needs and fills them in. Variable-length action lists copy the authored, inactive templates
+    // inside the "Legal actions" list; nothing else is created at runtime.
     public sealed partial class OnlineMvpScreen
     {
+        private const string TemplateSuffix = " Template";
+
         private static RectTransform Place(RectTransform rect, Transform parent, float x, float y, float width, float height)
         {
             rect.SetParent(parent, false);
@@ -18,96 +22,83 @@ namespace Busara.Online.Client
             return rect;
         }
 
-        private RectTransform Rect(string name, Transform parent, float x, float y, float width, float height) =>
-            Place(new GameObject(name, typeof(RectTransform)).GetComponent<RectTransform>(), parent, x, y, width, height);
-
-        private Image Surface(string name, Transform parent, float x, float y, float width, float height, Color color)
+        private T Use<T>(string name) where T : Component
         {
-            var image = Rect(name, parent, x, y, width, height).gameObject.AddComponent<Image>();
-            image.sprite = roundSprite;
-            image.type = Image.Type.Sliced;
-            image.pixelsPerUnitMultiplier = 40f / OnlineTheme.Radius;
-            image.color = color;
-            image.raycastTarget = false;
-            return image;
+            Transform child = content != null ? content.Find(name) : null;
+            if (child == null)
+            {
+                Debug.LogError("OnlineMVP is missing the authored control '" + name + "' on the " + page.name + " page.");
+                return null;
+            }
+            child.gameObject.SetActive(true);
+            return child.GetComponent<T>();
         }
 
-        private TMP_Text Label(string name, Transform parent, string value, int size, float x, float y, float width, float height)
+        private TMP_Text Label(string name, string value)
         {
-            var label = Instantiate(labelPrefab);
-            label.name = name;
-            Place(label.rectTransform, parent, x, y, width, height);
-            label.text = value;
-            label.fontSize = size;
+            var label = Use<TMP_Text>(name);
+            if (label != null) label.text = value;
             return label;
         }
 
-        private Button Button(string id, string label, Transform parent, float x, float y, float width, float height,
-            Action action, bool enabled = true)
+        private Button Button(string id, string label, Action action, bool enabled = true)
         {
-            var button = Instantiate(buttonPrefab);
-            button.name = id;
-            Place((RectTransform)button.transform, parent, x, y, width, height);
+            var button = Use<Button>(id);
+            if (button != null) Bind(button, id, label, action, enabled);
+            return button;
+        }
+
+        private void Bind(Button button, string id, string label, Action action, bool enabled)
+        {
             button.interactable = enabled;
+            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => action());
             var text = button.GetComponentInChildren<TMP_Text>(true);
-            text.text = label;
+            if (text != null) text.text = label;
             controls.Add(new Control { id = id, label = label, selectable = button });
-            return button;
         }
 
-        // The primary action on a surface: amber plate with ink text, mirroring the art's amber edge.
-        private static Button Primary(Button button)
+        private void Input(string id, string label, string value, Action<string> changed)
         {
-            button.image.color = OnlineTheme.Amber;
-            button.GetComponentInChildren<TMP_Text>(true).color = OnlineTheme.Ink;
-            return button;
-        }
-
-        private void Input(string id, string label, Transform parent, string value, float x, float y, float width, float height, Action<string> changed)
-        {
-            var frame = Surface(id, parent, x, y, width, height, OnlineTheme.Well);
-            frame.raycastTarget = true;
-            var input = frame.gameObject.AddComponent<TMP_InputField>();
-            var viewport = Rect("Viewport", frame.transform, 16, 8, width - 32, height - 16);
-            viewport.gameObject.AddComponent<RectMask2D>();
-            var text = Label("Text", viewport, "", 22, 0, 0, width - 32, height - 16);
-            text.alignment = TextAlignmentOptions.MidlineLeft;
-            var placeholder = Label("Placeholder", viewport, label, 22, 0, 0, width - 32, height - 16);
-            placeholder.color = OnlineTheme.TextMuted;
-            placeholder.alignment = TextAlignmentOptions.MidlineLeft;
-            input.textViewport = viewport;
-            input.textComponent = text;
-            input.placeholder = placeholder;
-            input.characterLimit = 40;
-            input.text = value;
+            var input = Use<TMP_InputField>(id);
+            if (input == null) return;
+            input.onValueChanged.RemoveAllListeners();
+            input.SetTextWithoutNotify(value);
             input.interactable = session.CanAct;
             input.onValueChanged.AddListener(v => changed(v));
             controls.Add(new Control { id = id, label = label, selectable = input });
         }
 
-        private RectTransform Scroll(string name, Transform parent, float x, float y, float width, float height)
+        // The authored action list, emptied of the previous render's rows.
+        private RectTransform ActionList()
         {
-            var root = Surface(name, parent, x, y, width, height, OnlineTheme.Surface);
-            root.raycastTarget = true;
-            var scroll = root.gameObject.AddComponent<ScrollRect>();
-            var viewport = Rect("Viewport", root.transform, 10, 10, width - 20, height - 20);
-            viewport.gameObject.AddComponent<RectMask2D>();
-            var list = Rect("Choices", viewport, 0, 0, width - 20, height);
-            list.anchorMax = new Vector2(1, 1);
-            list.sizeDelta = new Vector2(0, height);
-            scroll.viewport = viewport;
-            scroll.content = list;
-            scroll.horizontal = false;
-            scroll.movementType = ScrollRect.MovementType.Clamped;
-            scroll.scrollSensitivity = 45;
+            var scroll = Use<ScrollRect>("Legal actions");
+            var list = scroll != null ? scroll.content : null;
+            if (list == null) return null;
+            for (int i = list.childCount - 1; i >= 0; i--)
+            {
+                var child = list.GetChild(i).gameObject;
+                if (child.name.EndsWith(TemplateSuffix, StringComparison.Ordinal)) continue;
+                child.SetActive(false);
+                Destroy(child);
+            }
             return list;
+        }
+
+        private T Copy<T>(RectTransform list, string template, string name) where T : Component
+        {
+            var source = list.Find(template + TemplateSuffix);
+            var copy = Instantiate(source.gameObject, list, false);
+            copy.name = name;
+            copy.SetActive(true);
+            return copy.GetComponent<T>();
         }
 
         private void ListLabel(RectTransform list, string label, ref float y, float height)
         {
-            var text = Label("Instructions", list, label, OnlineTheme.BodySize, 12, y + 8, 456, height - 16);
-            text.color = OnlineTheme.TextMuted;
+            var text = Copy<TMP_Text>(list, "List Label", "Instructions");
+            Place(text.rectTransform, list, 12, y + 8, 456, height - 16);
+            text.text = label;
             // TMP's ellipsis blanks text whose lines overflow the rect, so the label grows to fit.
             float needed = text.GetPreferredValues(label, 456, 0).y + 16;
             if (needed > height)
@@ -118,9 +109,12 @@ namespace Busara.Online.Client
             y += height;
         }
 
-        private Button ListButton(RectTransform list, string id, string label, ref float y, Action action, bool enabled = true)
+        private Button ListButton(RectTransform list, string id, string label, ref float y, Action action, bool enabled = true,
+            bool primary = false)
         {
-            var button = Button(id, label, list, 10, y, 460, 56, action, enabled);
+            var button = Copy<Button>(list, primary ? "List Primary" : "List Button", id);
+            Place((RectTransform)button.transform, list, 10, y, 460, 56);
+            Bind(button, id, label, action, enabled);
             y += 66;
             return button;
         }

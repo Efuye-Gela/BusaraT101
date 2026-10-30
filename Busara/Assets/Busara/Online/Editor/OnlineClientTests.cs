@@ -120,8 +120,6 @@ public sealed class OnlineClientTests
         {
             var components = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<MonoBehaviour>(true)).ToArray();
             var screen = components.OfType<OnlineMvpScreen>().Single();
-            Assert.IsNotNull(screen.font);
-            Assert.IsNotNull(screen.boardArt);
             Assert.AreEqual(4, screen.resourceIcons.Length);
             Assert.IsTrue(screen.resourceIcons.All(sprite => sprite != null));
             Assert.IsTrue(components.All(component => IsOnlinePresentation(component.GetType().Namespace)),
@@ -132,10 +130,28 @@ public sealed class OnlineClientTests
             Assert.AreEqual("BusaraOnline", screen.gameObject.name, "The browser bridge sends events to this object name.");
             Assert.IsNotNull(screen.GetComponent<OnlineSession>());
             Assert.IsNotNull(screen.GetComponent<OnlineBrowserTransport>());
+            // Every control the controller shows is authored on its page; nothing is created at runtime.
+            var pages = components.OfType<OnlinePage>().ToDictionary(page => page.Id);
+            var pending = new[] { "retry-pending", "resolve-conflict" };
+            AssertAuthored(pages["Entry"], pending.Concat(new[] { "Entry heading", "Scope", "Entry actions", "Offline distinction",
+                "create-guest", "retry-session", "retry-room", "discard-room", "create-room", "join-room" }));
+            AssertAuthored(pages["Lobby"], pending.Concat(new[] { "Lobby heading", "Scope", "Seat card 0", "Seat card 1", "Seat 0",
+                "Seat 1", "player-name", "configure", "start", "copy-invite", "Room revision" }));
+            AssertAuthored(pages["Match"], pending.Concat(new[] { "Turn", "Revision", "Power status", "Board owner 0", "Board owner 1",
+                "Player details 0", "Player details 1", "Legal actions" }).Concat(Enumerable.Range(0, 32).Select(i => "slot-" + i)));
+            var list = pages["Match"].Content.Find("Legal actions").GetComponent<UnityEngine.UI.ScrollRect>().content;
+            foreach (string template in new[] { "List Label Template", "List Button Template", "List Primary Template" })
+                Assert.IsFalse(list.Find(template).gameObject.activeSelf, template + " must stay an inactive template.");
             var audit = Eg.Testing.Editor.SceneAudit.Audit(scene);
             Assert.IsEmpty(audit, string.Join("\n", audit));
         }
         finally { EditorSceneManager.CloseScene(scene, true); }
+    }
+
+    private static void AssertAuthored(OnlinePage page, IEnumerable<string> names)
+    {
+        foreach (string name in names)
+            Assert.IsNotNull(page.Content.Find(name), page.Id + " page is missing authored control " + name);
     }
 
     // No offline managers, bots or gameplay MonoBehaviours may enter the online scene.

@@ -36,9 +36,9 @@ namespace Busara.Online.Client
             if (Exchanging)
                 ListLabel(actions, "After paying, select any further virtues to exchange for " +
                     (VirtueType)paying.virtueType + " (" + exchange.Count + " selected).", ref y, 90);
-            Primary(ListButton(actions, "confirm-payment", "Confirm " + paying.kind + " · pay " + payment.Count + "/" + paying.paymentCost,
+            ListButton(actions, "confirm-payment", "Confirm " + paying.kind + " · pay " + payment.Count + "/" + paying.paymentCost,
                 ref y, () => session.Submit(paying, payment.ToList(), exchangeIds: exchange.ToList()),
-                session.CanAct && payment.Count == paying.paymentCost));
+                session.CanAct && payment.Count == paying.paymentCost, primary: true);
             ListButton(actions, "cancel-payment", "Back — do not submit", ref y, () =>
             { paying = null; payment.Clear(); exchange.Clear(); Rebuild(); }, session.CanAct);
             var pass = view.choices.Find(c => c.kind == "pass");

@@ -9,6 +9,9 @@ The art pipeline is in `tools/theme-lab`, and the project-local Unity skills are
   code (`new GameObject`, `AddComponent<Image/Button/TMP...>`). Scripts may fill in authored objects:
   set text, swap sprites, show or hide them, and copy an authored inactive template such as the
   power-choice button.
+- The online scene (`Busara/Assets/Busara/Online/Scenes/OnlineMVP.unity`) follows the same rule. Every control
+  is saved under its page's `Content`, named by control id; the browser tests find controls by those names.
+  Nothing regenerates the scene, and the Web build uses it as saved.
 - The only runtime sprite swapping is gameplay content. `ThemeManager` applies the board theme each
   player picks, `PieceCompositor` builds seat-coloured pieces, and `ThemeShowcase` runs the home-screen
   slideshow.
@@ -18,6 +21,12 @@ The art pipeline is in `tools/theme-lab`, and the project-local Unity skills are
   `pixelsPerUnitMultiplier` set 10x higher than on a 100-PPU canvas.
 - Set Raycast Target off on graphics nothing clicks. Turn TMP AutoSize off on text that changes at
   runtime (counters, names).
+
+## Online mode
+
+UGS-hosted online play: anonymous Unity Authentication, the `BusaraUgs` Cloud Code module (`online/src/Busara.Ugs`)
+and private Cloud Save. The client is a WebGL build hosted on Vercel. Setup and deployment are in `docs/ugs-setup.md`
+and `docs/vercel-hosting.md`. The online build requires Unity 6000.3.6f1 with WebGL.
 
 ## Art pipeline
 
