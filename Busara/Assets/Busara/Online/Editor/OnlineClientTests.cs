@@ -168,7 +168,7 @@ public sealed class OnlineClientTests
         try
         {
             var screen = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<OnlineMvpScreen>(true)).Single();
-            CollectionAssert.AreEquivalent(KingdomCatalog.All.Select(k => k.Id), screen.kingdomTexts.Select(k => k.id));
+            CollectionAssert.AreEquivalent(Busara.Online.KingdomCatalog.All.Select(k => k.Id), screen.kingdomTexts.Select(k => k.id));
             var offline = AssetDatabase.FindAssets("t:ScriptableObject", new[] { "Assets/Busara/ScriptableObjects/Kingdoms" })
                 .Select(guid => new SerializedObject(AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid))))
                 .Where(asset => asset.FindProperty("kingdomStory") != null)

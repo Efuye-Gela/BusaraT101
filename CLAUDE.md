@@ -29,6 +29,10 @@ UGS-hosted online play: anonymous Unity Authentication, the `BusaraUgs` Cloud Co
 and private Cloud Save. The client is a WebGL build hosted on Vercel. Setup and deployment are in `docs/ugs-setup.md`
 and `docs/vercel-hosting.md`. The online build requires Unity 6000.3.6f1 with WebGL.
 
+`Busara/Assets/Busara/Online/Editor` has no asmdef, so it compiles into Assembly-CSharp-Editor together with the
+offline game's global types. Fully qualify online types that share an offline name (`Busara.Online.KingdomCatalog`):
+a clash is a compile error, and any compile error fails the batch Web build.
+
 ## Art pipeline
 
 `node tools/theme-lab/export-sprites.mjs [theme ids]` regenerates the theme sprites, the piece layer
