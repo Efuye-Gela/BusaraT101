@@ -1,6 +1,8 @@
 param(
     [string]$UnityPath = 'C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Unity.exe',
     [switch]$Development,
+    # Build only the online scene, without the main menu and offline game.
+    [switch]$OnlineOnly,
     [ValidateSet('ugs', 'legacy')][string]$Backend = 'ugs',
     [string]$ProjectId = '',
     [string]$EnvironmentName = 'development'
@@ -27,12 +29,15 @@ $logs = Join-Path $repository 'online\.local\logs'
 New-Item -ItemType Directory -Path $logs -Force | Out-Null
 $log = Join-Path $logs ('unity-web-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
 $oldDevelopment = $env:BUSARA_ONLINE_DEVELOPMENT
+$oldOnlineOnly = $env:BUSARA_ONLINE_ONLY
 $oldBackend = $env:BUSARA_ONLINE_BACKEND
 $oldProject = $env:BUSARA_UGS_PROJECT_ID
 $oldEnvironment = $env:BUSARA_UGS_ENVIRONMENT
 try {
     if ($Development) { $env:BUSARA_ONLINE_DEVELOPMENT = '1' }
     else { $env:BUSARA_ONLINE_DEVELOPMENT = '0' }
+    if ($OnlineOnly) { $env:BUSARA_ONLINE_ONLY = '1' }
+    else { $env:BUSARA_ONLINE_ONLY = '0' }
     $env:BUSARA_ONLINE_BACKEND = $Backend
     $env:BUSARA_UGS_PROJECT_ID = $ProjectId
     $env:BUSARA_UGS_ENVIRONMENT = $EnvironmentName
@@ -52,6 +57,7 @@ try {
 }
 finally {
     $env:BUSARA_ONLINE_DEVELOPMENT = $oldDevelopment
+    $env:BUSARA_ONLINE_ONLY = $oldOnlineOnly
     $env:BUSARA_ONLINE_BACKEND = $oldBackend
     $env:BUSARA_UGS_PROJECT_ID = $oldProject
     $env:BUSARA_UGS_ENVIRONMENT = $oldEnvironment

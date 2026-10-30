@@ -57,7 +57,12 @@ namespace Busara.Online.Client
             Button("join-code", "JOIN", () => session.JoinWithCode(draftCode), session.CanStartRoom);
             if (session.HasInvite)
                 Button("join-room", "Accept private invitation", session.JoinRoom, session.CanStartRoom);
+            // Back to the main menu when this build has one (the full Web game does).
+            if (UnityEngine.Application.CanStreamedLevelBeLoaded(MenuScene))
+                Button("back-to-menu", "BACK", () => UnityEngine.SceneManagement.SceneManager.LoadScene(MenuScene), !session.Busy);
         }
+
+        private const string MenuScene = "mainMenu";
 
         private void Lobby()
         {

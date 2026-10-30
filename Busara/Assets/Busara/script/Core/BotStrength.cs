@@ -10,11 +10,14 @@ public static class GameLaunch
     public const int MaximumBots = 3;
     public static int Bots { get; private set; }
     public static BotStrength Strength { get; private set; } = BotStrength.Normal;
+    /// <summary>Hidden: bots get random kingdoms you only discover in play. Otherwise you choose and see them.</summary>
+    public static bool HiddenKingdoms { get; private set; } = true;
 
-    public static void Configure(int bots, BotStrength strength)
+    public static void Configure(int bots, BotStrength strength, bool hiddenKingdoms = true)
     {
         Bots = bots < 1 ? 1 : bots > MaximumBots ? MaximumBots : bots;
         Strength = strength;
+        HiddenKingdoms = hiddenKingdoms;
     }
 
     /// <summary>The number of bots to seat, then forgets it so a later scene load starts fresh.</summary>

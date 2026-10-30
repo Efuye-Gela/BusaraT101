@@ -109,4 +109,9 @@
 - Consequences: online bots play ordinary actions only (no powers, they reject
   trades and pass reactions). The module must be deployed before the client.
 - Reconsider if: online bots should use powers or offline bot strengths.
+- Update 2026-10-30: the Web build now starts at the main menu and includes the
+  offline game, so the Web flow matches Konker: Play -> New Game (bots, strength,
+  Choose or Hidden kingdoms) -> kingdom selection; Play with friends -> online.
+  Hidden kingdoms are dealt to bots at random and the screen shows the lone
+  human's view, so a bot's kingdom stays secret until revealed.
 

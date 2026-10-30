@@ -26,6 +26,7 @@ public class PlayerSetupUI : MonoBehaviour
     private readonly List<PlayerSetupEntry> entries = new List<PlayerSetupEntry>();
     private readonly List<BlockedCanvas> blockedCanvases = new List<BlockedCanvas>();
     private bool initialized;
+    private bool hiddenKingdoms = true;
 
     public IReadOnlyList<PlayerSetupEntry> Entries => entries;
 
@@ -66,13 +67,17 @@ public class PlayerSetupUI : MonoBehaviour
         if (screen != null)
             screen.SetActive(true);
         // The main menu's New Game screen seats one human against its chosen number of bots.
+        hiddenKingdoms = GameLaunch.HiddenKingdoms;
         int bots = Mathf.Min(GameLaunch.TakeBots(), Capacity - 1);
         if (bots > 0)
         {
             entries.Add(new PlayerSetupEntry("Player 1"));
             for (int i = 0; i < bots; i++)
             {
-                var bot = new PlayerSetupEntry($"Bot {i + 2}", isBotControlled: true) { Strength = GameLaunch.Strength };
+                var bot = new PlayerSetupEntry($"Bot {i + 2}", isBotControlled: true)
+                {
+                    Strength = GameLaunch.Strength, KingdomHidden = hiddenKingdoms
+                };
                 bot.Kingdom = FreeKingdom();
                 entries.Add(bot);
             }
@@ -240,6 +245,10 @@ public class PlayerSetupUI : MonoBehaviour
             if (entry == null)
                 return;
             entry.Kingdom = index == 0 ? null : manager.kingdomCatalog.kingdoms[index - 1];
+            // Picking a hidden bot's kingdom must not reveal it: that bot is quietly dealt another one.
+            foreach (PlayerSetupEntry other in entries)
+                if (other != entry && other.KingdomHidden && other.Kingdom == entry.Kingdom && entry.Kingdom != null)
+                    other.Kingdom = FreeKingdom();
             ShowKingdom(card, entry.Kingdom);
             Validate();
         });
@@ -273,6 +282,7 @@ public class PlayerSetupUI : MonoBehaviour
                 !entries.Exists(other => other != entry && other.Name == to + number))
                 entry.Name = to + number;
         }
+        entry.KingdomHidden = entry.IsBotControlled && hiddenKingdoms;
         if (entry.IsBotControlled && entry.Kingdom == null)
             entry.Kingdom = FreeKingdom();
         RebuildRows();
@@ -308,7 +318,15 @@ public class PlayerSetupUI : MonoBehaviour
         kingdoms.SetValueWithoutNotify(entry.Kingdom == null || manager.kingdomCatalog == null ? 0 :
             manager.kingdomCatalog.kingdoms.IndexOf(entry.Kingdom) + 1);
         kingdoms.RefreshShownValue();
-        ShowKingdom(card, entry.Kingdom);
+        // A hidden bot kingdom is dealt at random and stays secret, as it will in play.
+        kingdoms.interactable = !entry.KingdomHidden;
+        if (entry.KingdomHidden)
+        {
+            kingdoms.captionText.text = "Hidden kingdom";
+            ShowHiddenKingdom(card);
+        }
+        else
+            ShowKingdom(card, entry.Kingdom);
 
         PlayerColour colour = themes != null && themes.usePlayerColours ? themes.ColourAt(entry.ColourIndex) : null;
         Color tone = colour != null ? colour.colour : readyColour;
@@ -334,6 +352,13 @@ public class PlayerSetupUI : MonoBehaviour
                 card.swatches[c].targetGraphic.color = themes.playerColours[c].colour;
             card.swatchRings[c].enabled = colour != null && c == entry.ColourIndex % themes.playerColours.Count;
         }
+    }
+
+    private static void ShowHiddenKingdom(PlayerSetupCard card)
+    {
+        card.winCondition.SetActive(false);
+        card.powerName.text = "Hidden kingdom";
+        card.powerDescription.text = "Dealt at random. You will discover it, and its power, during play.";
     }
 
     private static void ShowKingdom(PlayerSetupCard card, Kingdom kingdom)

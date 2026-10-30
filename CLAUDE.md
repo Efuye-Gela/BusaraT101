@@ -34,6 +34,10 @@ codes, and server-side bots (`OnlineBot`, played after every human command). Two
 domain tests run the whole power suite for both. Deploy the `BusaraUgs` module before the Web client: the module
 rejects command fields it does not know.
 
+The Web build starts at `mainMenu` (Play -> New Game: bots, strength, Choose/Hidden kingdoms -> kingdom selection in
+GameScene; Play with friends -> OnlineMVP) and includes all three scenes. `OnlineLinkRedirect` sends invitation and
+match links straight to OnlineMVP. `Invoke-BusaraOnlineBuild.ps1 -OnlineOnly` builds just the online scene.
+
 `Busara/Assets/Busara/Online/Editor` has no asmdef, so it compiles into Assembly-CSharp-Editor together with the
 offline game's global types. Fully qualify online types that share an offline name (`Busara.Online.KingdomCatalog`):
 a clash is a compile error, and any compile error fails the batch Web build.

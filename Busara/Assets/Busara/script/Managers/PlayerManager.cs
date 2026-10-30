@@ -6,6 +6,22 @@ using UnityEngine.UI;
 public class PlayerManager : Manager<PlayerManager>
 {
     public List<Player> Players;
+
+    /// <summary>The one human at the table when everyone else is a bot; the screen shows what they may see.</summary>
+    public Player LocalViewer
+    {
+        get
+        {
+            Player human = null;
+            foreach (Player player in Players)
+                if (player != null && !player.IsBotControlled)
+                {
+                    if (human != null) return null;
+                    human = player;
+                }
+            return human;
+        }
+    }
     public KingdomCatalog kingdomCatalog;
     public bool dealKingdomsFromCatalog;
     public bool requirePlayerSetup;
@@ -91,6 +107,11 @@ public class PlayerManager : Manager<PlayerManager>
             player.gameObject.SetActive(false);
         }
         Players = participants;
+        // A bot whose kingdom was chosen openly on the setup screen is known to every human player.
+        for (int i = 0; i < participants.Count; i++)
+            if (entries[i].IsBotControlled && !entries[i].KingdomHidden)
+                foreach (Player human in participants.Where(other => !other.IsBotControlled))
+                    human.knownKingdoms.Add(participants[i].Kingdom);
         // Keep the scene's original slot indices and board geometry for adjacency.
         BoardManager.Instance.gameBoards.RemoveAll(board => !participants.Any(player => player.Board == board));
         BoardManager.slots.Clear();

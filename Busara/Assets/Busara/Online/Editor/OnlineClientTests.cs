@@ -136,7 +136,7 @@ public sealed class OnlineClientTests
             var pending = new[] { "retry-pending", "resolve-conflict" };
             AssertAuthored(pages["Entry"], pending.Concat(new[] { "Entry heading", "Scope", "Entry actions", "Offline distinction",
                 "retry-session", "retry-room", "discard-room", "create-room", "join-room", "Name caption", "entry-name",
-                "New room caption", "seat-count", "Code caption", "room-code", "join-code" }));
+                "New room caption", "seat-count", "Code caption", "room-code", "join-code", "back-to-menu" }));
             AssertAuthored(pages["Lobby"], pending.Concat(new[] { "Lobby heading", "Scope", "Seat card 0", "Seat card 1", "Seat 0",
                 "Seat 1", "player-name", "configure", "start", "copy-invite", "Room revision", "Seat card 2", "Seat card 3",
                 "Seat 2", "Seat 3", "seat-bot-1", "seat-bot-2", "seat-bot-3", "Room code caption", "Room code" }));

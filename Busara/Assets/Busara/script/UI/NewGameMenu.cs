@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// The main menu's New Game screen: how many bots to play against and how strong they are, then Start Game
-/// opens the player setup with those bots seated. Every control is authored; each option button has an
+/// The main menu's New Game screen: how many bots to play against, how strong they are and whether their kingdoms
+/// are hidden, then Start Game opens the kingdom selection (player setup) with those bots seated. Every control is authored; each option button has an
 /// inactive "Selected" fill that this shows for the chosen option.
 /// </summary>
 public class NewGameMenu : MonoBehaviour
@@ -16,6 +16,10 @@ public class NewGameMenu : MonoBehaviour
     public List<UnityEngine.UI.Button> opponentButtons = new List<UnityEngine.UI.Button>();
     [Tooltip("Easy, Normal and Hard, in order.")]
     public List<UnityEngine.UI.Button> strengthButtons = new List<UnityEngine.UI.Button>();
+    [Tooltip("Choose and Hidden, in order.")]
+    public List<UnityEngine.UI.Button> kingdomButtons = new List<UnityEngine.UI.Button>();
+    [Tooltip("Hidden in the Web build, where a page cannot quit.")]
+    public GameObject quitButton;
     public UnityEngine.UI.Button startButton;
     public UnityEngine.UI.Button backButton;
     public string gameScene = "GameScene";
@@ -24,6 +28,7 @@ public class NewGameMenu : MonoBehaviour
 
     private int bots = 1;
     private BotStrength strength = BotStrength.Normal;
+    private bool hiddenKingdoms = true;
 
     private void Awake()
     {
@@ -37,6 +42,13 @@ public class NewGameMenu : MonoBehaviour
             var chosen = (BotStrength)i;
             strengthButtons[i].onClick.AddListener(() => { strength = chosen; Refresh(); });
         }
+        for (int i = 0; i < kingdomButtons.Count; i++)
+        {
+            bool hidden = i == 1;
+            kingdomButtons[i].onClick.AddListener(() => { hiddenKingdoms = hidden; Refresh(); });
+        }
+        if (quitButton != null && Application.platform == RuntimePlatform.WebGLPlayer)
+            quitButton.SetActive(false);
         startButton.onClick.AddListener(StartGame);
         backButton.onClick.AddListener(Close);
         Refresh();
@@ -57,7 +69,7 @@ public class NewGameMenu : MonoBehaviour
 
     public void StartGame()
     {
-        GameLaunch.Configure(bots, strength);
+        GameLaunch.Configure(bots, strength, hiddenKingdoms);
         SceneManager.LoadScene(gameScene);
     }
 
@@ -67,6 +79,8 @@ public class NewGameMenu : MonoBehaviour
             Show(opponentButtons[i], i + 1 == bots);
         for (int i = 0; i < strengthButtons.Count; i++)
             Show(strengthButtons[i], (BotStrength)i == strength);
+        for (int i = 0; i < kingdomButtons.Count; i++)
+            Show(kingdomButtons[i], (i == 1) == hiddenKingdoms);
     }
 
     private void Show(UnityEngine.UI.Button button, bool selected)

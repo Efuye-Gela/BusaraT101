@@ -196,7 +196,10 @@ public class DisplayManager : Manager<DisplayManager>, TurnManager.TurnBeginList
         Player ThePlayer = TurnManager.Instance.ActivePlayer;
         if (ThePlayer == null || ThePlayer.Kingdom == null)
             return;
-        Player viewer = PowerManager.Instance != null ? PowerManager.Instance.Viewer : ThePlayer;
+        // Against bots the screen is the human's: a bot's kingdom stays hidden until it is revealed.
+        Player viewer = PlayerManager.Instance != null && PlayerManager.Instance.LocalViewer != null
+            ? PlayerManager.Instance.LocalViewer
+            : PowerManager.Instance != null ? PowerManager.Instance.Viewer : ThePlayer;
         bool visible = ThePlayer.CanSeeKingdom(viewer);
         if (PowerName != null)
             PowerName.text = visible ? ThePlayer.Kingdom.power.powerName : "Hidden power";

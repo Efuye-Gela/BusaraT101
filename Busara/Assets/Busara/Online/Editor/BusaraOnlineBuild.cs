@@ -16,6 +16,13 @@ public static class BusaraOnlineBuild
         public int pollSeconds = 10;
     }
     public const string ScenePath = "Assets/Busara/Online/Scenes/OnlineMVP.unity";
+    public const string MenuScenePath = "Assets/Scenes/mainMenu.unity";
+    public const string GameScenePath = "Assets/Scenes/GameScene.unity";
+
+    // The Web game starts at the main menu: Play leads to bots and kingdom selection offline, Play with friends to the
+    // online scene. BUSARA_ONLINE_ONLY=1 builds just the online scene, as earlier Web builds did.
+    public static string[] WebScenes(bool onlineOnly) =>
+        onlineOnly ? new[] { ScenePath } : new[] { MenuScenePath, GameScenePath, ScenePath };
 
     internal static void RestorePreviousSceneSetup(UnityEditor.SceneManagement.SceneSetup[] setup)
     {
@@ -44,8 +51,10 @@ public static class BusaraOnlineBuild
             (!Guid.TryParse(webConfig.projectId, out _) || string.IsNullOrWhiteSpace(webConfig.environmentName)))
             throw new BuildFailedException("Set BUSARA_UGS_PROJECT_ID and BUSARA_UGS_ENVIRONMENT before building UGS. Use the PowerShell build script parameters; legacy must be chosen explicitly.");
         // OnlineMVP is an authored scene: build it as saved, never regenerate it.
-        if (!File.Exists(Path.Combine(projectRoot, "Busara", ScenePath)))
-            throw new BuildFailedException("Missing authored scene " + ScenePath + ".");
+        bool onlineOnly = Environment.GetEnvironmentVariable("BUSARA_ONLINE_ONLY") == "1";
+        foreach (string scene in WebScenes(onlineOnly))
+            if (!File.Exists(Path.Combine(projectRoot, "Busara", scene)))
+                throw new BuildFailedException("Missing authored scene " + scene + ".");
         string template = PlayerSettings.WebGL.template;
         var compression = PlayerSettings.WebGL.compressionFormat;
         bool fallback = PlayerSettings.WebGL.decompressionFallback;
@@ -57,7 +66,7 @@ public static class BusaraOnlineBuild
             bool development = Environment.GetEnvironmentVariable("BUSARA_ONLINE_DEVELOPMENT") == "1";
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
-                scenes = new[] { ScenePath },
+                scenes = WebScenes(onlineOnly),
                 locationPathName = output,
                 target = BuildTarget.WebGL,
                 options = development ? BuildOptions.Development : BuildOptions.None

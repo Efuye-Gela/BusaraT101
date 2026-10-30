@@ -8,6 +8,8 @@ public class PlayerSetupEntry
     public Kingdom Kingdom;
     public bool IsBotControlled;
     public BotStrength Strength = BotStrength.Normal;
+    /// <summary>A bot's kingdom dealt at random and kept secret from the human players until it is revealed.</summary>
+    public bool KingdomHidden;
     public BoardTheme Theme;
     /// <summary>Index into <see cref="ThemeCatalog.playerColours"/> for this player's pieces; -1 uses the seat's colour.</summary>
     public int ColourIndex = -1;
