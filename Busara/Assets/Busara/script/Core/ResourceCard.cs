@@ -12,12 +12,3 @@ public class ResourceCard : Card
         Resource = resource;
     }
 }
-
-[System.Serializable]
-public enum ResourceType
-{ 
-    Water,
-    Earth,
-    Fire,
-    Air
-}

@@ -6,6 +6,11 @@ This is a guided reading of the **implemented game**, not a proposal for a new s
 
 **Scope and evidence:** the restored runtime, assets, and existing EditMode tests in this worktree. Game-rule descriptions are paraphrases; implementation constraints are called out separately. This guide does not change the rules or runtime. The local Unity MCP is a development tool, not part of the gameplay architecture; its separate [README](../tools/unity-mcp/README.md) explains its use.
 
+The separate [private online milestone](online-multiplayer.md) uses a clearly
+bounded three-power rules variant and server-authoritative persistence. This
+guide continues to describe the full offline game, not a claim that all fifteen
+powers are available online.
+
 ## Contents
 
 - [1. Learning path and vocabulary](#learning-path)

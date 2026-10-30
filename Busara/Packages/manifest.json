@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "com.egprojectcomponents.core": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.core#v0.1.4",
+    "com.egprojectcomponents.motion": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.motion#v0.1.4",
+    "com.egprojectcomponents.ui": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.ui#v0.1.4",
+    "com.egprojectcomponents.testing": "https://github.com/freadam/EgComponents.git?path=Packages/com.egprojectcomponents.testing#v0.1.4",
     "com.unity.collab-proxy": "2.5.2",
     "com.unity.device-simulator.devices": "1.0.0",
     "com.unity.feature.2d": "2.0.1",

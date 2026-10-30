@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ugs-config-schemas.unity3d.com/v1/project-access-policy.schema.json",
+  "Statements": [
+    {
+      "Sid": "deny-all-player-cloud-save",
+      "Action": ["*"],
+      "Effect": "Deny",
+      "Principal": "Player",
+      "Resource": "urn:ugs:cloud-save:/**",
+      "Version": "1.0.0"
+    }
+  ]
+}

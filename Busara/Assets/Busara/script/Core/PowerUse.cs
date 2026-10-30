@@ -21,16 +21,9 @@ public static class PowerRules
 {
     public static bool CanPay(IList<Virtue> owned, IList<Virtue> selected, int cost)
     {
-        if (owned == null || selected == null || cost < 0 || selected.Count != cost)
+        if (selected == null || selected.Any(virtue => virtue == null))
             return false;
-
-        var remaining = new List<Virtue>(owned);
-        foreach (Virtue virtue in selected)
-        {
-            if (virtue == null || !remaining.Remove(virtue))
-                return false;
-        }
-        return true;
+        return Busara.Online.SharedRules.CanPay(owned, selected, cost);
     }
 
     public static List<Slot> EmptySlots(Player player)

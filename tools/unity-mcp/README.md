@@ -7,8 +7,8 @@ It is a useful development foundation, **not every Unity API**. It deliberately 
 ## Requirements and installation
 
 - Node.js 20+ and npm.
-- A licensed Unity 6 Editor, this project's existing Unity Test Framework package, and an opened project. No runtime packages or `ProjectSettings` modifications are required.
-- On this machine, Unity is installed at `C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Unity.exe`. The project's checked-in version may differ: opening in a newer Editor can upgrade project files. Review/revert unintended configuration changes separately.
+- A licensed Unity **6000.3.6f1** Editor, this project's existing Unity Test Framework package, and an opened project. No runtime packages or `ProjectSettings` modifications are required.
+- Use the version pinned in `Busara\ProjectSettings\ProjectVersion.txt`. Verify the Editor owns the intended checkout before connecting; review incidental import changes without discarding unrelated edits.
 
 From this worktree, in PowerShell:
 
@@ -42,21 +42,21 @@ Configure a local stdio server in your MCP client (the exact outer configuration
     "busara-unity": {
       "command": "node",
       "args": [
-        "C:\\Users\\fread\\.copilot\\repos\\copilot-worktrees\\BusaraT101\\freadam-redesigned-telegram\\tools\\unity-mcp\\dist\\index.js",
+        "C:\\path\\to\\checkout\\tools\\unity-mcp\\dist\\index.js",
         "--project",
-        "C:\\Users\\fread\\.copilot\\repos\\copilot-worktrees\\BusaraT101\\freadam-redesigned-telegram\\Busara"
+        "C:\\path\\to\\checkout\\Busara"
       ]
     }
   }
 }
 ```
 
-Build first with `npm run build`. Alternatively set `UNITY_PROJECT_PATH`. Keep stdout exclusively for MCP messages; diagnostics use stderr. The server rereads discovery for each command so port/token rotation on domain reload is handled without retaining credentials in client configuration.
+Replace `C:\path\to\checkout` with your checkout's absolute path. Build first with `npm run build`. Alternatively set `UNITY_PROJECT_PATH`. Keep stdout exclusively for MCP messages; diagnostics use stderr. The server rereads discovery for each command so port/token rotation on domain reload is handled without retaining credentials in client configuration.
 
 Verify a **real** stdio MCP initialize, tools/list, and four tools/call requests against the running Editor:
 
 ```powershell
-npm run smoke -- "C:\Users\fread\.copilot\repos\copilot-worktrees\BusaraT101\freadam-redesigned-telegram\Busara"
+npm run smoke -- "C:\path\to\checkout\Busara"
 ```
 
 The smoke test is read-only. Its PASS line is evidence of live integration, whereas `npm test` alone uses controlled fixtures and does **not** prove Unity integration.
@@ -130,12 +130,15 @@ Node tests cover official MCP initialize/list/call/schema errors, discovery vali
 Run the Editor tests through Test Runner, via `unity_tests_start` with `{"mode":"EditMode","tests":["BusaraMcpTests"]}`, or close the interactive Editor and run:
 
 ```powershell
-& "C:\Program Files\Unity\Hub\Editor\6000.3.6f1\Editor\Unity.exe" `
+$project = 'C:\path\to\checkout\Busara'
+$results = Join-Path $project 'Logs'
+New-Item -ItemType Directory -Force -Path $results | Out-Null
+& "C:\path\to\6000.3.6f1\Editor\Unity.exe" `
   -batchmode -nographics `
-  -projectPath "C:\Users\fread\.copilot\repos\copilot-worktrees\BusaraT101\freadam-redesigned-telegram\Busara" `
+  -projectPath $project `
   -runTests -testPlatform EditMode -testFilter BusaraMcpTests `
-  -testResults "C:\Users\fread\.copilot\repos\copilot-worktrees\BusaraT101\freadam-redesigned-telegram\Busara\Library\BusaraMcp\editmode-results.xml" `
-  -logFile "C:\Users\fread\.copilot\repos\copilot-worktrees\BusaraT101\freadam-redesigned-telegram\Busara\Library\BusaraMcp\editmode.log"
+  -testResults (Join-Path $results 'mcp-editmode-results.xml') `
+  -logFile (Join-Path $results 'mcp-editmode.log')
 ```
 
 Do not open two Editors on the same project. To include gameplay and menu-flow regressions, combine `KingdomPowerTests;PlayerSetupTests;PlayerSetupSceneTests;BusaraMcpTests` in one `-testFilter`.
