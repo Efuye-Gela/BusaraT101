@@ -138,7 +138,11 @@ public sealed class OnlineClientTests
             AssertAuthored(pages["Lobby"], pending.Concat(new[] { "Lobby heading", "Scope", "Seat card 0", "Seat card 1", "Seat 0",
                 "Seat 1", "player-name", "configure", "start", "copy-invite", "Room revision" }));
             AssertAuthored(pages["Match"], pending.Concat(new[] { "Turn", "Revision", "Power status", "Board owner 0", "Board owner 1",
-                "Player details 0", "Player details 1", "Legal actions" }).Concat(Enumerable.Range(0, 32).Select(i => "slot-" + i)));
+                "Player details 0", "Player details 1", "Legal actions", "choice-draw--1--1--1", "mode-forge:-1", "mode-trade:-1",
+                "choice-weapon--1--1--1", "use-power", "Setup heading", "Setup hint" })
+                .Concat(Enumerable.Range(0, 4).Select(i => "mode-setupPlace:" + i))
+                .Concat(Enumerable.Range(0, 32).Select(i => "slot-" + i)));
+            AssertAuthored(pages["Match"], Enumerable.Range(0, 32).Select(i => "slot-" + i + "/Legal"));
             var list = pages["Match"].Content.Find("Legal actions").GetComponent<UnityEngine.UI.ScrollRect>().content;
             foreach (string template in new[] { "List Label Template", "List Button Template", "List Primary Template" })
                 Assert.IsFalse(list.Find(template).gameObject.activeSelf, template + " must stay an inactive template.");

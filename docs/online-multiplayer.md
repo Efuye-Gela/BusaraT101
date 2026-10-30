@@ -238,9 +238,12 @@ the original event or rewinds the version counter.
   `Scenes/OnlineMVP.unity` is an authored scene with EgComponents **v0.1.4** UI
   pages (`Entry`, `Lobby`, `Match`). Every control a page can show is saved in
   the scene under the page's `Content`, named by its control id (`create-room`,
-  `slot-12`, ...). `OnlineMvpScreen` only shows, fills and wires them. The
-  variable-length legal-action list copies the inactive `List ... Template`
-  rows inside `Legal actions`. Edit the scene in Unity: nothing regenerates it,
+  `slot-12`, ...). `OnlineMvpScreen` only shows, fills and wires them. As in the
+  offline side panel, round buttons beside the board offer the setup resources
+  (`mode-setupPlace:0..3`) and then Draw, Forge, Trade, Weapon and `use-power`;
+  each slot's `Legal` ring marks the spaces the current selection can reach. The
+  variable-length list below copies the inactive `List ... Template` rows inside
+  `Legal actions` for prompts, decisions and every other choice. Edit the scene in Unity: nothing regenerates it,
   and the Web build uses it as saved. The main menu's `Play Online` button is
   authored too (`SceneLink`, hidden when OnlineMVP is not in the build).
 - `online/tests/Busara.Domain.Tests`: rule, payment, serialization, privacy and

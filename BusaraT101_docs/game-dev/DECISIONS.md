@@ -70,6 +70,8 @@
   uses: a wood backdrop, a carved frieze, leather panels, gold-outline buttons, a glowing
   primary button, the Panther Court board, its resource pieces and its selection ring.
   `OnlineTheme` keeps only runtime state colours (gold, parchment, selection tints).
+  The match page has the offline side panel's round buttons: the four setup
+  resources with counts, then Draw, Forge, Trade and Weapon around the power knob.
 - Reason and evidence: in the first two-browser play test on Vercel the online
   game looked nothing like the offline one.
 - Consequences: new online controls copy an existing authored control so they keep the kit.

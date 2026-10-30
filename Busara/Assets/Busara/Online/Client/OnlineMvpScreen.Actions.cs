@@ -28,7 +28,8 @@ namespace Busara.Online.Client
 
         private IEnumerable<LegalChoice> FilterChoices()
         {
-            return session.View.choices.Where(c => (mode == null || c.kind == mode) &&
+            return session.View.choices.Where(c => (mode == null || c.kind == mode ||
+                    (mode == "power" && PowerKinds.Contains(c.kind))) &&
                 (resourceFilter < 0 || c.resourceType == resourceFilter) &&
                 (source < 0 || c.from == source || (c.from < 0 && c.to == source)));
         }
@@ -51,18 +52,19 @@ namespace Busara.Online.Client
             }
             string prompt = !string.IsNullOrEmpty(view.decision?.prompt) ? view.decision.prompt :
                 view.awaitingOther ? "The other player's required action is pending. Nothing will be passed automatically." :
-                "Choose an action below. Board clicks filter a source or choose a unique legal destination.";
+                "Use the round buttons, or tap one of your pieces and then a space to move or forge.";
             ListLabel(actions, prompt, ref y, 120);
             if (mode != null || source >= 0)
                 ListButton(actions, "clear-selection", "Show all legal actions", ref y, () =>
                 { mode = null; source = -1; resourceFilter = -1; Rebuild(); });
             if (mode == null)
             {
-                foreach (var marker in view.choices.Where(c => c.kind == "forgeChain" || c.kind == "weapon"))
+                foreach (var marker in view.choices.Where(c => c.kind == "forgeChain"))
                     ListButton(actions, "choice-" + marker.kind + "--1--1--1", marker.label, ref y,
                         () => Choose(marker), session.CanAct);
                 foreach (var group in view.choices.Where(c => c.to >= 0 || c.from >= 0)
-                    .GroupBy(c => c.kind + ":" + (TypedKind(c.kind) ? c.resourceType : -1)))
+                    .GroupBy(c => c.kind + ":" + (TypedKind(c.kind) ? c.resourceType : -1))
+                    .Where(group => !DockedMode(group.Key)))
                 {
                     var first = group.First();
                     int type = TypedKind(first.kind) ? first.resourceType : -1;
@@ -71,7 +73,9 @@ namespace Busara.Online.Client
                     { mode = first.kind; resourceFilter = type; source = -1; Rebuild(); });
                 }
             }
-            foreach (var choice in FilterChoices().Where(c => c.kind != "forgeChain" && c.kind != "weapon"))
+            // Board choices are reached through a mode or a source; with neither, the list keeps the rest.
+            foreach (var choice in FilterChoices().Where(c => c.kind != "forgeChain" && c.kind != "weapon" &&
+                (mode != null || source >= 0 || (c.from < 0 && c.to < 0 && !DockedChoice(c)))))
             {
                 var selected = choice;
                 string label = string.IsNullOrEmpty(choice.label) ? choice.kind : choice.label;

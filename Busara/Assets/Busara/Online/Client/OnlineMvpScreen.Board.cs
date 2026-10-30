@@ -23,6 +23,7 @@ namespace Busara.Online.Client
             Label("Power status", PowerStatus(view));
             for (int seat = 0; seat < 2; seat++) SeatDetails(view, seat);
             foreach (var slot in view.board) Slot(view, slot);
+            Dock(view);
             var actions = ActionList();
             if (actions == null) return;
             if (paying != null) PaymentPanel(actions);
@@ -65,6 +66,7 @@ namespace Busara.Online.Client
             bool hasIcon = occupied && (int)slot.type >= 0 && (int)slot.type < resourceIcons.Length && resourceIcons[(int)slot.type] != null;
             icon.gameObject.SetActive(hasIcon);
             if (hasIcon) icon.sprite = resourceIcons[(int)slot.type];
+            button.transform.Find("Legal").gameObject.SetActive(LegalTarget(slot.id));
             var badge = button.transform.Find("Order badge");
             badge.gameObject.SetActive(selectedIndex >= 0);
             if (selectedIndex >= 0) badge.Find("Order").GetComponent<TMP_Text>().text = (selectedIndex + 1).ToString();
