@@ -108,8 +108,11 @@ from the repository root, replacing the Project ID:
 .\Busara\Assets\Busara\Online\Editor\Invoke-BusaraOnlineBuild.ps1 -Backend ugs -ProjectId '<your-Unity-project-UUID>' -EnvironmentName 'development' -Development
 ```
 
-The approved build uses uncompressed, content-hashed Unity files. Keep the
-complete build together. Vercel does not compile Unity, run the C# module,
+The build uses Brotli-compressed (`.br`), content-hashed Unity files; since the Web game
+includes the main menu and offline game, plain files are too large to download reliably.
+`online/hosting/vercel.json` serves each `.br` file with `Content-Encoding: br` and the
+type of the file inside. `-Uncompressed` builds plain files for hosts that cannot set
+headers. Keep the complete build together. Vercel does not compile Unity, run the C# module,
 or require Unity licensing credentials.
 
 ## 2. Prepare a safe upload folder

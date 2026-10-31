@@ -61,7 +61,10 @@ public static class BusaraOnlineBuild
         try
         {
             PlayerSettings.WebGL.template = "PROJECT:BusaraOnline";
-            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
+            // Brotli by default: the full game (menu, offline game and art) is large, and hosts serve the .br files
+            // with Content-Encoding (online/hosting/vercel.json). BUSARA_WEB_COMPRESSION=none builds plain files.
+            PlayerSettings.WebGL.compressionFormat = Environment.GetEnvironmentVariable("BUSARA_WEB_COMPRESSION") == "none"
+                ? WebGLCompressionFormat.Disabled : WebGLCompressionFormat.Brotli;
             PlayerSettings.WebGL.decompressionFallback = false;
             bool development = Environment.GetEnvironmentVariable("BUSARA_ONLINE_DEVELOPMENT") == "1";
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions

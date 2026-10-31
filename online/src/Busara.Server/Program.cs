@@ -178,6 +178,7 @@ app.MapMethods("/api/rooms/{matchId:guid}/events", ["GET", "CONNECT"], async (Gu
 var contentTypes = new FileExtensionContentTypeProvider();
 contentTypes.Mappings[".wasm"] = "application/wasm";
 contentTypes.Mappings[".data"] = "application/octet-stream";
+contentTypes.Mappings[".br"] = "application/octet-stream";
 var webRoot = builder.Configuration["BUSARA_WEB_ROOT"] ??
     Path.GetFullPath(Path.Combine(builder.Environment.ContentRootPath, "..", "..", "web"));
 if (Directory.Exists(webRoot))
@@ -185,7 +186,18 @@ if (Directory.Exists(webRoot))
     var files = new PhysicalFileProvider(webRoot);
     app.Lifetime.ApplicationStopped.Register(files.Dispose);
     app.UseDefaultFiles(new DefaultFilesOptions { FileProvider = files });
-    app.UseStaticFiles(new StaticFileOptions { FileProvider = files, ContentTypeProvider = contentTypes });
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = files, ContentTypeProvider = contentTypes,
+        // Brotli build files keep the type of the file inside and are delivered with Content-Encoding.
+        OnPrepareResponse = context =>
+        {
+            string name = context.File.Name;
+            if (!name.EndsWith(".br", StringComparison.Ordinal)) return;
+            context.Context.Response.Headers.ContentEncoding = "br";
+            if (contentTypes.TryGetContentType(name[..^3], out var type)) context.Context.Response.ContentType = type;
+        }
+    });
 }
 else
 {

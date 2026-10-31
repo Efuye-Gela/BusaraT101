@@ -35,7 +35,10 @@ const server = https.createServer({
   if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }
   fs.stat(file, (error, stat) => {
     if (error || !stat.isFile()) { res.writeHead(404).end(); return; }
-    res.setHeader('Content-Type', mime[path.extname(file)] || 'application/octet-stream');
+    // Brotli build files: the type of the file inside, delivered with Content-Encoding.
+    const brotli = file.endsWith('.br');
+    if (brotli) res.setHeader('Content-Encoding', 'br');
+    res.setHeader('Content-Type', mime[path.extname(brotli ? file.slice(0, -3) : file)] || 'application/octet-stream');
     res.setHeader('Content-Length', stat.size);
     if (req.method === 'HEAD') { res.writeHead(200).end(); return; }
     const stream = fs.createReadStream(file);

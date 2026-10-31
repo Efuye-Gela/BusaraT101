@@ -38,6 +38,8 @@ try {
     Assert-True ($null -eq $config.functions -and $null -eq $config.rewrites) 'Unexpected server functions or proxy rewrites.'
     $wasm = $config.headers | Where-Object { $_.source -eq '/Build/(.*).wasm' }
     Assert-True ($wasm.headers.value -contains 'application/wasm') 'Wasm MIME is missing.'
+    $brotli = $config.headers | Where-Object { $_.source -eq '/Build/(.*).wasm.br' }
+    Assert-True ($brotli.headers.value -contains 'br' -and $brotli.headers.value -contains 'application/wasm') 'Brotli wasm headers are missing.'
     $rootHeaders = $config.headers | Where-Object { $_.source -eq '/' }
     Assert-True ($rootHeaders.headers.value -contains 'no-store') 'Entry page can become stale.'
     $timingHeaders = $config.headers | Where-Object { $_.source.Contains('busara-latency.js') }

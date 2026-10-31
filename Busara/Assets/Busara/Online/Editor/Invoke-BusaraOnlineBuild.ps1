@@ -3,6 +3,8 @@ param(
     [switch]$Development,
     # Build only the online scene, without the main menu and offline game.
     [switch]$OnlineOnly,
+    # Plain build files instead of Brotli (.br), for hosts that cannot send Content-Encoding.
+    [switch]$Uncompressed,
     [ValidateSet('ugs', 'legacy')][string]$Backend = 'ugs',
     [string]$ProjectId = '',
     [string]$EnvironmentName = 'development'
@@ -30,12 +32,15 @@ New-Item -ItemType Directory -Path $logs -Force | Out-Null
 $log = Join-Path $logs ('unity-web-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
 $oldDevelopment = $env:BUSARA_ONLINE_DEVELOPMENT
 $oldOnlineOnly = $env:BUSARA_ONLINE_ONLY
+$oldCompression = $env:BUSARA_WEB_COMPRESSION
 $oldBackend = $env:BUSARA_ONLINE_BACKEND
 $oldProject = $env:BUSARA_UGS_PROJECT_ID
 $oldEnvironment = $env:BUSARA_UGS_ENVIRONMENT
 try {
     if ($Development) { $env:BUSARA_ONLINE_DEVELOPMENT = '1' }
     else { $env:BUSARA_ONLINE_DEVELOPMENT = '0' }
+    if ($Uncompressed) { $env:BUSARA_WEB_COMPRESSION = 'none' }
+    else { $env:BUSARA_WEB_COMPRESSION = 'brotli' }
     if ($OnlineOnly) { $env:BUSARA_ONLINE_ONLY = '1' }
     else { $env:BUSARA_ONLINE_ONLY = '0' }
     $env:BUSARA_ONLINE_BACKEND = $Backend
@@ -58,6 +63,7 @@ try {
 finally {
     $env:BUSARA_ONLINE_DEVELOPMENT = $oldDevelopment
     $env:BUSARA_ONLINE_ONLY = $oldOnlineOnly
+    $env:BUSARA_WEB_COMPRESSION = $oldCompression
     $env:BUSARA_ONLINE_BACKEND = $oldBackend
     $env:BUSARA_UGS_PROJECT_ID = $oldProject
     $env:BUSARA_UGS_ENVIRONMENT = $oldEnvironment
