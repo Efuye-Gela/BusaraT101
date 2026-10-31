@@ -6,8 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public sealed class BotPlayerController : MonoBehaviour
 {
+    [Tooltip("Seconds between a bot's actions, so players can see each move.")]
+    public float actionDelay = 2.5f;
+    [Tooltip("Seconds between setup placements and power choices.")]
+    public float stepDelay = 0.9f;
+
     private Player player;
     private float nextStep;
+    private readonly List<Slot> shown = new List<Slot>();
     private readonly List<string> history = new List<string>();
 
     public bool Paused { get; private set; }
@@ -74,13 +80,16 @@ public sealed class BotPlayerController : MonoBehaviour
         Status = HeuristicBot.BlockReason(actor);
         if (Status.Length > 0 || Time.unscaledTime < nextStep)
             return;
-        nextStep = Time.unscaledTime + (powers != null && powers.IsBusy ? .25f : 1f);
+        nextStep = Time.unscaledTime + (powers != null && powers.IsBusy ? stepDelay : actionDelay);
+        Unmark();
         try
         {
             LastDecision = HeuristicBot.Analyze(actor);
             // Normal handlers end the action/turn; a draw needs a subsequent placement step.
+            BotCandidate chosen = LastDecision.Chosen;
             LastOutcome = HeuristicBot.Execute(LastDecision);
             ExecutedSteps++;
+            Announce(actor, chosen);
             history.Add($"{LastDecision.PlayerName}: {LastDecision.Chosen.Path} | value {LastDecision.Chosen.Score:0.##}");
             if (history.Count > 20)
                 history.RemoveAt(0);
@@ -105,12 +114,45 @@ public sealed class BotPlayerController : MonoBehaviour
         Status = "Placing setup resources.";
         if (Time.unscaledTime < nextStep)
             return true;
-        nextStep = Time.unscaledTime + .5f;
+        nextStep = Time.unscaledTime + stepDelay;
         ResourceCollectionDisplay setup = FindFirstObjectByType<ResourceCollectionDisplay>();
         if (setup == null || !setup.PlaceForBot())
             Fail("Could not place a setup resource.");
         return true;
     }
+
+    // Shows what the bot just did: a message, and the spaces it used stay marked until its next step.
+    private void Announce(Player actor, BotCandidate chosen)
+    {
+        if (chosen == null)
+            return;
+        string[] parts = chosen.Path.Split(new[] { " -> " }, StringSplitOptions.None);
+        // Paths read "Move Water #3 -> #4 -> why" and "Forge #1 + #2 -> gain Art -> why".
+        string move = parts.Length < 2 ? parts[0]
+            : chosen.Kind == BotActionKind.Move ? parts[0] + " to " + parts[1]
+            : chosen.Kind == BotActionKind.Forge ? parts[0] + ": " + parts[1]
+            : parts[0];
+        if (DisplayManager.Instance != null)
+            DisplayManager.Instance.DeliverInstructions(actor.Name + ": " + move);
+        foreach (int index in new[] { chosen.From, chosen.To })
+        {
+            Slot slot = index < 0 ? null : BoardManager.slots.Find(item => item != null && item.Index == index);
+            if (slot == null)
+                continue;
+            slot.Highlight();
+            shown.Add(slot);
+        }
+    }
+
+    private void Unmark()
+    {
+        foreach (Slot slot in shown)
+            if (slot != null)
+                slot.UnHighlight();
+        shown.Clear();
+    }
+
+    private void OnDisable() => Unmark();
 
     private void Fail(string message)
     {
